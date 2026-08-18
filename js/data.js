@@ -40,7 +40,8 @@ const mockData = {
             { id: 1, customer: 'Công ty Cổ phần Alpha', company: 'Tân Hồng Hà', amount: 250000000, daysOverdue: 120, status: 'Khoá tài khoản' },
             { id: 2, customer: 'Tập đoàn Beta', company: 'Xem Sơn', amount: 500000000, daysOverdue: 95, status: 'Đang pháp lý' },
             { id: 3, customer: 'Đại lý Gamma', company: 'Việt', amount: 120000000, daysOverdue: 150, status: 'Khoá tài khoản' },
-            { id: 4, customer: 'Cửa hàng Delta', company: 'ITSS', amount: 85000000, daysOverdue: 110, status: 'Chờ thanh toán' }
+            { id: 4, customer: 'Cửa hàng Delta', company: 'ITSS', amount: 85000000, daysOverdue: 110, status: 'Chờ thanh toán' },
+            { id: 5, customer: 'Đại lý Epsilon', company: 'VPS M', amount: 150000000, daysOverdue: 60, status: 'Đang theo dõi' }
         ]
     },
     inventory: {
@@ -55,21 +56,45 @@ const mockData = {
     }
 };
 
+// Helper to simulate data changing over time periods
+function applyPeriodMultiplier(data, period) {
+    let multiplier = 1;
+    if(period === 'day') multiplier = 0.03;
+    if(period === 'week') multiplier = 0.25;
+    if(period === 'month') multiplier = 1;
+    if(period === 'year') multiplier = 12;
+
+    // Deep clone to not mutate original mock data
+    const cloned = JSON.parse(JSON.stringify(data));
+    
+    // Naive recursive multiplication for numbers (except ids and daysOverdue)
+    function multiplyNumbers(obj) {
+        for (let key in obj) {
+            if (typeof obj[key] === 'number' && key !== 'id' && key !== 'daysOverdue' && key !== 'percentage') {
+                obj[key] = obj[key] * multiplier;
+            } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                multiplyNumbers(obj[key]);
+            }
+        }
+    }
+    multiplyNumbers(cloned);
+    return cloned;
+}
+
 window.DataService = {
     async getCustomersData(period = 'month', company = 'all') {
-        // Simulate network delay
-        return new Promise(resolve => setTimeout(() => resolve(mockData.customers), 300));
+        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.customers, period)), 200));
     },
     
     async getRevenueData(period = 'month', company = 'all') {
-        return new Promise(resolve => setTimeout(() => resolve(mockData.revenue), 300));
+        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.revenue, period)), 200));
     },
     
     async getDebtData(period = 'month', company = 'all') {
-        return new Promise(resolve => setTimeout(() => resolve(mockData.debt), 300));
+        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.debt, period)), 200));
     },
 
     async getInventoryData(period = 'month', company = 'all') {
-        return new Promise(resolve => setTimeout(() => resolve(mockData.inventory), 300));
+        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.inventory, period)), 200));
     }
 };

@@ -12,12 +12,14 @@ const ROLES = {
 };
 
 // Mock Users Database
-const users = {
-    'ceo': { name: 'Vũ Phạm', role: ROLES.CEO, company: 'all' },
-    'cso': { name: 'Trần Bình', role: ROLES.CSO, company: 'all' },
-    'director_thh': { name: 'Lê Cường', role: ROLES.DIRECTOR, company: 'Tân Hồng Hà' },
-    'manager_itss': { name: 'Nguyễn Dũng', role: ROLES.MANAGER, company: 'ITSS' },
-    'staff_vpsm': { name: 'Phạm E', role: ROLES.STAFF, company: 'VPS M' }
+const USERS = {
+    'ADMIN': { password: 'Admin123@', role: 'ceo', name: 'ADMIN', company: 'all' },
+    'CEO': { password: '123a@', role: 'ceo', name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
+    'THH': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
+    'VCOPY': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC VIỆT', company: 'Việt' },
+    'XESCO': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC XEM SƠN', company: 'Xem Sơn' },
+    'vpsm': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC VPS M', company: 'VPS M' },
+    'ITSS': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
 };
 
 window.AuthService = {

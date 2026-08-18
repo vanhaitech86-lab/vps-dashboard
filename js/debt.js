@@ -104,7 +104,9 @@ window.DebtModule = {
             return;
         }
 
+        let totalAmount = 0;
         filteredList.forEach(item => {
+            totalAmount += item.amount;
             const tr = document.createElement('tr');
             
             // Format currency
@@ -119,5 +121,16 @@ window.DebtModule = {
             `;
             tbody.appendChild(tr);
         });
+
+        // Add total row
+        const totalTr = document.createElement('tr');
+        totalTr.style.background = '#f8f9fa';
+        totalTr.style.fontWeight = 'bold';
+        totalTr.innerHTML = `
+            <td colspan="2" style="text-align: right;">TỔNG CỘNG:</td>
+            <td style="color:var(--clr-danger);">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalAmount)}</td>
+            <td colspan="2"></td>
+        `;
+        tbody.appendChild(totalTr);
     }
 };

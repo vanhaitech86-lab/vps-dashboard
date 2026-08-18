@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showView(viewId) {
             // Update title
             const titles = {
-                'overview': 'Tổng Quan',
+                'overview': 'DASHBOARD',
                 'hr': '1. CCTC Nhân Sự',
                 'revenue': '2. Doanh Số Lãi Gộp',
                 'product': '3. Sản Phẩm',
