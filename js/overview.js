@@ -36,8 +36,9 @@ window.OverviewModule = {
 
     updateUI(customers, revenue, debt, company) {
         // --- 1. Customers ---
-        let custLabels = [], custData = [];
+        let custLabels = ['Dịch vụ', 'Thuê máy', 'Phân phối'], custData = [];
         let tCust=0, tNew=0, tDec=0, tLost=0;
+        let tService = 0, tRental = 0, tDistribution = 0;
         
         if (company === 'all') {
             tCust = customers.total;
@@ -45,9 +46,11 @@ window.OverviewModule = {
             tDec = customers.trend.decreased;
             tLost = customers.trend.lost;
             for (const [compName, compData] of Object.entries(customers.byCompany)) {
-                custLabels.push(compName);
-                custData.push(compData.service + compData.rental + compData.distribution);
+                tService += compData.service;
+                tRental += compData.rental;
+                tDistribution += compData.distribution;
             }
+            custData = [tService, tRental, tDistribution];
         } else {
             const compData = customers.byCompany[company];
             if(compData) {
@@ -55,7 +58,6 @@ window.OverviewModule = {
                 tNew = compData.new;
                 tDec = compData.decreased;
                 tLost = compData.lost;
-                custLabels = ['Dịch vụ', 'Thuê máy', 'Phân phối'];
                 custData = [compData.service, compData.rental, compData.distribution];
             }
         }
@@ -69,8 +71,19 @@ window.OverviewModule = {
             labels: custLabels,
             datasets: [{
                 data: custData,
-                backgroundColor: ['#1B2A4A', '#2E86AB', '#FFC107', '#28A745', '#DC3545']
+                backgroundColor: ['#1B2A4A', '#2E86AB', '#FFC107']
             }]
+        }, {
+            plugins: {
+                datalabels: {
+                    color: '#fff',
+                    font: { weight: 'bold', size: 10 },
+                    formatter: function(value, context) {
+                        return context.chart.data.labels[context.dataIndex] + '\n' + value.toLocaleString();
+                    },
+                    textAlign: 'center'
+                }
+            }
         });
 
         // --- 2. Revenue ---
@@ -93,14 +106,11 @@ window.OverviewModule = {
             labels: revLabels,
             datasets: [
                 {
-                    type: 'line',
+                    type: 'bar',
                     label: 'Kế hoạch',
                     data: revPlanData,
-                    borderColor: '#1B2A4A',
                     backgroundColor: '#1B2A4A',
-                    borderWidth: 2,
-                    fill: false,
-                    tension: 0.1
+                    borderRadius: 4
                 },
                 {
                     type: 'bar',
@@ -110,27 +120,42 @@ window.OverviewModule = {
                     borderRadius: 4
                 }
             ]
+        }, {
+            plugins: {
+                datalabels: {
+                    anchor: 'end',
+                    align: 'top',
+                    color: '#444',
+                    font: { size: 9, weight: 'bold' },
+                    formatter: function(value) {
+                        return value + ' Tỷ';
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grace: '20%' // Add padding for top labels
+                }
+            }
         });
 
         // --- 3. Debt ---
-        let debtLabels = [], debtData = [];
+        let debtLabels = ['Trong hạn', 'Quá hạn', 'Khó đòi'], debtData = [];
         let dTotal=0, dCurrent=0, dOverdue=0, dBad=0;
         
         if (company === 'all') {
             dTotal = debt.total;
             for (const [compName, compData] of Object.entries(debt.byCompany)) {
-                debtLabels.push(compName);
-                let compTotal = compData.current + compData.overdue + compData.bad;
-                debtData.push(compTotal);
                 dCurrent += compData.current;
                 dOverdue += compData.overdue;
                 dBad += compData.bad;
             }
+            debtData = [dCurrent, dOverdue, dBad];
             document.getElementById('overview-debt-val').textContent = dTotal.toFixed(1) + ' Tỷ ₫';
         } else {
             if(debt.byCompany[company]) {
                 const cData = debt.byCompany[company];
-                debtLabels = ['Trong hạn', 'Quá hạn', 'Khó đòi'];
                 debtData = [cData.current, cData.overdue, cData.bad];
                 dTotal = cData.current + cData.overdue + cData.bad;
                 dCurrent = cData.current;
@@ -149,8 +174,19 @@ window.OverviewModule = {
             labels: debtLabels,
             datasets: [{
                 data: debtData,
-                backgroundColor: ['#6c757d', '#17a2b8', '#ffc107', '#fd7e14', '#20c997']
+                backgroundColor: ['#17a2b8', '#ffc107', '#fd7e14']
             }]
+        }, {
+            plugins: {
+                datalabels: {
+                    color: '#fff',
+                    font: { weight: 'bold', size: 10 },
+                    formatter: function(value, context) {
+                        if (value === 0) return '';
+                        return value.toFixed(1) + 'T';
+                    }
+                }
+            }
         });
     }
 };

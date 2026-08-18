@@ -6,6 +6,11 @@ window.ChartManager = {
     charts: {},
 
     init() {
+        // Register datalabels plugin if available
+        if (typeof ChartDataLabels !== 'undefined') {
+            Chart.register(ChartDataLabels);
+        }
+
         // Set global Chart.js defaults
         Chart.defaults.font.family = "'Inter', sans-serif";
         Chart.defaults.color = '#6C757D';
