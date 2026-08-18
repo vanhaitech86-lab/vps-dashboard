@@ -111,14 +111,14 @@ window.OverviewModule = {
                     type: 'bar',
                     label: 'Kế hoạch',
                     data: revPlanData,
-                    backgroundColor: '#1B2A4A',
+                    backgroundColor: '#2E86AB', // Blue
                     borderRadius: 4
                 },
                 {
                     type: 'bar',
                     label: 'Thực tế',
                     data: revActualData,
-                    backgroundColor: '#28A745',
+                    backgroundColor: '#DC3545', // Red
                     borderRadius: 4
                 }
             ]
@@ -127,8 +127,8 @@ window.OverviewModule = {
                 datalabels: {
                     anchor: 'end',
                     align: 'top',
-                    color: '#000000',
-                    font: { size: 14, weight: 'bold' },
+                    color: '#444444',
+                    font: { size: 10, weight: 'bold' },
                     formatter: function(value) {
                         return value + ' Tỷ';
                     }
