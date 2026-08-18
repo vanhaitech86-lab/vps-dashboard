@@ -255,14 +255,15 @@
     background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-secondary) 100%);
     color: white;
     border-radius: var(--radius-lg);
-    padding: 1.5rem 2rem;
-    margin-bottom: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 1rem;
     box-shadow: var(--shadow-md);
 }
 
 .welcome-banner h2 {
     color: white;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
+    font-size: 1.25rem;
 }
 
 .welcome-banner p {
