@@ -11,8 +11,8 @@ const ROLES = {
     STAFF: { level: 6, name: 'Nhân viên', canViewAll: false }
 };
 
-// Mock Users Database
-const USERS = {
+// Default Mock Users Database
+const DEFAULT_USERS = {
     'ADMIN': { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' },
     'CEO': { password: '123a@', role: ROLES.CEO, name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
     'THH': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
@@ -22,12 +22,44 @@ const USERS = {
     'ITSS': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
 };
 
+let usersDB = null;
+
 window.AuthService = {
     currentUser: null,
 
+    loadUsers() {
+        if (!usersDB) {
+            const stored = localStorage.getItem('vps_users_db');
+            if (stored) {
+                usersDB = JSON.parse(stored);
+            } else {
+                usersDB = JSON.parse(JSON.stringify(DEFAULT_USERS));
+            }
+        }
+    },
+
+    getUsers() {
+        this.loadUsers();
+        return usersDB;
+    },
+
+    saveUser(id, userData) {
+        this.loadUsers();
+        usersDB[id] = userData;
+        localStorage.setItem('vps_users_db', JSON.stringify(usersDB));
+    },
+
+    deleteUser(id) {
+        this.loadUsers();
+        if (usersDB[id]) {
+            delete usersDB[id];
+            localStorage.setItem('vps_users_db', JSON.stringify(usersDB));
+        }
+    },
+
     login(username, password) {
-        // Mock authentication
-        const user = USERS[username];
+        this.loadUsers();
+        const user = usersDB[username];
         if (user && user.password === password) {
             this.currentUser = user;
             localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
@@ -42,9 +74,15 @@ window.AuthService = {
     },
 
     checkSession() {
+        this.loadUsers();
         const stored = localStorage.getItem('vps_user');
         if (stored) {
             this.currentUser = JSON.parse(stored);
+            // Refresh with latest data from DB just in case it was updated
+            if(usersDB[this.currentUser.id || Object.keys(usersDB).find(k => usersDB[k].name === this.currentUser.name)]) {
+                const userId = Object.keys(usersDB).find(k => usersDB[k].name === this.currentUser.name);
+                if (userId) this.currentUser = usersDB[userId];
+            }
             return true;
         }
         return false;
@@ -58,5 +96,9 @@ window.AuthService = {
         if (!this.currentUser) return false;
         if (this.currentUser.role.canViewAll) return true;
         return this.currentUser.company === companyName;
+    },
+
+    getRolesMap() {
+        return ROLES;
     }
 };

@@ -87,12 +87,24 @@ document.addEventListener('DOMContentLoaded', () => {
             window.FilterManager.init();
             window.FilterManager.updateCompanyFilterVisibility(user);
             
+            // Show Admin link only for ADMIN user
+            const adminNav = document.getElementById('nav-admin');
+            if (adminNav) {
+                // Determine if user is ADMIN. The ID isn't directly on user obj, but we can check name
+                if (user.name === 'ADMIN') {
+                    adminNav.classList.remove('hidden');
+                } else {
+                    adminNav.classList.add('hidden');
+                }
+            }
+            
             // Initialize Dashboard Modules
             if(window.ChartManager) window.ChartManager.init();
             if(window.OverviewModule) window.OverviewModule.init();
             if(window.CustomersModule) window.CustomersModule.init();
             if(window.RevenueModule) window.RevenueModule.init();
             if(window.DebtModule) window.DebtModule.init();
+            if(window.AdminModule) window.AdminModule.init();
             
             // Trigger initial data load
             window.FilterManager.triggerFilterChange();
@@ -116,7 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 'iso': '9. ISO',
                 'training': '10. Đào Tạo',
                 'culture': '11. Văn Hóa Doanh Nghiệp',
-                'brand': '12. Thương Hiệu'
+                'brand': '12. Thương Hiệu',
+                'admin': 'Quản trị Hệ thống'
             };
             document.getElementById('page-title').textContent = titles[viewId] || 'Dashboard';
             

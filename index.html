@@ -73,8 +73,8 @@
                 <a href="#service" class="nav-item" data-target="service" style="border-left: 4px solid #16a085;"><i data-lucide="headphones"></i> 8. Dịch Vụ</a>
                 <a href="#iso" class="nav-item" data-target="iso" style="border-left: 4px solid #27ae60;"><i data-lucide="check-circle"></i> 9. ISO</a>
                 <a href="#training" class="nav-item" data-target="training" style="border-left: 4px solid #2980b9;"><i data-lucide="book-open"></i> 10. Đào Tạo</a>
-                <a href="#culture" class="nav-item" data-target="culture" style="border-left: 4px solid #8e44ad;"><i data-lucide="heart"></i> 11. VHDN</a>
                 <a href="#brand" class="nav-item" data-target="brand" style="border-left: 4px solid #d35400;"><i data-lucide="star"></i> 12. Thương Hiệu</a>
+                <a href="#admin" id="nav-admin" class="nav-item hidden" data-target="admin" style="border-left: 4px solid #7f8c8d; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;"><i data-lucide="settings"></i> Quản trị Hệ thống</a>
             </nav>
             <div class="sidebar-footer">
                 <div class="user-info">
@@ -101,7 +101,7 @@
                     <h1 id="page-title">DASHBOARD</h1>
                 </div>
                 <div class="topbar-center" style="flex-grow: 1; overflow: hidden; margin: 0 20px; display: flex; align-items: center;">
-                    <marquee direction="right" style="color: var(--clr-primary); font-weight: bold; font-size: 1.2rem; white-space: nowrap;">TẬP ĐOÀN VPS-MÁY VĂN PHÒNG HÀNG ĐẦU VIỆT NAM</marquee>
+                    <marquee direction="right" style="color: #f1c40f; font-weight: bold; font-size: 1.2rem; white-space: nowrap;">TẬP ĐOÀN VPS-MÁY VĂN PHÒNG HÀNG ĐẦU VIỆT NAM</marquee>
                 </div>
                 <div class="topbar-right">
                     <!-- Global Time Filter -->
@@ -382,6 +382,81 @@
                     </div>
                 </section>
 
+                <!-- Admin View -->
+                <section id="view-admin" class="view hidden">
+                    <div class="card">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>Quản lý Tài khoản (Hệ thống giả lập)</h3>
+                            <button id="btn-add-user" class="btn btn-primary btn-sm"><i data-lucide="plus" style="width:16px;height:16px;margin-right:4px;"></i> Thêm tài khoản</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên đăng nhập (ID)</th>
+                                            <th>Tên hiển thị</th>
+                                            <th>Chức vụ (Role)</th>
+                                            <th>Phụ trách Công ty</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-users-table-body">
+                                        <!-- Rendered by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add/Edit User Modal (Simple inline form for now) -->
+                    <div id="admin-user-form-container" class="card mt-20 hidden" style="border: 2px solid var(--clr-primary);">
+                        <div class="card-header">
+                            <h3 id="admin-form-title">Thêm / Sửa Tài Khoản</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="admin-user-form">
+                                <div class="grid-layout cols-2" style="gap: 15px; margin-bottom: 15px;">
+                                    <div class="form-group">
+                                        <label>Tên đăng nhập (ID)</label>
+                                        <input type="text" id="admin-form-id" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mật khẩu</label>
+                                        <input type="text" id="admin-form-password" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tên hiển thị</label>
+                                        <input type="text" id="admin-form-name" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cấp độ phân quyền</label>
+                                        <select id="admin-form-role" class="form-control" required>
+                                            <option value="CEO">Chủ tịch / CEO (Toàn quyền)</option>
+                                            <option value="DIRECTOR">Giám đốc (Chỉ định công ty)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Công ty phụ trách</label>
+                                        <select id="admin-form-company" class="form-control" required>
+                                            <option value="all">Tất cả (all)</option>
+                                            <option value="Tân Hồng Hà">Tân Hồng Hà</option>
+                                            <option value="Việt">Việt</option>
+                                            <option value="Xem Sơn">Xem Sơn</option>
+                                            <option value="VPS M">VPS M</option>
+                                            <option value="ITSS">ITSS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 10px;">
+                                    <button type="submit" class="btn btn-primary">Lưu tài khoản</button>
+                                    <button type="button" id="btn-cancel-user" class="btn btn-secondary">Hủy</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </main>
     </div>
@@ -396,6 +471,7 @@
     <script src="js/customers.js"></script>
     <script src="js/revenue.js"></script>
     <script src="js/debt.js"></script>
+    <script src="js/admin.js"></script>
     <script src="js/app.js"></script>
     
     <script>
