@@ -76,12 +76,14 @@ window.OverviewModule = {
         }, {
             plugins: {
                 datalabels: {
-                    color: '#fff',
-                    font: { weight: 'bold', size: 10 },
+                    color: '#ffffff',
+                    font: { weight: 'bold', size: 14 },
                     formatter: function(value, context) {
                         return context.chart.data.labels[context.dataIndex] + '\n' + value.toLocaleString();
                     },
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    textStrokeColor: 'rgba(0,0,0,0.5)',
+                    textStrokeWidth: 2
                 }
             }
         });
@@ -125,8 +127,8 @@ window.OverviewModule = {
                 datalabels: {
                     anchor: 'end',
                     align: 'top',
-                    color: '#444',
-                    font: { size: 9, weight: 'bold' },
+                    color: '#000000',
+                    font: { size: 14, weight: 'bold' },
                     formatter: function(value) {
                         return value + ' Tỷ';
                     }
@@ -135,7 +137,7 @@ window.OverviewModule = {
             scales: {
                 y: {
                     beginAtZero: true,
-                    grace: '20%' // Add padding for top labels
+                    grace: '25%' // Add padding for larger top labels
                 }
             }
         });
@@ -179,12 +181,14 @@ window.OverviewModule = {
         }, {
             plugins: {
                 datalabels: {
-                    color: '#fff',
-                    font: { weight: 'bold', size: 10 },
+                    color: '#ffffff',
+                    font: { weight: 'bold', size: 14 },
                     formatter: function(value, context) {
                         if (value === 0) return '';
                         return value.toFixed(1) + 'T';
-                    }
+                    },
+                    textStrokeColor: 'rgba(0,0,0,0.5)',
+                    textStrokeWidth: 2
                 }
             }
         });

@@ -7,10 +7,20 @@ window.DebtModule = {
         document.addEventListener('vps_filter_changed', (e) => {
             this.loadData(e.detail.period, e.detail.company);
         });
+        
+        const localFilter = document.getElementById('bad-debt-company-filter');
+        if (localFilter) {
+            localFilter.addEventListener('change', (e) => {
+                if (this.currentData) {
+                    this.renderTable(this.currentData.badDebtsList, e.target.value);
+                }
+            });
+        }
     },
 
     async loadData(period, company) {
         const data = await window.DataService.getDebtData(period, company);
+        this.currentData = data;
         this.updateUI(data, company);
     },
 
