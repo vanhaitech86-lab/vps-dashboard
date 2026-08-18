@@ -161,7 +161,7 @@
                     
                     <!-- KPI Cards for 3 specific indicators -->
                     <div class="kpi-grid">
-                        <div class="kpi-card">
+                        <div class="kpi-card clickable-card" data-target="customers" style="cursor: pointer;" title="Nhấn để xem chi tiết Khách hàng">
                             <div class="kpi-icon bg-primary-light"><i data-lucide="users"></i></div>
                             <div class="kpi-details">
                                 <p class="kpi-label">7. Khách Hàng Hiện Có</p>
@@ -169,7 +169,7 @@
                                 <p class="kpi-trend positive"><i data-lucide="trending-up"></i> +5.2% vs kỳ trước</p>
                             </div>
                         </div>
-                        <div class="kpi-card">
+                        <div class="kpi-card clickable-card" data-target="revenue" style="cursor: pointer;" title="Nhấn để xem chi tiết Doanh số">
                             <div class="kpi-icon bg-success-light"><i data-lucide="dollar-sign"></i></div>
                             <div class="kpi-details">
                                 <p class="kpi-label">2. Doanh Số Lãi Gộp</p>
@@ -177,45 +177,67 @@
                                 <p class="kpi-trend positive"><i data-lucide="trending-up"></i> +12% vs KH</p>
                             </div>
                         </div>
-                        <div class="kpi-card">
-                            <div class="kpi-icon" style="background: rgba(255, 193, 7, 0.2); color: #FFC107;"><i data-lucide="boxes"></i></div>
+                        <div class="kpi-card clickable-card" data-target="debt" style="cursor: pointer;" title="Nhấn để xem chi tiết Công nợ">
+                            <div class="kpi-icon bg-danger-light"><i data-lucide="alert-triangle"></i></div>
                             <div class="kpi-details">
-                                <p class="kpi-label">4. Tổng Tồn Kho</p>
-                                <h3 class="kpi-value" id="overview-inventory-val">85.3 Tỷ ₫</h3>
-                                <p class="kpi-trend negative"><i data-lucide="trending-down"></i> -2.1% vs kỳ trước</p>
+                                <p class="kpi-label">6. Tổng Công Nợ</p>
+                                <h3 class="kpi-value" id="overview-debt-val">45.2 Tỷ ₫</h3>
+                                <p class="kpi-trend negative"><i data-lucide="trending-up"></i> +2.1% vs kỳ trước</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Charts for 3 specific indicators -->
                     <div class="grid-layout cols-3 mt-20">
-                        <div class="card">
+                        <!-- Customers Card -->
+                        <div class="card clickable-card" data-target="customers" style="cursor: pointer;">
                             <div class="card-header">
                                 <h3>Cơ cấu Khách hàng</h3>
+                                <span class="text-muted" style="font-size:0.75rem;">Xem chi tiết ↗</span>
                             </div>
                             <div class="card-body">
-                                <div class="chart-container" style="height: 250px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 0.8rem; text-align: center;">
+                                    <div style="background: #f8fafc; padding: 5px; border-radius: 4px;">Hiện có: <b id="ov-cust-total" style="color:var(--clr-primary)">0</b></div>
+                                    <div style="background: #d4edda; padding: 5px; border-radius: 4px;">Tăng: <b id="ov-cust-new" class="positive">0</b></div>
+                                    <div style="background: #fff3cd; padding: 5px; border-radius: 4px;">Giảm: <b id="ov-cust-decreased" class="negative">0</b></div>
+                                    <div style="background: #f8d7da; padding: 5px; border-radius: 4px;">Mất: <b id="ov-cust-lost" class="negative">0</b></div>
+                                </div>
+                                <div class="chart-container" style="height: 180px;">
                                     <canvas id="overviewCustomersChart"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
+                        <!-- Revenue Card -->
+                        <div class="card clickable-card" data-target="revenue" style="cursor: pointer;">
                             <div class="card-header">
                                 <h3>Biến động Doanh số</h3>
+                                <span class="text-muted" style="font-size:0.75rem;">Xem chi tiết ↗</span>
                             </div>
                             <div class="card-body">
-                                <div class="chart-container" style="height: 250px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.8rem;">
+                                    <span><span style="display:inline-block;width:10px;height:10px;background:var(--clr-primary);"></span> Kế hoạch</span>
+                                    <span><span style="display:inline-block;width:10px;height:10px;background:var(--clr-success);"></span> Thực tế</span>
+                                </div>
+                                <div class="chart-container" style="height: 215px;">
                                     <canvas id="overviewRevenueChart"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
+                        <!-- Debt Card -->
+                        <div class="card clickable-card" data-target="debt" style="cursor: pointer;">
                             <div class="card-header">
-                                <h3>Giá trị Tồn kho</h3>
+                                <h3>Tình hình Công nợ</h3>
+                                <span class="text-muted" style="font-size:0.75rem;">Xem chi tiết ↗</span>
                             </div>
                             <div class="card-body">
-                                <div class="chart-container" style="height: 250px;">
-                                    <canvas id="overviewInventoryChart"></canvas>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 0.8rem; text-align: center;">
+                                    <div style="background: #e2e8f0; padding: 5px; border-radius: 4px;">Tổng: <b id="ov-debt-total" style="color:var(--clr-primary)">0</b></div>
+                                    <div style="background: #d1ecf1; padding: 5px; border-radius: 4px;">Trong hạn: <b id="ov-debt-current" style="color:#17a2b8">0</b></div>
+                                    <div style="background: #fff3cd; padding: 5px; border-radius: 4px;">Quá hạn: <b id="ov-debt-overdue" class="status-warning">0</b></div>
+                                    <div style="background: #f8d7da; padding: 5px; border-radius: 4px;">Khó đòi: <b id="ov-debt-bad" class="status-overdue">0</b></div>
+                                </div>
+                                <div class="chart-container" style="height: 180px;">
+                                    <canvas id="overviewDebtChart"></canvas>
                                 </div>
                             </div>
                         </div>

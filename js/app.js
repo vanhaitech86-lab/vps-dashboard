@@ -36,21 +36,29 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Navigation
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
+            document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
-                    
-                    // Update active state
-                    navItems.forEach(nav => nav.classList.remove('active'));
+                    document.querySelectorAll('.sidebar-nav .nav-item').forEach(nav => nav.classList.remove('active'));
                     item.classList.add('active');
-                    
-                    // Show target view
-                    const target = item.dataset.target;
-                    this.showView(target);
-                    
-                    // Close sidebar on mobile
-                    document.querySelector('.sidebar').classList.remove('open');
+                    this.showView(item.dataset.target);
+                    // On mobile, close sidebar
+                    document.querySelector('.sidebar').classList.remove('active');
+                });
+            });
+
+            // Handle clickable cards on overview
+            document.querySelectorAll('.clickable-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const target = card.dataset.target;
+                    if(target) {
+                        document.querySelectorAll('.sidebar-nav .nav-item').forEach(nav => {
+                            if(nav.dataset.target === target) nav.classList.add('active');
+                            else nav.classList.remove('active');
+                        });
+                        this.showView(target);
+                        window.scrollTo(0,0);
+                    }
                 });
             });
 

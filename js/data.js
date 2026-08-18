@@ -8,12 +8,13 @@ const COMPANIES = ['Tân Hồng Hà', 'Việt', 'Xem Sơn', 'VPS M', 'ITSS'];
 const mockData = {
     customers: {
         total: 12450,
+        trend: { new: 650, lost: -30, decreased: -15, totalIncreased: 650, percentage: 5.2 },
         byCompany: {
-            'Tân Hồng Hà': { service: 1200, rental: 800, distribution: 1500, new: 120, lost: 10 },
-            'Việt': { service: 900, rental: 600, distribution: 1100, new: 80, lost: 5 },
-            'Xem Sơn': { service: 1500, rental: 400, distribution: 800, new: 90, lost: 12 },
-            'VPS M': { service: 800, rental: 900, distribution: 400, new: 150, lost: 8 },
-            'ITSS': { service: 830, rental: 400, distribution: 320, new: 60, lost: 4 }
+            'Tân Hồng Hà': { service: 1200, rental: 800, distribution: 2500, new: 150, lost: -5, decreased: -2 },
+            'Việt': { service: 900, rental: 600, distribution: 1500, new: 100, lost: -10, decreased: -3 },
+            'Xem Sơn': { service: 1500, rental: 1100, distribution: 300, new: 250, lost: -8, decreased: -5 },
+            'VPS M': { service: 600, rental: 400, distribution: 800, new: 50, lost: -2, decreased: -1 },
+            'ITSS': { service: 300, rental: 150, distribution: 200, new: 100, lost: -5, decreased: -4 }
         }
     },
     revenue: {
