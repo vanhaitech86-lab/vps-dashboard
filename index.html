@@ -64,14 +64,41 @@
                 <a href="#overview" class="nav-item active" data-target="overview">
                     <i data-lucide="layout-dashboard"></i> Tổng Quan
                 </a>
-                <a href="#customers" class="nav-item" data-target="customers">
-                    <i data-lucide="users"></i> Khách Hàng
+                <a href="#hr" class="nav-item" data-target="hr">
+                    <b style="width: 24px; display: inline-block;">1.</b> CCTC Nhân Sự
                 </a>
                 <a href="#revenue" class="nav-item" data-target="revenue">
-                    <i data-lucide="bar-chart-2"></i> Doanh Số
+                    <b style="width: 24px; display: inline-block;">2.</b> Doanh Số Lãi Gộp
+                </a>
+                <a href="#product" class="nav-item" data-target="product">
+                    <b style="width: 24px; display: inline-block;">3.</b> Sản Phẩm
+                </a>
+                <a href="#inventory" class="nav-item" data-target="inventory">
+                    <b style="width: 24px; display: inline-block;">4.</b> Tồn Kho
+                </a>
+                <a href="#expense" class="nav-item" data-target="expense">
+                    <b style="width: 24px; display: inline-block;">5.</b> Chi Phí
                 </a>
                 <a href="#debt" class="nav-item" data-target="debt">
-                    <i data-lucide="alert-circle"></i> Công Nợ
+                    <b style="width: 24px; display: inline-block;">6.</b> Công Nợ
+                </a>
+                <a href="#customers" class="nav-item" data-target="customers">
+                    <b style="width: 24px; display: inline-block;">7.</b> Khách Hàng
+                </a>
+                <a href="#service" class="nav-item" data-target="service">
+                    <b style="width: 24px; display: inline-block;">8.</b> Dịch Vụ Tận Tâm
+                </a>
+                <a href="#iso" class="nav-item" data-target="iso">
+                    <b style="width: 24px; display: inline-block;">9.</b> ISO
+                </a>
+                <a href="#training" class="nav-item" data-target="training">
+                    <b style="width: 24px; display: inline-block;">10.</b> Đào Tạo
+                </a>
+                <a href="#culture" class="nav-item" data-target="culture">
+                    <b style="width: 24px; display: inline-block;">11.</b> VHDN
+                </a>
+                <a href="#brand" class="nav-item" data-target="brand">
+                    <b style="width: 24px; display: inline-block;">12.</b> Thương Hiệu
                 </a>
             </nav>
             <div class="sidebar-footer">
@@ -239,6 +266,79 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Placeholder Views for other indicators -->
+                <section id="view-hr" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="users-cog" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>CCTC Nhân Sự</h2>
+                        <p class="text-muted">Module đang được phát triển. Dữ liệu sẽ được tích hợp trong giai đoạn sau.</p>
+                    </div>
+                </section>
+
+                <section id="view-product" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="package" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>Sản Phẩm</h2>
+                        <p class="text-muted">Module đang được phát triển.</p>
+                    </div>
+                </section>
+
+                <section id="view-inventory" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="boxes" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>Tồn Kho</h2>
+                        <p class="text-muted">Module đang được phát triển.</p>
+                    </div>
+                </section>
+
+                <section id="view-expense" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="credit-card" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>Chi Phí</h2>
+                        <p class="text-muted">Module đang được phát triển.</p>
+                    </div>
+                </section>
+
+                <section id="view-service" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="heart-handshake" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>Dịch Vụ Tận Tâm</h2>
+                        <p class="text-muted">Module đang được phát triển.</p>
+                    </div>
+                </section>
+
+                <section id="view-iso" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="award" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>ISO</h2>
+                        <p class="text-muted">Module đang được phát triển.</p>
+                    </div>
+                </section>
+
+                <section id="view-training" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="graduation-cap" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>Đào Tạo</h2>
+                        <p class="text-muted">Module đang được phát triển.</p>
+                    </div>
+                </section>
+
+                <section id="view-culture" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="building-2" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>Văn Hóa Doanh Nghiệp</h2>
+                        <p class="text-muted">Module đang được phát triển.</p>
+                    </div>
+                </section>
+
+                <section id="view-brand" class="view hidden">
+                    <div class="card text-center" style="padding: 40px;">
+                        <i data-lucide="star" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
+                        <h2>Thương Hiệu</h2>
+                        <p class="text-muted">Module đang được phát triển.</p>
                     </div>
                 </section>
 

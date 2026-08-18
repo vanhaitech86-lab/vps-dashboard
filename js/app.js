@@ -97,9 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update title
             const titles = {
                 'overview': 'Tổng Quan',
-                'customers': 'Quản Lý Khách Hàng',
-                'revenue': 'Báo Cáo Doanh Số',
-                'debt': 'Quản Lý Công Nợ'
+                'hr': '1. CCTC Nhân Sự',
+                'revenue': '2. Doanh Số Lãi Gộp',
+                'product': '3. Sản Phẩm',
+                'inventory': '4. Tồn Kho',
+                'expense': '5. Chi Phí',
+                'debt': '6. Công Nợ',
+                'customers': '7. Khách Hàng',
+                'service': '8. Dịch Vụ Tận Tâm',
+                'iso': '9. ISO',
+                'training': '10. Đào Tạo',
+                'culture': '11. Văn Hóa Doanh Nghiệp',
+                'brand': '12. Thương Hiệu'
             };
             document.getElementById('page-title').textContent = titles[viewId] || 'Dashboard';
             
