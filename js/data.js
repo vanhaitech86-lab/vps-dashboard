@@ -41,6 +41,16 @@ const mockData = {
             { id: 3, customer: 'Đại lý Gamma', company: 'Việt', amount: 120000000, daysOverdue: 150, status: 'Khoá tài khoản' },
             { id: 4, customer: 'Cửa hàng Delta', company: 'ITSS', amount: 85000000, daysOverdue: 110, status: 'Chờ thanh toán' }
         ]
+    },
+    inventory: {
+        total: 85.3,
+        byCompany: {
+            'Tân Hồng Hà': { value: 25.5 },
+            'Việt': { value: 18.2 },
+            'Xem Sơn': { value: 15.0 },
+            'VPS M': { value: 20.1 },
+            'ITSS': { value: 6.5 }
+        }
     }
 };
 
@@ -56,5 +66,9 @@ window.DataService = {
     
     async getDebtData(period = 'month', company = 'all') {
         return new Promise(resolve => setTimeout(() => resolve(mockData.debt), 300));
+    },
+
+    async getInventoryData(period = 'month', company = 'all') {
+        return new Promise(resolve => setTimeout(() => resolve(mockData.inventory), 300));
     }
 };

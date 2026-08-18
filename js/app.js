@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Initialize Dashboard Modules
             if(window.ChartManager) window.ChartManager.init();
+            if(window.OverviewModule) window.OverviewModule.init();
             if(window.CustomersModule) window.CustomersModule.init();
             if(window.RevenueModule) window.RevenueModule.init();
             if(window.DebtModule) window.DebtModule.init();

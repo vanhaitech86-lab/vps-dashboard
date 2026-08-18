@@ -58,7 +58,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>VPS GROUP</h2>
+                <h2 style="font-size: 1.1rem;">BỘ ĐIỀU HÀNH - VPS</h2>
             </div>
             <nav class="sidebar-nav">
                 <a href="#overview" class="nav-item active" data-target="overview">
@@ -159,29 +159,64 @@
                         </div>
                     </div>
                     
+                    <!-- KPI Cards for 3 specific indicators -->
                     <div class="kpi-grid">
                         <div class="kpi-card">
                             <div class="kpi-icon bg-primary-light"><i data-lucide="users"></i></div>
                             <div class="kpi-details">
-                                <p class="kpi-label">Tổng Khách Hàng</p>
-                                <h3 class="kpi-value">12,450</h3>
+                                <p class="kpi-label">7. Khách Hàng Hiện Có</p>
+                                <h3 class="kpi-value" id="overview-customers-val">12,450</h3>
                                 <p class="kpi-trend positive"><i data-lucide="trending-up"></i> +5.2% vs kỳ trước</p>
                             </div>
                         </div>
                         <div class="kpi-card">
                             <div class="kpi-icon bg-success-light"><i data-lucide="dollar-sign"></i></div>
                             <div class="kpi-details">
-                                <p class="kpi-label">Doanh Số Tập Đoàn</p>
-                                <h3 class="kpi-value">450.5 Tỷ ₫</h3>
+                                <p class="kpi-label">2. Doanh Số Lãi Gộp</p>
+                                <h3 class="kpi-value" id="overview-revenue-val">450.5 Tỷ ₫</h3>
                                 <p class="kpi-trend positive"><i data-lucide="trending-up"></i> +12% vs KH</p>
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon bg-danger-light"><i data-lucide="alert-triangle"></i></div>
+                            <div class="kpi-icon" style="background: rgba(255, 193, 7, 0.2); color: #FFC107;"><i data-lucide="boxes"></i></div>
                             <div class="kpi-details">
-                                <p class="kpi-label">Công Nợ Tổng</p>
-                                <h3 class="kpi-value">45.2 Tỷ ₫</h3>
-                                <p class="kpi-trend negative"><i data-lucide="trending-up"></i> +2.1% vs kỳ trước</p>
+                                <p class="kpi-label">4. Tổng Tồn Kho</p>
+                                <h3 class="kpi-value" id="overview-inventory-val">85.3 Tỷ ₫</h3>
+                                <p class="kpi-trend negative"><i data-lucide="trending-down"></i> -2.1% vs kỳ trước</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts for 3 specific indicators -->
+                    <div class="grid-layout cols-3 mt-20">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Cơ cấu Khách hàng</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 250px;">
+                                    <canvas id="overviewCustomersChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Biến động Doanh số</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 250px;">
+                                    <canvas id="overviewRevenueChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Giá trị Tồn kho</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 250px;">
+                                    <canvas id="overviewInventoryChart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -352,6 +387,7 @@
     <script src="js/auth.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/charts.js"></script>
+    <script src="js/overview.js"></script>
     <script src="js/customers.js"></script>
     <script src="js/revenue.js"></script>
     <script src="js/debt.js"></script>
