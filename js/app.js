@@ -106,6 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.DebtModule) window.DebtModule.init();
             if(window.AdminModule) window.AdminModule.init();
             
+            // Trigger CRM API Backend Test
+            if(window.CrmConnector) window.CrmConnector.fetchDashboardData(new Date().getMonth() + 1, user.company);
+
             // Trigger initial data load
             window.FilterManager.triggerFilterChange();
             

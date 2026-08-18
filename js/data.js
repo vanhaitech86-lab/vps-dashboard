@@ -81,6 +81,31 @@ function applyPeriodMultiplier(data, period) {
     return cloned;
 }
 
+// Cấu trúc Data Giả lập (Mock Data)
+// Hiện tại Dashboard vẫn đang hiển thị số liệu từ đây. 
+// Khi đấu nối xong CRM thật, chúng ta sẽ xóa hoặc vô hiệu hóa file này.
+
+/**
+ * CRM API Connector (Kết nối Frontend với Backend Vercel)
+ */
+window.CrmConnector = {
+    async fetchDashboardData(month, company) {
+        try {
+            console.log(`[CrmConnector] Đang gọi API Backend Vercel để lấy dữ liệu ${company || 'Tất cả'} - Tháng ${month || 'Hiện tại'}...`);
+            
+            // Gọi lên Serverless Function vừa được tạo ở thư mục /api
+            const response = await fetch(`/api/crm_sync?month=${month || 8}&company=${encodeURIComponent(company || 'all')}`);
+            const data = await response.json();
+            
+            console.log("[CrmConnector] Dữ liệu từ Backend trả về:", data);
+            return data;
+        } catch (error) {
+            console.error("[CrmConnector] Lỗi kết nối API:", error);
+            return null;
+        }
+    }
+};
+
 window.DataService = {
     async getCustomersData(period = 'month', company = 'all') {
         return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.customers, period)), 200));
