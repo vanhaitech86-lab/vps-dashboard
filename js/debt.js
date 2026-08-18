@@ -70,6 +70,18 @@ window.DebtModule = {
              scales: {
                 x: { stacked: true },
                 y: { stacked: true }
+            },
+            plugins: {
+                datalabels: {
+                    color: '#ffffff',
+                    font: { weight: 'bold', size: 12 },
+                    formatter: function(value) {
+                        if (value === 0) return '';
+                        return value;
+                    },
+                    textStrokeColor: 'rgba(0,0,0,0.3)',
+                    textStrokeWidth: 2
+                }
             }
         });
 
