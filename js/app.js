@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update UI with user info
             document.getElementById('current-user-name').textContent = user.name;
             document.getElementById('current-user-role').textContent = user.role.name;
-            document.getElementById('welcome-name').textContent = user.name;
             
             // Init filters based on user role
             window.FilterManager.init();
@@ -105,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showView(viewId) {
             // Update title
             const titles = {
-                'overview': 'TẬP ĐOÀN VPS',
+                'overview': 'DASHBOARD',
                 'hr': '1. CCTC Nhân Sự',
                 'revenue': '2. Doanh Số Lãi Gộp',
                 'product': '3. Sản Phẩm',
