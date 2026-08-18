@@ -1,0 +1,117 @@
+/**
+ * Main Application Controller
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+    const App = {
+        init() {
+            this.bindEvents();
+            
+            // Check session
+            if (window.AuthService.checkSession()) {
+                this.showApp();
+            } else {
+                this.showLogin();
+            }
+        },
+
+        bindEvents() {
+            // Login Form
+            document.getElementById('login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const user = document.getElementById('username').value;
+                const pass = document.getElementById('password').value;
+                
+                if (window.AuthService.login(user, pass)) {
+                    this.showApp();
+                } else {
+                    alert('Đăng nhập thất bại. Kiểm tra lại thông tin.');
+                }
+            });
+
+            // Logout
+            document.getElementById('btn-logout').addEventListener('click', () => {
+                window.AuthService.logout();
+                this.showLogin();
+            });
+
+            // Navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Update active state
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    // Show target view
+                    const target = item.dataset.target;
+                    this.showView(target);
+                    
+                    // Close sidebar on mobile
+                    document.querySelector('.sidebar').classList.remove('open');
+                });
+            });
+
+            // Mobile Menu Toggle
+            document.querySelector('.menu-toggle').addEventListener('click', () => {
+                document.querySelector('.sidebar').classList.toggle('open');
+            });
+        },
+
+        showLogin() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('app-screen').classList.add('hidden');
+        },
+
+        showApp() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('app-screen').classList.remove('hidden');
+            
+            const user = window.AuthService.getCurrentUser();
+            
+            // Update UI with user info
+            document.getElementById('current-user-name').textContent = user.name;
+            document.getElementById('current-user-role').textContent = user.role.name;
+            document.getElementById('welcome-name').textContent = user.role.name;
+            
+            // Init filters based on user role
+            window.FilterManager.init();
+            window.FilterManager.updateCompanyFilterVisibility(user);
+            
+            // Initialize Dashboard Modules
+            if(window.ChartManager) window.ChartManager.init();
+            if(window.CustomersModule) window.CustomersModule.init();
+            if(window.RevenueModule) window.RevenueModule.init();
+            if(window.DebtModule) window.DebtModule.init();
+            
+            // Trigger initial data load
+            window.FilterManager.triggerFilterChange();
+            
+            // Show overview by default
+            this.showView('overview');
+        },
+
+        showView(viewId) {
+            // Update title
+            const titles = {
+                'overview': 'Tổng Quan',
+                'customers': 'Quản Lý Khách Hàng',
+                'revenue': 'Báo Cáo Doanh Số',
+                'debt': 'Quản Lý Công Nợ'
+            };
+            document.getElementById('page-title').textContent = titles[viewId] || 'Dashboard';
+            
+            // Hide all views
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.add('hidden');
+            });
+            
+            // Show target
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+        }
+    };
+
+    App.init();
+});

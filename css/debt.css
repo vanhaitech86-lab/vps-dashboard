@@ -1,0 +1,19 @@
+/* Debt Dashboard Specific Styles */
+#view-debt .kpi-card {
+    border-top: 4px solid var(--clr-danger);
+}
+
+.status-overdue {
+    color: var(--clr-danger);
+    font-weight: 500;
+}
+
+.status-warning {
+    color: var(--clr-warning);
+    font-weight: 500;
+}
+
+.status-ok {
+    color: var(--clr-success);
+    font-weight: 500;
+}

@@ -1,0 +1,4 @@
+/* Revenue Dashboard Specific Styles */
+#view-revenue .kpi-card {
+    border-top: 4px solid var(--clr-success);
+}

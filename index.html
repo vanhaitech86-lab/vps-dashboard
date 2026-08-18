@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Group Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/customers.css">
+    <link rel="stylesheet" href="css/revenue.css">
+    <link rel="stylesheet" href="css/debt.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>TẬP ĐOÀN VPS</h2>
+                <p>Hệ thống Quản trị & Báo cáo</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" id="username" value="ceo" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" value="password" required>
+                </div>
+                <div class="login-hint">
+                    <p>Demo Accounts:</p>
+                    <ul>
+                        <li><code>ceo</code>: Quyền Chủ tịch/CEO (All data)</li>
+                        <li><code>director_thh</code>: Giám đốc Tân Hồng Hà</li>
+                        <li><code>manager_itss</code>: Trưởng phòng ITSS</li>
+                    </ul>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Application Shell -->
+    <div id="app-screen" class="screen hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>VPS GROUP</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" data-target="overview">
+                    <i data-lucide="layout-dashboard"></i> Tổng Quan
+                </a>
+                <a href="#customers" class="nav-item" data-target="customers">
+                    <i data-lucide="users"></i> Khách Hàng
+                </a>
+                <a href="#revenue" class="nav-item" data-target="revenue">
+                    <i data-lucide="bar-chart-2"></i> Doanh Số
+                </a>
+                <a href="#debt" class="nav-item" data-target="debt">
+                    <i data-lucide="alert-circle"></i> Công Nợ
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar"><i data-lucide="user"></i></div>
+                    <div class="details">
+                        <span id="current-user-name">Nguyen Van A</span>
+                        <span id="current-user-role" class="badge">CEO</span>
+                    </div>
+                </div>
+                <button id="btn-logout" class="btn btn-icon" title="Đăng xuất">
+                    <i data-lucide="log-out"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle btn btn-icon d-mobile">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <h1 id="page-title">Tổng Quan</h1>
+                </div>
+                <div class="topbar-right">
+                    <!-- Global Time Filter -->
+                    <div class="time-filter">
+                        <button class="filter-btn" data-period="day">Ngày</button>
+                        <button class="filter-btn" data-period="week">Tuần</button>
+                        <button class="filter-btn active" data-period="month">Tháng</button>
+                        <button class="filter-btn" data-period="year">Năm</button>
+                    </div>
+                    <!-- Context Filter (if applicable) -->
+                    <div id="company-filter-container" class="custom-select hidden">
+                        <select id="company-filter">
+                            <option value="all">Tất cả công ty</option>
+                            <option value="Tân Hồng Hà">Tân Hồng Hà</option>
+                            <option value="Việt">Việt</option>
+                            <option value="Xem Sơn">Xem Sơn</option>
+                            <option value="VPS M">VPS M</option>
+                            <option value="ITSS">ITSS</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Views -->
+            <div class="dashboard-views">
+                
+                <!-- Overview View -->
+                <section id="view-overview" class="view active">
+                    <div class="welcome-banner">
+                        <div>
+                            <h2>Xin chào, <span id="welcome-name">CEO</span>!</h2>
+                            <p>Đây là báo cáo tổng hợp kết quả kinh doanh của Tập đoàn VPS.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-icon bg-primary-light"><i data-lucide="users"></i></div>
+                            <div class="kpi-details">
+                                <p class="kpi-label">Tổng Khách Hàng</p>
+                                <h3 class="kpi-value">12,450</h3>
+                                <p class="kpi-trend positive"><i data-lucide="trending-up"></i> +5.2% vs kỳ trước</p>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon bg-success-light"><i data-lucide="dollar-sign"></i></div>
+                            <div class="kpi-details">
+                                <p class="kpi-label">Doanh Số Tập Đoàn</p>
+                                <h3 class="kpi-value">450.5 Tỷ ₫</h3>
+                                <p class="kpi-trend positive"><i data-lucide="trending-up"></i> +12% vs KH</p>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon bg-danger-light"><i data-lucide="alert-triangle"></i></div>
+                            <div class="kpi-details">
+                                <p class="kpi-label">Công Nợ Tổng</p>
+                                <h3 class="kpi-value">45.2 Tỷ ₫</h3>
+                                <p class="kpi-trend negative"><i data-lucide="trending-up"></i> +2.1% vs kỳ trước</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Customers View -->
+                <section id="view-customers" class="view hidden">
+                    <div class="grid-layout cols-3">
+                        <div class="kpi-card">
+                            <h4>KH Dịch vụ</h4>
+                            <div class="kpi-value">5,230</div>
+                            <div class="kpi-subtext"><span class="positive">+120</span> tăng mới</div>
+                        </div>
+                        <div class="kpi-card">
+                            <h4>KH Thuê máy</h4>
+                            <div class="kpi-value">3,100</div>
+                            <div class="kpi-subtext"><span class="positive">+45</span> tăng mới</div>
+                        </div>
+                        <div class="kpi-card">
+                            <h4>KH Phân phối</h4>
+                            <div class="kpi-value">4,120</div>
+                            <div class="kpi-subtext"><span class="negative">-12</span> giảm</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Khách Hàng Theo Công Ty</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 300px;">
+                                <canvas id="customersByCompanyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Revenue View -->
+                <section id="view-revenue" class="view hidden">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Doanh Số Các Công Ty (Tỷ VNĐ)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Debt View -->
+                <section id="view-debt" class="view hidden">
+                     <div class="card">
+                        <div class="card-header">
+                            <h3>Tình Hình Công Nợ (Tỷ VNĐ)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="debtChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Danh Sách Khách Hàng Khó Đòi</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Khách Hàng</th>
+                                        <th>Công Ty Trực Thuộc</th>
+                                        <th>Số Tiền (VNĐ)</th>
+                                        <th>Số Ngày Quá Hạn</th>
+                                        <th>Trạng Thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bad-debt-table-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/connectors.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/customers.js"></script>
+    <script src="js/revenue.js"></script>
+    <script src="js/debt.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

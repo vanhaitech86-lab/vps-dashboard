@@ -1,0 +1,18 @@
+/* Customers Dashboard Specific Styles */
+#view-customers .kpi-card {
+    border-left: 4px solid var(--clr-primary);
+}
+
+#view-customers .kpi-card:nth-child(2) {
+    border-left-color: var(--clr-secondary);
+}
+
+#view-customers .kpi-card:nth-child(3) {
+    border-left-color: var(--clr-warning);
+}
+
+.kpi-subtext {
+    font-size: 0.875rem;
+    color: var(--clr-text-muted);
+    margin-top: 0.5rem;
+}
