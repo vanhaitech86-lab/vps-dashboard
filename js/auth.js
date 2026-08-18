@@ -13,13 +13,13 @@ const ROLES = {
 
 // Mock Users Database
 const USERS = {
-    'ADMIN': { password: 'Admin123@', role: 'ceo', name: 'ADMIN', company: 'all' },
-    'CEO': { password: '123a@', role: 'ceo', name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
-    'THH': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
-    'VCOPY': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC VIỆT', company: 'Việt' },
-    'XESCO': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC XEM SƠN', company: 'Xem Sơn' },
-    'vpsm': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC VPS M', company: 'VPS M' },
-    'ITSS': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
+    'ADMIN': { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' },
+    'CEO': { password: '123a@', role: ROLES.CEO, name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
+    'THH': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
+    'VCOPY': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC VIỆT', company: 'Việt' },
+    'XESCO': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC XEM SƠN', company: 'Xem Sơn' },
+    'vpsm': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC VPS M', company: 'VPS M' },
+    'ITSS': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
 };
 
 window.AuthService = {
@@ -27,8 +27,9 @@ window.AuthService = {
 
     login(username, password) {
         // Mock authentication
-        if (users[username] && password === 'password') {
-            this.currentUser = users[username];
+        const user = USERS[username];
+        if (user && user.password === password) {
+            this.currentUser = user;
             localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
             return true;
         }
