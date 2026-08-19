@@ -142,6 +142,57 @@ window.OverviewModule = {
             }
         });
 
+        // Biểu đồ So sánh Doanh số Cùng kỳ (YoY)
+        let currentYearData = [];
+        let previousYearData = [];
+        
+        if (revenue.monthlyComparison) {
+            currentYearData = revenue.monthlyComparison.currentYear;
+            previousYearData = revenue.monthlyComparison.previousYear;
+        }
+
+        window.ChartManager.createChart('revenueComparisonChart', 'bar', {
+            labels: ['Th 1', 'Th 2', 'Th 3', 'Th 4', 'Th 5', 'Th 6', 'Th 7', 'Th 8', 'Th 9', 'Th 10', 'Th 11', 'Th 12'],
+            datasets: [
+                {
+                    label: 'Năm Nay (2026)',
+                    data: currentYearData,
+                    backgroundColor: '#007BFF',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Năm Ngoái (2025)',
+                    data: previousYearData,
+                    backgroundColor: '#6C757D',
+                    borderRadius: 4
+                }
+            ]
+        }, {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { 
+                    beginAtZero: true, 
+                    title: { display: true, text: 'Tỷ VNĐ' },
+                    grace: '15%' // Add padding for top labels
+                }
+            },
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { mode: 'index', intersect: false },
+                datalabels: {
+                    color: '#000000', // Đặt màu chữ thành màu đen rõ ràng
+                    font: { weight: 'bold', size: 11 },
+                    anchor: 'end',
+                    align: 'top', // Đưa lên trên cột để dễ đọc
+                    formatter: function(value) {
+                        if (value === 0) return '';
+                        return value;
+                    }
+                }
+            }
+        });
+
         // --- 3. Debt ---
         let debtLabels = ['Trong hạn', 'Quá hạn', 'Khó đòi'], debtData = [];
         let dTotal=0, dCurrent=0, dOverdue=0, dBad=0;
