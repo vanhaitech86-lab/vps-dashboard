@@ -105,10 +105,11 @@ window.GoogleSheetsService = {
                 if(!catId) continue;
 
                 const rowData = {
-                    dau: { may: parseNumber(row[2]), kh: parseNumber(row[3]) },
-                    tang: { may: parseNumber(row[4]), kh: parseNumber(row[5]) },
-                    giam: { may: parseNumber(row[6]), kh: parseNumber(row[7]) },
-                    cuoi: { may: parseNumber(row[8]), kh: parseNumber(row[9]) }
+                    ke_hoach: { may: parseNumber(row[3]), kh: parseNumber(row[4]) },
+                    dau: { may: parseNumber(row[5]), kh: parseNumber(row[6]) },
+                    tang: { may: parseNumber(row[7]), kh: parseNumber(row[8]) },
+                    giam: { may: parseNumber(row[9]), kh: parseNumber(row[10]) },
+                    cuoi: { may: parseNumber(row[11]), kh: parseNumber(row[12]) }
                 };
                 
                 newData.customers.matrix[currentCompany][catId] = rowData;
