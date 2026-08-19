@@ -100,6 +100,24 @@ const mockData = {
                 "may": 0,
                 "kh": 0
             }
+        },
+        "phan_phoi": {
+            "dau": {
+                "may": 0,
+                "kh": 1881
+            },
+            "tang": {
+                "may": 0,
+                "kh": 64
+            },
+            "giam": {
+                "may": 0,
+                "kh": 1
+            },
+            "cuoi": {
+                "may": 0,
+                "kh": 1944
+            }
         }
     },
     "THH": {
@@ -191,6 +209,24 @@ const mockData = {
             "cuoi": {
                 "may": 0,
                 "kh": 0
+            }
+        },
+        "phan_phoi": {
+            "dau": {
+                "may": 0,
+                "kh": 358
+            },
+            "tang": {
+                "may": 0,
+                "kh": 2
+            },
+            "giam": {
+                "may": 0,
+                "kh": 0
+            },
+            "cuoi": {
+                "may": 0,
+                "kh": 360
             }
         }
     },
@@ -284,6 +320,24 @@ const mockData = {
                 "may": 0,
                 "kh": 0
             }
+        },
+        "phan_phoi": {
+            "dau": {
+                "may": 0,
+                "kh": 1041
+            },
+            "tang": {
+                "may": 0,
+                "kh": 11
+            },
+            "giam": {
+                "may": 0,
+                "kh": 0
+            },
+            "cuoi": {
+                "may": 0,
+                "kh": 1052
+            }
         }
     },
     "XemSon": {
@@ -375,6 +429,24 @@ const mockData = {
             "cuoi": {
                 "may": 0,
                 "kh": 0
+            }
+        },
+        "phan_phoi": {
+            "dau": {
+                "may": 0,
+                "kh": 435
+            },
+            "tang": {
+                "may": 0,
+                "kh": 29
+            },
+            "giam": {
+                "may": 0,
+                "kh": 0
+            },
+            "cuoi": {
+                "may": 0,
+                "kh": 464
             }
         }
     },
@@ -468,139 +540,27 @@ const mockData = {
                 "may": 0,
                 "kh": 0
             }
+        },
+        "phan_phoi": {
+            "dau": {
+                "may": 0,
+                "kh": 47
+            },
+            "tang": {
+                "may": 0,
+                "kh": 22
+            },
+            "giam": {
+                "may": 0,
+                "kh": 1
+            },
+            "cuoi": {
+                "may": 0,
+                "kh": 68
+            }
         }
     }
 },
-        plan2026: {
-                'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
-        'Tân Hồng Hà': { ds: 300000, actual: 68204, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
-        'Việt': { ds: 106000, actual: 40891, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
-        'Xem Sơn': { ds: 168000, actual: 69426, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
-        'VPS M': { ds: 45000, actual: 11251, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
-        'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
-        'Văn phòng VPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
-    },
-    byCompany: {
-            'Tân Hồng Hà': { service: 1200, rental: 800, distribution: 2500, new: 150, lost: -5, decreased: -2 },
-            'Việt': { service: 900, rental: 600, distribution: 1500, new: 100, lost: -10, decreased: -3 },
-            'Xem Sơn': { service: 1500, rental: 1100, distribution: 300, new: 250, lost: -8, decreased: -5 },
-            'VPS M': { service: 600, rental: 400, distribution: 800, new: 50, lost: -2, decreased: -1 },
-            'ITSS': { service: 300, rental: 150, distribution: 200, new: 100, lost: -5, decreased: -4 },
-            'Văn phòng VPS': { service: 50, rental: 10, distribution: 20, new: 5, lost: 0, decreased: -1 }
-        }
-    },
-    revenue: {
-        total: 450.5,
-        plan2026: {
-                'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
-        'Tân Hồng Hà': { ds: 300000, actual: 68204, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
-        'Việt': { ds: 106000, actual: 40891, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
-        'Xem Sơn': { ds: 168000, actual: 69426, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
-        'VPS M': { ds: 45000, actual: 11251, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
-        'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
-        'Văn phòng VPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
-    },
-    byCompany: {
-                    'Tân Hồng Hà': { actual: 68.204, plan: 300.0 },
-            'Việt': { actual: 40.891, plan: 106.0 },
-            'Xem Sơn': { actual: 69.426, plan: 168.0 },
-            'VPS M': { actual: 11.251, plan: 45.0 },
-            'ITSS': { actual: 2.914, plan: 13.64 },
-            'Văn phòng VPS': { actual: 0, plan: 0 }
-        },
-        monthlyComparison: {
-            // Mock data cho biểu đồ đường hoặc cột (12 tháng)
-            currentYear: [30, 45, 42, 50, 48, 55, 60, 65, 0, 0, 0, 0], // Dữ liệu năm nay (Ví dụ đến tháng 8)
-            previousYear: [25, 40, 38, 48, 45, 52, 58, 62, 55, 65, 70, 80] // Dữ liệu năm trước
-        }
-    },
-    debt: {
-        total: 45.2,
-        plan2026: {
-                'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
-        'Tân Hồng Hà': { ds: 300000, actual: 68204, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
-        'Việt': { ds: 106000, actual: 40891, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
-        'Xem Sơn': { ds: 168000, actual: 69426, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
-        'VPS M': { ds: 45000, actual: 11251, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
-        'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
-        'Văn phòng VPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
-    },
-    byCompany: {
-            'Tân Hồng Hà': { current: 8.5, overdue: 2.1, bad: 0.5 },
-            'Việt': { current: 5.2, overdue: 1.5, bad: 0.2 },
-            'Xem Sơn': { current: 9.0, overdue: 3.0, bad: 1.1 },
-            'VPS M': { current: 7.5, overdue: 1.0, bad: 0.1 },
-            'ITSS': { current: 4.0, overdue: 1.2, bad: 0.3 },
-            'Văn phòng VPS': { current: 1.5, overdue: 0.2, bad: 0.0 }
-        },
-        badDebtsList: [
-            { id: 1, customer: 'Công ty Cổ phần Alpha', company: 'Tân Hồng Hà', amount: 250000000, daysOverdue: 120, status: 'Khoá tài khoản' },
-            { id: 2, customer: 'Tập đoàn Beta', company: 'Xem Sơn', amount: 500000000, daysOverdue: 95, status: 'Đang pháp lý' },
-            { id: 3, customer: 'Đại lý Gamma', company: 'Việt', amount: 120000000, daysOverdue: 150, status: 'Khoá tài khoản' },
-            { id: 4, customer: 'Cửa hàng Delta', company: 'ITSS', amount: 85000000, daysOverdue: 110, status: 'Chờ thanh toán' },
-            { id: 5, customer: 'Đại lý Epsilon', company: 'VPS M', amount: 150000000, daysOverdue: 60, status: 'Đang theo dõi' }
-        ]
-    },
-    inventory: {
-        total: 69183.27, // Ty VND
-        byCompany: {
-            'all': {
-                brands: { 'HP': 38534031075, 'Fujifilm': 22849479085, 'Olivetti': 550312253, 'Bonsai': 2398346934, 'Khac': 4960116121 },
-                categories: {
-                    'May': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Option': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Consumable': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Part': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Khac': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Tong': { 'HP': 38534031075, 'Fujifilm': 22849479085, 'Olivetti': 550312253, 'Bonsai': 2398346934, 'Khac': 4960116121, 'Cong': 69183272352 }
-                }
-            },
-            'Tân Hồng Hà': {
-                brands: { 'HP': 19088136754, 'Fujifilm': 8744769719, 'Olivetti': 147356859, 'Bonsai': 1197169790, 'Khac': 1160336475 },
-                categories: {
-                    'May': { 'HP': 16236861538, 'Fujifilm': 2691167947, 'Olivetti': 145461859, 'Bonsai': 1196919790, 'Khac': 351112106, 'Cong': 20621523240 },
-                    'Option': { 'HP': 724129217, 'Fujifilm': 316631629, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 84155594, 'Cong': 1124916440 },
-                    'Consumable': { 'HP': 1697362872, 'Fujifilm': 3893921782, 'Olivetti': 595000, 'Bonsai': 0, 'Khac': 477185636, 'Cong': 6069065290 },
-                    'Part': { 'HP': 422875719, 'Fujifilm': 1842798361, 'Olivetti': 1300000, 'Bonsai': 250000, 'Khac': 232552257, 'Cong': 2499776337 },
-                    'Khac': { 'HP': 6907408, 'Fujifilm': 250000, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 15330882, 'Cong': 22488290 },
-                    'Tong': { 'HP': 19088136754, 'Fujifilm': 8744769719, 'Olivetti': 147356859, 'Bonsai': 1197169790, 'Khac': 1160336475, 'Cong': 30567325628 }
-                }
-            },
-            'Việt': {
-                brands: { 'HP': 1464514898, 'Fujifilm': 565815358, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 2641297155 },
-                categories: {
-                    'May': { 'HP': 789169565, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 865846304, 'Cong': 1655015869 },
-                    'Option': { 'HP': 0, 'Fujifilm': 3770311, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 3770311 },
-                    'Consumable': { 'HP': 671194009, 'Fujifilm': 407253157, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 1163183311, 'Cong': 2241630477 },
-                    'Part': { 'HP': 4151324, 'Fujifilm': 154791890, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 294985264, 'Cong': 453928478 },
-                    'Khac': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 317282276, 'Cong': 317282276 },
-                    'Tong': { 'HP': 1464514898, 'Fujifilm': 565815358, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 2641297155, 'Cong': 4671627411 }
-                }
-            },
-            'Xem Sơn': {
-                brands: { 'HP': 16201444802, 'Fujifilm': 11217528088, 'Olivetti': 330260724, 'Bonsai': 1071775506, 'Khac': 819913344 },
-                categories: {
-                    'May': { 'HP': 8045068951, 'Fujifilm': 2429722467, 'Olivetti': 198937517, 'Bonsai': 1061511065, 'Khac': 162201573, 'Cong': 11897441573 },
-                    'Option': { 'HP': 5929018372, 'Fujifilm': 146022831, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 44239635, 'Cong': 6119280838 },
-                    'Consumable': { 'HP': 1887432428, 'Fujifilm': 6988196768, 'Olivetti': 131323207, 'Bonsai': 0, 'Khac': 481597314, 'Cong': 9488549717 },
-                    'Part': { 'HP': 339925051, 'Fujifilm': 1653586022, 'Olivetti': 0, 'Bonsai': 10264441, 'Khac': 126635862, 'Cong': 2130411376 },
-                    'Khac': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 5238960, 'Cong': 5238960 },
-                    'Tong': { 'HP': 16201444802, 'Fujifilm': 11217528088, 'Olivetti': 330260724, 'Bonsai': 1071775506, 'Khac': 819913344, 'Cong': 29640922464 }
-                }
-            },
-            'VPS M': {
-                brands: { 'HP': 1779934621, 'Fujifilm': 2321365920, 'Olivetti': 72694670, 'Bonsai': 129401638, 'Khac': 338569147 },
-                categories: {
-                    'May': { 'HP': 691079773, 'Fujifilm': 712194005, 'Olivetti': 72694670, 'Bonsai': 129401638, 'Khac': 0, 'Cong': 1605370086 },
-                    'Option': { 'HP': 7499646, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 7499646 },
-                    'Consumable': { 'HP': 1081355202, 'Fujifilm': 1479770277, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 2561125479 },
-                    'Part': { 'HP': 0, 'Fujifilm': 129401638, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 129401638 },
-                    'Khac': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 338569147, 'Cong': 338569147 },
-                    'Tong': { 'HP': 1779934621, 'Fujifilm': 2321365920, 'Olivetti': 72694670, 'Bonsai': 129401638, 'Khac': 338569147, 'Cong': 4303396849 }
-                }
-            }
-        }
-    },
     hr: {
         plan2026: {
                 'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },

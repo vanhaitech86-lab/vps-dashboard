@@ -23,7 +23,7 @@ window.CustomersModule = {
         else if (company === 'Việt' || company.includes('Vi')) matrixKey = 'Viet';
         else if (company === 'Xem Sơn' || company.includes('Xem')) matrixKey = 'XemSon';
         else if (company === 'VPS M' || company.includes('VPS M')) matrixKey = 'VPSM';
-        else if (company === 'ITSS' || company.includes('ITSS')) matrixKey = 'all'; // No ITSS data in image, fallback to all or empty
+        else if (company === 'ITSS' || company.includes('ITSS')) matrixKey = 'all'; 
         else if (company !== 'all') matrixKey = 'all';
 
         let cData = data.matrix[matrixKey];
@@ -35,7 +35,8 @@ window.CustomersModule = {
             { id: 'mc', name: 'MC' },
             { id: 'dv_photo', name: 'Dịch vụ - Photo' },
             { id: 'dv_may_in', name: 'Dịch vụ - Máy in' },
-            { id: 'dv_khac', name: 'Dịch vụ khác' }
+            { id: 'dv_khac', name: 'Dịch vụ khác' },
+            { id: 'phan_phoi', name: 'Phân phối (Đại lý)' }
         ];
 
         let tbodyHTML = '';
@@ -79,13 +80,19 @@ window.CustomersModule = {
             let prefix = (r.id === 'thue_may' || r.id === 'mc') ? '&nbsp;&nbsp;&nbsp;&nbsp;<i>' : '';
             let suffix = (r.id === 'thue_may' || r.id === 'mc') ? '</i>' : '';
 
+            // Formatting: If Phân phối, don't show MÁY count (put -)
+            let mayDau = r.id === 'phan_phoi' ? '-' : (rowData.dau.may || 0);
+            let mayTang = r.id === 'phan_phoi' ? '-' : (rowData.tang.may || 0);
+            let mayGiam = r.id === 'phan_phoi' ? '-' : (rowData.giam.may || 0);
+            let mayCuoi = r.id === 'phan_phoi' ? '-' : (rowData.cuoi.may || 0);
+
             tbodyHTML += `
                 <tr>
                     <td style="text-align: left;">${prefix}${r.name}${suffix}</td>
-                    <td>${rowData.dau.may || 0}</td><td>${rowData.dau.kh || 0}</td>
-                    <td>${rowData.tang.may || 0}</td><td>${rowData.tang.kh || 0}</td>
-                    <td>${rowData.giam.may || 0}</td><td>${rowData.giam.kh || 0}</td>
-                    <td>${rowData.cuoi.may || 0}</td><td>${rowData.cuoi.kh || 0}</td>
+                    <td>${mayDau}</td><td>${rowData.dau.kh || 0}</td>
+                    <td>${mayTang}</td><td>${rowData.tang.kh || 0}</td>
+                    <td>${mayGiam}</td><td>${rowData.giam.kh || 0}</td>
+                    <td>${mayCuoi}</td><td>${rowData.cuoi.kh || 0}</td>
                 </tr>
             `;
         });
@@ -108,24 +115,25 @@ window.CustomersModule = {
         document.getElementById('cust-total-may').innerText = sums.cuoi.may.toLocaleString();
         document.getElementById('cust-total-kh').innerText = sums.cuoi.kh.toLocaleString();
 
-        // Update Overview KPI top bar if on Overview view, actually the events will re-trigger overview
+        // Update Overview KPI top bar if on Overview view
         const ovVal = document.getElementById('ov-cust-total');
         if(ovVal) ovVal.innerText = sums.cuoi.kh.toLocaleString();
 
-        // Prepare chart data (Pie chart for Cuối Tháng - MÁY)
-        const chartLabels = ['Thuê máy', 'MC', 'Dịch vụ - Photo', 'Dịch vụ - Máy in'];
+        // Prepare chart data (Pie chart for Cuối Tháng - KH)
+        const chartLabels = ['Thuê máy', 'MC', 'Dịch vụ - Photo', 'Dịch vụ - Máy in', 'Phân phối (Đại lý)'];
         const chartValues = [
-            cData['thue_may'].cuoi.may,
-            cData['mc'].cuoi.may,
-            cData['dv_photo'].cuoi.may,
-            cData['dv_may_in'].cuoi.may
+            cData['thue_may'].cuoi.kh,
+            cData['mc'].cuoi.kh,
+            cData['dv_photo'].cuoi.kh,
+            cData['dv_may_in'].cuoi.kh,
+            cData['phan_phoi'].cuoi.kh
         ];
 
         const chartConfig = {
             labels: chartLabels,
             datasets: [{
                 data: chartValues,
-                backgroundColor: ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D'],
+                backgroundColor: ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#16A34A'],
                 borderWidth: 1
             }]
         };
@@ -142,7 +150,7 @@ window.CustomersModule = {
                                 let label = context.label || '';
                                 if (label) { label += ': '; }
                                 if (context.raw !== null) {
-                                    label += new Intl.NumberFormat('vi-VN').format(context.raw) + ' Máy';
+                                    label += new Intl.NumberFormat('vi-VN').format(context.raw) + ' KH';
                                 }
                                 return label;
                             }
