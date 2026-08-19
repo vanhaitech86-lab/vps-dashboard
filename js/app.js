@@ -80,10 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show loading state
             document.querySelector('.top-bar-right').insertAdjacentHTML('beforeend', '<div id="gs-loading" style="color:red; font-weight:bold; margin-left:15px;">⏳ Đang đồng bộ Google Sheets...</div>');
             
-            // TẠM DỪNG GOOGLE SHEETS THEO YÊU CẦU ĐỂ BÁO CÁO SẾP
-            // if (window.GoogleSheetsService) {
-            //     await window.GoogleSheetsService.loadAllData();
-            // }
+            // KẾT NỐI LẠI GOOGLE SHEETS
+            if (window.GoogleSheetsService) {
+                try {
+                    await window.GoogleSheetsService.loadAllData();
+                } catch(e) {
+                    console.warn('Google Sheets sync failed, using offline data:', e);
+                }
+            }
             
             // Remove loading
             const loadingEl = document.getElementById('gs-loading');
@@ -102,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show Admin link only for ADMIN user
             const adminNav = document.getElementById('nav-admin');
             if (adminNav) {
-                // Determine if user is ADMIN. The ID isn't directly on user obj, but we can check name
                 if (user.name === 'ADMIN') {
                     adminNav.classList.remove('hidden');
                 } else {
@@ -123,11 +126,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // Trigger CRM API Backend Test
             if(window.CrmConnector) window.CrmConnector.fetchDashboardData(new Date().getMonth() + 1, user.company);
 
-            // Trigger initial data load
+            // QUAN TRỌNG: Hiển thị overview TRƯỚC, rồi mới trigger filter
+            this.showView('overview');
             window.FilterManager.triggerFilterChange();
             
-            // Show overview by default
-            this.showView('overview');
+            // Đảm bảo data load dù event bị miss
+            setTimeout(() => {
+                if(window.OverviewModule) {
+                    window.OverviewModule.loadData(
+                        window.FilterManager.currentPeriod || 'month',
+                        window.FilterManager.currentCompany || 'all'
+                    );
+                }
+            }, 500);
         },
 
         showView(viewId) {
