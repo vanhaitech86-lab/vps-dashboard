@@ -73,10 +73,22 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('app-screen').classList.add('hidden');
         },
 
-        showApp() {
+        async showApp() {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('app-screen').classList.remove('hidden');
             
+            // Show loading state
+            document.querySelector('.top-bar-right').insertAdjacentHTML('beforeend', '<div id="gs-loading" style="color:red; font-weight:bold; margin-left:15px;">⏳ Đang đồng bộ Google Sheets...</div>');
+            
+            // Fetch from Google Sheets
+            if (window.GoogleSheetsService) {
+                await window.GoogleSheetsService.loadAllData();
+            }
+            
+            // Remove loading
+            const loadingEl = document.getElementById('gs-loading');
+            if(loadingEl) loadingEl.remove();
+
             const user = window.AuthService.getCurrentUser();
             
             // Update UI with user info
