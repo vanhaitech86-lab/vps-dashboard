@@ -3,7 +3,7 @@
  * Simulates data fetching from backend APIs
  */
 
-const COMPANIES = ['Tân Hồng Hà', 'Việt', 'Xem Sơn', 'VPS M', 'ITSS'];
+const COMPANIES = ['Tân Hồng Hà', 'Việt', 'Xem Sơn', 'VPS M', 'ITSS', 'Văn phòng VPS'];
 
 const mockData = {
     customers: {
@@ -14,7 +14,8 @@ const mockData = {
             'Việt': { service: 900, rental: 600, distribution: 1500, new: 100, lost: -10, decreased: -3 },
             'Xem Sơn': { service: 1500, rental: 1100, distribution: 300, new: 250, lost: -8, decreased: -5 },
             'VPS M': { service: 600, rental: 400, distribution: 800, new: 50, lost: -2, decreased: -1 },
-            'ITSS': { service: 300, rental: 150, distribution: 200, new: 100, lost: -5, decreased: -4 }
+            'ITSS': { service: 300, rental: 150, distribution: 200, new: 100, lost: -5, decreased: -4 },
+            'Văn phòng VPS': { service: 50, rental: 10, distribution: 20, new: 5, lost: 0, decreased: -1 }
         }
     },
     revenue: {
@@ -24,7 +25,8 @@ const mockData = {
             'Việt': { actual: 85.0, plan: 90.0 },
             'Xem Sơn': { actual: 95.2, plan: 95.0 },
             'VPS M': { actual: 105.8, plan: 100.0 },
-            'ITSS': { actual: 44.0, plan: 50.0 }
+            'ITSS': { actual: 44.0, plan: 50.0 },
+            'Văn phòng VPS': { actual: 12.0, plan: 15.0 }
         },
         monthlyComparison: {
             // Mock data cho biểu đồ đường hoặc cột (12 tháng)
@@ -39,7 +41,8 @@ const mockData = {
             'Việt': { current: 5.2, overdue: 1.5, bad: 0.2 },
             'Xem Sơn': { current: 9.0, overdue: 3.0, bad: 1.1 },
             'VPS M': { current: 7.5, overdue: 1.0, bad: 0.1 },
-            'ITSS': { current: 4.0, overdue: 1.2, bad: 0.3 }
+            'ITSS': { current: 4.0, overdue: 1.2, bad: 0.3 },
+            'Văn phòng VPS': { current: 1.5, overdue: 0.2, bad: 0.0 }
         },
         badDebtsList: [
             { id: 1, customer: 'Công ty Cổ phần Alpha', company: 'Tân Hồng Hà', amount: 250000000, daysOverdue: 120, status: 'Khoá tài khoản' },
@@ -56,7 +59,8 @@ const mockData = {
             'Việt': { value: 18.2 },
             'Xem Sơn': { value: 15.0 },
             'VPS M': { value: 20.1 },
-            'ITSS': { value: 6.5 }
+            'ITSS': { value: 6.5 },
+            'Văn phòng VPS': { value: 2.1 }
         }
     },
     hr: {
@@ -65,7 +69,8 @@ const mockData = {
             'Việt': { quota: 100, official: 85, probation: 10, resigned: 2 },
             'Xem Sơn': { quota: 80, official: 70, probation: 5, resigned: 1 },
             'VPS M': { quota: 120, official: 100, probation: 12, resigned: 4 },
-            'ITSS': { quota: 50, official: 40, probation: 5, resigned: 0 }
+            'ITSS': { quota: 50, official: 40, probation: 5, resigned: 0 },
+            'Văn phòng VPS': { quota: 40, official: 30, probation: 5, resigned: 2 }
         }
     }
 };
