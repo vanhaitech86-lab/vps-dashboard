@@ -104,7 +104,7 @@ const mockData = {
                     "phan_phoi": {
                               "dau": {
                                         "may": 0,
-                                        "kh": 1881
+                                        "kh": 2790
                               },
                               "tang": {
                                         "may": 0,
@@ -116,7 +116,7 @@ const mockData = {
                               },
                               "cuoi": {
                                         "may": 0,
-                                        "kh": 1944
+                                        "kh": 2853
                               }
                     }
           },
@@ -324,7 +324,7 @@ const mockData = {
                     "phan_phoi": {
                               "dau": {
                                         "may": 0,
-                                        "kh": 1041
+                                        "kh": 1950
                               },
                               "tang": {
                                         "may": 0,
@@ -336,7 +336,7 @@ const mockData = {
                               },
                               "cuoi": {
                                         "may": 0,
-                                        "kh": 1052
+                                        "kh": 1961
                               }
                     }
           },
