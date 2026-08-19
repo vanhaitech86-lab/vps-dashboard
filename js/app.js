@@ -80,10 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show loading state
             document.querySelector('.top-bar-right').insertAdjacentHTML('beforeend', '<div id="gs-loading" style="color:red; font-weight:bold; margin-left:15px;">⏳ Đang đồng bộ Google Sheets...</div>');
             
-            // Fetch from Google Sheets
-            if (window.GoogleSheetsService) {
-                await window.GoogleSheetsService.loadAllData();
-            }
+            // TẠM DỪNG GOOGLE SHEETS THEO YÊU CẦU ĐỂ BÁO CÁO SẾP
+            // if (window.GoogleSheetsService) {
+            //     await window.GoogleSheetsService.loadAllData();
+            // }
             
             // Remove loading
             const loadingEl = document.getElementById('gs-loading');
