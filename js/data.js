@@ -25,6 +25,11 @@ const mockData = {
             'Xem Sơn': { actual: 95.2, plan: 95.0 },
             'VPS M': { actual: 105.8, plan: 100.0 },
             'ITSS': { actual: 44.0, plan: 50.0 }
+        },
+        monthlyComparison: {
+            // Mock data cho biểu đồ đường hoặc cột (12 tháng)
+            currentYear: [30, 45, 42, 50, 48, 55, 60, 65, 0, 0, 0, 0], // Dữ liệu năm nay (Ví dụ đến tháng 8)
+            previousYear: [25, 40, 38, 48, 45, 52, 58, 62, 55, 65, 70, 80] // Dữ liệu năm trước
         }
     },
     debt: {
