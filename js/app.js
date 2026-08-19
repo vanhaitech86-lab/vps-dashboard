@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Update UI with user info
             document.getElementById('current-user-name').textContent = user.name;
-            document.getElementById('current-user-role').textContent = user.role.name;
+            document.getElementById('current-user-role').textContent = typeof user.role === 'object' ? user.role.name : String(user.role);
             
             // Init filters based on user role
             window.FilterManager.init();
