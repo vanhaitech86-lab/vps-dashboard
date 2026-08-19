@@ -41,6 +41,7 @@ window.CustomersModule = {
 
         let tbodyHTML = '';
         let sums = {
+            ke_hoach: { may: 0, kh: 0 },
             dau: { may: 0, kh: 0 },
             tang: { may: 0, kh: 0 },
             giam: { may: 0, kh: 0 },
@@ -48,6 +49,8 @@ window.CustomersModule = {
         };
 
         // Render Thuê máy, MC - Photo summary row (Thue may + MC)
+        let tm_mc_ke_hoach_may = (cData['thue_may'].ke_hoach?.may || 0) + (cData['mc'].ke_hoach?.may || 0);
+        let tm_mc_ke_hoach_kh = (cData['thue_may'].ke_hoach?.kh || 0) + (cData['mc'].ke_hoach?.kh || 0);
         let tm_mc_dau_may = cData['thue_may'].dau.may + cData['mc'].dau.may;
         let tm_mc_dau_kh = cData['thue_may'].dau.kh + cData['mc'].dau.kh;
         let tm_mc_tang_may = cData['thue_may'].tang.may + cData['mc'].tang.may;
@@ -61,6 +64,7 @@ window.CustomersModule = {
             <tr style="font-weight: bold; background: #f8fafc;">
                 <td style="text-align: left;">Thuê máy, MC - Photo</td>
                 <td>${tm_mc_dau_may || 0}</td><td>${tm_mc_dau_kh || 0}</td>
+                <td style="color: #0369a1; font-weight: bold;">${tm_mc_ke_hoach_may || 0}</td><td style="color: #0369a1; font-weight: bold;">${tm_mc_ke_hoach_kh || 0}</td>
                 <td>${tm_mc_tang_may || 0}</td><td>${tm_mc_tang_kh || 0}</td>
                 <td>${tm_mc_giam_may || 0}</td><td>${tm_mc_giam_kh || 0}</td>
                 <td>${tm_mc_cuoi_may || 0}</td><td>${tm_mc_cuoi_kh || 0}</td>
@@ -73,6 +77,7 @@ window.CustomersModule = {
             
             // accumulate to sums
             sums.dau.may += rowData.dau.may; sums.dau.kh += rowData.dau.kh;
+            sums.ke_hoach.may += rowData.ke_hoach?.may || 0; sums.ke_hoach.kh += rowData.ke_hoach?.kh || 0;
             sums.tang.may += rowData.tang.may; sums.tang.kh += rowData.tang.kh;
             sums.giam.may += rowData.giam.may; sums.giam.kh += rowData.giam.kh;
             sums.cuoi.may += rowData.cuoi.may; sums.cuoi.kh += rowData.cuoi.kh;
@@ -81,6 +86,7 @@ window.CustomersModule = {
             let suffix = (r.id === 'thue_may' || r.id === 'mc') ? '</i>' : '';
 
             // Formatting: If Phân phối, don't show MÁY count (put -)
+            let mayKeHoach = r.id === 'phan_phoi' ? '-' : (rowData.ke_hoach?.may || 0);
             let mayDau = r.id === 'phan_phoi' ? '-' : (rowData.dau.may || 0);
             let mayTang = r.id === 'phan_phoi' ? '-' : (rowData.tang.may || 0);
             let mayGiam = r.id === 'phan_phoi' ? '-' : (rowData.giam.may || 0);
@@ -90,6 +96,7 @@ window.CustomersModule = {
                 <tr>
                     <td style="text-align: left;">${prefix}${r.name}${suffix}</td>
                     <td>${mayDau}</td><td>${rowData.dau.kh || 0}</td>
+                    <td style="color: #0369a1; font-weight: bold;">${mayKeHoach}</td><td style="color: #0369a1; font-weight: bold;">${rowData.ke_hoach?.kh || 0}</td>
                     <td>${mayTang}</td><td>${rowData.tang.kh || 0}</td>
                     <td>${mayGiam}</td><td>${rowData.giam.kh || 0}</td>
                     <td>${mayCuoi}</td><td>${rowData.cuoi.kh || 0}</td>
@@ -102,6 +109,7 @@ window.CustomersModule = {
             <tr style="font-weight: bold; background: #e2e8f0; border-top: 2px solid #cbd5e1; color: #b91c1c;">
                 <td style="text-align: left;">Tổng cộng</td>
                 <td>${sums.dau.may}</td><td>${sums.dau.kh}</td>
+                <td style="color: #0369a1; font-weight: bold;">${sums.ke_hoach.may}</td><td style="color: #0369a1; font-weight: bold;">${sums.ke_hoach.kh}</td>
                 <td>${sums.tang.may}</td><td>${sums.tang.kh}</td>
                 <td>${sums.giam.may}</td><td>${sums.giam.kh}</td>
                 <td>${sums.cuoi.may}</td><td>${sums.cuoi.kh}</td>
