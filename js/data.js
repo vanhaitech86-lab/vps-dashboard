@@ -110,12 +110,12 @@ const mockData = {
         'Văn phòng VPS': { ds: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
     },
     byCompany: {
-            'Tân Hồng Hà': { quota: 54, official: 48, probation: 2, resigned: 0, kpi: {A: 2, B: 43, C: 3, D: 0}, analysis: { cause: 'Cần bổ sung nhân sự kinh doanh và hoàn thành định biên.', solution: 'Tuyển thêm 6 nhân viên kinh doanh theo định mức.' } },
+            'Tân Hồng Hà': { quota: 54, official: 48, probation: 2, resigned: 3, kpi: {A: 2, B: 43, C: 3, D: 0}, analysis: { cause: 'Cần bổ sung nhân sự kinh doanh và hoàn thành định biên. Trong kỳ có 3 nhân sự nghỉ việc (Linh, Lan Anh, Nguyệt).', solution: 'Tuyển thêm nhân viên kinh doanh theo định mức để bù đắp quân số.' } },
             'Việt': { quota: 43, official: 39, probation: 1, resigned: 0, kpi: {A: 14, B: 19, C: 1, D: 4}, analysis: { cause: 'Chất lượng nhân sự có phân bổ rộng, một số yếu kém cần cải thiện.', solution: 'Tuyển bổ sung 3 nhân sự, đào tạo lại nhóm nhân sự loại D.' } },
             'Xem Sơn': { quota: 98, official: 95, probation: 1, resigned: 0, kpi: {A: 0, B: 85, C: 10, D: 0}, analysis: { cause: 'Nhân sự khá ổn định nhưng chưa có cá nhân xuất sắc.', solution: 'Tuyển thêm 2 nhân viên kinh doanh để hoàn thiện cơ cấu.' } },
             'VPS M': { quota: 15, official: 10, probation: 0, resigned: 0, kpi: {A: 0, B: 10, C: 0, D: 0}, analysis: { cause: 'Thiếu hụt đáng kể so với định biên (cần 5 nhân viên kinh doanh).', solution: 'Gấp rút đẩy mạnh hoạt động tuyển dụng nhân sự kinh doanh.' } },
             'ITSS': { quota: 8, official: 3, probation: 1, resigned: 0, kpi: {A: 3, B: 0, C: 0, D: 0}, analysis: { cause: 'Team ITSS quy mô nhỏ, chất lượng nhân sự xuất sắc nhưng thiếu số lượng.', solution: 'Tuyển dụng thêm 4 nhân sự lập trình/hỗ trợ CRM.' } },
-            'Văn phòng VPS': { quota: 19, official: 18, probation: 0, resigned: 0, kpi: {A: 0, B: 18, C: 0, D: 0}, analysis: { cause: 'Nhân sự đã gần đủ định biên, chất lượng đạt mức khá toàn diện.', solution: 'Tuyển thêm 1 vị trí cuối cùng, duy trì chính sách giữ chân nhân sự.' } }
+            'Văn phòng VPS': { quota: 19, official: 18, probation: 0, resigned: 1, kpi: {A: 0, B: 18, C: 0, D: 0}, analysis: { cause: 'Nhân sự đã gần đủ định biên. Vừa có 1 nhân sự nghỉ việc (Quang).', solution: 'Tuyển thêm vị trí thay thế, duy trì chính sách giữ chân nhân sự.' } }
         }
     }
 };
