@@ -333,33 +333,25 @@
                         </div>
                         <div class="table-responsive">
                             <table class="data-table" id="customersTable" style="text-align: right;">
-                                  <thead>
-                                      <tr>
-                                          <th rowspan="2" style="text-align: left; vertical-align: middle;">NỘI DUNG</th>
-                                          <th colspan="2" style="text-align: center; background: #f8fafc;">SỐ ĐẦU THÁNG</th>
-                                          <th colspan="2" style="text-align: center; background: #eff6ff;">
-                                              KẾ HOẠCH
-                                              <select id="customers-month-filter" style="border: none; border-bottom: 1px dashed #0369a1; border-radius: 0; padding: 0; font-weight: bold; background: transparent; cursor: pointer; color: #0369a1; outline: none; margin-left: 5px;">
-                                                  <option value="08/2026" selected>THÁNG 8</option>
-                                              </select>
-                                          </th>
-                                          <th colspan="2" style="text-align: center; background: #f0fdf4;">SL TĂNG</th>
-                                          <th colspan="2" style="text-align: center; background: #fef2f2;">SL GIẢM</th>
-                                          <th colspan="2" style="text-align: center; background: #f8fafc; font-weight: bold;">SỐ CUỐI THÁNG</th>
-                                      </tr>
-                                      <tr>
-                                          <th style="background: #f8fafc;">MÁY</th>
-                                          <th style="background: #f8fafc;">KH</th>
-                                          <th style="background: #eff6ff;">MÁY</th>
-                                          <th style="background: #eff6ff;">KH</th>
-                                          <th style="background: #f0fdf4;">MÁY</th>
-                                          <th style="background: #f0fdf4;">KH</th>
-                                          <th style="background: #fef2f2;">MÁY</th>
-                                          <th style="background: #fef2f2;">KH</th>
-                                          <th style="background: #f8fafc;">MÁY</th>
-                                          <th style="background: #f8fafc;">KH</th>
-                                      </tr>
-                                  </thead>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" style="text-align: left; vertical-align: middle;">NỘI DUNG</th>
+                                        <th colspan="2" style="text-align: center; background: #f8fafc;">SỐ ĐẦU THÁNG</th>
+                                        <th colspan="2" style="text-align: center; background: #f0fdf4;">SL TĂNG</th>
+                                        <th colspan="2" style="text-align: center; background: #fef2f2;">SL GIẢM</th>
+                                        <th colspan="2" style="text-align: center; background: #f8fafc; font-weight: bold;">SỐ CUỐI THÁNG</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="background: #f8fafc;">MÁY</th>
+                                        <th style="background: #f8fafc;">KH</th>
+                                        <th style="background: #f0fdf4;">MÁY</th>
+                                        <th style="background: #f0fdf4;">KH</th>
+                                        <th style="background: #fef2f2;">MÁY</th>
+                                        <th style="background: #fef2f2;">KH</th>
+                                        <th style="background: #f8fafc;">MÁY</th>
+                                        <th style="background: #f8fafc;">KH</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <!-- Populated by JS -->
                                 </tbody>
@@ -370,31 +362,16 @@
 
                 <!-- Revenue View -->
                 <section id="view-revenue" class="view hidden">
-                      <div class="grid-layout cols-2">
-                          <div class="card">
-                              <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                                  <h3 style="font-size: 1rem;">So Sánh Doanh Số Cùng Kỳ</h3>
-                                  <select id="revenue-year-filter" style="border: 1px solid #ccc; border-radius: 4px; padding: 2px 5px; font-size: 0.8rem; background: white;">
-                                      <option value="2026">Năm 2026 vs 2025</option>
-                                  </select>
-                              </div>
-                              <div class="card-body">
-                                  <div class="chart-container" style="height: 280px;">
-                                      <canvas id="revenueChart"></canvas>
-                                  </div>
-                              </div>
-                          </div>
-                          
-                          <div class="card" style="border: 2px dashed #cbd5e1; background: #f8fafc;">
-                              <div class="card-header" style="background: transparent; border-bottom: none;">
-                                  <h3 style="color: #64748b; font-size: 1rem;">Khu vực Báo Cáo Mới</h3>
-                              </div>
-                              <div class="card-body" style="height: 280px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #94a3b8; text-align: center;">
-                                  <i data-lucide="plus-circle" style="width: 40px; height: 40px; margin-bottom: 10px; color: #cbd5e1;"></i>
-                                  <p>Đã thu nhỏ biểu đồ bên trái.<br>Không gian này để chờ bạn thêm biểu đồ/báo cáo khác.</p>
-                              </div>
-                          </div>
-                      </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Doanh Số Các Công Ty (Tỷ VNĐ)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="card mt-20">
                         <div class="card-header">
@@ -683,29 +660,24 @@
     <!-- Scripts -->
     <script src="js/connectors.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="js/google_sheets.js?v=3"></script>
-    <script src="js/data.js?v=4"></script>
+    <script src="js/google_sheets.js"></script>
+    <script src="js/data.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/charts.js"></script>
-    <script src="js/overview.js?v=4"></script>
+    <script src="js/overview.js"></script>
     <script src="js/customers.js"></script>
     <script src="js/revenue.js"></script>
     <script src="js/inventory.js"></script>
     <script src="js/debt.js"></script>
     <script src="js/hr.js"></script>
     <script src="js/admin.js"></script>
-    <script src="js/app.js?v=4"></script>
+    <script src="js/app.js"></script>
     
     <script>
         lucide.createIcons();
     </script>
 </body>
 </html>
-
-
-
-
-
 
 

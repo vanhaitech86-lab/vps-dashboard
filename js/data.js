@@ -1007,6 +1007,3 @@ window.DataService = {
 };
 
 
-
-window.mockData = mockData;
-
