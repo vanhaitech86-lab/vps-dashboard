@@ -55,5 +55,38 @@ window.RevenueModule = {
         };
 
         window.ChartManager.createChart('revenueChart', 'bar', chartData);
+
+        // Update Plan Table
+        const tbody = document.querySelector('#revenuePlanTable tbody');
+        if (tbody && data.plan2026) {
+            let html = '';
+            const renderRow = (name, p) => `
+                <tr ${name === 'TẬP ĐOÀN VPS' || name === 'all' ? 'style="font-weight: bold; background: #e2e8f0;"' : ''}>
+                    <td>${name === 'all' ? 'TẬP ĐOÀN VPS' : name}</td>
+                    <td style="text-align: right;">${p.ds ? p.ds.toLocaleString() : '-'}</td>
+                    <td style="text-align: right;">${p.ttlg ? p.ttlg.toLocaleString() : '-'}</td>
+                    <td style="text-align: right;">${p.lg_pct ? p.lg_pct + '%' : '-'}</td>
+                    <td style="text-align: right;">${p.cp_lg_pct ? p.cp_lg_pct + '%' : '-'}</td>
+                    <td style="text-align: right;">${p.cp ? p.cp.toLocaleString() : '-'}</td>
+                    <td style="text-align: right;">${p.lntt ? p.lntt.toLocaleString() : '-'}</td>
+                </tr>
+            `;
+
+            if (company === 'all') {
+                html += renderRow('TẬP ĐOÀN VPS', data.plan2026['all']);
+                for (const [compName, p] of Object.entries(data.plan2026)) {
+                    if (compName !== 'all' && compName !== 'Văn phòng VPS') {
+                        html += renderRow(compName, p);
+                    }
+                }
+            } else {
+                const p = data.plan2026[company];
+                if (p) {
+                    html += renderRow(company, p);
+                }
+            }
+            tbody.innerHTML = html;
+        }
     }
 };
+

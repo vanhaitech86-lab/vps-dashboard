@@ -9,7 +9,16 @@ const mockData = {
     customers: {
         total: 12450,
         trend: { new: 650, lost: -30, decreased: -15, totalIncreased: 650, percentage: 5.2 },
-        byCompany: {
+        plan2026: {
+        'all': { ds: 632640, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
+        'Tân Hồng Hà': { ds: 300000, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
+        'Việt': { ds: 106000, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
+        'Xem Sơn': { ds: 168000, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
+        'VPS M': { ds: 45000, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
+        'ITSS': { ds: 13640, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
+        'Văn phòng VPS': { ds: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+    },
+    byCompany: {
             'Tân Hồng Hà': { service: 1200, rental: 800, distribution: 2500, new: 150, lost: -5, decreased: -2 },
             'Việt': { service: 900, rental: 600, distribution: 1500, new: 100, lost: -10, decreased: -3 },
             'Xem Sơn': { service: 1500, rental: 1100, distribution: 300, new: 250, lost: -8, decreased: -5 },
@@ -20,7 +29,16 @@ const mockData = {
     },
     revenue: {
         total: 450.5,
-        byCompany: {
+        plan2026: {
+        'all': { ds: 632640, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
+        'Tân Hồng Hà': { ds: 300000, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
+        'Việt': { ds: 106000, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
+        'Xem Sơn': { ds: 168000, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
+        'VPS M': { ds: 45000, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
+        'ITSS': { ds: 13640, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
+        'Văn phòng VPS': { ds: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+    },
+    byCompany: {
             'Tân Hồng Hà': { actual: 120.5, plan: 110.0 },
             'Việt': { actual: 85.0, plan: 90.0 },
             'Xem Sơn': { actual: 95.2, plan: 95.0 },
@@ -36,7 +54,16 @@ const mockData = {
     },
     debt: {
         total: 45.2,
-        byCompany: {
+        plan2026: {
+        'all': { ds: 632640, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
+        'Tân Hồng Hà': { ds: 300000, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
+        'Việt': { ds: 106000, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
+        'Xem Sơn': { ds: 168000, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
+        'VPS M': { ds: 45000, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
+        'ITSS': { ds: 13640, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
+        'Văn phòng VPS': { ds: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+    },
+    byCompany: {
             'Tân Hồng Hà': { current: 8.5, overdue: 2.1, bad: 0.5 },
             'Việt': { current: 5.2, overdue: 1.5, bad: 0.2 },
             'Xem Sơn': { current: 9.0, overdue: 3.0, bad: 1.1 },
@@ -54,7 +81,16 @@ const mockData = {
     },
     inventory: {
         total: 85.3,
-        byCompany: {
+        plan2026: {
+        'all': { ds: 632640, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
+        'Tân Hồng Hà': { ds: 300000, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
+        'Việt': { ds: 106000, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
+        'Xem Sơn': { ds: 168000, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
+        'VPS M': { ds: 45000, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
+        'ITSS': { ds: 13640, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
+        'Văn phòng VPS': { ds: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+    },
+    byCompany: {
             'Tân Hồng Hà': { value: 25.5 },
             'Việt': { value: 18.2 },
             'Xem Sơn': { value: 15.0 },
@@ -64,7 +100,16 @@ const mockData = {
         }
     },
     hr: {
-        byCompany: {
+        plan2026: {
+        'all': { ds: 632640, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
+        'Tân Hồng Hà': { ds: 300000, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
+        'Việt': { ds: 106000, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
+        'Xem Sơn': { ds: 168000, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
+        'VPS M': { ds: 45000, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
+        'ITSS': { ds: 13640, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
+        'Văn phòng VPS': { ds: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+    },
+    byCompany: {
             'Tân Hồng Hà': { quota: 150, official: 120, probation: 15, resigned: 3, kpi: {A: 40, B: 50, C: 25, D: 5}, analysis: { cause: 'Biến động nhân sự sale khu vực miền Nam, năng suất chưa đạt kỳ vọng.', solution: 'Đào tạo lại kỹ năng sale, tăng cường giám sát KPIs.' } },
             'Việt': { quota: 100, official: 85, probation: 10, resigned: 2, kpi: {A: 30, B: 40, C: 12, D: 3}, analysis: { cause: 'Quy trình vận hành kho chưa tối ưu, thiếu nhân lực lúc cao điểm.', solution: 'Tuyển bổ sung nhân viên kho, áp dụng hệ thống quét mã vạch.' } },
             'Xem Sơn': { quota: 80, official: 70, probation: 5, resigned: 1, kpi: {A: 35, B: 25, C: 8, D: 2}, analysis: { cause: 'Kỹ thuật viên mới chưa quen việc xử lý máy in màu.', solution: 'Kèm cặp 1-1, tổ chức thi tay nghề định kỳ.' } },
@@ -148,4 +193,5 @@ window.DataService = {
         return new Promise(resolve => setTimeout(() => resolve(mockData.hr), 200));
     }
 };
+
 
