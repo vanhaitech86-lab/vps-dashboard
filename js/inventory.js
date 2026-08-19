@@ -10,7 +10,7 @@ window.InventoryModule = {
     },
 
     async loadData(period, company) {
-        const invData = await window.DataService.getData().then(d => d.inventory);
+        const invData = await window.DataService.getInventoryData(period, company);
         this.updateUI(invData, company);
     },
 
