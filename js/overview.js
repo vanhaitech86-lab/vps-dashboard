@@ -124,6 +124,19 @@ window.OverviewModule = {
             }
         }
 
+        let totalActualRev = 0;
+        let totalPlanRev = 0;
+        if (company === 'all') {
+            for (let a of revActualData) totalActualRev += a;
+            for (let p of revPlanData) totalPlanRev += p;
+        } else {
+            totalActualRev = revActualData[0] || 0;
+            totalPlanRev = revPlanData[0] || 0;
+        }
+        
+        let valEl = document.getElementById('overview-revenue-val');
+        if(valEl) valEl.textContent = (totalActualRev / 1000).toFixed(1) + ' Tỷ đ';
+        
         window.ChartManager.createChart('overviewRevenueChart', 'bar', {
             labels: revLabels,
             datasets: [
