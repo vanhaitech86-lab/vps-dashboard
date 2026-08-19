@@ -133,8 +133,8 @@ window.GoogleSheetsService = {
                 if(!catId) continue;
 
                 const rowData = {
-                    ke_hoach: { may: parseNumber(row[3]), kh: parseNumber(row[4]) },
-                    dau: { may: parseNumber(row[5]), kh: parseNumber(row[6]) },
+                    dau: { may: parseNumber(row[3]), kh: parseNumber(row[4]) },
+                    ke_hoach: { may: parseNumber(row[5]), kh: parseNumber(row[6]) },
                     tang: { may: parseNumber(row[7]), kh: parseNumber(row[8]) },
                     giam: { may: parseNumber(row[9]), kh: parseNumber(row[10]) },
                     cuoi: { may: parseNumber(row[11]), kh: parseNumber(row[12]) }
@@ -213,7 +213,7 @@ window.GoogleSheetsService = {
                     sortedMonths.forEach(m => {
                         const opt = document.createElement('option');
                         opt.value = m;
-                        opt.textContent = m;
+                        opt.textContent = "THÁNG " + m.split('/')[0];
                         if (m === defaultMonth) opt.selected = true;
                         selectEl.appendChild(opt);
                     });
