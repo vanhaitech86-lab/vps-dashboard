@@ -50,9 +50,7 @@ window.InventoryModule = {
             }]
         };
 
-        const ctx = document.getElementById('inventoryChart');
-        if (ctx) {
-            window.ChartManager.renderChart(ctx, 'doughnut', chartData, {
+        window.ChartManager.createChart('inventoryChart', 'doughnut', chartData, {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: { position: 'right' },

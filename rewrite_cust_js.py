@@ -1,4 +1,6 @@
-/**
+const fs = require('fs');
+
+let js = `/**
  * Customers Module
  */
 
@@ -56,15 +58,15 @@ window.CustomersModule = {
         let tm_mc_cuoi_may = cData['thue_may'].cuoi.may + cData['mc'].cuoi.may;
         let tm_mc_cuoi_kh = cData['thue_may'].cuoi.kh + cData['mc'].cuoi.kh;
 
-        tbodyHTML += `
+        tbodyHTML += \`
             <tr style="font-weight: bold; background: #f8fafc;">
                 <td style="text-align: left;">Thuê máy, MC - Photo</td>
-                <td>${tm_mc_dau_may || 0}</td><td>${tm_mc_dau_kh || 0}</td>
-                <td>${tm_mc_tang_may || 0}</td><td>${tm_mc_tang_kh || 0}</td>
-                <td>${tm_mc_giam_may || 0}</td><td>${tm_mc_giam_kh || 0}</td>
-                <td>${tm_mc_cuoi_may || 0}</td><td>${tm_mc_cuoi_kh || 0}</td>
+                <td>\${tm_mc_dau_may || 0}</td><td>\${tm_mc_dau_kh || 0}</td>
+                <td>\${tm_mc_tang_may || 0}</td><td>\${tm_mc_tang_kh || 0}</td>
+                <td>\${tm_mc_giam_may || 0}</td><td>\${tm_mc_giam_kh || 0}</td>
+                <td>\${tm_mc_cuoi_may || 0}</td><td>\${tm_mc_cuoi_kh || 0}</td>
             </tr>
-        `;
+        \`;
 
         // Render sub-items and calculate sums
         rows.forEach(r => {
@@ -79,27 +81,27 @@ window.CustomersModule = {
             let prefix = (r.id === 'thue_may' || r.id === 'mc') ? '&nbsp;&nbsp;&nbsp;&nbsp;<i>' : '';
             let suffix = (r.id === 'thue_may' || r.id === 'mc') ? '</i>' : '';
 
-            tbodyHTML += `
+            tbodyHTML += \`
                 <tr>
-                    <td style="text-align: left;">${prefix}${r.name}${suffix}</td>
-                    <td>${rowData.dau.may || 0}</td><td>${rowData.dau.kh || 0}</td>
-                    <td>${rowData.tang.may || 0}</td><td>${rowData.tang.kh || 0}</td>
-                    <td>${rowData.giam.may || 0}</td><td>${rowData.giam.kh || 0}</td>
-                    <td>${rowData.cuoi.may || 0}</td><td>${rowData.cuoi.kh || 0}</td>
+                    <td style="text-align: left;">\${prefix}\${r.name}\${suffix}</td>
+                    <td>\${rowData.dau.may || 0}</td><td>\${rowData.dau.kh || 0}</td>
+                    <td>\${rowData.tang.may || 0}</td><td>\${rowData.tang.kh || 0}</td>
+                    <td>\${rowData.giam.may || 0}</td><td>\${rowData.giam.kh || 0}</td>
+                    <td>\${rowData.cuoi.may || 0}</td><td>\${rowData.cuoi.kh || 0}</td>
                 </tr>
-            `;
+            \`;
         });
 
         // Add Tổng cộng row
-        tbodyHTML += `
+        tbodyHTML += \`
             <tr style="font-weight: bold; background: #e2e8f0; border-top: 2px solid #cbd5e1; color: #b91c1c;">
                 <td style="text-align: left;">Tổng cộng</td>
-                <td>${sums.dau.may}</td><td>${sums.dau.kh}</td>
-                <td>${sums.tang.may}</td><td>${sums.tang.kh}</td>
-                <td>${sums.giam.may}</td><td>${sums.giam.kh}</td>
-                <td>${sums.cuoi.may}</td><td>${sums.cuoi.kh}</td>
+                <td>\${sums.dau.may}</td><td>\${sums.dau.kh}</td>
+                <td>\${sums.tang.may}</td><td>\${sums.tang.kh}</td>
+                <td>\${sums.giam.may}</td><td>\${sums.giam.kh}</td>
+                <td>\${sums.cuoi.may}</td><td>\${sums.cuoi.kh}</td>
             </tr>
-        `;
+        \`;
 
         const tbody = document.querySelector('#customersTable tbody');
         if (tbody) tbody.innerHTML = tbodyHTML;
@@ -132,7 +134,7 @@ window.CustomersModule = {
 
         const ctx = document.getElementById('customersChart');
         if (ctx) {
-            window.ChartManager.createChart('customersChart', 'pie', chartConfig, {
+            window.ChartManager.renderChart(ctx, 'pie', chartConfig, {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: { position: 'right' },
@@ -153,3 +155,7 @@ window.CustomersModule = {
         }
     }
 };
+`;
+
+fs.writeFileSync('js/customers.js', js, 'utf8');
+console.log("customers.js completely rewritten!");
