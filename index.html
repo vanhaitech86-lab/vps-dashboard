@@ -229,6 +229,43 @@
                     </div>
                 </section>
 
+                <!-- HR View -->
+                <section id="view-hr" class="view hidden">
+                    <div class="grid-layout cols-4">
+                        <div class="kpi-card">
+                            <h4>Tổng Nhân Sự / Định Biên</h4>
+                            <div class="kpi-value"><span id="hr-total">0</span> / <span id="hr-quota" style="color: #6C757D; font-size: 1.2rem;">0</span></div>
+                            <div class="kpi-subtext" id="hr-fulfillment">Đạt 0% định biên</div>
+                        </div>
+                        <div class="kpi-card">
+                            <h4>Thử Việc</h4>
+                            <div class="kpi-value" id="hr-probation" style="color: #F59E0B;">0</div>
+                            <div class="kpi-subtext">Đang trong thời gian đánh giá</div>
+                        </div>
+                        <div class="kpi-card">
+                            <h4>Đã Nghỉ Việc</h4>
+                            <div class="kpi-value" id="hr-resigned" style="color: #EF4444;">0</div>
+                            <div class="kpi-subtext">Trong kỳ báo cáo</div>
+                        </div>
+                        <div class="kpi-card">
+                            <h4>Cần Tuyển Thêm</h4>
+                            <div class="kpi-value" id="hr-vacancy" style="color: #10B981;">0</div>
+                            <div class="kpi-subtext">Số lượng chỗ trống</div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Cơ Cấu Nhân Sự Theo Công Ty</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 400px;">
+                                <canvas id="hrStructureChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Customers View -->
                 <section id="view-customers" class="view hidden">
                     <div class="grid-layout cols-3">
@@ -482,6 +519,7 @@
     <script src="js/customers.js"></script>
     <script src="js/revenue.js"></script>
     <script src="js/debt.js"></script>
+    <script src="js/hr.js"></script>
     <script src="js/admin.js"></script>
     <script src="js/app.js"></script>
     

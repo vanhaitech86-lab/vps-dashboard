@@ -58,6 +58,15 @@ const mockData = {
             'VPS M': { value: 20.1 },
             'ITSS': { value: 6.5 }
         }
+    },
+    hr: {
+        byCompany: {
+            'Tân Hồng Hà': { quota: 150, official: 120, probation: 15, resigned: 3 },
+            'Việt': { quota: 100, official: 85, probation: 10, resigned: 2 },
+            'Xem Sơn': { quota: 80, official: 70, probation: 5, resigned: 1 },
+            'VPS M': { quota: 120, official: 100, probation: 12, resigned: 4 },
+            'ITSS': { quota: 50, official: 40, probation: 5, resigned: 0 }
+        }
     }
 };
 
@@ -126,5 +135,11 @@ window.DataService = {
 
     async getInventoryData(period = 'month', company = 'all') {
         return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.inventory, period)), 200));
+    },
+
+    async getHrData(period = 'month', company = 'all') {
+        // HR data should generally not be multiplied by period for headcount, except maybe resigned.
+        // For simplicity we will return it as is or lightly processed.
+        return new Promise(resolve => setTimeout(() => resolve(mockData.hr), 200));
     }
 };

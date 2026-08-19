@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.CustomersModule) window.CustomersModule.init();
             if(window.RevenueModule) window.RevenueModule.init();
             if(window.DebtModule) window.DebtModule.init();
+            if(window.HrModule) window.HrModule.init();
             if(window.AdminModule) window.AdminModule.init();
             
             // Trigger CRM API Backend Test
