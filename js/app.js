@@ -124,10 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.CrmConnector) window.CrmConnector.fetchDashboardData(new Date().getMonth() + 1, user.company);
 
             // Trigger initial data load
-            window.FilterManager.triggerFilterChange();
-            
-            // Show overview by default
             this.showView('overview');
+            window.FilterManager.triggerFilterChange();
         },
 
         showView(viewId) {
@@ -162,3 +160,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     App.init();
 });
+
