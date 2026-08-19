@@ -74,21 +74,6 @@ window.HrModule = {
                 vacancyData.push(Math.max(0, compData.quota - (compData.official + compData.probation)));
             }
         }
-        } else {
-            const compData = data.byCompany[company];
-            if (compData) {
-                tQuota = compData.quota;
-                tOfficial = compData.official;
-                tProbation = compData.probation;
-                tResigned = compData.resigned;
-
-                chartLabels.push(company);
-                officialData.push(compData.official);
-                probationData.push(compData.probation);
-                resignedData.push(compData.resigned);
-                vacancyData.push(Math.max(0, compData.quota - (compData.official + compData.probation)));
-            }
-        }
 
         const tTotal = tOfficial + tProbation;
         const tVacancy = Math.max(0, tQuota - tTotal);
