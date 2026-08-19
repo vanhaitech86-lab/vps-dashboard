@@ -1,4 +1,5 @@
-/**
+const fs = require('fs');
+let invJs = `/**
  * Inventory Module
  */
 
@@ -38,6 +39,7 @@ window.InventoryModule = {
         const brands = Object.keys(compData.brands);
         const brandValues = Object.values(compData.brands);
         
+        // Custom labels for chart
         const labelMap = { 'Khac': 'Khác' };
         const displayLabels = brands.map(b => labelMap[b] || b);
 
@@ -116,3 +118,6 @@ window.InventoryModule = {
         }
     }
 };
+`;
+
+fs.writeFileSync('js/inventory.js', invJs, 'utf8');
