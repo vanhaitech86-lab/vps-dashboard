@@ -37,21 +37,22 @@ window.HrModule = {
 
         if (company === 'all') {
             for (const [compName, compData] of Object.entries(data.byCompany)) {
-                tQuota += compData.quota;
-                tOfficial += compData.official;
-                tProbation += compData.probation;
-                tResigned += compData.resigned;
+                tQuota += compData.quota || 0;
+                tOfficial += compData.official || 0;
+                tProbation += compData.probation || 0;
+                tResigned += compData.resigned || 0;
                 
-                tKpi.A += compData.kpi.A;
-                tKpi.B += compData.kpi.B;
-                tKpi.C += compData.kpi.C;
-                tKpi.D += compData.kpi.D;
+                const kpi = compData.kpi || { A: 0, B: 0, C: 0, D: 0 };
+                tKpi.A += kpi.A || 0;
+                tKpi.B += kpi.B || 0;
+                tKpi.C += kpi.C || 0;
+                tKpi.D += kpi.D || 0;
 
                 chartLabels.push(compName);
-                officialData.push(compData.official);
-                probationData.push(compData.probation);
-                resignedData.push(compData.resigned);
-                const vacancy = Math.max(0, compData.quota - (compData.official + compData.probation));
+                officialData.push(compData.official || 0);
+                probationData.push(compData.probation || 0);
+                resignedData.push(compData.resigned || 0);
+                const vacancy = Math.max(0, (compData.quota || 0) - ((compData.official || 0) + (compData.probation || 0)));
                 vacancyData.push(vacancy);
             }
             currentAnalysis.cause = "Tổng hợp toàn bộ các đơn vị. Xem chi tiết bằng cách chọn từng công ty.";
@@ -59,19 +60,19 @@ window.HrModule = {
         } else {
             const compData = data.byCompany[company];
             if (compData) {
-                tQuota = compData.quota;
-                tOfficial = compData.official;
-                tProbation = compData.probation;
-                tResigned = compData.resigned;
+                tQuota = compData.quota || 0;
+                tOfficial = compData.official || 0;
+                tProbation = compData.probation || 0;
+                tResigned = compData.resigned || 0;
 
-                tKpi = { ...compData.kpi };
-                currentAnalysis = { ...compData.analysis };
+                tKpi = compData.kpi ? { ...compData.kpi } : { A: 0, B: 0, C: 0, D: 0 };
+                currentAnalysis = compData.analysis ? { ...compData.analysis } : { cause: 'Chưa có dữ liệu', solution: 'Chưa có dữ liệu' };
 
                 chartLabels.push(company);
-                officialData.push(compData.official);
-                probationData.push(compData.probation);
-                resignedData.push(compData.resigned);
-                vacancyData.push(Math.max(0, compData.quota - (compData.official + compData.probation)));
+                officialData.push(compData.official || 0);
+                probationData.push(compData.probation || 0);
+                resignedData.push(compData.resigned || 0);
+                vacancyData.push(Math.max(0, (compData.quota || 0) - ((compData.official || 0) + (compData.probation || 0))));
             }
         }
 
