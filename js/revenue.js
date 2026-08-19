@@ -15,6 +15,25 @@ window.RevenueModule = {
     },
 
     updateUI(data, company) {
+        
+        const companyNameMap = {
+            'all': 'Tất cả',
+            'THH': 'Tân Hồng Hà',
+            'Viet': 'Việt',
+            'XemSon': 'Xem Sơn',
+            'VPSM': 'VPS M',
+            'ITSS': 'ITSS',
+            'VPVPS': 'Văn phòng VPS'
+        };
+
+        let dataKey = 'all';
+        if (company === 'Tân Hồng Hà' || (company.includes('T') && company.includes('H'))) dataKey = 'THH';
+        else if (company === 'Việt' || company.includes('Vi')) dataKey = 'Viet';
+        else if (company === 'Xem Sơn' || company.includes('Xem')) dataKey = 'XemSon';
+        else if (company === 'VPS M' || company.includes('VPS M')) dataKey = 'VPSM';
+        else if (company === 'ITSS' || company.includes('ITSS')) dataKey = 'ITSS'; 
+        else if (company !== 'all') dataKey = 'VPVPS';
+
         let labels = [], actualData = [], planData = [];
         
         if (company === 'all') {
@@ -24,7 +43,7 @@ window.RevenueModule = {
                 planData.push(compData.plan);
             }
         } else {
-            const compData = data.byCompany[company];
+            const compData = data.byCompany[dataKey];
             if(compData) {
                 labels = [company];
                 actualData = [compData.actual];
@@ -104,7 +123,7 @@ window.RevenueModule = {
                     }
                 }
             } else {
-                const p = data.plan2026[company];
+                const p = data.plan2026[dataKey];
                 if (p) {
                     html += renderRow(company, p);
                 }

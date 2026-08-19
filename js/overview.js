@@ -25,16 +25,35 @@ window.OverviewModule = {
 
     async loadData(period, company) {
         // Fetch all 3 datasets
-        const [customers, revenue, inventory] = await Promise.all([
+        const [customers, revenue, debt] = await Promise.all([
             window.DataService.getCustomersData(period, company),
             window.DataService.getRevenueData(period, company),
-            window.DataService.getInventoryData(period, company)
+            window.DataService.getDebtData(period, company)
         ]);
 
-        this.updateUI(customers, revenue, inventory, company);
+        this.updateUI(customers, revenue, debt, company);
     },
 
     updateUI(customers, revenue, debt, company) {
+        
+        const companyNameMap = {
+            'all': 'Tất cả',
+            'THH': 'Tân Hồng Hà',
+            'Viet': 'Việt',
+            'XemSon': 'Xem Sơn',
+            'VPSM': 'VPS M',
+            'ITSS': 'ITSS',
+            'VPVPS': 'Văn phòng VPS'
+        };
+
+        let dataKey = 'all';
+        if (company === 'Tân Hồng Hà' || (company.includes('T') && company.includes('H'))) dataKey = 'THH';
+        else if (company === 'Việt' || company.includes('Vi')) dataKey = 'Viet';
+        else if (company === 'Xem Sơn' || company.includes('Xem')) dataKey = 'XemSon';
+        else if (company === 'VPS M' || company.includes('VPS M')) dataKey = 'VPSM';
+        else if (company === 'ITSS' || company.includes('ITSS')) dataKey = 'ITSS'; 
+        else if (company !== 'all') dataKey = 'VPVPS';
+
         // --- 1. Customers ---
         let custLabels = ['Dịch vụ', 'Thuê máy', 'Phân phối'], custData = [];
         let tCust=0, tNew=0, tDec=0, tLost=0;
@@ -52,7 +71,7 @@ window.OverviewModule = {
             }
             custData = [tService, tRental, tDistribution];
         } else {
-            const compData = customers.byCompany[company];
+            const compData = customers.byCompany[dataKey];
             if(compData) {
                 tCust = compData.service + compData.rental + compData.distribution;
                 tNew = compData.new;
@@ -63,6 +82,7 @@ window.OverviewModule = {
         }
         
         document.getElementById('ov-cust-total').textContent = tCust.toLocaleString();
+        document.getElementById('overview-customers-val').textContent = tCust.toLocaleString();
         document.getElementById('ov-cust-new').textContent = "+" + tNew.toLocaleString();
         document.getElementById('ov-cust-decreased').textContent = tDec.toLocaleString();
         document.getElementById('ov-cust-lost').textContent = tLost.toLocaleString();
@@ -92,15 +112,15 @@ window.OverviewModule = {
         let revLabels = [], revActualData = [], revPlanData = [];
         if (company === 'all') {
             for (const [compName, compData] of Object.entries(revenue.byCompany)) {
-                revLabels.push(compName);
+                revLabels.push(companyNameMap[compName] || compName);
                 revActualData.push(compData.actual);
                 revPlanData.push(compData.plan);
             }
         } else {
-            if(revenue.byCompany[company]) {
+            if(revenue.byCompany[dataKey]) {
                 revLabels = [company];
-                revActualData = [revenue.byCompany[company].actual];
-                revPlanData = [revenue.byCompany[company].plan];
+                revActualData = [revenue.byCompany[dataKey].actual];
+                revPlanData = [revenue.byCompany[dataKey].plan];
             }
         }
 
@@ -207,8 +227,8 @@ window.OverviewModule = {
             debtData = [dCurrent, dOverdue, dBad];
             document.getElementById('overview-debt-val').textContent = dTotal.toFixed(1) + ' Tỷ ₫';
         } else {
-            if(debt.byCompany[company]) {
-                const cData = debt.byCompany[company];
+            if(debt.byCompany[dataKey]) {
+                const cData = debt.byCompany[dataKey];
                 debtData = [cData.current, cData.overdue, cData.bad];
                 dTotal = cData.current + cData.overdue + cData.bad;
                 dCurrent = cData.current;
@@ -245,3 +265,5 @@ window.OverviewModule = {
         });
     }
 };
+
+

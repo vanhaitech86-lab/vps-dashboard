@@ -80,8 +80,6 @@ window.InventoryModule = {
                     }
                 }
             });
-        }
-
         const tbody = document.querySelector('#inventoryTable tbody');
         if (tbody) {
             let html = '';
@@ -114,3 +112,5 @@ window.InventoryModule = {
         }
     }
 };
+
+

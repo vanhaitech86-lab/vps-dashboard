@@ -29,6 +29,25 @@ window.HrModule = {
     },
 
     updateUI(data, company) {
+        
+        const companyNameMap = {
+            'all': 'Tất cả',
+            'THH': 'Tân Hồng Hà',
+            'Viet': 'Việt',
+            'XemSon': 'Xem Sơn',
+            'VPSM': 'VPS M',
+            'ITSS': 'ITSS',
+            'VPVPS': 'Văn phòng VPS'
+        };
+
+        let dataKey = 'all';
+        if (company === 'Tân Hồng Hà' || (company.includes('T') && company.includes('H'))) dataKey = 'THH';
+        else if (company === 'Việt' || company.includes('Vi')) dataKey = 'Viet';
+        else if (company === 'Xem Sơn' || company.includes('Xem')) dataKey = 'XemSon';
+        else if (company === 'VPS M' || company.includes('VPS M')) dataKey = 'VPSM';
+        else if (company === 'ITSS' || company.includes('ITSS')) dataKey = 'ITSS'; 
+        else if (company !== 'all') dataKey = 'VPVPS';
+
         let tQuota = 0, tOfficial = 0, tProbation = 0, tResigned = 0;
         let chartLabels = [], officialData = [], probationData = [], vacancyData = [], resignedData = [];
 
@@ -58,7 +77,7 @@ window.HrModule = {
             currentAnalysis.cause = "Tổng hợp toàn bộ các đơn vị. Xem chi tiết bằng cách chọn từng công ty.";
             currentAnalysis.solution = "Điều chỉnh chiến lược nhân sự tổng thể Tập đoàn.";
         } else {
-            const compData = data.byCompany[company];
+            const compData = data.byCompany[dataKey];
             if (compData) {
                 tQuota = compData.quota || 0;
                 tOfficial = compData.official || 0;
