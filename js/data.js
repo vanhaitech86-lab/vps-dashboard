@@ -110,12 +110,12 @@ const mockData = {
         'Văn phòng VPS': { ds: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
     },
     byCompany: {
-            'Tân Hồng Hà': { quota: 150, official: 120, probation: 15, resigned: 3, kpi: {A: 40, B: 50, C: 25, D: 5}, analysis: { cause: 'Biến động nhân sự sale khu vực miền Nam, năng suất chưa đạt kỳ vọng.', solution: 'Đào tạo lại kỹ năng sale, tăng cường giám sát KPIs.' } },
-            'Việt': { quota: 100, official: 85, probation: 10, resigned: 2, kpi: {A: 30, B: 40, C: 12, D: 3}, analysis: { cause: 'Quy trình vận hành kho chưa tối ưu, thiếu nhân lực lúc cao điểm.', solution: 'Tuyển bổ sung nhân viên kho, áp dụng hệ thống quét mã vạch.' } },
-            'Xem Sơn': { quota: 80, official: 70, probation: 5, resigned: 1, kpi: {A: 35, B: 25, C: 8, D: 2}, analysis: { cause: 'Kỹ thuật viên mới chưa quen việc xử lý máy in màu.', solution: 'Kèm cặp 1-1, tổ chức thi tay nghề định kỳ.' } },
-            'VPS M': { quota: 120, official: 100, probation: 12, resigned: 4, kpi: {A: 45, B: 45, C: 8, D: 2}, analysis: { cause: 'Bộ phận dự án làm việc quá tải do thầu nhiều.', solution: 'Giãn tiến độ hoặc thuê thêm outsource thời vụ.' } },
-            'ITSS': { quota: 50, official: 40, probation: 5, resigned: 0, kpi: {A: 20, B: 20, C: 4, D: 1}, analysis: { cause: 'Team Dev năng suất tốt nhưng chưa thạo nghiệp vụ CRM.', solution: 'Mời chuyên gia CRM về training nội bộ.' } },
-            'Văn phòng VPS': { quota: 40, official: 30, probation: 5, resigned: 2, kpi: {A: 15, B: 15, C: 4, D: 1}, analysis: { cause: 'Thiếu nhân sự kế toán trưởng, một số phòng ban phối hợp chậm.', solution: 'Đẩy mạnh tuyển dụng cấp cao, ban hành lại quy chế phối hợp.' } }
+            'Tân Hồng Hà': { quota: 54, official: 48, probation: 2, resigned: 0, kpi: {A: 2, B: 43, C: 3, D: 0}, analysis: { cause: 'Cần bổ sung nhân sự kinh doanh và hoàn thành định biên.', solution: 'Tuyển thêm 6 nhân viên kinh doanh theo định mức.' } },
+            'Việt': { quota: 43, official: 39, probation: 1, resigned: 0, kpi: {A: 14, B: 19, C: 1, D: 4}, analysis: { cause: 'Chất lượng nhân sự có phân bổ rộng, một số yếu kém cần cải thiện.', solution: 'Tuyển bổ sung 3 nhân sự, đào tạo lại nhóm nhân sự loại D.' } },
+            'Xem Sơn': { quota: 98, official: 95, probation: 1, resigned: 0, kpi: {A: 0, B: 85, C: 10, D: 0}, analysis: { cause: 'Nhân sự khá ổn định nhưng chưa có cá nhân xuất sắc.', solution: 'Tuyển thêm 2 nhân viên kinh doanh để hoàn thiện cơ cấu.' } },
+            'VPS M': { quota: 15, official: 10, probation: 0, resigned: 0, kpi: {A: 0, B: 10, C: 0, D: 0}, analysis: { cause: 'Thiếu hụt đáng kể so với định biên (cần 5 nhân viên kinh doanh).', solution: 'Gấp rút đẩy mạnh hoạt động tuyển dụng nhân sự kinh doanh.' } },
+            'ITSS': { quota: 8, official: 3, probation: 1, resigned: 0, kpi: {A: 3, B: 0, C: 0, D: 0}, analysis: { cause: 'Team ITSS quy mô nhỏ, chất lượng nhân sự xuất sắc nhưng thiếu số lượng.', solution: 'Tuyển dụng thêm 4 nhân sự lập trình/hỗ trợ CRM.' } },
+            'Văn phòng VPS': { quota: 19, official: 18, probation: 0, resigned: 0, kpi: {A: 0, B: 18, C: 0, D: 0}, analysis: { cause: 'Nhân sự đã gần đủ định biên, chất lượng đạt mức khá toàn diện.', solution: 'Tuyển thêm 1 vị trí cuối cùng, duy trì chính sách giữ chân nhân sự.' } }
         }
     }
 };
