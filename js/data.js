@@ -65,12 +65,12 @@ const mockData = {
     },
     hr: {
         byCompany: {
-            'Tân Hồng Hà': { quota: 150, official: 120, probation: 15, resigned: 3 },
-            'Việt': { quota: 100, official: 85, probation: 10, resigned: 2 },
-            'Xem Sơn': { quota: 80, official: 70, probation: 5, resigned: 1 },
-            'VPS M': { quota: 120, official: 100, probation: 12, resigned: 4 },
-            'ITSS': { quota: 50, official: 40, probation: 5, resigned: 0 },
-            'Văn phòng VPS': { quota: 40, official: 30, probation: 5, resigned: 2 }
+            'Tân Hồng Hà': { quota: 150, official: 120, probation: 15, resigned: 3, kpi: {A: 40, B: 50, C: 25, D: 5}, analysis: { cause: 'Biến động nhân sự sale khu vực miền Nam, năng suất chưa đạt kỳ vọng.', solution: 'Đào tạo lại kỹ năng sale, tăng cường giám sát KPIs.' } },
+            'Việt': { quota: 100, official: 85, probation: 10, resigned: 2, kpi: {A: 30, B: 40, C: 12, D: 3}, analysis: { cause: 'Quy trình vận hành kho chưa tối ưu, thiếu nhân lực lúc cao điểm.', solution: 'Tuyển bổ sung nhân viên kho, áp dụng hệ thống quét mã vạch.' } },
+            'Xem Sơn': { quota: 80, official: 70, probation: 5, resigned: 1, kpi: {A: 35, B: 25, C: 8, D: 2}, analysis: { cause: 'Kỹ thuật viên mới chưa quen việc xử lý máy in màu.', solution: 'Kèm cặp 1-1, tổ chức thi tay nghề định kỳ.' } },
+            'VPS M': { quota: 120, official: 100, probation: 12, resigned: 4, kpi: {A: 45, B: 45, C: 8, D: 2}, analysis: { cause: 'Bộ phận dự án làm việc quá tải do thầu nhiều.', solution: 'Giãn tiến độ hoặc thuê thêm outsource thời vụ.' } },
+            'ITSS': { quota: 50, official: 40, probation: 5, resigned: 0, kpi: {A: 20, B: 20, C: 4, D: 1}, analysis: { cause: 'Team Dev năng suất tốt nhưng chưa thạo nghiệp vụ CRM.', solution: 'Mời chuyên gia CRM về training nội bộ.' } },
+            'Văn phòng VPS': { quota: 40, official: 30, probation: 5, resigned: 2, kpi: {A: 15, B: 15, C: 4, D: 1}, analysis: { cause: 'Thiếu nhân sự kế toán trưởng, một số phòng ban phối hợp chậm.', solution: 'Đẩy mạnh tuyển dụng cấp cao, ban hành lại quy chế phối hợp.' } }
         }
     }
 };
@@ -148,3 +148,4 @@ window.DataService = {
         return new Promise(resolve => setTimeout(() => resolve(mockData.hr), 200));
     }
 };
+
