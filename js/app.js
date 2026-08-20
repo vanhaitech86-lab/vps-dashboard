@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.CustomersModule) window.CustomersModule.init();
             if(window.ProductsModule) window.ProductsModule.init();
             if(window.FujifilmModule) window.FujifilmModule.init();
+            if(window.ProductsOtherModule) window.ProductsOtherModule.init();
             if(window.RevenueModule) window.RevenueModule.init();
             if(window.InventoryModule) window.InventoryModule.init();
             if(window.DebtModule) window.DebtModule.init();
