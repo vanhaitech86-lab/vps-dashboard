@@ -213,6 +213,8 @@ a:hover {
    ========================================================================== */
 
 .card {
+    min-width: 0;
+
     background: var(--clr-surface);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
