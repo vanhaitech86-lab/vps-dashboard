@@ -1,30 +1,12 @@
-import codecs
 import re
 
-with codecs.open('js/app.js', 'r', 'utf-8') as f:
-    content = f.read()
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    js = f.read()
 
-content = re.sub(
-    r'showApp\(\)\s*\{\s*document\.getElementById\(\'login-screen\'\)\.classList\.add\(\'hidden\'\);\s*document\.getElementById\(\'app-screen\'\)\.classList\.remove\(\'hidden\'\);\s*const user = window\.AuthService\.getCurrentUser\(\);',
-    r'''async showApp() {
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('app-screen').classList.remove('hidden');
-            
-            // Show loading state
-            document.querySelector('.top-bar-right').insertAdjacentHTML('beforeend', '<div id="gs-loading" style="color:red; font-weight:bold; margin-left:15px;">⏳ Đang đồng bộ Google Sheets...</div>');
-            
-            // Fetch from Google Sheets
-            if (window.GoogleSheetsService) {
-                await window.GoogleSheetsService.loadAllData();
-            }
-            
-            // Remove loading
-            const loadingEl = document.getElementById('gs-loading');
-            if(loadingEl) loadingEl.remove();
+# Replace document.getElementById('current-user-role').textContent = user.role.name;
+# with safe check
+js = js.replace("document.getElementById('current-user-role').textContent = user.role.name;", 
+                "document.getElementById('current-user-role').textContent = typeof user.role === 'object' ? user.role.name : String(user.role);")
 
-            const user = window.AuthService.getCurrentUser();''',
-    content
-)
-
-with codecs.open('js/app.js', 'w', 'utf-8') as f:
-    f.write(content)
+with open('js/app.js', 'w', encoding='utf-8') as f:
+    f.write(js)

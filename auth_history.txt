@@ -1,0 +1,263 @@
+commit 5f2cef89ed7057d35f272ddd88487c12c5ac42d0
+Author: VPS Dashboard Bot <bot@example.com>
+Date:   Wed Aug 19 10:18:45 2026 +0700
+
+    Add Van phong VPS and resigned staff to HR chart
+
+diff --git a/js/auth.js b/js/auth.js
+index c1d02b7..d88c5c6 100644
+--- a/js/auth.js
++++ b/js/auth.js
+@@ -19,7 +19,8 @@ const DEFAULT_USERS = {
+     'VCOPY': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC VIỆT', company: 'Việt' },
+     'XESCO': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC XEM SƠN', company: 'Xem Sơn' },
+     'vpsm': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC VPS M', company: 'VPS M' },
+-    'ITSS': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
++    'ITSS': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC ITSS', company: 'ITSS' },
++    'vpvps': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC VP VPS', company: 'Văn phòng VPS' }
+ };
+ 
+ let usersDB = null;
+
+commit c56325dfa874ef6ff0230bb17f5ce96016e2267a
+Author: VPS Dashboard Bot <bot@example.com>
+Date:   Wed Aug 19 00:24:38 2026 +0700
+
+    Add Admin module and update marquee color
+
+diff --git a/js/auth.js b/js/auth.js
+index 2abc0fe..c1d02b7 100644
+--- a/js/auth.js
++++ b/js/auth.js
+@@ -11,8 +11,8 @@ const ROLES = {
+     STAFF: { level: 6, name: 'Nhân viên', canViewAll: false }
+ };
+ 
+-// Mock Users Database
+-const USERS = {
++// Default Mock Users Database
++const DEFAULT_USERS = {
+     'ADMIN': { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' },
+     'CEO': { password: '123a@', role: ROLES.CEO, name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
+     'THH': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
+@@ -22,12 +22,44 @@ const USERS = {
+     'ITSS': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
+ };
+ 
++let usersDB = null;
++
+ window.AuthService = {
+     currentUser: null,
+ 
++    loadUsers() {
++        if (!usersDB) {
++            const stored = localStorage.getItem('vps_users_db');
++            if (stored) {
++                usersDB = JSON.parse(stored);
++            } else {
++                usersDB = JSON.parse(JSON.stringify(DEFAULT_USERS));
++            }
++        }
++    },
++
++    getUsers() {
++        this.loadUsers();
++        return usersDB;
++    },
++
++    saveUser(id, userData) {
++        this.loadUsers();
++        usersDB[id] = userData;
++        localStorage.setItem('vps_users_db', JSON.stringify(usersDB));
++    },
++
++    deleteUser(id) {
++        this.loadUsers();
++        if (usersDB[id]) {
++            delete usersDB[id];
++            localStorage.setItem('vps_users_db', JSON.stringify(usersDB));
++        }
++    },
++
+     login(username, password) {
+-        // Mock authentication
+-        const user = USERS[username];
++        this.loadUsers();
++        const user = usersDB[username];
+         if (user && user.password === password) {
+             this.currentUser = user;
+             localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
+@@ -42,9 +74,15 @@ window.AuthService = {
+     },
+ 
+     checkSession() {
++        this.loadUsers();
+         const stored = localStorage.getItem('vps_user');
+         if (stored) {
+             this.currentUser = JSON.parse(stored);
++            // Refresh with latest data from DB just in case it was updated
++            if(usersDB[this.currentUser.id || Object.keys(usersDB).find(k => usersDB[k].name === this.currentUser.name)]) {
++                const userId = Object.keys(usersDB).find(k => usersDB[k].name === this.currentUser.name);
++                if (userId) this.currentUser = usersDB[userId];
++            }
+             return true;
+         }
+         return false;
+@@ -58,5 +96,9 @@ window.AuthService = {
+         if (!this.currentUser) return false;
+         if (this.currentUser.role.canViewAll) return true;
+         return this.currentUser.company === companyName;
++    },
++
++    getRolesMap() {
++        return ROLES;
+     }
+ };
+
+commit 47228453947519cadc3f81f26d3ee19b74b035c5
+Author: VPS Dashboard Bot <bot@example.com>
+Date:   Tue Aug 18 23:59:47 2026 +0700
+
+    Fix UI glitches, text replacements, and auth bugs
+
+diff --git a/js/auth.js b/js/auth.js
+index fc4e85d..2abc0fe 100644
+--- a/js/auth.js
++++ b/js/auth.js
+@@ -13,13 +13,13 @@ const ROLES = {
+ 
+ // Mock Users Database
+ const USERS = {
+-    'ADMIN': { password: 'Admin123@', role: 'ceo', name: 'ADMIN', company: 'all' },
+-    'CEO': { password: '123a@', role: 'ceo', name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
+-    'THH': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
+-    'VCOPY': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC VIỆT', company: 'Việt' },
+-    'XESCO': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC XEM SƠN', company: 'Xem Sơn' },
+-    'vpsm': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC VPS M', company: 'VPS M' },
+-    'ITSS': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
++    'ADMIN': { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' },
++    'CEO': { password: '123a@', role: ROLES.CEO, name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
++    'THH': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
++    'VCOPY': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC VIỆT', company: 'Việt' },
++    'XESCO': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC XEM SƠN', company: 'Xem Sơn' },
++    'vpsm': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC VPS M', company: 'VPS M' },
++    'ITSS': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
+ };
+ 
+ window.AuthService = {
+@@ -27,8 +27,9 @@ window.AuthService = {
+ 
+     login(username, password) {
+         // Mock authentication
+-        if (users[username] && password === 'password') {
+-            this.currentUser = users[username];
++        const user = USERS[username];
++        if (user && user.password === password) {
++            this.currentUser = user;
+             localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
+             return true;
+         }
+
+commit b92c6c422a3805eed19f9acfeccd81fb059f537a
+Author: VPS Dashboard Bot <bot@example.com>
+Date:   Tue Aug 18 23:45:50 2026 +0700
+
+    Update user roles, texts, table totals and data simulation
+
+diff --git a/js/auth.js b/js/auth.js
+index 9166a07..fc4e85d 100644
+--- a/js/auth.js
++++ b/js/auth.js
+@@ -12,12 +12,14 @@ const ROLES = {
+ };
+ 
+ // Mock Users Database
+-const users = {
+-    'ceo': { name: 'Vũ Phạm', role: ROLES.CEO, company: 'all' },
+-    'cso': { name: 'Trần Bình', role: ROLES.CSO, company: 'all' },
+-    'director_thh': { name: 'Lê Cường', role: ROLES.DIRECTOR, company: 'Tân Hồng Hà' },
+-    'manager_itss': { name: 'Nguyễn Dũng', role: ROLES.MANAGER, company: 'ITSS' },
+-    'staff_vpsm': { name: 'Phạm E', role: ROLES.STAFF, company: 'VPS M' }
++const USERS = {
++    'ADMIN': { password: 'Admin123@', role: 'ceo', name: 'ADMIN', company: 'all' },
++    'CEO': { password: '123a@', role: 'ceo', name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
++    'THH': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
++    'VCOPY': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC VIỆT', company: 'Việt' },
++    'XESCO': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC XEM SƠN', company: 'Xem Sơn' },
++    'vpsm': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC VPS M', company: 'VPS M' },
++    'ITSS': { password: '123a@', role: 'director', name: 'GIÁM ĐỐC ITSS', company: 'ITSS' }
+ };
+ 
+ window.AuthService = {
+
+commit 0637b5c79c795150714bfbc0c83f875144ab0705
+Author: VPS Dashboard Bot <bot@example.com>
+Date:   Tue Aug 18 22:07:31 2026 +0700
+
+    Initial commit
+
+diff --git a/js/auth.js b/js/auth.js
+new file mode 100644
+index 0000000..9166a07
+--- /dev/null
++++ b/js/auth.js
+@@ -0,0 +1,59 @@
++/**
++ * Authentication and Role-Based Access Control (RBAC)
++ */
++
++const ROLES = {
++    CEO: { level: 1, name: 'Chủ tịch / CEO', canViewAll: true },
++    CSO: { level: 2, name: 'Phó Chủ tịch / CSO', canViewAll: true },
++    DIRECTOR: { level: 3, name: 'Giám đốc', canViewAll: false },
++    MANAGER: { level: 4, name: 'Trưởng phòng', canViewAll: false },
++    LEADER: { level: 5, name: 'Tổ trưởng', canViewAll: false },
++    STAFF: { level: 6, name: 'Nhân viên', canViewAll: false }
++};
++
++// Mock Users Database
++const users = {
++    'ceo': { name: 'Vũ Phạm', role: ROLES.CEO, company: 'all' },
++    'cso': { name: 'Trần Bình', role: ROLES.CSO, company: 'all' },
++    'director_thh': { name: 'Lê Cường', role: ROLES.DIRECTOR, company: 'Tân Hồng Hà' },
++    'manager_itss': { name: 'Nguyễn Dũng', role: ROLES.MANAGER, company: 'ITSS' },
++    'staff_vpsm': { name: 'Phạm E', role: ROLES.STAFF, company: 'VPS M' }
++};
++
++window.AuthService = {
++    currentUser: null,
++
++    login(username, password) {
++        // Mock authentication
++        if (users[username] && password === 'password') {
++            this.currentUser = users[username];
++            localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
++            return true;
++        }
++        return false;
++    },
++
++    logout() {
++        this.currentUser = null;
++        localStorage.removeItem('vps_user');
++    },
++
++    checkSession() {
++        const stored = localStorage.getItem('vps_user');
++        if (stored) {
++            this.currentUser = JSON.parse(stored);
++            return true;
++        }
++        return false;
++    },
++
++    getCurrentUser() {
++        return this.currentUser;
++    },
++
++    canViewCompany(companyName) {
++        if (!this.currentUser) return false;
++        if (this.currentUser.role.canViewAll) return true;
++        return this.currentUser.company === companyName;
++    }
++};
