@@ -201,7 +201,7 @@ window.InventoryModule = {
             window.ChartManager.createChart('inventoryChart', 'doughnut', chartData, {
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'right' },
+                    legend: { position: 'bottom' },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
