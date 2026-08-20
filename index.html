@@ -478,11 +478,72 @@
                 </section>
 
                 <section id="view-product" class="view hidden">
-                    <div class="card text-center" style="padding: 40px;">
-                        <i data-lucide="package" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
-                        <h2>Sản Phẩm</h2>
-                        <p class="text-muted">Module đang được phát triển.</p>
-                    </div>
+<div class="card mt-20">
+    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>Báo Cáo Chỉ Tiêu Sản Phẩm</h3>
+        <select id="products-month-filter" style="padding: 4px 8px; font-weight: bold; border-radius: 4px; border: 1px solid #cbd5e1;"></select>
+    </div>
+    <div class="table-responsive">
+        <table class="data-table" id="productsTable" style="text-align: right; white-space: nowrap; font-size: 0.85rem;">
+            <thead>
+                <tr>
+                    <th rowspan="3" style="text-align: center; vertical-align: middle; background: #f8fafc; position: sticky; left: 0; z-index: 2;">STT</th>
+                    <th rowspan="3" style="text-align: center; vertical-align: middle; background: #f8fafc; position: sticky; left: 40px; z-index: 2; min-width: 250px;">SẢN PHẨM</th>
+                    <!-- THH -->
+                    <th colspan="5" class="col-thh" style="text-align: center; background: #fed7aa; color: #9a3412;">THH</th>
+                    <!-- XESCO -->
+                    <th colspan="5" class="col-xesco" style="text-align: center; background: #fef08a; color: #854d0e;">XESCO</th>
+                    <!-- VIỆT -->
+                    <th colspan="5" class="col-viet" style="text-align: center; background: #bbf7d0; color: #166534;">VIỆT</th>
+                    <!-- VPSM -->
+                    <th colspan="5" class="col-vpsm" style="text-align: center; background: #bfdbfe; color: #1e40af;">VPSM</th>
+                    <!-- ITSS -->
+                    <th colspan="5" class="col-itss" style="text-align: center; background: #e9d5ff; color: #6b21a8;">ITSS</th>
+                    <!-- TỔNG -->
+                    <th colspan="5" class="col-all" style="text-align: center; background: #f87171; color: #450a0a;">TỔNG TẬP ĐOÀN VPS</th>
+                </tr>
+                <tr>
+                    <!-- THH -->
+                    <th colspan="2" class="col-thh" style="background: #ffedd5;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-thh" style="background: #ffedd5;">THỰC HIỆN</th>
+                    <!-- XESCO -->
+                    <th colspan="2" class="col-xesco" style="background: #fef9c3;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-xesco" style="background: #fef9c3;">THỰC HIỆN</th>
+                    <!-- VIỆT -->
+                    <th colspan="2" class="col-viet" style="background: #dcfce7;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-viet" style="background: #dcfce7;">THỰC HIỆN</th>
+                    <!-- VPSM -->
+                    <th colspan="2" class="col-vpsm" style="background: #dbeafe;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-vpsm" style="background: #dbeafe;">THỰC HIỆN</th>
+                    <!-- ITSS -->
+                    <th colspan="2" class="col-itss" style="background: #f3e8ff;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-itss" style="background: #f3e8ff;">THỰC HIỆN</th>
+                    <!-- TỔNG -->
+                    <th colspan="2" class="col-all" style="background: #fca5a5;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-all" style="background: #fca5a5;">THỰC HIỆN</th>
+                </tr>
+                <tr>
+                    <!-- THH -->
+                    <th class="col-thh">SL</th><th class="col-thh">DS</th><th class="col-thh">SL</th><th class="col-thh">DS</th><th class="col-thh">%ĐẠT</th>
+                    <!-- XESCO -->
+                    <th class="col-xesco">SL</th><th class="col-xesco">DS</th><th class="col-xesco">SL</th><th class="col-xesco">DS</th><th class="col-xesco">%ĐẠT</th>
+                    <!-- VIỆT -->
+                    <th class="col-viet">SL</th><th class="col-viet">DS</th><th class="col-viet">SL</th><th class="col-viet">DS</th><th class="col-viet">%ĐẠT</th>
+                    <!-- VPSM -->
+                    <th class="col-vpsm">SL</th><th class="col-vpsm">DS</th><th class="col-vpsm">SL</th><th class="col-vpsm">DS</th><th class="col-vpsm">%ĐẠT</th>
+                    <!-- ITSS -->
+                    <th class="col-itss">SL</th><th class="col-itss">DS</th><th class="col-itss">SL</th><th class="col-itss">DS</th><th class="col-itss">%ĐẠT</th>
+                    <!-- TỔNG -->
+                    <th class="col-all">SL</th><th class="col-all">DS</th><th class="col-all">SL</th><th class="col-all">DS</th><th class="col-all">%ĐẠT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populated by JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
                 </section>
 
                 <section id="view-inventory" class="view hidden">
@@ -671,6 +732,7 @@
     <script src="js/charts.js"></script>
     <script src="js/overview.js"></script>
     <script src="js/customers.js"></script>
+    <script src="js/products.js"></script>
     <script src="js/revenue.js"></script>
     <script src="js/inventory.js"></script>
     <script src="js/debt.js"></script>
