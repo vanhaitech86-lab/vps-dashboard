@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     item.classList.add('active');
                     this.showView(item.dataset.target);
                     // On mobile, close sidebar
-                    document.querySelector('.sidebar').classList.remove('active');
+                    const sidebar = document.querySelector('.sidebar');
+                    if(sidebar) sidebar.classList.remove('open');
                 });
             });
 
@@ -58,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                         this.showView(target);
                         window.scrollTo(0,0);
+                        const sidebar = document.querySelector('.sidebar');
+                        if(sidebar) sidebar.classList.remove('open');
                     }
                 });
             });
