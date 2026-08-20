@@ -256,9 +256,18 @@ window.GoogleSheetsService = {
                         selectEl.appendChild(opt);
                     });
                     
+                    // Update header title initially
+                    const planHeader = document.getElementById('plan-header-title');
+                    if (planHeader) {
+                        planHeader.textContent = "KẾ HOẠCH TÌM KIẾM THÊM THÁNG " + defaultMonth.split('/')[0];
+                    }
+
                     // Bind event listener
                     selectEl.addEventListener('change', (e) => {
                         const newMonth = e.target.value;
+                        if (planHeader) {
+                            planHeader.textContent = "KẾ HOẠCH TÌM KIẾM THÊM THÁNG " + newMonth.split('/')[0];
+                        }
                         window.mockData.customers = window.GoogleSheetsService.buildCustomerDataForMonth(newMonth);
                         if(window.FilterManager) window.FilterManager.triggerFilterChange();
                     });
