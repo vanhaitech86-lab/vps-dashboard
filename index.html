@@ -478,9 +478,29 @@
                 </section>
 
                 <section id="view-product" class="view hidden">
-<div class="card mt-20">
-    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-        <h3>Báo Cáo Chỉ Tiêu Sản Phẩm</h3>
+                    <!-- Charts Section -->
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card">
+                                <h3>Doanh Số Theo Sản Phẩm (Thực Hiện)</h3>
+                                <div class="chart-container" style="height: 300px; width: 100%;">
+                                    <canvas id="productsPieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <h3>Doanh Số Các Đơn Vị (Kế Hoạch vs Thực Hiện)</h3>
+                                <div class="chart-container" style="height: 300px; width: 100%;">
+                                    <canvas id="productsBarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-20">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>Báo cáo chi tiết Sản phẩm HP</h3>
         <select id="products-month-filter" style="padding: 4px 8px; font-weight: bold; border-radius: 4px; border: 1px solid #cbd5e1;"></select>
     </div>
     <div class="table-responsive">
