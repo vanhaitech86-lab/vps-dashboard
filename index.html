@@ -65,8 +65,9 @@
                 <a href="#overview" class="nav-item active" data-target="overview" style="border-left: 4px solid #3498db;"><i data-lucide="layout-dashboard"></i> DASHBOARD</a>
                 <a href="#hr" class="nav-item" data-target="hr" style="border-left: 4px solid #e74c3c;"><i data-lucide="users"></i> 1. CCTC Nhân Sự</a>
                 <a href="#revenue" class="nav-item" data-target="revenue" style="border-left: 4px solid #2ecc71;"><i data-lucide="bar-chart-2"></i> 2. Doanh Số Lãi Gộp</a>
-                <a href="#product" class="nav-item" data-target="product" style="border-left: 4px solid #9b59b6;"><i data-lucide="package"></i> 3. Sản Phẩm</a>
-                <a href="#inventory" class="nav-item" data-target="inventory" style="border-left: 4px solid #f1c40f;"><i data-lucide="archive"></i> 4. Tồn Kho</a>
+                <a href="#product" class="nav-item" data-target="product" style="border-left: 4px solid #9b59b6;"><i data-lucide="package"></i> 3. Sản Phẩm HP</a>
+                    <a href="#fujifilm" class="nav-item" data-target="fujifilm" style="border-left: 4px solid #ef4444;"><i data-lucide="printer"></i> 4. Sản Phẩm Fujifilm</a>
+                <a href="#inventory" class="nav-item" data-target="inventory" style="border-left: 4px solid #f1c40f;"><i data-lucide="archive"></i> 5. Tồn Kho</a>
                 <a href="#expenses" class="nav-item" data-target="expenses" style="border-left: 4px solid #e67e22;"><i data-lucide="pie-chart"></i> 5. Chi Phí</a>
                 <a href="#debt" class="nav-item" data-target="debt" style="border-left: 4px solid #1abc9c;"><i data-lucide="file-text"></i> 6. Công Nợ</a>
                 <a href="#customers" class="nav-item" data-target="customers" style="border-left: 4px solid #34495e;"><i data-lucide="user-check"></i> 7. Khách Hàng</a>
@@ -566,6 +567,95 @@
 
                 </section>
 
+                <section id="view-fujifilm" class="view hidden">
+                    <!-- Charts Section -->
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card">
+                                <h3>Doanh Số Theo Sản Phẩm (Thực Hiện)</h3>
+                                <div class="chart-container" style="height: 300px; width: 100%;">
+                                    <canvas id="fujifilmPieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <h3>Doanh Số Các Đơn Vị (Kế Hoạch vs Thực Hiện)</h3>
+                                <div class="chart-container" style="height: 300px; width: 100%;">
+                                    <canvas id="fujifilmBarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-20">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>Báo cáo chi tiết Sản phẩm Fujifilm</h3>
+        <select id="fujifilm-month-filter" style="padding: 4px 8px; font-weight: bold; border-radius: 4px; border: 1px solid #cbd5e1;"></select>
+    </div>
+    <div class="table-responsive">
+        <table class="data-table" id="fujifilmTable" style="text-align: right; white-space: nowrap; font-size: 0.85rem;">
+            <thead>
+                <tr>
+                    <th rowspan="3" style="text-align: center; vertical-align: middle; background: #f8fafc; position: sticky; left: 0; z-index: 2;">STT</th>
+                    <th rowspan="3" style="text-align: center; vertical-align: middle; background: #f8fafc; position: sticky; left: 40px; z-index: 2; min-width: 250px;">SẢN PHẨM</th>
+                    <!-- THH -->
+                    <th colspan="5" class="col-thh" style="text-align: center; background: #fed7aa; color: #9a3412;">THH</th>
+                    <!-- XESCO -->
+                    <th colspan="5" class="col-xesco" style="text-align: center; background: #fef08a; color: #854d0e;">XESCO</th>
+                    <!-- VIỆT -->
+                    <th colspan="5" class="col-viet" style="text-align: center; background: #bbf7d0; color: #166534;">VIỆT</th>
+                    <!-- VPSM -->
+                    <th colspan="5" class="col-vpsm" style="text-align: center; background: #bfdbfe; color: #1e40af;">VPSM</th>
+                    <!-- ITSS -->
+                    <th colspan="5" class="col-itss" style="text-align: center; background: #e9d5ff; color: #6b21a8;">ITSS</th>
+                    <!-- TỔNG -->
+                    <th colspan="5" class="col-all" style="text-align: center; background: #f87171; color: #450a0a;">TỔNG TẬP ĐOÀN VPS</th>
+                </tr>
+                <tr>
+                    <!-- THH -->
+                    <th colspan="2" class="col-thh" style="background: #ffedd5;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-thh" style="background: #ffedd5;">THỰC HIỆN</th>
+                    <!-- XESCO -->
+                    <th colspan="2" class="col-xesco" style="background: #fef9c3;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-xesco" style="background: #fef9c3;">THỰC HIỆN</th>
+                    <!-- VIỆT -->
+                    <th colspan="2" class="col-viet" style="background: #dcfce7;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-viet" style="background: #dcfce7;">THỰC HIỆN</th>
+                    <!-- VPSM -->
+                    <th colspan="2" class="col-vpsm" style="background: #dbeafe;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-vpsm" style="background: #dbeafe;">THỰC HIỆN</th>
+                    <!-- ITSS -->
+                    <th colspan="2" class="col-itss" style="background: #f3e8ff;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-itss" style="background: #f3e8ff;">THỰC HIỆN</th>
+                    <!-- TỔNG -->
+                    <th colspan="2" class="col-all" style="background: #fca5a5;">KẾ HOẠCH</th>
+                    <th colspan="3" class="col-all" style="background: #fca5a5;">THỰC HIỆN</th>
+                </tr>
+                <tr>
+                    <!-- THH -->
+                    <th class="col-thh">SL</th><th class="col-thh">DS</th><th class="col-thh">SL</th><th class="col-thh">DS</th><th class="col-thh">%ĐẠT</th>
+                    <!-- XESCO -->
+                    <th class="col-xesco">SL</th><th class="col-xesco">DS</th><th class="col-xesco">SL</th><th class="col-xesco">DS</th><th class="col-xesco">%ĐẠT</th>
+                    <!-- VIỆT -->
+                    <th class="col-viet">SL</th><th class="col-viet">DS</th><th class="col-viet">SL</th><th class="col-viet">DS</th><th class="col-viet">%ĐẠT</th>
+                    <!-- VPSM -->
+                    <th class="col-vpsm">SL</th><th class="col-vpsm">DS</th><th class="col-vpsm">SL</th><th class="col-vpsm">DS</th><th class="col-vpsm">%ĐẠT</th>
+                    <!-- ITSS -->
+                    <th class="col-itss">SL</th><th class="col-itss">DS</th><th class="col-itss">SL</th><th class="col-itss">DS</th><th class="col-itss">%ĐẠT</th>
+                    <!-- TỔNG -->
+                    <th class="col-all">SL</th><th class="col-all">DS</th><th class="col-all">SL</th><th class="col-all">DS</th><th class="col-all">%ĐẠT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populated by JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+                </section>
+
                 <section id="view-inventory" class="view hidden">
                     <div class="grid-layout cols-2">
                         <div class="card">
@@ -753,6 +843,7 @@
     <script src="js/overview.js"></script>
     <script src="js/customers.js"></script>
     <script src="js/products.js"></script>
+    <script src="js/fujifilm.js"></script>
     <script src="js/revenue.js"></script>
     <script src="js/inventory.js"></script>
     <script src="js/debt.js"></script>
