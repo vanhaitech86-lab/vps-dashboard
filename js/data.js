@@ -947,7 +947,7 @@ function applyPeriodMultiplier(data, period) {
     function multiplyNumbers(obj) {
         for (let key in obj) {
             if (typeof obj[key] === 'number' && key !== 'id' && key !== 'daysOverdue' && key !== 'percentage') {
-                obj[key] = obj[key] * multiplier;
+                obj[key] = Math.round(obj[key] * multiplier);
             } else if (typeof obj[key] === 'object' && obj[key] !== null) {
                 multiplyNumbers(obj[key]);
             }
