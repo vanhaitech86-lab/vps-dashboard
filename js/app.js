@@ -77,8 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('app-screen').classList.remove('hidden');
             
-            // Show loading state
-            document.querySelector('.top-bar-right').insertAdjacentHTML('beforeend', '<div id="gs-loading" style="color:red; font-weight:bold; margin-left:15px;">⏳ Đang đồng bộ Google Sheets...</div>');
+            // Show loading state (safe - element may not exist)
+            const topBarRight = document.querySelector('.top-bar-right') || document.querySelector('.filter-bar') || document.querySelector('header');
+            if (topBarRight) {
+                topBarRight.insertAdjacentHTML('beforeend', '<div id="gs-loading" style="color:red; font-weight:bold; margin-left:15px;">⏳ Đang đồng bộ Google Sheets...</div>');
+            }
             
             // KẾT NỐI LẠI GOOGLE SHEETS
             if (window.GoogleSheetsService) {
