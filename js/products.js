@@ -139,11 +139,11 @@ window.ProductsModule = {
         const barLabels = ['THH', 'XESCO', 'VIỆT', 'VPSM', 'ITSS'];
         const tongRow = this.mockRows.find(r => r.id === 'tong');
         
+        const keys = ['thh', 'xesco', 'viet', 'vpsm', 'itss'];
         let planData = [];
         let actualData = [];
         
-        barLabels.forEach(label => {
-            const k = label.toLowerCase();
+        keys.forEach(k => {
             planData.push(tongRow.data[k].kh_ds);
             actualData.push(tongRow.data[k].th_ds);
         });
