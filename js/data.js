@@ -999,9 +999,10 @@ window.DataService = {
         return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.inventory, period)), 200));
     },
 
-    async getHrData(period = 'month', company = 'all') {
-        // HR data should generally not be multiplied by period for headcount, except maybe resigned.
-        // For simplicity we will return it as is or lightly processed.
+        async getHrData(period = 'month', company = 'all') {
+        if(window.appData && window.appData.hr) {
+            return new Promise(resolve => setTimeout(() => resolve(window.appData.hr), 100));
+        }
         return new Promise(resolve => setTimeout(() => resolve(mockData.hr), 200));
     }
 };

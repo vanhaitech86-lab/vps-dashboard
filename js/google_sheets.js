@@ -42,10 +42,11 @@ function parseNumber(val) {
 window.GoogleSheetsService = {
     async loadAllData() {
         try {
-            const [revCsv, debtCsv, custCsv] = await Promise.all([
+            const [revCsv, debtCsv, custCsv, hrCsv] = await Promise.all([
                 fetchCsv('Doanh thu'),
                 fetchCsv('Công nợ'),
-                fetchCsv('Khách hàng')
+                fetchCsv('Khách hàng'),
+                fetchCsv('Nhân sự')
             ]);
             
             const newData = {
@@ -89,6 +90,43 @@ window.GoogleSheetsService = {
                     newData.debt.total += (parseNumber(row[2]) + parseNumber(row[3]) + parseNumber(row[4]));
                 }
             }
+
+
+            // Parse HR
+            let hrByCompany = {
+                'THH': { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} },
+                'Viet': { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} },
+                'XemSon': { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} },
+                'VPSM': { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} },
+                'ITSS': { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} },
+                'VPVPS': { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} }
+            };
+
+            let currentHrCompany = '';
+            for (let i = 2; i < hrCsv.length; i++) {
+                const row = hrCsv[i];
+                if (!row) continue;
+                if (row[1]) {
+                    currentHrCompany = companyIdMap[row[1]] || currentHrCompany;
+                } else if (row[0] && companyIdMap[row[0]]) {
+                    currentHrCompany = companyIdMap[row[0]];
+                }
+                
+                if (!currentHrCompany) continue;
+                
+                const cId = currentHrCompany;
+                const nghiviec = parseNumber(row[5]);
+                const thuviec = parseNumber(row[6]);
+                const cuoiky = parseNumber(row[7]);
+                
+                if (hrByCompany[cId]) {
+                    hrByCompany[cId].probation += thuviec;
+                    hrByCompany[cId].resigned += nghiviec;
+                    hrByCompany[cId].official += (cuoiky - thuviec);
+                    hrByCompany[cId].quota += cuoiky; // mock quota as cuoiky for now
+                }
+            }
+            newData.hr.byCompany = hrByCompany;
 
             // Parse Customers
             
