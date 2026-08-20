@@ -5,52 +5,200 @@
 window.InventoryModule = {
     init() {
         document.addEventListener('vps_filter_changed', (e) => {
-            this.loadData(e.detail.period, e.detail.company);
+            this.renderUI(e.detail.company);
         });
-    },
-
-    async loadData(period, company) {
-        const invData = await window.DataService.getInventoryData(period, company);
-        this.updateUI(invData, company);
-    },
-
-    updateUI(invData, company) {
-        if(!invData || !invData.byCompany) return;
         
-        let compData = invData.byCompany[company];
-        if(!compData || !compData.categories) {
-            compData = {
-                brands: { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0 },
-                categories: {
-                    'May': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Option': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Consumable': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Part': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Khac': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 },
-                    'Tong': { 'HP': 0, 'Fujifilm': 0, 'Olivetti': 0, 'Bonsai': 0, 'Khac': 0, 'Cong': 0 }
-                }
-            };
+        // Setup initial table structure
+        const thead = document.querySelector('#inventoryTable thead');
+        if (thead) {
+            thead.innerHTML = `
+                <tr style="background: #a3e635; font-size: 0.95rem;">
+                    <th style="width: 50px; text-align: center;">STT</th>
+                    <th style="min-width: 200px;">ĐƠN VỊ / PHÂN LOẠI</th>
+                    <th style="text-align: right;">HP</th>
+                    <th style="text-align: right;">Fujifilm</th>
+                    <th style="text-align: right;">Olivetti / VCOPY</th>
+                    <th style="text-align: right;">Bonsai / AIN</th>
+                    <th style="text-align: right;">Khác</th>
+                    <th style="text-align: right; background: rgba(0,0,0,0.05);">Cộng</th>
+                </tr>
+            `;
         }
-
-        const totalNum = compData.categories['Tong']['Cong'];
-        document.getElementById('inventory-total-val').innerText = (totalNum / 1000000000).toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' Tỷ VNĐ';
-
-        const brands = Object.keys(compData.brands);
-        const brandValues = Object.values(compData.brands);
         
-        const labelMap = { 'Khac': 'Khác' };
-        const displayLabels = brands.map(b => labelMap[b] || b);
+        this.generateData();
+        this.renderUI('all');
+    },
+    
+    generateData() {
+        this.invData = [
+            {
+                company: "THH",
+                stt: "I",
+                headers: ["HP", "Fujifilm", "Olivetti", "Bonsai", "Khác", "Cộng"],
+                rows: [
+                    { stt: "1", name: "Máy", vals: [16236861538, 2691167947, 145461859, 1196919790, 351112106] },
+                    { stt: "2", name: "Option/phần mềm", vals: [724129217, 316631629, null, null, 84155594] },
+                    { stt: "3", name: "Consumable", vals: [1697362872, 3893921782, 595000, null, 477185636] },
+                    { stt: "4", name: "Part", vals: [422875719, 1842798361, 1300000, 250000, 232552257] },
+                    { stt: "5", name: "Khác", vals: [6907408, 250000, null, null, 15330882] }
+                ]
+            },
+            {
+                company: "VIỆT",
+                stt: "II",
+                headers: ["HP", "Fujifilm", "VCOPY", "AIN", "Khác", "Cộng"],
+                rows: [
+                    { stt: "1", name: "Máy", vals: [789169565, null, null, null, 865846304] },
+                    { stt: "2", name: "Option/phần mềm", vals: [null, 3770311, null, null, null] },
+                    { stt: "3", name: "Consumable", vals: [671194009, 407253157, null, null, 1163183311] },
+                    { stt: "4", name: "Part", vals: [4151324, 154791890, null, null, 294985264] },
+                    { stt: "5", name: "Khác", vals: [null, null, null, null, 317282276] }
+                ]
+            },
+            {
+                company: "XESCO",
+                stt: "III",
+                headers: ["HP", "Fujifilm", "Olivetti", "Bonsai", "Khác", "Cộng"],
+                rows: [
+                    { stt: "1", name: "Máy", vals: [8045068951, 2429722467, 198937517, 1061511065, 162201573] },
+                    { stt: "2", name: "Option/phần mềm", vals: [5929018372, 146022831, null, null, 44239635] },
+                    { stt: "3", name: "Consumable", vals: [1887432428, 6988196768, 131323207, null, 481597314] },
+                    { stt: "4", name: "Part", vals: [339925051, 1653586022, null, 10264441, 126635862] },
+                    { stt: "5", name: "Khác", vals: [null, null, null, null, 5238960] }
+                ]
+            },
+            {
+                company: "VPSM",
+                stt: "IV",
+                headers: ["HP", "Fujifilm", "Olivetti", "Bonsai", "Khác", "Cộng"],
+                rows: [
+                    { stt: "1", name: "Máy", vals: [691079773, 712194005, 72694670, 129401638, null] },
+                    { stt: "2", name: "Option/phần mềm", vals: [7499646, null, null, null, null] },
+                    { stt: "3", name: "Consumable vật tư", vals: [1081355202, 1479770277, null, null, null] },
+                    { stt: "4", name: "Part/ Linh kiện", vals: [null, 129401638, null, null, null] },
+                    { stt: "5", name: "Khác", vals: [null, null, null, null, 338569147] }
+                ]
+            },
+            {
+                company: "VPS",
+                stt: "V",
+                headers: ["HP", "Fujifilm", "Olivetti + GL", "Bonsai", "Khác", "Cộng"],
+                rows: [
+                    { stt: "1", name: "Máy", vals: [1761370959, 242362282, 468416955, 456721, 1300471] },
+                    { stt: "2", name: "Option/phần mềm", vals: [null, null, null, null, null] },
+                    { stt: "3", name: "Consumable vật tư", vals: [null, 213306355, null, null, null] },
+                    { stt: "4", name: "Part/ Linh kiện", vals: [3008139, 610122393, null, null, 704976] },
+                    { stt: "5", name: "Khác", vals: [null, 37499514, null, null, 8574286] }
+                ]
+            }
+        ];
+    },
 
-        const chartData = {
-            labels: displayLabels,
-            datasets: [{
-                data: brandValues,
-                backgroundColor: ['#2563eb', '#16a34a', '#ca8a04', '#0891b2', '#64748b'],
-                borderWidth: 1
-            }]
-        };
+    renderUI(companyFilter) {
+        if(!this.invData) this.generateData();
+        let compKey = 'all';
+        if (companyFilter === 'Tân Hồng Hà' || (companyFilter.includes('T') && companyFilter.includes('H'))) compKey = 'THH';
+        else if (companyFilter === 'Xem Sơn' || companyFilter.includes('Xem')) compKey = 'XESCO';
+        else if (companyFilter === 'Việt' || companyFilter.includes('Vi')) compKey = 'VIỆT';
+        else if (companyFilter === 'VPS M' || companyFilter.includes('VPS M')) compKey = 'VPSM';
+        else if (companyFilter === 'ITSS' || companyFilter.includes('ITSS')) compKey = 'VPS'; 
+        
+        let totalBrands = [0, 0, 0, 0, 0, 0];
+        
+        const tbody = document.querySelector('#inventoryTable tbody');
+        if (!tbody) return;
+        
+        let html = '';
+        
+        let isAll = compKey === 'all';
+        
+        let activeBlocks = this.invData.filter(d => isAll || d.company === compKey);
+        
+        activeBlocks.forEach(block => {
+            let blockSums = [0, 0, 0, 0, 0, 0];
+            
+            let rowsHtml = '';
+            block.rows.forEach(r => {
+                let rowSum = 0;
+                r.vals.forEach(v => rowSum += (v || 0));
+                
+                for(let i=0; i<5; i++) blockSums[i] += (r.vals[i] || 0);
+                blockSums[5] += rowSum;
+                
+                rowsHtml += `<tr>
+                    <td style="text-align: center;">${r.stt}</td>
+                    <td>${r.name}</td>
+                    <td style="text-align: right;">${r.vals[0] ? r.vals[0].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right;">${r.vals[1] ? r.vals[1].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right;">${r.vals[2] ? r.vals[2].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right;">${r.vals[3] ? r.vals[3].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right;">${r.vals[4] ? r.vals[4].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right; background: rgba(0,0,0,0.02); font-weight: bold;">${rowSum ? rowSum.toLocaleString('vi-VN') : ''}</td>
+                </tr>`;
+            });
+            
+            for(let i=0; i<6; i++) totalBrands[i] += blockSums[i];
+            
+            html += `
+                <tr style="background: #a3e635; font-weight: bold;">
+                    <td style="text-align: center;">${block.stt}</td>
+                    <td>${block.company}</td>
+                    <td style="text-align: right;">${block.headers[0]}</td>
+                    <td style="text-align: right;">${block.headers[1]}</td>
+                    <td style="text-align: right;">${block.headers[2]}</td>
+                    <td style="text-align: right;">${block.headers[3]}</td>
+                    <td style="text-align: right;">${block.headers[4]}</td>
+                    <td style="text-align: right;">${block.headers[5]}</td>
+                </tr>
+            `;
+            
+            html += rowsHtml;
+            
+            html += `
+                <tr style="background: #bae6fd; font-weight: bold;">
+                    <td></td>
+                    <td>Tổng cộng</td>
+                    <td style="text-align: right;">${blockSums[0] ? blockSums[0].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right;">${blockSums[1] ? blockSums[1].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right;">${blockSums[2] ? blockSums[2].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right;">${blockSums[3] ? blockSums[3].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right;">${blockSums[4] ? blockSums[4].toLocaleString('vi-VN') : ''}</td>
+                    <td style="text-align: right; color: #b91c1c;">${blockSums[5] ? blockSums[5].toLocaleString('vi-VN') : ''}</td>
+                </tr>
+            `;
+        });
+        
+        if (isAll) {
+            let masterHeader = `
+                <tr style="background: #fde047; font-weight: bold; font-size: 1.1rem;">
+                    <td style="text-align: center;">A</td>
+                    <td>TỔNG TẬP ĐOÀN</td>
+                    <td style="text-align: right;">${totalBrands[0].toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right;">${totalBrands[1].toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right;">${totalBrands[2].toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right;">${totalBrands[3].toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right;">${totalBrands[4].toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right; color: #b91c1c;">${totalBrands[5].toLocaleString('vi-VN')}</td>
+                </tr>
+            `;
+            html = masterHeader + html;
+        }
+        
+        document.getElementById('inventory-total-val').innerText = (totalBrands[5] / 1000000000).toLocaleString('vi-VN', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' Tỷ VND';
+        
+        tbody.innerHTML = html;
+        
+        if (window.ChartManager) {
+            const chartData = {
+                labels: ['HP', 'Fujifilm', 'Olivetti / VCOPY', 'Bonsai / AIN', 'Khác'],
+                datasets: [{
+                    data: totalBrands.slice(0, 5),
+                    backgroundColor: ['#2563eb', '#16a34a', '#ca8a04', '#0891b2', '#64748b'],
+                    borderWidth: 1
+                }]
+            };
 
-        window.ChartManager.createChart('inventoryChart', 'doughnut', chartData, {
+            window.ChartManager.createChart('inventoryChart', 'doughnut', chartData, {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: { position: 'right' },
@@ -60,7 +208,7 @@ window.InventoryModule = {
                                 let label = context.label || '';
                                 if (label) { label += ': '; }
                                 if (context.raw !== null) {
-                                    label += new Intl.NumberFormat('vi-VN').format(context.raw) + ' VNĐ';
+                                    label += new Intl.NumberFormat('vi-VN').format(context.raw) + ' VND';
                                 }
                                 return label;
                             }
@@ -80,37 +228,6 @@ window.InventoryModule = {
                     }
                 }
             });
-        const tbody = document.querySelector('#inventoryTable tbody');
-        if (tbody) {
-            let html = '';
-            const catNames = { 'May': 'Máy', 'Option': 'Option/phần mềm', 'Consumable': 'Consumable', 'Part': 'Part', 'Khac': 'Khác' };
-            for(const cat of ['May', 'Option', 'Consumable', 'Part', 'Khac']) {
-                const cData = compData.categories[cat];
-                html += `<tr>
-                    <td>${catNames[cat]}</td>
-                    <td style="text-align: right;">${cData['HP'] ? cData['HP'].toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right;">${cData['Fujifilm'] ? cData['Fujifilm'].toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right;">${cData['Olivetti'] ? cData['Olivetti'].toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right;">${cData['Bonsai'] ? cData['Bonsai'].toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right;">${cData['Khac'] ? cData['Khac'].toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; background: rgba(0,0,0,0.02); font-weight: bold;">${cData['Cong'] ? cData['Cong'].toLocaleString('vi-VN') : '-'}</td>
-                </tr>`;
-            }
-            
-            const tData = compData.categories['Tong'];
-            html += `<tr style="font-weight: bold; background: #e2e8f0; border-top: 2px solid #cbd5e1;">
-                <td>TỔNG CỘNG</td>
-                <td style="text-align: right;">${tData['HP'] ? tData['HP'].toLocaleString('vi-VN') : '-'}</td>
-                <td style="text-align: right;">${tData['Fujifilm'] ? tData['Fujifilm'].toLocaleString('vi-VN') : '-'}</td>
-                <td style="text-align: right;">${tData['Olivetti'] ? tData['Olivetti'].toLocaleString('vi-VN') : '-'}</td>
-                <td style="text-align: right;">${tData['Bonsai'] ? tData['Bonsai'].toLocaleString('vi-VN') : '-'}</td>
-                <td style="text-align: right;">${tData['Khac'] ? tData['Khac'].toLocaleString('vi-VN') : '-'}</td>
-                <td style="text-align: right; color: #b91c1c;">${tData['Cong'] ? tData['Cong'].toLocaleString('vi-VN') : '-'}</td>
-            </tr>`;
-            
-            tbody.innerHTML = html;
         }
     }
 };
-
-
