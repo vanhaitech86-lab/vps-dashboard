@@ -103,7 +103,7 @@ window.GoogleSheetsService = {
             };
 
             let currentHrCompany = '';
-            for (let i = 2; i < hrCsv.length; i++) {
+            for (let i = 1; i < hrCsv.length; i++) {
                 const row = hrCsv[i];
                 if (!row) continue;
                 if (row[1]) {
@@ -270,7 +270,7 @@ window.GoogleSheetsService = {
             // Fallback for HR and Inventory since we haven't written parsers for them yet
             // To prevent crashes, we can pull them from mockData for now
             newData.inventory = window.mockData.inventory;
-            newData.hr = window.mockData.hr;
+            // newData.hr is now parsed from CSV, don't overwrite it!
 
             // Fallback to mockData if sheet is empty (so UI doesn't look blank during testing)
             if (newData.revenue.total > 0) {
@@ -281,6 +281,9 @@ window.GoogleSheetsService = {
             }
             if (newData.customers.total > 0) {
                 window.mockData.customers = newData.customers;
+            }
+            if (Object.keys(newData.hr.byCompany).length > 0) {
+                window.mockData.hr = newData.hr;
             }
             
             console.log("Successfully loaded data from Google Sheets:", newData);
