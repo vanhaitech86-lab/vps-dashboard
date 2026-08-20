@@ -110,7 +110,7 @@ window.ProductsOtherModule = {
             
             ['thh', 'xesco', 'viet', 'vpsm', 'itss', 'all'].forEach(c => {
                 let display = (compKey !== 'all' && compKey !== c && c !== 'all') ? 'none' : '';
-                let isBold = r.isSum || r.stt === 'I';
+                let isBold = r.isSum || r.stt === 'I' || r.stt === 'IV';
                 let fw = isBold ? 'font-weight: bold;' : '';
                 
                 let d = r.data[c];
@@ -192,7 +192,7 @@ window.ProductsOtherModule = {
         window.ChartManager.createChart('otherPieChart', 'pie', pieConfig, {
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'right' },
+                legend: { position: 'bottom' },
                 tooltip: {
                     callbacks: {
                         label: function(context) {

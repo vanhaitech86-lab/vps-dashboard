@@ -108,7 +108,7 @@ window.FujifilmModule = {
             
             ['thh', 'xesco', 'viet', 'vpsm', 'itss', 'all'].forEach(c => {
                 let display = (compKey !== 'all' && compKey !== c && c !== 'all') ? 'none' : '';
-                let isBold = r.isSum || r.stt === 'I';
+                let isBold = r.isSum || r.stt === 'I' || r.stt === 'II';
                 let fw = isBold ? 'font-weight: bold;' : '';
                 
                 let d = r.data[c];
@@ -190,7 +190,7 @@ window.FujifilmModule = {
         window.ChartManager.createChart('fujifilmPieChart', 'pie', pieConfig, {
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'right' },
+                legend: { position: 'bottom' },
                 tooltip: {
                     callbacks: {
                         label: function(context) {

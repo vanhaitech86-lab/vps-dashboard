@@ -195,7 +195,7 @@ window.ProductsModule = {
         window.ChartManager.createChart('productsPieChart', 'pie', pieConfig, {
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'right' },
+                legend: { position: 'bottom' },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
