@@ -999,10 +999,8 @@ window.DataService = {
         return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.inventory, period)), 200));
     },
 
-        async getHrData(period = 'month', company = 'all') {
-        if(window.appData && window.appData.hr) {
-            return new Promise(resolve => setTimeout(() => resolve(window.appData.hr), 100));
-        }
+    async getHrData(period = 'month', company = 'all') {
+        // mockData.hr is updated by google_sheets.js loadAllData()
         return new Promise(resolve => setTimeout(() => resolve(mockData.hr), 200));
     }
 };

@@ -57,7 +57,7 @@ window.GoogleSheetsService = {
                 hr: { totalEmployees: 0, newHires: 0, resignations: 0, probation: 0, byDepartment: {}, byCompany: {} }
             };
 
-            // Parse Revenue (Rows 2 to 7)
+            // ========== Parse Revenue ==========
             for (let i = 2; i < revCsv.length; i++) {
                 const row = revCsv[i];
                 if(!row[0]) continue;
@@ -76,7 +76,7 @@ window.GoogleSheetsService = {
                 }
             }
 
-            // Parse Debt
+            // ========== Parse Debt ==========
             for (let i = 2; i < debtCsv.length; i++) {
                 const row = debtCsv[i];
                 if(!row[0]) continue;
@@ -91,8 +91,8 @@ window.GoogleSheetsService = {
                 }
             }
 
-
-            // Parse HR
+            // ========== Parse HR ==========
+            // CSV structure (row 0 = header): Tháng/Năm | Công ty | Phòng ban | Tổng NV Đầu kỳ | Tuyển mới | Nghỉ việc | NV Thử việc | Tổng NV Cuối kỳ
             let hrByCompany = {
                 'THH': { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} },
                 'Viet': { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} },
@@ -103,12 +103,18 @@ window.GoogleSheetsService = {
             };
 
             let currentHrCompany = '';
+            console.log('[HR DEBUG] hrCsv total rows:', hrCsv.length);
             for (let i = 1; i < hrCsv.length; i++) {
                 const row = hrCsv[i];
                 if (!row) continue;
+
+                // Detect company from column 1 (Công ty)
                 if (row[1]) {
-                    currentHrCompany = companyIdMap[row[1]] || currentHrCompany;
-                } else if (row[0] && companyIdMap[row[0]]) {
+                    const mapped = companyIdMap[row[1]];
+                    if (mapped) currentHrCompany = mapped;
+                }
+                // Fallback: detect company from column 0
+                if (!currentHrCompany && row[0] && companyIdMap[row[0]]) {
                     currentHrCompany = companyIdMap[row[0]];
                 }
                 
@@ -123,13 +129,13 @@ window.GoogleSheetsService = {
                     hrByCompany[cId].probation += thuviec;
                     hrByCompany[cId].resigned += nghiviec;
                     hrByCompany[cId].official += (cuoiky - thuviec);
-                    hrByCompany[cId].quota += cuoiky; // mock quota as cuoiky for now
+                    hrByCompany[cId].quota += cuoiky;
                 }
             }
             newData.hr.byCompany = hrByCompany;
+            console.log('[HR DEBUG] Parsed hrByCompany:', JSON.stringify(hrByCompany));
 
-            // Parse Customers
-            
+            // ========== Parse Customers ==========
             let currentCompany = '';
             let currentMonth = '';
             
@@ -140,31 +146,24 @@ window.GoogleSheetsService = {
             for (let i = 3; i < custCsv.length; i++) {
                 const row = custCsv[i];
                 if (row[0]) {
-                    // Try to extract month if it's there
-                    // Because merged cells might leave month blank on subsequent rows, we keep track of it
                     const m = row[0].toString().trim();
-                    // Basic regex to check if it's a month like 08/2026
                     if (m.includes('/')) {
                         currentMonth = m;
                         availableMonths.add(m);
                         currentCompany = companyIdMap[row[1]] || currentCompany;
                     } else if (companyIdMap[m]) {
-                        // Sometimes column 0 is company if Month is omitted
                         currentCompany = companyIdMap[m];
                     }
                 }
                 
-                // If the CSV structure is Month | Company | Category, 
-                // and due to merges Month and Company might be in row[0] and row[1] only on the first row of a block
                 let catName = row[2];
-                // Handle case where Month is missing and everything shifted (if user unmerged)
                 if(!catName && customerCatMap[row[1]]) {
                     catName = row[1];
                 } else if(!catName && customerCatMap[row[0]]) {
                     catName = row[0];
                 }
 
-                if (!currentMonth) currentMonth = "08/2026"; // Fallback
+                if (!currentMonth) currentMonth = "08/2026";
                 if (!currentCompany) continue;
                 
                 const catId = customerCatMap[catName];
@@ -260,19 +259,14 @@ window.GoogleSheetsService = {
                     selectEl.addEventListener('change', (e) => {
                         const newMonth = e.target.value;
                         window.mockData.customers = window.GoogleSheetsService.buildCustomerDataForMonth(newMonth);
-                        // Re-trigger global filter to re-render UI
                         if(window.FilterManager) window.FilterManager.triggerFilterChange();
                     });
                 }
             }, 1000);
 
-
-            // Fallback for HR and Inventory since we haven't written parsers for them yet
-            // To prevent crashes, we can pull them from mockData for now
+            // ========== Write to mockData ==========
             newData.inventory = window.mockData.inventory;
-            // newData.hr is now parsed from CSV, don't overwrite it!
 
-            // Fallback to mockData if sheet is empty (so UI doesn't look blank during testing)
             if (newData.revenue.total > 0) {
                 window.mockData.revenue = newData.revenue;
             }
@@ -282,9 +276,8 @@ window.GoogleSheetsService = {
             if (newData.customers.total > 0) {
                 window.mockData.customers = newData.customers;
             }
-            if (Object.keys(newData.hr.byCompany).length > 0) {
-                window.mockData.hr = newData.hr;
-            }
+            // Always write HR from Google Sheets (even if values are 0, the structure is correct)
+            window.mockData.hr = newData.hr;
             
             console.log("Successfully loaded data from Google Sheets:", newData);
             return window.mockData;
