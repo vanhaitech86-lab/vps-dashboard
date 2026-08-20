@@ -43,11 +43,12 @@ window.GoogleSheetsService = {
     async loadAllData() {
         try {
             const [revCsv, debtCsv, custCsv, hrCsv] = await Promise.all([
-                fetchCsv('Doanh thu'),
-                fetchCsv('Công nợ'),
-                fetchCsv('Khách hàng'),
-                fetchCsv('Nhân sự')
+                fetchCsv('Doanh thu').catch(e => { console.warn('Failed to fetch Doanh thu:', e); return []; }),
+                fetchCsv('Công nợ').catch(e => { console.warn('Failed to fetch Công nợ:', e); return []; }),
+                fetchCsv('Khách hàng').catch(e => { console.warn('Failed to fetch Khách hàng:', e); return []; }),
+                fetchCsv('Nhân sự').catch(e => { console.warn('Failed to fetch Nhân sự:', e); return []; })
             ]);
+            console.log('[GS DEBUG] Fetched rows: rev=' + revCsv.length + ' debt=' + debtCsv.length + ' cust=' + custCsv.length + ' hr=' + hrCsv.length);
             
             const newData = {
                 revenue: { total: 0, plan2026: window.mockData.revenue.plan2026, byCompany: {} },
