@@ -13,8 +13,8 @@ window.InventoryModule = {
         if (thead) {
             thead.innerHTML = `
                 <tr style="background: #a3e635; font-size: 0.95rem;">
-                    <th style="width: 40px; text-align: center; position: sticky; left: 0; z-index: 2; background: #a3e635;">STT</th>
-                    <th style="min-width: 130px; white-space: normal; position: sticky; left: 40px; z-index: 2; background: #a3e635;">ĐƠN VỊ / PHÂN LOẠI</th>
+                    <th style="width: 40px; text-align: center;  background: #a3e635;">STT</th>
+                    <th style="min-width: 130px; white-space: normal;  background: #a3e635;">ĐƠN VỊ / PHÂN LOẠI</th>
                     <th style="text-align: right;">HP</th>
                     <th style="text-align: right;">Fujifilm</th>
                     <th style="text-align: right;">Olivetti / VCOPY</th>
@@ -126,8 +126,8 @@ window.InventoryModule = {
                 blockSums[5] += rowSum;
                 
                 rowsHtml += `<tr>
-                    <td style="text-align: center; position: sticky; left: 0; z-index: 1; background: #fff;">${r.stt}</td>
-                    <td style="position: sticky; left: 40px; z-index: 1; background: #fff;">${r.name}</td>
+                    <td style="text-align: center;  background: #fff;">${r.stt}</td>
+                    <td style=" background: #fff;">${r.name}</td>
                     <td style="text-align: right;">${r.vals[0] ? r.vals[0].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${r.vals[1] ? r.vals[1].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${r.vals[2] ? r.vals[2].toLocaleString('vi-VN') : ''}</td>
@@ -141,8 +141,8 @@ window.InventoryModule = {
             
             html += `
                 <tr style="background: #a3e635; font-weight: bold;">
-                    <td style="text-align: center; position: sticky; left: 0; z-index: 1; background: #a3e635;">${block.stt}</td>
-                    <td style="position: sticky; left: 40px; z-index: 1; background: #a3e635;">${block.company}</td>
+                    <td style="text-align: center;  background: #a3e635;">${block.stt}</td>
+                    <td style=" background: #a3e635;">${block.company}</td>
                     <td style="text-align: right;">${block.headers[0]}</td>
                     <td style="text-align: right;">${block.headers[1]}</td>
                     <td style="text-align: right;">${block.headers[2]}</td>
@@ -156,8 +156,8 @@ window.InventoryModule = {
             
             html += `
                 <tr style="background: #bae6fd; font-weight: bold;">
-                    <td style="position: sticky; left: 0; z-index: 1; background: #bae6fd;"></td>
-                    <td style="position: sticky; left: 40px; z-index: 1; background: #bae6fd;">Tổng cộng</td>
+                    <td style=" background: #bae6fd;"></td>
+                    <td style=" background: #bae6fd;">Tổng cộng</td>
                     <td style="text-align: right;">${blockSums[0] ? blockSums[0].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${blockSums[1] ? blockSums[1].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${blockSums[2] ? blockSums[2].toLocaleString('vi-VN') : ''}</td>
@@ -171,8 +171,8 @@ window.InventoryModule = {
         if (isAll) {
             let masterHeader = `
                 <tr style="background: #fde047; font-weight: bold; font-size: 1.1rem;">
-                    <td style="text-align: center; position: sticky; left: 0; z-index: 2; background: #fde047;">A</td>
-                    <td style="position: sticky; left: 40px; z-index: 2; background: #fde047;">TỔNG TẬP ĐOÀN</td>
+                    <td style="text-align: center;  background: #fde047;">A</td>
+                    <td style=" background: #fde047;">TỔNG TẬP ĐOÀN</td>
                     <td style="text-align: right;">${totalBrands[0].toLocaleString('vi-VN')}</td>
                     <td style="text-align: right;">${totalBrands[1].toLocaleString('vi-VN')}</td>
                     <td style="text-align: right;">${totalBrands[2].toLocaleString('vi-VN')}</td>
