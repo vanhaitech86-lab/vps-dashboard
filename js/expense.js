@@ -101,7 +101,7 @@ window.ExpenseModule = {
                 items: [
                     { code: "CP.LT.LU.010", name: "Chi phí lương ban điều hành VPS" }
                 ]
-            }
+            },
             {
                 stt: "V",
                 name: "CP Bất Thường",
