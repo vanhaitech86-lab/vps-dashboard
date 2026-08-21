@@ -9,7 +9,7 @@ window.ExpenseModule = {
     init() {
         document.addEventListener('vps_filter_changed', (e) => {
             this.currentCompanyFilter = e.detail.company;
-            this.renderUI();
+            setTimeout(() => { this.renderUI(); }, 10);
         });
         
         // Add a "Reset Filter" button HTML above the table if it doesn't exist
@@ -230,7 +230,7 @@ window.ExpenseModule = {
                         } else {
                             this.currentCategoryFilter = clickedIndex;
                         }
-                        this.renderUI();
+                        setTimeout(() => { this.renderUI(); }, 10);
                         // Scroll to table smoothly
                         document.getElementById('expenseTable').scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
