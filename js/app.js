@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const App = {
         init() {
             this.bindEvents();
+            window.addEventListener('orientationchange', () => {
+                setTimeout(() => {
+                    window.dispatchEvent(new Event('resize'));
+                }, 300);
+            });
             
             // Check session
             if (window.AuthService.checkSession()) {
