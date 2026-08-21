@@ -892,45 +892,43 @@
 
                                 <section id="view-iso" class="view hidden">
                     <!-- SUMMARY SECTION -->
-                    <div class="grid-layout cols-2" style="grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Tổng Hợp Quy Trình, Quy Định</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container" style="height: 350px;">
-                                    <canvas id="isoSummaryChart"></canvas>
-                                </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Tổng Hợp Quy Trình, Quy Định</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 400px;">
+                                <canvas id="isoSummaryChart"></canvas>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Bảng Tổng Hợp ISO</h3>
-                            </div>
-                            <div class="table-responsive" style="height: 350px; overflow-y: auto;">
-                                <table class="data-table">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>CÔNG TY</th>
-                                            <th style="text-align: center;">QUY TRÌNH</th>
-                                            <th style="text-align: center;">QUY ĐỊNH</th>
-                                            <th style="text-align: center;">TỔNG</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="iso-summary-tbody">
-                                        <!-- Rendered by JS -->
-                                    </tbody>
-                                    <tfoot>
-                                        <tr style="font-weight: bold; background: #f8f9fa;">
-                                            <td colspan="2" style="text-align: right;">TỔNG:</td>
-                                            <td style="text-align: center;">124</td>
-                                            <td style="text-align: center;">144</td>
-                                            <td style="text-align: center; color: var(--clr-primary);">268</td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                    </div>
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Bảng Tổng Hợp ISO</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>CÔNG TY</th>
+                                        <th style="text-align: center;">QUY TRÌNH</th>
+                                        <th style="text-align: center;">QUY ĐỊNH</th>
+                                        <th style="text-align: center;">TỔNG</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="iso-summary-tbody">
+                                    <!-- Rendered by JS -->
+                                </tbody>
+                                <tfoot>
+                                    <tr style="font-weight: bold; background: #f8f9fa;">
+                                        <td colspan="2" style="text-align: right;">TỔNG:</td>
+                                        <td style="text-align: center;">124</td>
+                                        <td style="text-align: center;">144</td>
+                                        <td style="text-align: center; color: var(--clr-primary);">268</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
 

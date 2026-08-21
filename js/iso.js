@@ -10,7 +10,6 @@ window.IsoModule = {
         { name: 'XESCO', qt: 22, qd: 26, total: 48 }
     ],
 
-    // Detail breakdown per company based on images
     detailData: {
         'TÂN HỒNG HÀ': [
             { dept: 'KINH DOANH LẺ, THUÊ MÁY, DỰ ÁN', qt: 3, qtList: ['QT bán hàng', 'QT chăm sóc khách hàng', 'QT thầu'], qd: 1, qdList: ['QĐ về chỉ tiêu khách hàng và chăm sóc khách hàng của khối KD trên phần mềm CRM'] },
@@ -38,7 +37,6 @@ window.IsoModule = {
             { dept: 'TÀI CHÍNH - KẾ TOÁN', qt: 4, qtList: ['1. Quy trình thu công nợ khách hàng: Bán buôn, bán lẻ, dịch vụ kỹ thuật', '2. Quy trình thu tiền', '3. Quy trình chi tiền', '4. QT BCTC'], qd: 16, qdList: ['1. QĐ thanh toán thưởng', '2. QĐ nhập hàng tại kho', '3. QĐ thanh toán tiền hàng', '4. QĐ thanh toán chi phí, công tác phí', '5. QĐ tạm ứng', '6. QĐ viết hóa đơn', '7. QĐ thu hồi công nợ', '8. QĐ kiểm kê hàng hóa tại kho', '9. QĐ xuất hàng tại kho', '10. QĐ duyệt giá bán hàng', '11. QĐ kiểm soát tiền chiết khấu', '12. QĐ kiểm tra thông tin hợp đồng', '13. QĐ chế độ báo cáo của Kế toán', '14. QĐ quản lý quỹ tiền mặt', '15. QĐ kiểm soát nội bộ', '16. QĐ ký duyệt chứng từ'] },
             { dept: 'Kinh doanh', qt: 3, qtList: ['1. QT bán hàng', '2. QT chăm sóc khách hàng', '3. QT thầu'], qd: 0, qdList: [] }
         ],
-        // Mock data for VPSM and XESCO reusing THH format with exact numbers
         'VPSM': [
             { dept: 'KINH DOANH', qt: 8, qtList: ['Các quy trình kinh doanh, chăm sóc KH'], qd: 3, qdList: ['Các quy định về bán hàng'] },
             { dept: 'KỸ THUẬT', qt: 10, qtList: ['Các quy trình kỹ thuật, sửa chữa, bảo hành'], qd: 3, qdList: ['Quy định dụng cụ, trang thiết bị'] },
@@ -103,12 +101,27 @@ window.IsoModule = {
                     }
                 ]
             },
+            plugins: [ChartDataLabels],
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                     x: { stacked: true },
                     y: { stacked: true, beginAtZero: true }
+                },
+                plugins: {
+                    datalabels: {
+                        color: 'rgba(0,0,0,0.6)',
+                        font: { weight: '500', size: 14 },
+                        anchor: 'center',
+                        align: 'center',
+                        formatter: function(value) {
+                            return value > 0 ? value : '';
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    }
                 },
                 onClick: (event, elements) => {
                     if (elements.length > 0) {
