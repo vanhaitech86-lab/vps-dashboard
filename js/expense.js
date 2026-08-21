@@ -102,6 +102,15 @@ window.ExpenseModule = {
                     { code: "CP.LT.LU.010", name: "Chi phí lương ban điều hành VPS" }
                 ]
             }
+            {
+                stt: "V",
+                name: "CP Bất Thường",
+                code: "",
+                chartGroup: 4, // Pie chart index 4
+                items: [
+                    { code: "", name: "Chi phí bất thường của các đơn vị" }
+                ]
+            }
         ];
     },
 
@@ -119,7 +128,7 @@ window.ExpenseModule = {
         let grandTotalPlan = 0;
         let grandTotalActual = 0;
         
-        let chartDataByCat = [0, 0, 0, 0]; // Biến đổi, Cố định, Lương, Khác
+        let chartDataByCat = [0, 0, 0, 0, 0]; // Biến đổi, Cố định, Lương, Khác
         
         // FIRST PASS: Calculate all totals so the charts always show the big picture
         this.categories.forEach((cat) => {
@@ -209,10 +218,10 @@ window.ExpenseModule = {
         // Update Chart
         if (window.ChartManager) {
             const pieData = {
-                labels: ['Biến đổi', 'Cố định', 'Lương', 'Chuyển VPS'],
+                labels: ['Biến đổi', 'Cố định', 'Lương', 'Chuyển VPS', 'Bất thường'],
                 datasets: [{
                     data: chartDataByCat,
-                    backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#6366f1'],
+                    backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#6366f1', '#ec4899'],
                     borderWidth: 2,
                     borderColor: '#ffffff',
                     hoverOffset: 10
