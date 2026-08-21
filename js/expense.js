@@ -119,7 +119,7 @@ window.ExpenseModule = {
                 rowsHtml += `<tr>
                     <td style="text-align: center; position: sticky; left: 0; z-index: 1; background: #fff;"></td>
                     <td style="position: sticky; left: 40px; z-index: 1; background: #fff;">${item.code}</td>
-                    <td style="position: sticky; left: 160px; z-index: 1; background: #fff;">${item.name}</td>
+                    <td style="position: sticky; left: 160px; z-index: 1; background: #fff; white-space: normal; min-width: 250px;">${item.name}</td>
                     <td style="text-align: right;">${basePlan.toLocaleString('vi-VN')}</td>
                     <td style="text-align: right;">${baseActual.toLocaleString('vi-VN')}</td>
                     <td style="text-align: center; color: ${color}; font-weight: 500;">${percent}%</td>
@@ -140,7 +140,7 @@ window.ExpenseModule = {
                 <tr style="background: #f1f5f9; font-weight: bold;">
                     <td style="text-align: center; position: sticky; left: 0; z-index: 1; background: #e2e8f0;">${cat.stt}</td>
                     <td style="position: sticky; left: 40px; z-index: 1; background: #e2e8f0;"></td>
-                    <td style="position: sticky; left: 160px; z-index: 1; background: #e2e8f0; color: #1e40af;">${cat.name}</td>
+                    <td style="position: sticky; left: 160px; z-index: 1; background: #e2e8f0; color: #1e40af; white-space: normal; min-width: 250px;">${cat.name}</td>
                     <td style="text-align: right;">${catPlan.toLocaleString('vi-VN')}</td>
                     <td style="text-align: right; color: #b91c1c;">${catActual.toLocaleString('vi-VN')}</td>
                     <td style="text-align: center;">${catPercent}%</td>
@@ -208,7 +208,7 @@ window.ExpenseModule = {
             let top5 = allItems.slice(0, 5);
             
             const barData = {
-                labels: top5.map(i => i.name.substring(0, 20) + '...'),
+                labels: top5.map(i => i.name.length > 45 ? i.name.substring(0, 45) + '...' : i.name),
                 datasets: [{
                     label: 'Chi phí (VND)',
                     data: top5.map(i => i.val),
