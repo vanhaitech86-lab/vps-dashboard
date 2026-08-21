@@ -906,8 +906,25 @@
                     </div>
                 </section>
 
-                                <section id="view-culture" class="view hidden">
-                    <div class="card">
+                                                <section id="view-culture" class="view hidden">
+                    <div class="grid-layout cols-2" style="grid-template-columns: 1fr 2fr;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Tỷ Lệ Thực Hiện Theo Đơn Vị</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 300px; position: relative;">
+                                    <canvas id="culturePieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" style="display: flex; flex-direction: column; justify-content: center; padding: 20px;">
+                            <h2 style="color: var(--clr-primary); font-size: 1.8rem; margin-bottom: 10px;">Văn Hóa Doanh Nghiệp</h2>
+                            <p style="font-size: 1.1rem; line-height: 1.6;">Lan tỏa triết lý <strong>Nhân - Quả</strong> và <strong>Tứ vô lượng tâm (Từ - Bi - Hỷ - Xả)</strong>. 100% CBNV thực hành giao tiếp ái ngữ, vận dụng trí tuệ và sự từ bi để giải quyết công việc theo hướng tích cực và nhân văn.</p>
+                        </div>
+                    </div>
+
+                    <div class="card mt-20">
                         <div class="card-header">
                             <h3>Báo Cáo Chỉ Tiêu Văn Hóa Doanh Nghiệp</h3>
                         </div>
@@ -915,41 +932,86 @@
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th style="width: 5%; text-align: center;">STT</th>
-                                        <th style="width: 75%;">NỘI DUNG CHỈ TIÊU</th>
-                                        <th style="width: 20%; text-align: center;">TRẠNG THÁI</th>
+                                        <th rowspan="2" style="width: 3%; text-align: center; vertical-align: middle;">STT</th>
+                                        <th rowspan="2" style="width: 35%; vertical-align: middle;">NỘI DUNG CHỈ TIÊU</th>
+                                        <th rowspan="2" style="width: 8%; text-align: center; vertical-align: middle;">KẾ HOẠCH</th>
+                                        <th colspan="6" style="text-align: center; border-bottom: 1px solid #ddd; background-color: #f8f9fa;">THỰC HIỆN CỦA CÁC ĐƠN VỊ</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 9%; text-align: center; font-size: 0.8rem; background-color: #f8f9fa;">TÂN HỒNG HÀ</th>
+                                        <th style="width: 9%; text-align: center; font-size: 0.8rem; background-color: #f8f9fa;">VIỆT</th>
+                                        <th style="width: 9%; text-align: center; font-size: 0.8rem; background-color: #f8f9fa;">XEMSON</th>
+                                        <th style="width: 9%; text-align: center; font-size: 0.8rem; background-color: #f8f9fa;">VPS M</th>
+                                        <th style="width: 9%; text-align: center; font-size: 0.8rem; background-color: #f8f9fa;">ITSS</th>
+                                        <th style="width: 9%; text-align: center; font-size: 0.8rem; background-color: #f8f9fa;">VP VPS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td style="text-align: center; font-weight: bold;">1</td>
                                         <td style="white-space: normal;">100% CBNV chính thức hiểu và tin sâu luật "Nhân - Quả"</td>
-                                        <td style="text-align: center;"><span class="badge" style="background-color: #27ae60; color: white; padding: 5px 10px; font-size: 0.85rem;">Hoàn thành 100%</span></td>
+                                        <td style="text-align: center; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: center; font-weight: bold;">2</td>
                                         <td style="white-space: normal;">100% CBNV chính thức giao tiếp ứng xử theo Tứ vô lượng tâm "Từ - Bi - Hỷ - Xả"</td>
-                                        <td style="text-align: center;"><span class="badge" style="background-color: #27ae60; color: white; padding: 5px 10px; font-size: 0.85rem;">Hoàn thành 100%</span></td>
+                                        <td style="text-align: center; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: center; font-weight: bold;">3</td>
                                         <td style="white-space: normal;">100% CBNV chính thức được quy y Tam Bảo: Phật - Pháp - Tăng</td>
-                                        <td style="text-align: center;"><span class="badge" style="background-color: #27ae60; color: white; padding: 5px 10px; font-size: 0.85rem;">Hoàn thành 100%</span></td>
+                                        <td style="text-align: center; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: center; font-weight: bold;">4</td>
                                         <td style="white-space: normal;">100% CBNV chính thức sẽ đạt 03 Tín chỉ phật pháp trong thời gian 02 năm</td>
-                                        <td style="text-align: center;"><span class="badge" style="background-color: #27ae60; color: white; padding: 5px 10px; font-size: 0.85rem;">Hoàn thành 100%</span></td>
+                                        <td style="text-align: center; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: center; font-weight: bold;">5</td>
                                         <td style="white-space: normal;">100% các đơn vị thành viên tham gia các hoạt động từ thiện, phật sự, cúng dường, phóng sinh, ủng hộ thiên tai</td>
-                                        <td style="text-align: center;"><span class="badge" style="background-color: #27ae60; color: white; padding: 5px 10px; font-size: 0.85rem;">Hoàn thành 100%</span></td>
+                                        <td style="text-align: center; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #27ae60; font-weight: bold;">100%</td>
                                     </tr>
                                     <tr style="background-color: rgba(241, 196, 15, 0.1);">
                                         <td style="text-align: center; font-weight: bold; color: #d35400;">6</td>
                                         <td style="white-space: normal; color: #d35400; font-weight: 500;">100% CBNV thực hành giao tiếp ái ngữ, vận dụng trí tuệ và sự từ bi để giải quyết công việc theo hướng tích cực và nhân văn.</td>
-                                        <td style="text-align: center;"><span class="badge" style="background-color: #27ae60; color: white; padding: 5px 10px; font-size: 0.85rem;">Hoàn thành 100%</span></td>
+                                        <td style="text-align: center; font-weight: bold; color: #d35400;">100%</td>
+                                        <td style="text-align: center; color: #d35400; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #d35400; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #d35400; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #d35400; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #d35400; font-weight: bold;">100%</td>
+                                        <td style="text-align: center; color: #d35400; font-weight: bold;">100%</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1063,6 +1125,7 @@
     <script src="js/debt.js"></script>
     <script src="js/hr.js"></script>
     <script src="js/admin.js"></script>
+    <script src="js/culture.js"></script>
     <script src="js/app.js"></script>
     
     <script>
