@@ -988,217 +988,77 @@
                 </section>
 
                 <section id="view-training" class="view hidden">
+                    <!-- SUMMARY SECTION -->
                     <div class="card">
                         <div class="card-header">
-                            <h3>Chương trình đào tạo</h3>
+                            <h3>Tổng Quan Đào Tạo Theo Đơn Vị</h3>
                         </div>
-                        <div class="table-responsive" style="max-height: 70vh; overflow: auto;">
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="trainingSummaryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Bảng Tổng Hợp Đào Tạo</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>CÔNG TY</th>
+                                        <th style="text-align: center;">KẾ HOẠCH (LƯỢT)</th>
+                                        <th style="text-align: center;">THỰC HIỆN (LƯỢT)</th>
+                                        <th style="text-align: center;">TỶ LỆ HOÀN THÀNH</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="training-summary-tbody">
+                                    <!-- Rendered by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- DETAIL SECTION (MATRIX) -->
+                    <div class="card mt-20 hidden" id="training-detail-card">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 id="training-detail-title" style="color: var(--clr-primary);">Ma Trận Chương Trình Đào Tạo - CÔNG TY</h3>
+                            <button class="btn-filter" onclick="document.getElementById('training-detail-card').classList.add('hidden')" style="padding: 5px 10px; cursor: pointer; border: 1px solid #ddd; border-radius: 4px; background: #f8f9fa;">Đóng chi tiết</button>
+                        </div>
+                        <div class="table-responsive" style="max-height: 60vh; overflow: auto;">
                             <table class="data-table matrix-table" style="width: 100%; border-collapse: collapse; white-space: nowrap; font-size: 0.85rem;">
                                 <thead style="position: sticky; top: 0; z-index: 10; background: #fff;">
                                     <tr>
-                                        <th rowspan="3" style="border: 1px solid #ccc; text-align: center; vertical-align: middle;">STT</th>
-                                        <th rowspan="3" style="border: 1px solid #ccc; text-align: center; vertical-align: middle; min-width: 200px;">ĐỐI TƯỢNG</th>
-                                        <th colspan="11" style="border: 1px solid #ccc; text-align: center;">CHƯƠNG TRÌNH ĐÀO TẠO</th>
-                                        <th rowspan="3" style="border: 1px solid #ccc; text-align: center; vertical-align: middle;">Tổng</th>
+                                        <th rowspan="3" style="border: 1px solid #ccc; text-align: center; vertical-align: middle; background: #e2e8f0;">STT</th>
+                                        <th rowspan="3" style="border: 1px solid #ccc; text-align: center; vertical-align: middle; min-width: 200px; background: #e2e8f0;">ĐỐI TƯỢNG</th>
+                                        <th colspan="11" style="border: 1px solid #ccc; text-align: center; background: #bae6fd;">CHƯƠNG TRÌNH ĐÀO TẠO</th>
+                                        <th rowspan="3" style="border: 1px solid #ccc; text-align: center; vertical-align: middle; background: #e2e8f0;">Tổng</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3" style="border: 1px solid #ccc; text-align: center;">Văn hóa DN</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">ISO</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">Quản trị<br>DN</th>
-                                        <th colspan="2" style="border: 1px solid #ccc; text-align: center;">Chuyên môn</th>
-                                        <th colspan="4" style="border: 1px solid #ccc; text-align: center;">Kỹ năng</th>
+                                        <th colspan="3" style="border: 1px solid #ccc; text-align: center; background: #fef08a;">Văn hóa DN</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #fef08a;">ISO</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #fef08a;">Quản trị<br>DN</th>
+                                        <th colspan="2" style="border: 1px solid #ccc; text-align: center; background: #fef08a;">Chuyên môn</th>
+                                        <th colspan="4" style="border: 1px solid #ccc; text-align: center; background: #fef08a;">Kỹ năng</th>
                                     </tr>
                                     <tr>
-                                        <th style="border: 1px solid #ccc; text-align: center;">TC1</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">TC2</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">TC3</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">QT-QĐ<br>đơn vị</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">Quản trị<br>DN</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">Sản<br>phẩm</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">Nghiệp<br>vụ</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">Giao<br>tiếp</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">Kỹ năng<br>nhóm</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">Thuyết<br>trình</th>
-                                        <th style="border: 1px solid #ccc; text-align: center;">Tin học</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">TC1</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">TC2</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">TC3</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">QT-QĐ<br>đơn vị</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">Quản trị<br>DN</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">Sản<br>phẩm</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">Nghiệp<br>vụ</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">Giao<br>tiếp</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">Kỹ năng<br>nhóm</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">Thuyết<br>trình</th>
+                                        <th style="border: 1px solid #ccc; text-align: center; background: #f8fafc;">Tin học</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr style="font-weight: bold; background: #f8fafc;">
-                                        <td style="border: 1px solid #ccc; text-align: center;">A</td>
-                                        <td style="border: 1px solid #ccc;">CÁN BỘ PHỤ TRÁCH</td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                    </tr>
-                                    <tr style="font-weight: bold; background: #f8fafc;">
-                                        <td style="border: 1px solid #ccc; text-align: center;">B</td>
-                                        <td style="border: 1px solid #ccc;">ĐỐI TƯỢNG ĐÀO TẠO</td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                    </tr>
-                                    <tr style="font-weight: bold;">
-                                        <td style="border: 1px solid #ccc; text-align: center;">I</td>
-                                        <td style="border: 1px solid #ccc;">Cấp quản lý</td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; text-align: center;">1</td>
-                                        <td style="border: 1px solid #ccc; padding-left: 1.5rem;">Giám đốc/Phó GĐ</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center; font-weight: bold;">5</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; text-align: center;">1</td>
-                                        <td style="border: 1px solid #ccc; padding-left: 1.5rem;">Cán bộ (cấp phòng, tổ)</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center; font-weight: bold;">10</td>
-                                    </tr>
-                                    <tr style="font-weight: bold;">
-                                        <td style="border: 1px solid #ccc; text-align: center;">II</td>
-                                        <td style="border: 1px solid #ccc;">Cấp nhân viên</td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                        <td style="border: 1px solid #ccc;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; text-align: center;">1</td>
-                                        <td style="border: 1px solid #ccc; padding-left: 1.5rem;">NV kinh doanh</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center; font-weight: bold;">9</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; text-align: center;">2</td>
-                                        <td style="border: 1px solid #ccc; padding-left: 1.5rem;">NV kỹ thuật</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center; font-weight: bold;">8</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; text-align: center;">3</td>
-                                        <td style="border: 1px solid #ccc; padding-left: 1.5rem;">NV điều phối</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center; font-weight: bold;">8</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; text-align: center;">4</td>
-                                        <td style="border: 1px solid #ccc; padding-left: 1.5rem;">NV kế toán</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center; font-weight: bold;">7</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #ccc; text-align: center;">5</td>
-                                        <td style="border: 1px solid #ccc; padding-left: 1.5rem;">Phòng ban khác</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;">✓</td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center;"></td>
-                                        <td style="border: 1px solid #ccc; text-align: center; font-weight: bold;">6</td>
-                                    </tr>
+                                <tbody id="training-detail-tbody">
+                                    <!-- Rendered by JS -->
                                 </tbody>
                             </table>
                         </div>
@@ -1426,6 +1286,7 @@
     <script src="js/admin.js"></script>
     <script src="js/culture.js"></script>
     <script src="js/iso.js"></script>
+    <script src="js/training.js"></script>
     <script src="js/app.js"></script>
     
     <script>
