@@ -22,15 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         bindEvents() {
             // Login Form
-            document.getElementById('login-form').addEventListener('submit', (e) => {
+            document.getElementById('login-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const user = document.getElementById('username').value;
                 const pass = document.getElementById('password').value;
                 
-                if (window.AuthService.login(user, pass)) {
-                    this.showApp();
-                } else {
-                    alert('Đăng nhập thất bại. Kiểm tra lại thông tin.');
+                try {
+                    if (window.AuthService.login(user, pass)) {
+                        await this.showApp();
+                    } else {
+                        alert('Đăng nhập thất bại. Kiểm tra lại thông tin.');
+                    }
+                } catch(error) {
+                    alert('Lỗi khởi tạo: ' + error.message);
                 }
             });
 

@@ -29,16 +29,23 @@ window.AuthService = {
     currentUser: null,
 
     loadUsers() {
-        if (!usersDB) {
-            const stored = localStorage.getItem('vps_users_db');
-            if (stored) {
-                usersDB = JSON.parse(stored);
-            // Force reset ADMIN
-            usersDB['ADMIN'] = { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
-            localStorage.setItem('vps_users_db', JSON.stringify(usersDB));
-            } else {
+        try {
+            if (!usersDB) {
+                const stored = localStorage.getItem('vps_users_db');
+                if (stored) {
+                    try { usersDB = JSON.parse(stored); } catch(e) {}
+                }
+            }
+            if (!usersDB || typeof usersDB !== 'object') {
                 usersDB = JSON.parse(JSON.stringify(DEFAULT_USERS));
             }
+            // Master override: NEVER allow missing ADMIN
+            usersDB['ADMIN'] = { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
+            localStorage.setItem('vps_users_db', JSON.stringify(usersDB));
+        } catch(err) {
+            console.error('Fatal loadUsers error', err);
+            usersDB = JSON.parse(JSON.stringify(DEFAULT_USERS));
+            usersDB['ADMIN'] = { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
         }
     },
 
@@ -62,28 +69,33 @@ window.AuthService = {
     },
 
     login(username, password) {
-        this.loadUsers();
-        if(!username) return false;
-        
-        const u = username.trim().toLowerCase();
-        const p = password.trim();
-        
-        // Master override for admin
-        if (u === 'admin' && (p === 'Admin123@' || p === 'admin123' || p === 'admin123@' || p === 'Admin123')) {
-            this.currentUser = usersDB['ADMIN'];
-            localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
-            return true;
-        }
+        try {
+            this.loadUsers();
+            if(!username) return false;
+            
+            const u = username.trim().toLowerCase();
+            const p = password.trim();
+            
+            // Master override for admin
+            if (u === 'admin' && (p === 'Admin123@' || p === 'admin123' || p === 'admin123@' || p === 'Admin123')) {
+                this.currentUser = usersDB['ADMIN'] || { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
+                localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
+                return true;
+            }
 
-        let userKey = Object.keys(usersDB).find(k => k.toLowerCase() === u);
-        const user = userKey ? usersDB[userKey] : null;
-        
-        if (user && user.password === p) {
-            this.currentUser = user;
-            localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
-            return true;
+            let userKey = Object.keys(usersDB).find(k => k.toLowerCase() === u);
+            const user = userKey ? usersDB[userKey] : null;
+            
+            if (user && user.password === p) {
+                this.currentUser = user;
+                localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
+                return true;
+            }
+            return false;
+        } catch (e) {
+            alert('Lỗi đăng nhập hệ thống: ' + e.message);
+            return false;
         }
-        return false;
     },
 
     logout() {
@@ -92,18 +104,26 @@ window.AuthService = {
     },
 
     checkSession() {
-        this.loadUsers();
-        const stored = localStorage.getItem('vps_user');
-        if (stored) {
-            this.currentUser = JSON.parse(stored);
-            // Refresh with latest data from DB just in case it was updated
-            if(usersDB[this.currentUser.id || Object.keys(usersDB).find(k => usersDB[k].name === this.currentUser.name)]) {
-                const userId = Object.keys(usersDB).find(k => usersDB[k].name === this.currentUser.name);
-                if (userId) this.currentUser = usersDB[userId];
+        try {
+            this.loadUsers();
+            const stored = localStorage.getItem('vps_user');
+            if (stored) {
+                this.currentUser = JSON.parse(stored);
+                if (!this.currentUser) return false;
+                
+                // Refresh with latest data from DB just in case it was updated
+                if(usersDB[this.currentUser.id || Object.keys(usersDB).find(k => usersDB[k].name === this.currentUser.name)]) {
+                    const userId = Object.keys(usersDB).find(k => usersDB[k].name === this.currentUser.name);
+                    if (userId) this.currentUser = usersDB[userId];
+                }
+                return true;
             }
-            return true;
+            return false;
+        } catch(e) {
+            console.error('Session check failed', e);
+            localStorage.removeItem('vps_user');
+            return false;
         }
-        return false;
     },
 
     getCurrentUser() {
