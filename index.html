@@ -25,6 +25,30 @@
     <link rel="stylesheet" href="css/debt.css">
 <style>.chart-container { position: relative; width: 100%; }    html, body { height: 100%; width: 100%; }
 </style>
+
+    <style>
+        /* BULLETPROOF MOBILE APP LAYOUT */
+        html, body { 
+            height: 100%; 
+            width: 100%; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; /* Prevent body bounce/scroll */
+            position: fixed; /* Lock to viewport */
+            top: 0; left: 0;
+            background: #f8fafc;
+        }
+        #app-screen {
+            position: absolute !important;
+            top: 0; left: 0; right: 0; bottom: 0;
+            height: auto !important;
+            min-height: 0 !important;
+        }
+        .dashboard-views {
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 100px !important; /* Extra padding at bottom so nothing gets cut off by browser chrome */
+        }
+    </style>
 </head>
 <body>
     <!-- Login Screen -->
