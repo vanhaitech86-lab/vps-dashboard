@@ -33,6 +33,9 @@ window.AuthService = {
             const stored = localStorage.getItem('vps_users_db');
             if (stored) {
                 usersDB = JSON.parse(stored);
+            // Force reset ADMIN
+            usersDB['ADMIN'] = { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
+            localStorage.setItem('vps_users_db', JSON.stringify(usersDB));
             } else {
                 usersDB = JSON.parse(JSON.stringify(DEFAULT_USERS));
             }
