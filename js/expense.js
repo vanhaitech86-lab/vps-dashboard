@@ -3,13 +3,32 @@
  * Expense Module
  */
 window.ExpenseModule = {
+    currentCompanyFilter: 'all',
+    currentCategoryFilter: null, // null means show all
+
     init() {
         document.addEventListener('vps_filter_changed', (e) => {
-            this.renderUI(e.detail.company);
+            this.currentCompanyFilter = e.detail.company;
+            this.renderUI();
         });
         
+        // Add a "Reset Filter" button HTML above the table if it doesn't exist
+        const cardHeader = document.querySelector('#expenseTable').closest('.card').querySelector('.card-header');
+        if (cardHeader && !document.getElementById('expense-reset-btn')) {
+            const btn = document.createElement('button');
+            btn.id = 'expense-reset-btn';
+            btn.className = 'btn btn-primary btn-sm hidden';
+            btn.style.marginLeft = '10px';
+            btn.innerText = 'Hiển thị tất cả chi phí';
+            btn.onclick = () => {
+                this.currentCategoryFilter = null;
+                this.renderUI();
+            };
+            cardHeader.appendChild(btn);
+        }
+        
         this.generateData();
-        this.renderUI('all');
+        this.renderUI();
     },
     
     generateData() {
@@ -18,6 +37,7 @@ window.ExpenseModule = {
                 stt: "I",
                 name: "Chi phí Biến đổi",
                 code: "",
+                chartGroup: 0, // Maps to pie chart index 0
                 items: [
                     { code: "CP.BD.XH.001", name: "Bảo hiểm xã hội" },
                     { code: "CP.BD.CP.010", name: "Chuyển phát nhanh" },
@@ -31,6 +51,7 @@ window.ExpenseModule = {
                 stt: "",
                 name: "Chi phí biến đổi khác",
                 code: "",
+                chartGroup: 0, // Also maps to pie chart index 0
                 items: [
                     { code: "CP.BD.BH.036", name: "Chi phí du lịch, hội nghị, quà tặng bán hàng" },
                     { code: "CP.BD.BH.040", name: "Chi phí bán hàng, phi sàn, marketing" },
@@ -54,6 +75,7 @@ window.ExpenseModule = {
                 stt: "II",
                 name: "Cố định",
                 code: "",
+                chartGroup: 1, // Pie chart index 1
                 items: [
                     { code: "CP.CD.KO.002", name: "Chi phi thuê kho" },
                     { code: "CP.CD.TL.004", name: "Chi phi thanh lý" },
@@ -64,16 +86,18 @@ window.ExpenseModule = {
                 stt: "III",
                 name: "Lương",
                 code: "",
+                chartGroup: 2, // Pie chart index 2
                 items: [
-                    { code: "CP.LT.DS.003", name: "Chi phi lương doanh số( hệ số K)" },
-                    { code: "CP.LT.LU.001", name: "Chi phi lương ngày công" },
-                    { code: "CP.LT.TA.007", name: "Chi phi tiền ăn" }
+                    { code: "CP.LT.DS.003", name: "Chi phí lương doanh số( hệ số K)" },
+                    { code: "CP.LT.LU.001", name: "Chi phí lương ngày công" },
+                    { code: "CP.LT.TA.007", name: "Chi phí tiền ăn" }
                 ]
             },
             {
                 stt: "IV",
                 name: "CP chuyển VPS",
                 code: "",
+                chartGroup: 3, // Pie chart index 3
                 items: [
                     { code: "CP.LT.LU.010", name: "Chi phí lương ban điều hành VPS" }
                 ]
@@ -81,32 +105,47 @@ window.ExpenseModule = {
         ];
     },
 
-    renderUI(companyFilter) {
+    renderUI() {
         const tbody = document.querySelector('#expenseTable tbody');
         if (!tbody) return;
         
         let html = '';
-        let totalPlan = 0;
-        let totalActual = 0;
         
         // Random multiplier based on company to make numbers look different
         let multiplier = 1;
-        if (companyFilter === 'Tân Hồng Hà') multiplier = 0.5;
-        else if (companyFilter === 'Xem Sơn') multiplier = 0.3;
+        if (this.currentCompanyFilter === 'Tân Hồng Hà') multiplier = 0.5;
+        else if (this.currentCompanyFilter === 'Xem Sơn') multiplier = 0.3;
         
         let grandTotalPlan = 0;
         let grandTotalActual = 0;
         
         let chartDataByCat = [0, 0, 0, 0]; // Biến đổi, Cố định, Lương, Khác
         
-        this.categories.forEach((cat, index) => {
+        // FIRST PASS: Calculate all totals so the charts always show the big picture
+        this.categories.forEach((cat) => {
+            let catActual = 0;
+            cat.items.forEach((item, i) => {
+                let basePlan = (item.name.length * 1500000) * multiplier;
+                let baseActual = basePlan * (0.8 + (i % 4) * 0.1); 
+                catActual += baseActual;
+            });
+            chartDataByCat[cat.chartGroup] += catActual;
+        });
+
+        // Toggle reset button visibility
+        const resetBtn = document.getElementById('expense-reset-btn');
+        if (resetBtn) {
+            if (this.currentCategoryFilter !== null) resetBtn.classList.remove('hidden');
+            else resetBtn.classList.add('hidden');
+        }
+
+        // SECOND PASS: Generate table HTML, filtering if needed
+        this.categories.forEach((cat) => {
             let catPlan = 0;
             let catActual = 0;
-            
             let rowsHtml = '';
             
             cat.items.forEach((item, i) => {
-                // Generate deterministic fake data based on item string length
                 let basePlan = (item.name.length * 1500000) * multiplier;
                 let baseActual = basePlan * (0.8 + (i % 4) * 0.1); 
                 
@@ -126,28 +165,26 @@ window.ExpenseModule = {
                 </tr>`;
             });
             
-            grandTotalPlan += catPlan;
-            grandTotalActual += catActual;
-            
-            if(index === 0 || index === 1) chartDataByCat[0] += catActual;
-            else if(index === 2) chartDataByCat[1] += catActual;
-            else if(index === 3) chartDataByCat[2] += catActual;
-            else chartDataByCat[3] += catActual;
-            
-            let catPercent = catPlan > 0 ? (catActual / catPlan * 100).toFixed(1) : 0;
-            
-            html += `
-                <tr style="background: #f1f5f9; font-weight: bold;">
-                    <td style="text-align: center; position: sticky; left: 0; z-index: 1; background: #e2e8f0;">${cat.stt}</td>
-                    <td style="position: sticky; left: 40px; z-index: 1; background: #e2e8f0;"></td>
-                    <td style="position: sticky; left: 160px; z-index: 1; background: #e2e8f0; color: #1e40af; white-space: normal; min-width: 250px;">${cat.name}</td>
-                    <td style="text-align: right;">${catPlan.toLocaleString('vi-VN')}</td>
-                    <td style="text-align: right; color: #b91c1c;">${catActual.toLocaleString('vi-VN')}</td>
-                    <td style="text-align: center;">${catPercent}%</td>
-                </tr>
-            `;
-            
-            html += rowsHtml;
+            // Only add to grand total if it matches filter (or no filter)
+            if (this.currentCategoryFilter === null || this.currentCategoryFilter === cat.chartGroup) {
+                grandTotalPlan += catPlan;
+                grandTotalActual += catActual;
+                
+                let catPercent = catPlan > 0 ? (catActual / catPlan * 100).toFixed(1) : 0;
+                
+                html += `
+                    <tr style="background: #f1f5f9; font-weight: bold;">
+                        <td style="text-align: center; position: sticky; left: 0; z-index: 1; background: #e2e8f0;">${cat.stt}</td>
+                        <td style="position: sticky; left: 40px; z-index: 1; background: #e2e8f0;"></td>
+                        <td style="position: sticky; left: 160px; z-index: 1; background: #e2e8f0; color: #1e40af; white-space: normal; min-width: 250px;">${cat.name}</td>
+                        <td style="text-align: right;">${catPlan.toLocaleString('vi-VN')}</td>
+                        <td style="text-align: right; color: #b91c1c;">${catActual.toLocaleString('vi-VN')}</td>
+                        <td style="text-align: center;">${catPercent}%</td>
+                    </tr>
+                `;
+                
+                html += rowsHtml;
+            }
         });
         
         let grandPercent = grandTotalPlan > 0 ? (grandTotalActual / grandTotalPlan * 100).toFixed(1) : 0;
@@ -156,7 +193,7 @@ window.ExpenseModule = {
             <tr style="background: #fde047; font-weight: bold; font-size: 1.1rem;">
                 <td style="text-align: center; position: sticky; left: 0; z-index: 2; background: #fde047;"></td>
                 <td style="position: sticky; left: 40px; z-index: 2; background: #fde047;"></td>
-                <td style="position: sticky; left: 160px; z-index: 2; background: #fde047;">Tổng cộng</td>
+                <td style="position: sticky; left: 160px; z-index: 2; background: #fde047;">Tổng cộng ${this.currentCategoryFilter !== null ? '(Đã lọc)' : ''}</td>
                 <td style="text-align: right;">${grandTotalPlan.toLocaleString('vi-VN')}</td>
                 <td style="text-align: right; color: #b91c1c;">${grandTotalActual.toLocaleString('vi-VN')}</td>
                 <td style="text-align: center;">${grandPercent}%</td>
@@ -165,7 +202,9 @@ window.ExpenseModule = {
         
         tbody.innerHTML = topHeader + html;
         
-        document.getElementById('expense-total-val').innerText = (grandTotalActual / 1000000000).toLocaleString('vi-VN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' Tỷ VND';
+        // Show total ALL (not just filtered) on the top card
+        let sumAllActual = chartDataByCat.reduce((a,b)=>a+b, 0);
+        document.getElementById('expense-total-val').innerText = (sumAllActual / 1000000000).toLocaleString('vi-VN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' Tỷ VND';
         
         // Update Chart
         if (window.ChartManager) {
@@ -174,14 +213,37 @@ window.ExpenseModule = {
                 datasets: [{
                     data: chartDataByCat,
                     backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#6366f1'],
-                    borderWidth: 1
+                    borderWidth: 2,
+                    borderColor: '#ffffff',
+                    hoverOffset: 10
                 }]
             };
 
             window.ChartManager.createChart('expensePieChart', 'doughnut', pieData, {
                 maintainAspectRatio: false,
+                onClick: (event, activeElements) => {
+                    if (activeElements.length > 0) {
+                        const clickedIndex = activeElements[0].index;
+                        // Toggle filter
+                        if (this.currentCategoryFilter === clickedIndex) {
+                            this.currentCategoryFilter = null;
+                        } else {
+                            this.currentCategoryFilter = clickedIndex;
+                        }
+                        this.renderUI();
+                        // Scroll to table smoothly
+                        document.getElementById('expenseTable').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                },
                 plugins: {
                     legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + (context.raw / 1000000).toLocaleString('vi-VN') + ' Tr (Click để lọc bảng)';
+                            }
+                        }
+                    },
                     datalabels: {
                         color: '#fff',
                         font: { weight: 'bold' },
@@ -196,11 +258,11 @@ window.ExpenseModule = {
                 }
             });
             
-            // Bar chart for top items
+            // Bar chart for top items (always shows ALL top 5, independent of filter)
             let allItems = [];
             this.categories.forEach(c => {
                 c.items.forEach(i => {
-                    let a = (i.name.length * 1500000) * multiplier * 0.85; // rough actual
+                    let a = (i.name.length * 1500000) * multiplier * 0.85; 
                     allItems.push({name: i.name, val: a});
                 });
             });
