@@ -154,22 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(window.OverviewModule) {
                     window.OverviewModule.loadData(
                         window.FilterManager.currentPeriod || 'month',
-            if(window.DebtModule) window.DebtModule.init();
-            if(window.HrModule) window.HrModule.init();
-            if(window.AdminModule) window.AdminModule.init();
-            
-            // Trigger CRM API Backend Test
-            if(window.CrmConnector) window.CrmConnector.fetchDashboardData(new Date().getMonth() + 1, user.company);
-
-            // QUAN TRỌNG: Hiển thị overview TRƯỚC, rồi mới trigger filter
-            this.showView('overview');
-            window.FilterManager.triggerFilterChange();
-            
-            // Đảm bảo data load dù event bị miss
-            setTimeout(() => {
-                if(window.OverviewModule) {
-                    window.OverviewModule.loadData(
-                        window.FilterManager.currentPeriod || 'month',
                         window.FilterManager.currentCompany || 'all'
                     );
                 }
@@ -184,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 'revenue': '2. Doanh Số Lãi Gộp',
                 'product': '3. Sản Phẩm',
                 'inventory': '4. Tồn Kho',
-                'expenses': '5. Chi Phí',
                 'expense': '5. Chi Phí',
                 'debt': '6. Công Nợ',
                 'customers': '7. Khách Hàng',
@@ -199,31 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Hide all views
             document.querySelectorAll('.view').forEach(view => {
-                view.classList.remove('active');
                 view.classList.add('hidden');
             });
             
-            const targetView = document.getElementById(`view-${viewId}`);
-            if (targetView) {
-                targetView.classList.remove('hidden');
-                targetView.classList.add('active');
-            }
-            
-            // Reset scroll position
-            const viewsContainer = document.querySelector('.dashboard-views');
-            if (viewsContainer) {
-                viewsContainer.scrollTop = 0;
-            }
-            
-            // Reset Expense filter if navigating to it
-            if ((viewId === 'expenses' || viewId === 'expense') && window.ExpenseModule) {
-                window.ExpenseModule.currentCategoryFilter = null;
-                window.ExpenseModule.renderUI();
-            }
-            
-            setTimeout(() => {
-                window.dispatchEvent(new Event('resize'));
-            }, 100);
+            // Show target
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
         }
     };
 
