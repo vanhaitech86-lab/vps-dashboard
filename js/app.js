@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.ProductsOtherModule) window.ProductsOtherModule.init();
             if(window.RevenueModule) window.RevenueModule.init();
             if(window.InventoryModule) window.InventoryModule.init();
+            if(window.ExpenseModule) window.ExpenseModule.init();
             if(window.DebtModule) window.DebtModule.init();
             if(window.HrModule) window.HrModule.init();
             if(window.AdminModule) window.AdminModule.init();

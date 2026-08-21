@@ -830,11 +830,54 @@
                     </div>
                 </section>
 
-                <section id="view-expense" class="view hidden">
-                    <div class="card text-center" style="padding: 40px;">
-                        <i data-lucide="credit-card" style="width:64px;height:64px;color:var(--clr-primary);opacity:0.5;margin-bottom:20px;"></i>
-                        <h2>Chi Phí</h2>
-                        <p class="text-muted">Module đang được phát triển.</p>
+                <section id="view-expenses" class="view hidden">
+                    <div class="grid-layout cols-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Cơ Cấu Chi Phí</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 300px;">
+                                    <canvas id="expensePieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Top 5 Hạng Mục Chi Phí Cao Nhất</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 300px;">
+                                    <canvas id="expenseBarChart"></canvas>
+                                </div>
+                                <div style="margin-top: 15px; text-align: center;">
+                                    <strong>Tổng Chi Phí: </strong><span id="expense-total-val" style="color: #b91c1c; font-size: 1.3rem; font-weight: bold;">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Bảng Kê Chi Tiết Chi Phí (VND)</h3>
+                        </div>
+                        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                            <table class="data-table" id="expenseTable" style="white-space: nowrap; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background: #a3e635;">
+                                        <th style="width: 40px; text-align: center; position: sticky; left: 0; z-index: 2; background: #a3e635;">STT</th>
+                                        <th style="min-width: 120px; position: sticky; left: 40px; z-index: 2; background: #a3e635;">Phí</th>
+                                        <th style="min-width: 250px; position: sticky; left: 160px; z-index: 2; background: #a3e635;">Diễn giải</th>
+                                        <th style="text-align: right;">Kế hoạch (VND)</th>
+                                        <th style="text-align: right;">Thực hiện (VND)</th>
+                                        <th style="text-align: center;">Tỷ lệ (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
 
@@ -981,6 +1024,7 @@
     <script>
         lucide.createIcons();
     </script>
+    <script src="js/expense.js"></script>
 </body>
 </html>
 
