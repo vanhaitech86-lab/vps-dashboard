@@ -63,7 +63,13 @@ window.AuthService = {
 
     login(username, password) {
         this.loadUsers();
-        const user = usersDB[username];
+        if(!username) return false;
+        
+        // Find user case-insensitively
+        const u = username.trim().toLowerCase();
+        let userKey = Object.keys(usersDB).find(k => k.toLowerCase() === u);
+        const user = userKey ? usersDB[userKey] : null;
+        
         if (user && user.password === password) {
             this.currentUser = user;
             localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
