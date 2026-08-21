@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.HrModule) window.HrModule.init();
             if(window.AdminModule) window.AdminModule.init();
             if(window.CultureModule) window.CultureModule.init();
+            if(window.IsoModule) window.IsoModule.init();
             
             // Trigger CRM API Backend Test
             if(window.CrmConnector) window.CrmConnector.fetchDashboardData(new Date().getMonth() + 1, user.company);
