@@ -232,7 +232,11 @@ window.ExpenseModule = {
                         }
                         setTimeout(() => { this.renderUI(); }, 10);
                         // Scroll to table smoothly
-                        document.getElementById('expenseTable').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const views = document.querySelector('.dashboard-views');
+                        const table = document.getElementById('expenseTable');
+                        if (views && table) {
+                            views.scrollTo({ top: table.offsetTop - 20, behavior: 'smooth' });
+                        }
                     }
                 },
                 plugins: {
