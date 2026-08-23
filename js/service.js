@@ -213,9 +213,8 @@ window.ServiceModule = {
             parent.style.marginTop = '0px';
         }
 
-        let cty = 'all';        let cty = 'all';
-
-        if(window.FilterManager && window.FilterManager.currentCompany) {
+        let cty = 'all';
+if(window.FilterManager && window.FilterManager.currentCompany) {
             cty = window.FilterManager.currentCompany;
         }
 
@@ -409,7 +408,7 @@ window.ServiceModule = {
         else this.complaintCompanyFilter = null;
         
         let cty = 'all';
-        if(window.FilterManager && window.FilterManager.currentCompany) {
+if(window.FilterManager && window.FilterManager.currentCompany) {
             cty = window.FilterManager.currentCompany;
         }
         
