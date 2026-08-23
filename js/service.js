@@ -198,14 +198,14 @@ window.ServiceModule = {
 
         // Initialize HTML with TABS
         let html = `
-            <div style="display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px;">
+            <div style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 10px;">
                 
                 <!-- TABS NAVIGATION -->
                 <div style="display: flex; gap: 10px; border-bottom: 2px solid #e2e8f0; margin-bottom: 10px;">
-                    <button onclick="window.ServiceModule.switchTab('service')" style="padding: 12px 24px; font-size: 1rem; font-weight: bold; border: none; background: none; cursor: pointer; color: ${this.currentTab === 'service' ? '#4f46e5' : '#64748b'}; border-bottom: ${this.currentTab === 'service' ? '3px solid #4f46e5' : '3px solid transparent'}; outline: none; transition: all 0.2s;">
+                    <button onclick="window.ServiceModule.switchTab('service')" style="padding: 8px 16px; font-size: 0.9rem; font-weight: bold; border: none; background: none; cursor: pointer; color: ${this.currentTab === 'service' ? '#4f46e5' : '#64748b'}; border-bottom: ${this.currentTab === 'service' ? '3px solid #4f46e5' : '3px solid transparent'}; outline: none; transition: all 0.2s;">
                         <i data-lucide="bar-chart-2" style="display: inline-block; vertical-align: middle; margin-right: 8px; width: 18px; height: 18px;"></i> BÁO CÁO CHẤT LƯỢNG
                     </button>
-                    <button onclick="window.ServiceModule.switchTab('complaint')" style="padding: 12px 24px; font-size: 1rem; font-weight: bold; border: none; background: none; cursor: pointer; color: ${this.currentTab === 'complaint' ? '#ef4444' : '#64748b'}; border-bottom: ${this.currentTab === 'complaint' ? '3px solid #ef4444' : '3px solid transparent'}; outline: none; transition: all 0.2s;">
+                    <button onclick="window.ServiceModule.switchTab('complaint')" style="padding: 8px 16px; font-size: 0.9rem; font-weight: bold; border: none; background: none; cursor: pointer; color: ${this.currentTab === 'complaint' ? '#ef4444' : '#64748b'}; border-bottom: ${this.currentTab === 'complaint' ? '3px solid #ef4444' : '3px solid transparent'}; outline: none; transition: all 0.2s;">
                         <i data-lucide="alert-circle" style="display: inline-block; vertical-align: middle; margin-right: 8px; width: 18px; height: 18px;"></i> BÁO CÁO KHIẾU NẠI
                     </button>
                 </div>
@@ -228,7 +228,7 @@ window.ServiceModule = {
 
             html += `
                 <div style="display: flex; flex-direction: column; animation: fadeIn 0.3s ease;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <h2 style="font-size: 1.25rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 4px solid #4f46e5; padding-left: 10px;">CHẤT LƯỢNG DỊCH VỤ TẬN TÂM</h2>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn tháng:</label>
@@ -238,10 +238,10 @@ window.ServiceModule = {
                         </div>
                     </div>
 
-                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 20px; display: flex; gap: 24px; min-height: 250px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: flex; gap: 10px; min-height: 180px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                         <div style="flex: 1; position: relative;">
                             <h3 style="text-align: center; font-weight: bold; color: #334155; margin-bottom: 10px;">Tỉ lệ công việc theo Đơn vị</h3>
-                            <div style="height: 200px; display: flex; justify-content: center;">
+                            <div style="height: 150px; display: flex; justify-content: center;">
                                 <canvas id="serviceRatioChart"></canvas>
                             </div>
                         </div>
@@ -310,7 +310,7 @@ window.ServiceModule = {
 
             html += `
                 <div style="display: flex; flex-direction: column; animation: fadeIn 0.3s ease;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <h2 style="font-size: 1.25rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 4px solid #ef4444; padding-left: 10px;">BÁO CÁO KHIẾU NẠI KHÁCH HÀNG</h2>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn tháng:</label>
@@ -320,10 +320,10 @@ window.ServiceModule = {
                         </div>
                     </div>
 
-                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 20px; display: flex; gap: 24px; min-height: 250px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: flex; gap: 10px; min-height: 180px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                         <div style="flex: 1; position: relative;">
                             <h3 style="text-align: center; font-weight: bold; color: #334155; margin-bottom: 10px;">Tỉ lệ khiếu nại theo Đơn vị</h3>
-                            <div style="height: 200px; display: flex; justify-content: center;">
+                            <div style="height: 150px; display: flex; justify-content: center;">
                                 <canvas id="complaintRatioChart"></canvas>
                             </div>
                         </div>
