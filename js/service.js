@@ -187,18 +187,28 @@ window.ServiceModule = {
     // ==========================================
     // RENDER
     // ==========================================
+
     render() {
         const container = document.getElementById('view-service');
         if (!container) return;
         
+        // FORCIBLY REMOVE ANY PADDING OR GAP FROM THE PARENT CONTAINER
+        const parent = container.parentElement;
+        if(parent && parent.classList.contains('dashboard-views')) {
+            parent.style.paddingTop = '0px';
+            parent.style.marginTop = '0px';
+            parent.style.display = 'block';
+        }
+
         let cty = 'all';
+
         if(window.FilterManager && window.FilterManager.currentCompany) {
             cty = window.FilterManager.currentCompany;
         }
 
         // Initialize HTML with TABS
         let html = `
-            <div style="margin-top: -20px; display: flex; flex-direction: column; gap: 10px; padding-bottom: 50px;">
+            <div style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 50px; position: relative; z-index: 99; pointer-events: auto;">
                 
                 <!-- TABS NAVIGATION -->
                 <div style="display: flex; gap: 10px; border-bottom: 2px solid #e2e8f0; margin-bottom: 10px;">
@@ -287,6 +297,7 @@ window.ServiceModule = {
                         </div>
                     </div>
                 </div>
+            </div>
             `;
             container.innerHTML = html;
             if(window.lucide) window.lucide.createIcons();
@@ -362,6 +373,7 @@ window.ServiceModule = {
                         </div>
                     </div>
                 </div>
+            </div>
             `;
             container.innerHTML = html;
             if(window.lucide) window.lucide.createIcons();
