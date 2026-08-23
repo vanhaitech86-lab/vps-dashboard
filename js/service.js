@@ -126,7 +126,7 @@ window.ServiceModule = {
                                     <th class="px-3 py-2 border border-gray-300 font-bold">HỌ VÀ TÊN NHÂN VIÊN</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">MÃ NV</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">BỘ PHẬN</th>
-                                    <th class="px-3 py-2 border border-gray-300 font-bold">CÔNG TY</th>
+                                    <th class="px-3 py-2 border border-gray-300 font-bold">XẾP HẠNG ĐƠN VỊ</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">SỐ CÔNG VIỆC</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">SỐ ĐIỂM TB</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">TỔNG ĐIỂM</th>
@@ -231,6 +231,33 @@ window.ServiceModule = {
         const title = document.getElementById('service-table-title');
         if (!tbody) return;
 
+        let companyStats = {};
+        data.forEach(d => {
+            if(!companyStats[d.cty]) companyStats[d.cty] = { score: 0, tasks: 0 };
+            companyStats[d.cty].score += d.totalScore || 0;
+            companyStats[d.cty].tasks += d.tasks || 0;
+        });
+
+        let sortedCompanies = Object.keys(companyStats).sort((a, b) => {
+            if (companyStats[b].score !== companyStats[a].score) {
+                return companyStats[b].score - companyStats[a].score;
+            }
+            return companyStats[b].tasks - companyStats[a].tasks;
+        });
+
+        let companyRanks = {};
+        sortedCompanies.forEach((c, index) => {
+            companyRanks[c] = index + 1;
+        });
+        
+        let getRankBadge = (rank) => {
+            if(rank === 1) return `<span style="color:#eab308; font-weight:bold;">Top 1 🏆</span>`;
+            if(rank === 2) return `<span style="color:#94a3b8; font-weight:bold;">Top 2 🥈</span>`;
+            if(rank === 3) return `<span style="color:#b45309; font-weight:bold;">Top 3 🥉</span>`;
+            return `<span class="text-gray-500 font-bold">Top ${rank}</span>`;
+        };
+
+
         let tableData = data;
         if (this.localCompanyFilter) {
             tableData = data.filter(d => d.cty === this.localCompanyFilter);
@@ -251,7 +278,7 @@ window.ServiceModule = {
                 <td class="px-3 py-2 border border-gray-200 text-left font-medium text-gray-800">${d.name}</td>
                 <td class="px-2 py-2 border border-gray-200">${d.code}</td>
                 <td class="px-2 py-2 border border-gray-200">${d.dept}</td>
-                <td class="px-3 py-2 border border-gray-200 text-gray-600">${d.cty}</td>
+                <td class="px-3 py-2 border border-gray-200 text-center bg-gray-50 border-r-2 border-r-gray-300">${getRankBadge(companyRanks[d.cty])}</td>
                 <td class="px-2 py-2 border border-gray-200 font-bold text-indigo-600">${d.tasks}</td>
                 <td class="px-2 py-2 border border-gray-200" style="color: #16a34a;">${d.avgScore || 0}</td>
                 <td class="px-2 py-2 border border-gray-200" style="color: #16a34a;">${d.totalScore || 0}</td>
