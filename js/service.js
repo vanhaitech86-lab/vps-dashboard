@@ -3,15 +3,9 @@
 window.ServiceModule = {
     name: 'Dịch Vụ Tận Tâm',
     localCompanyFilter: null,
+    localMonthFilter: 'all',
     chartInstance: null,
     
-    mockData: [
-        { stt: 1, name: "Cổ Phước Thịnh", code: "THINHCY", dept: "ENGI", cty: "Tân Hồng Hà", tasks: 13, avgScore: 0, totalScore: 0, responseTime: 14.536, travelTo: 0.438, processingTime: 1.549, travelBack: 0.515, reportCreated: 0, reportReplaced: 0, materialRecovered: 0 },
-        { stt: 2, name: "Hồ Trung Nam", code: "NAMHT", dept: "ENGI", cty: "Việt", tasks: 57, avgScore: 0, totalScore: 0, responseTime: 21.117, travelTo: 0.248, processingTime: 0.168, travelBack: 0, reportCreated: 0, reportReplaced: 14, materialRecovered: 14 },
-        { stt: 3, name: "Phan Văn Nguyện", code: "NGUYENPV", dept: "ENGI", cty: "VPS M", tasks: 66, avgScore: 0, totalScore: 0, responseTime: 15.884, travelTo: 0.446, processingTime: 0.726, travelBack: 0.052, reportCreated: 0, reportReplaced: 23, materialRecovered: 21 },
-        { stt: 4, name: "Trương Quốc Bảo", code: "BAOTQ", dept: "ENGI", cty: "Xem Sơn", tasks: 44, avgScore: 0, totalScore: 0, responseTime: 14.863, travelTo: 0.631, processingTime: 0.416, travelBack: 0.001, reportCreated: 0, reportReplaced: 9, materialRecovered: 18 }
-    ],
-
     init() {
         this.render();
         window.addEventListener('filter-changed', () => {
@@ -20,16 +14,18 @@ window.ServiceModule = {
         });
     },
 
-    parseData(selectedCty) {
-        let data = this.mockData;
+    parseData(selectedCty, selectedMonth) {
+        let data = [];
         
         if (window.mockData && window.mockData.service_raw && window.mockData.service_raw.length > 1) {
             let csv = window.mockData.service_raw;
-            let parsed = [];
             for (let i = 1; i < csv.length; i++) {
                 let row = csv[i];
-                if (!row || !row[1]) continue; // check if Name exists
-                parsed.push({
+                if (!row || (!row[1] && !row[2])) continue; 
+                
+                let t = (row[15] !== undefined && row[15] !== '') ? row[15].toString().replace('Tháng', '').trim() : '8';
+                
+                data.push({
                     stt: row[0] || i,
                     name: row[1] || '',
                     code: row[2] || '',
@@ -45,9 +41,9 @@ window.ServiceModule = {
                     reportCreated: parseFloat(row[12]) || 0,
                     reportReplaced: parseFloat(row[13]) || 0,
                     materialRecovered: parseFloat(row[14]) || 0,
+                    month: t
                 });
             }
-            if (parsed.length > 0) data = parsed;
         }
 
         if (selectedCty && selectedCty !== 'all') {
@@ -61,7 +57,26 @@ window.ServiceModule = {
                 return false;
             });
         }
+        
+        if (selectedMonth && selectedMonth !== 'all') {
+            data = data.filter(d => d.month == selectedMonth);
+        }
+        
         return data;
+    },
+
+    getUniqueMonths(rawCsv) {
+        let months = new Set();
+        if (rawCsv && rawCsv.length > 1) {
+            for (let i = 1; i < rawCsv.length; i++) {
+                if(rawCsv[i] && rawCsv[i][15]) {
+                    let m = rawCsv[i][15].toString().replace('Tháng', '').trim();
+                    if(m) months.add(m);
+                }
+            }
+        }
+        if(months.size === 0) months.add('8');
+        return Array.from(months).sort((a,b) => parseInt(a) - parseInt(b));
     },
 
     render() {
@@ -73,7 +88,8 @@ window.ServiceModule = {
             cty = window.FilterManager.currentCompany;
         }
 
-        const data = this.parseData(cty);
+        const data = this.parseData(cty, this.localMonthFilter);
+        const allMonths = this.getUniqueMonths(window.mockData ? window.mockData.service_raw : null);
 
         let companyStats = {};
         data.forEach(d => {
@@ -84,12 +100,22 @@ window.ServiceModule = {
 
         const labels = Object.keys(companyStats);
         const chartData = Object.values(companyStats);
+        
+        let monthOptions = `<option value="all">Tất cả các tháng</option>`;
+        allMonths.forEach(m => {
+            monthOptions += `<option value="${m}" ${this.localMonthFilter == m ? 'selected' : ''}>Tháng ${m}</option>`;
+        });
 
         let html = `
             <div class="animate-fade-in" style="height: calc(100vh - 100px); display: flex; flex-direction: column;">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">Báo Cáo Chất Lượng Dịch Vụ</h2>
-                    <div class="text-sm text-gray-500">Click vào biểu đồ để lọc chi tiết bên dưới</div>
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-bold text-gray-600">Chọn thời gian:</label>
+                        <select id="service-month-filter" class="border border-gray-300 rounded px-3 py-1 bg-white shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500" onchange="window.ServiceModule.changeMonth(this.value)">
+                            ${monthOptions}
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Dashboard Section -->
@@ -126,7 +152,6 @@ window.ServiceModule = {
                                     <th class="px-3 py-2 border border-gray-300 font-bold">HỌ VÀ TÊN NHÂN VIÊN</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">MÃ NV</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">BỘ PHẬN</th>
-                                    <th class="px-3 py-2 border border-gray-300 font-bold">XẾP HẠNG ĐƠN VỊ</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">SỐ CÔNG VIỆC</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">SỐ ĐIỂM TB</th>
                                     <th class="px-2 py-2 border border-gray-300 font-bold">TỔNG ĐIỂM</th>
@@ -153,13 +178,18 @@ window.ServiceModule = {
         this.renderTableData(data);
     },
 
+    changeMonth(month) {
+        this.localMonthFilter = month;
+        this.render();
+    },
+
     clearLocalFilter() {
         this.localCompanyFilter = null;
         let cty = 'all';
         if(window.FilterManager && window.FilterManager.currentCompany) {
             cty = window.FilterManager.currentCompany;
         }
-        const data = this.parseData(cty);
+        const data = this.parseData(cty, this.localMonthFilter);
         this.renderTableData(data);
     },
 
@@ -212,10 +242,9 @@ window.ServiceModule = {
                         if(window.FilterManager && window.FilterManager.currentCompany) {
                             cty = window.FilterManager.currentCompany;
                         }
-                        const fullData = this.parseData(cty);
+                        const fullData = this.parseData(cty, this.localMonthFilter);
                         this.renderTableData(fullData);
                     } else {
-                        // Clicked outside
                         this.clearLocalFilter();
                     }
                 },
@@ -231,33 +260,6 @@ window.ServiceModule = {
         const title = document.getElementById('service-table-title');
         if (!tbody) return;
 
-        let companyStats = {};
-        data.forEach(d => {
-            if(!companyStats[d.cty]) companyStats[d.cty] = { score: 0, tasks: 0 };
-            companyStats[d.cty].score += d.totalScore || 0;
-            companyStats[d.cty].tasks += d.tasks || 0;
-        });
-
-        let sortedCompanies = Object.keys(companyStats).sort((a, b) => {
-            if (companyStats[b].score !== companyStats[a].score) {
-                return companyStats[b].score - companyStats[a].score;
-            }
-            return companyStats[b].tasks - companyStats[a].tasks;
-        });
-
-        let companyRanks = {};
-        sortedCompanies.forEach((c, index) => {
-            companyRanks[c] = index + 1;
-        });
-        
-        let getRankBadge = (rank) => {
-            if(rank === 1) return `<span style="color:#eab308; font-weight:bold;">Top 1 🏆</span>`;
-            if(rank === 2) return `<span style="color:#94a3b8; font-weight:bold;">Top 2 🥈</span>`;
-            if(rank === 3) return `<span style="color:#b45309; font-weight:bold;">Top 3 🥉</span>`;
-            return `<span class="text-gray-500 font-bold">Top ${rank}</span>`;
-        };
-
-
         let tableData = data;
         if (this.localCompanyFilter) {
             tableData = data.filter(d => d.cty === this.localCompanyFilter);
@@ -266,7 +268,6 @@ window.ServiceModule = {
             if(title) title.innerHTML = `Chi tiết: Tất cả đơn vị`;
         }
 
-        // Update KPIs
         const empCount = document.getElementById('srv-total-emp');
         const taskCount = document.getElementById('srv-total-tasks');
         if(empCount) empCount.textContent = tableData.length;
@@ -278,7 +279,6 @@ window.ServiceModule = {
                 <td class="px-3 py-2 border border-gray-200 text-left font-medium text-gray-800">${d.name}</td>
                 <td class="px-2 py-2 border border-gray-200">${d.code}</td>
                 <td class="px-2 py-2 border border-gray-200">${d.dept}</td>
-                <td class="px-3 py-2 border border-gray-200 text-center bg-gray-50 border-r-2 border-r-gray-300">${getRankBadge(companyRanks[d.cty])}</td>
                 <td class="px-2 py-2 border border-gray-200 font-bold text-indigo-600">${d.tasks}</td>
                 <td class="px-2 py-2 border border-gray-200" style="color: #16a34a;">${d.avgScore || 0}</td>
                 <td class="px-2 py-2 border border-gray-200" style="color: #16a34a;">${d.totalScore || 0}</td>
