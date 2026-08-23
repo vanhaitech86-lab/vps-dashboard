@@ -62,7 +62,7 @@ window.ServiceModule = {
     },
 
     render() {
-        const container = document.getElementById('module-content');
+        const container = document.getElementById('view-service');
         if (!container) return;
         
         let cty = 'all';
