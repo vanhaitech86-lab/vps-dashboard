@@ -6,6 +6,13 @@ window.ServiceModule = {
     localMonthFilter: 'all',
     chartInstance: null,
     
+    mockData: [
+        { stt: 1, name: "Cổ Phước Thịnh", code: "THINHCY", dept: "ENGI", cty: "Tân Hồng Hà", tasks: 13, avgScore: 0, totalScore: 0, responseTime: 14.536, travelTo: 0.438, processingTime: 1.549, travelBack: 0.515, reportCreated: 0, reportReplaced: 0, materialRecovered: 0, month: '8' },
+        { stt: 2, name: "Hồ Trung Nam", code: "NAMHT", dept: "ENGI", cty: "Việt", tasks: 57, avgScore: 0, totalScore: 0, responseTime: 21.117, travelTo: 0.248, processingTime: 0.168, travelBack: 0, reportCreated: 0, reportReplaced: 14, materialRecovered: 14, month: '8' },
+        { stt: 3, name: "Phan Văn Nguyện", code: "NGUYENPV", dept: "ENGI", cty: "VPS M", tasks: 66, avgScore: 0, totalScore: 0, responseTime: 15.884, travelTo: 0.446, processingTime: 0.726, travelBack: 0.052, reportCreated: 0, reportReplaced: 23, materialRecovered: 21, month: '8' },
+        { stt: 4, name: "Trương Quốc Bảo", code: "BAOTQ", dept: "ENGI", cty: "Xem Sơn", tasks: 44, avgScore: 0, totalScore: 0, responseTime: 14.863, travelTo: 0.631, processingTime: 0.416, travelBack: 0.001, reportCreated: 0, reportReplaced: 9, materialRecovered: 18, month: '8' }
+    ],
+
     init() {
         this.render();
         window.addEventListener('filter-changed', () => {
@@ -15,17 +22,18 @@ window.ServiceModule = {
     },
 
     parseData(selectedCty, selectedMonth) {
-        let data = [];
+        let data = JSON.parse(JSON.stringify(this.mockData)); // copy mock data
         
         if (window.mockData && window.mockData.service_raw && window.mockData.service_raw.length > 1) {
             let csv = window.mockData.service_raw;
+            let parsed = [];
             for (let i = 1; i < csv.length; i++) {
                 let row = csv[i];
                 if (!row || (!row[1] && !row[2])) continue; 
                 
                 let t = (row[15] !== undefined && row[15] !== '') ? row[15].toString().replace('Tháng', '').trim() : '8';
                 
-                data.push({
+                parsed.push({
                     stt: row[0] || i,
                     name: row[1] || '',
                     code: row[2] || '',
@@ -43,6 +51,9 @@ window.ServiceModule = {
                     materialRecovered: parseFloat(row[14]) || 0,
                     month: t
                 });
+            }
+            if(parsed.length > 0) {
+                data = parsed;
             }
         }
 
@@ -107,64 +118,65 @@ window.ServiceModule = {
         });
 
         let html = `
-            <div class="animate-fade-in" style="height: calc(100vh - 100px); display: flex; flex-direction: column;">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold text-gray-800">Báo Cáo Chất Lượng Dịch Vụ</h2>
-                    <div class="flex items-center gap-2">
-                        <label class="text-sm font-bold text-gray-600">Chọn thời gian:</label>
-                        <select id="service-month-filter" class="border border-gray-300 rounded px-3 py-1 bg-white shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500" onchange="window.ServiceModule.changeMonth(this.value)">
+            <div style="height: calc(100vh - 100px); display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="font-size: 1.5rem; font-weight: bold; color: #1e293b; margin: 0;">Báo Cáo Chất Lượng Dịch Vụ</h2>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn thời gian:</label>
+                        <select id="service-month-filter" style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 12px; background: white; font-weight: bold; outline: none; cursor: pointer;" onchange="window.ServiceModule.changeMonth(this.value)">
                             ${monthOptions}
                         </select>
                     </div>
                 </div>
 
                 <!-- Dashboard Section -->
-                <div class="bg-white shadow-sm border border-gray-200 rounded-lg p-4 mb-4 flex gap-6" style="min-height: 250px;">
+                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 20px; display: flex; gap: 24px; min-height: 250px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                     <div style="flex: 1; position: relative;">
-                        <h3 class="text-center font-bold text-gray-700 mb-2">Tỉ lệ công việc theo Đơn vị</h3>
+                        <h3 style="text-align: center; font-weight: bold; color: #334155; margin-bottom: 10px;">Tỉ lệ công việc theo Đơn vị</h3>
                         <div style="height: 200px; display: flex; justify-content: center;">
                             <canvas id="serviceRatioChart"></canvas>
                         </div>
+                        <div style="text-align: center; font-size: 0.75rem; color: #94a3b8; margin-top: 5px;">(Click vào biểu đồ để lọc dữ liệu)</div>
                     </div>
                     
-                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 1rem;">
-                        <div class="bg-indigo-50 rounded-lg p-4 text-center">
-                            <div class="text-indigo-600 text-sm font-bold">TỔNG NHÂN VIÊN DỊCH VỤ</div>
-                            <div class="text-3xl font-black text-indigo-800" id="srv-total-emp">${data.length}</div>
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px;">
+                        <div style="background: #eef2ff; border-radius: 8px; padding: 20px; text-align: center;">
+                            <div style="color: #4f46e5; font-size: 0.875rem; font-weight: bold; margin-bottom: 8px;">TỔNG NHÂN VIÊN DỊCH VỤ</div>
+                            <div style="font-size: 2.5rem; font-weight: 900; color: #3730a3;" id="srv-total-emp">${data.length}</div>
                         </div>
-                        <div class="bg-green-50 rounded-lg p-4 text-center">
-                            <div class="text-green-600 text-sm font-bold">TỔNG SỐ CÔNG VIỆC</div>
-                            <div class="text-3xl font-black text-green-800" id="srv-total-tasks">${chartData.reduce((a,b)=>a+b, 0)}</div>
+                        <div style="background: #f0fdf4; border-radius: 8px; padding: 20px; text-align: center;">
+                            <div style="color: #16a34a; font-size: 0.875rem; font-weight: bold; margin-bottom: 8px;">TỔNG SỐ CÔNG VIỆC</div>
+                            <div style="font-size: 2.5rem; font-weight: 900; color: #166534;" id="srv-total-tasks">${chartData.reduce((a,b)=>a+b, 0)}</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Table Section -->
-                <div class="bg-white shadow-sm border border-gray-200 overflow-hidden" style="flex: 1; border-radius: 4px; display: flex; flex-direction: column;">
-                    <div class="p-2 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
-                        <span class="font-bold text-gray-700" id="service-table-title">Chi tiết: Tất cả đơn vị</span>
+                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; display: flex; flex-direction: column; flex: 1; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div style="padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: bold; color: #334155;" id="service-table-title">Chi tiết: Tất cả đơn vị</span>
                     </div>
-                    <div class="overflow-auto" style="flex: 1;">
-                        <table class="min-w-full text-sm text-center whitespace-nowrap border-collapse" style="font-family: Arial, sans-serif;">
+                    <div style="overflow: auto; flex: 1;">
+                        <table style="width: 100%; min-width: 1200px; text-align: center; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 0.875rem;">
                             <thead style="background-color: #E6E6FA; color: #333; position: sticky; top: 0; z-index: 10;">
                                 <tr>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">STT</th>
-                                    <th class="px-3 py-2 border border-gray-300 font-bold">HỌ VÀ TÊN NHÂN VIÊN</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">MÃ NV</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">BỘ PHẬN</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">SỐ CÔNG VIỆC</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">SỐ ĐIỂM TB</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">TỔNG ĐIỂM</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">TB THỜI GIAN ĐÁP ỨNG</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">TB THỜI GIAN DI CHUYỂN ĐI</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">TB THỜI GIAN XỬ LÝ</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">TB THỜI GIAN DI CHUYỂN VỀ</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">SỐ BIÊN BẢN KTRA LẬP</th>
-                                    <th class="px-2 py-2 border border-gray-300 font-bold">SỐ BIÊN BẢN KTRA THAY</th>
-                                    <th class="px-3 py-2 border border-gray-300 font-bold">SỐ LẦN ĐÃ THU HỒI VẬT TƯ CŨ</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">STT</th>
+                                    <th style="padding: 8px 12px; border: 1px solid #cbd5e1; font-weight: bold;">HỌ VÀ TÊN NHÂN VIÊN</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">MÃ NV</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">BỘ PHẬN</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">SỐ CÔNG VIỆC</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">SỐ ĐIỂM TB</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">TỔNG ĐIỂM</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">TB THỜI GIAN ĐÁP ỨNG</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">TB THỜI GIAN DI CHUYỂN ĐI</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">TB THỜI GIAN XỬ LÝ</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">TB THỜI GIAN DI CHUYỂN VỀ</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">SỐ BIÊN BẢN KTRA LẬP</th>
+                                    <th style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold;">SỐ BIÊN BẢN KTRA THAY</th>
+                                    <th style="padding: 8px 12px; border: 1px solid #cbd5e1; font-weight: bold;">SỐ LẦN ĐÃ THU HỒI VẬT TƯ CŨ</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200" id="service-table-body">
+                            <tbody id="service-table-body">
                                 <!-- Table rows will be injected here -->
                             </tbody>
                         </table>
@@ -263,7 +275,7 @@ window.ServiceModule = {
         let tableData = data;
         if (this.localCompanyFilter) {
             tableData = data.filter(d => d.cty === this.localCompanyFilter);
-            if(title) title.innerHTML = `Chi tiết: <span class="text-indigo-600 font-bold">${this.localCompanyFilter}</span> <button onclick="window.ServiceModule.clearLocalFilter()" class="ml-2 text-xs bg-red-100 text-red-600 px-2 py-1 rounded cursor-pointer hover:bg-red-200">Hiển thị Tất cả</button>`;
+            if(title) title.innerHTML = `Chi tiết: <span style="color:#4f46e5; font-weight:bold;">${this.localCompanyFilter}</span> <button onclick="window.ServiceModule.clearLocalFilter()" style="margin-left:10px; font-size:0.75rem; background:#fee2e2; color:#ef4444; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Hiển thị Tất cả</button>`;
         } else {
             if(title) title.innerHTML = `Chi tiết: Tất cả đơn vị`;
         }
@@ -274,21 +286,21 @@ window.ServiceModule = {
         if(taskCount) taskCount.textContent = tableData.reduce((a,b)=>a+b.tasks, 0);
 
         tbody.innerHTML = tableData.map((d, i) => `
-            <tr class="hover:bg-gray-50 bg-white transition-colors">
-                <td class="px-2 py-2 border border-gray-200">${d.stt || (i+1)}</td>
-                <td class="px-3 py-2 border border-gray-200 text-left font-medium text-gray-800">${d.name}</td>
-                <td class="px-2 py-2 border border-gray-200">${d.code}</td>
-                <td class="px-2 py-2 border border-gray-200">${d.dept}</td>
-                <td class="px-2 py-2 border border-gray-200 font-bold text-indigo-600">${d.tasks}</td>
-                <td class="px-2 py-2 border border-gray-200" style="color: #16a34a;">${d.avgScore || 0}</td>
-                <td class="px-2 py-2 border border-gray-200" style="color: #16a34a;">${d.totalScore || 0}</td>
-                <td class="px-2 py-2 border border-gray-200">${d.responseTime}</td>
-                <td class="px-2 py-2 border border-gray-200">${d.travelTo}</td>
-                <td class="px-2 py-2 border border-gray-200">${d.processingTime}</td>
-                <td class="px-2 py-2 border border-gray-200">${d.travelBack}</td>
-                <td class="px-2 py-2 border border-gray-200">${d.reportCreated}</td>
-                <td class="px-2 py-2 border border-gray-200">${d.reportReplaced}</td>
-                <td class="px-3 py-2 border border-gray-200 font-bold">${d.materialRecovered}</td>
+            <tr style="background: white; border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.stt || (i+1)}</td>
+                <td style="padding: 8px 12px; border: 1px solid #e2e8f0; text-align: left; font-weight: 500; color: #1e293b;">${d.name}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.code}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.dept}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; color: #4f46e5;">${d.tasks}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; color: #16a34a;">${d.avgScore || 0}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; color: #16a34a;">${d.totalScore || 0}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.responseTime}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.travelTo}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.processingTime}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.travelBack}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.reportCreated}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.reportReplaced}</td>
+                <td style="padding: 8px 12px; border: 1px solid #e2e8f0; font-weight: bold;">${d.materialRecovered}</td>
             </tr>
         `).join('');
     }
