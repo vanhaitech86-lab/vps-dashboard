@@ -15,6 +15,7 @@ window.ServiceModule = {
 
     init() {
         this.render();
+        window.addEventListener('filter-changed', () => this.render());
     },
 
     parseData(selectedCty) {
