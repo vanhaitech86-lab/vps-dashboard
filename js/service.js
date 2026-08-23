@@ -1,7 +1,9 @@
-// Dịch Vụ Tận Tâm & Khiếu Nại Module - Combined
+// Dịch Vụ Tận Tâm & Khiếu Nại Module - Combined with Tabs
 
 window.ServiceModule = {
     name: 'Dịch Vụ Tận Tâm',
+    currentTab: 'service', // 'service' | 'complaint'
+
     localCompanyFilter: null,
     localMonthFilter: 'all',
     chartInstance: null,
@@ -35,6 +37,11 @@ window.ServiceModule = {
         });
     },
 
+    switchTab(tab) {
+        this.currentTab = tab;
+        this.render();
+    },
+
     // ==========================================
     // SERVICE METHODS
     // ==========================================
@@ -61,6 +68,37 @@ window.ServiceModule = {
         return this.filterData(data, selectedCty, selectedMonth);
     },
 
+    aggregateServiceData(data) {
+        let map = {};
+        data.forEach(d => {
+            if (!map[d.code]) {
+                map[d.code] = { ...d, count: 1 };
+            } else {
+                map[d.code].tasks += d.tasks;
+                map[d.code].avgScore += d.avgScore;
+                map[d.code].totalScore += d.totalScore;
+                map[d.code].responseTime += d.responseTime;
+                map[d.code].travelTo += d.travelTo;
+                map[d.code].processingTime += d.processingTime;
+                map[d.code].travelBack += d.travelBack;
+                map[d.code].reportCreated += d.reportCreated;
+                map[d.code].reportReplaced += d.reportReplaced;
+                map[d.code].materialRecovered += d.materialRecovered;
+                map[d.code].count += 1;
+            }
+        });
+        return Object.values(map).map(d => {
+            if (d.count > 1) {
+                d.avgScore = parseFloat((d.avgScore / d.count).toFixed(2));
+                d.responseTime = parseFloat((d.responseTime / d.count).toFixed(3));
+                d.travelTo = parseFloat((d.travelTo / d.count).toFixed(3));
+                d.processingTime = parseFloat((d.processingTime / d.count).toFixed(3));
+                d.travelBack = parseFloat((d.travelBack / d.count).toFixed(3));
+            }
+            return d;
+        });
+    },
+
     // ==========================================
     // COMPLAINTS METHODS
     // ==========================================
@@ -73,7 +111,6 @@ window.ServiceModule = {
                 let row = csv[i];
                 if (!row || !row[0]) continue; 
                 
-                // Parse Month from Date (row[4])
                 let dateStr = row[4] ? row[4].toString().trim() : '';
                 let m = '8';
                 if(dateStr.includes('-')) {
@@ -81,7 +118,7 @@ window.ServiceModule = {
                     if(parts.length >= 2) m = parseInt(parts[1]).toString();
                 } else if(dateStr.includes('/')) {
                     let parts = dateStr.split('/');
-                    if(parts.length >= 2) m = parseInt(parts[1]).toString(); // dd/mm/yyyy
+                    if(parts.length >= 2) m = parseInt(parts[1]).toString();
                 }
 
                 parsed.push({
@@ -95,7 +132,7 @@ window.ServiceModule = {
                     staff: row[7] || '',
                     processContent: row[8] || '',
                     result: row[9] || '',
-                    cty: row[10] ? row[10].toString().trim() : 'Tân Hồng Hà', // Default fallback
+                    cty: row[10] ? row[10].toString().trim() : 'Tân Hồng Hà',
                     month: m
                 });
             }
@@ -159,50 +196,42 @@ window.ServiceModule = {
             cty = window.FilterManager.currentCompany;
         }
 
-        // --- SERVICE DATA ---
-        const svcData = this.parseServiceData(cty, this.localMonthFilter);
-        const svcMonths = this.getUniqueMonths(window.mockData ? window.mockData.service_raw : null, 15);
-        let svcCompanyStats = {};
-        svcData.forEach(d => {
-            let cName = d.cty || 'Khác';
-            if(!svcCompanyStats[cName]) svcCompanyStats[cName] = 0;
-            svcCompanyStats[cName] += d.tasks;
-        });
-        const svcLabels = Object.keys(svcCompanyStats);
-        const svcChartData = Object.values(svcCompanyStats);
-        
-        let svcMonthOpts = `<option value="all">Tất cả các tháng</option>`;
-        svcMonths.forEach(m => { svcMonthOpts += `<option value="${m}" ${this.localMonthFilter == m ? 'selected' : ''}>Tháng ${m}</option>`; });
-
-
-        // --- COMPLAINTS DATA ---
-        const cmpData = this.parseComplaintsData(cty, this.complaintMonthFilter);
-        const cmpMonths = this.getUniqueMonths(window.mockData ? window.mockData.complaints_raw : null, 4); // Date is Col E (index 4)
-        let cmpCompanyStats = {};
-        cmpData.forEach(d => {
-            let cName = d.cty || 'Khác';
-            if(!cmpCompanyStats[cName]) cmpCompanyStats[cName] = 0;
-            cmpCompanyStats[cName] += 1; // 1 complaint per row
-        });
-        const cmpLabels = Object.keys(cmpCompanyStats);
-        const cmpChartData = Object.values(cmpCompanyStats);
-        
-        let cmpMonthOpts = `<option value="all">Tất cả các tháng</option>`;
-        cmpMonths.forEach(m => { cmpMonthOpts += `<option value="${m}" ${this.complaintMonthFilter == m ? 'selected' : ''}>Tháng ${m}</option>`; });
-
-
-        // --- RENDER HTML ---
+        // Initialize HTML with TABS
         let html = `
-            <div style="display: flex; flex-direction: column; gap: 40px; padding-bottom: 40px;">
+            <div style="display: flex; flex-direction: column; gap: 20px; padding-bottom: 20px;">
                 
-                <!-- ============================== -->
-                <!-- 1. BÁO CÁO CHẤT LƯỢNG DỊCH VỤ -->
-                <!-- ============================== -->
-                <div style="display: flex; flex-direction: column;">
+                <!-- TABS NAVIGATION -->
+                <div style="display: flex; gap: 10px; border-bottom: 2px solid #e2e8f0; margin-bottom: 10px;">
+                    <button onclick="window.ServiceModule.switchTab('service')" style="padding: 12px 24px; font-size: 1rem; font-weight: bold; border: none; background: none; cursor: pointer; color: ${this.currentTab === 'service' ? '#4f46e5' : '#64748b'}; border-bottom: ${this.currentTab === 'service' ? '3px solid #4f46e5' : '3px solid transparent'}; outline: none; transition: all 0.2s;">
+                        <i data-lucide="bar-chart-2" style="display: inline-block; vertical-align: middle; margin-right: 8px; width: 18px; height: 18px;"></i> BÁO CÁO CHẤT LƯỢNG
+                    </button>
+                    <button onclick="window.ServiceModule.switchTab('complaint')" style="padding: 12px 24px; font-size: 1rem; font-weight: bold; border: none; background: none; cursor: pointer; color: ${this.currentTab === 'complaint' ? '#ef4444' : '#64748b'}; border-bottom: ${this.currentTab === 'complaint' ? '3px solid #ef4444' : '3px solid transparent'}; outline: none; transition: all 0.2s;">
+                        <i data-lucide="alert-circle" style="display: inline-block; vertical-align: middle; margin-right: 8px; width: 18px; height: 18px;"></i> BÁO CÁO KHIẾU NẠI
+                    </button>
+                </div>
+        `;
+
+        if (this.currentTab === 'service') {
+            const svcData = this.parseServiceData(cty, this.localMonthFilter);
+            const svcMonths = this.getUniqueMonths(window.mockData ? window.mockData.service_raw : null, 15);
+            let svcCompanyStats = {};
+            svcData.forEach(d => {
+                let cName = d.cty || 'Khác';
+                if(!svcCompanyStats[cName]) svcCompanyStats[cName] = 0;
+                svcCompanyStats[cName] += d.tasks;
+            });
+            const svcLabels = Object.keys(svcCompanyStats);
+            const svcChartData = Object.values(svcCompanyStats);
+            
+            let svcMonthOpts = `<option value="all">Tất cả các tháng</option>`;
+            svcMonths.forEach(m => { svcMonthOpts += `<option value="${m}" ${this.localMonthFilter == m ? 'selected' : ''}>Tháng ${m}</option>`; });
+
+            html += `
+                <div style="display: flex; flex-direction: column; animation: fadeIn 0.3s ease;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h2 style="font-size: 1.5rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 5px solid #4f46e5; padding-left: 10px;">BÁO CÁO CHẤT LƯỢNG DỊCH VỤ</h2>
+                        <h2 style="font-size: 1.25rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 4px solid #4f46e5; padding-left: 10px;">CHẤT LƯỢNG DỊCH VỤ TẬN TÂM</h2>
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn thời gian:</label>
+                            <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn tháng:</label>
                             <select style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 12px; background: white; font-weight: bold; outline: none; cursor: pointer;" onchange="window.ServiceModule.changeMonth('service', this.value)">
                                 ${svcMonthOpts}
                             </select>
@@ -215,17 +244,16 @@ window.ServiceModule = {
                             <div style="height: 200px; display: flex; justify-content: center;">
                                 <canvas id="serviceRatioChart"></canvas>
                             </div>
-                            <div style="text-align: center; font-size: 0.75rem; color: #94a3b8; margin-top: 5px;">(Click vào biểu đồ để lọc dữ liệu)</div>
                         </div>
                         
                         <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px;">
-                            <div style="background: #eef2ff; border-radius: 8px; padding: 20px; text-align: center;">
-                                <div style="color: #4f46e5; font-size: 0.875rem; font-weight: bold; margin-bottom: 8px;">TỔNG NHÂN VIÊN DỊCH VỤ</div>
-                                <div style="font-size: 2.5rem; font-weight: 900; color: #3730a3;" id="srv-total-emp">${svcData.length}</div>
+                            <div style="background: #eef2ff; border-radius: 8px; padding: 15px; text-align: center;">
+                                <div style="color: #4f46e5; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">TỔNG NHÂN VIÊN DỊCH VỤ</div>
+                                <div style="font-size: 2rem; font-weight: 900; color: #3730a3;" id="srv-total-emp">${this.aggregateServiceData(svcData).length}</div>
                             </div>
-                            <div style="background: #f0fdf4; border-radius: 8px; padding: 20px; text-align: center;">
-                                <div style="color: #16a34a; font-size: 0.875rem; font-weight: bold; margin-bottom: 8px;">TỔNG SỐ CÔNG VIỆC</div>
-                                <div style="font-size: 2.5rem; font-weight: 900; color: #166534;" id="srv-total-tasks">${svcChartData.reduce((a,b)=>a+b, 0)}</div>
+                            <div style="background: #f0fdf4; border-radius: 8px; padding: 15px; text-align: center;">
+                                <div style="color: #16a34a; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">TỔNG SỐ CÔNG VIỆC</div>
+                                <div style="font-size: 2rem; font-weight: 900; color: #166534;" id="srv-total-tasks">${svcChartData.reduce((a,b)=>a+b, 0)}</div>
                             </div>
                         </div>
                     </div>
@@ -234,7 +262,7 @@ window.ServiceModule = {
                         <div style="padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-weight: bold; color: #334155;" id="service-table-title">Chi tiết: Tất cả đơn vị</span>
                         </div>
-                        <div style="overflow: auto; max-height: 400px;">
+                        <div style="overflow: auto; max-height: 50vh;">
                             <table style="width: 100%; min-width: 1200px; text-align: center; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 0.875rem;">
                                 <thead style="background-color: #E6E6FA; color: #333; position: sticky; top: 0; z-index: 10;">
                                     <tr>
@@ -259,15 +287,33 @@ window.ServiceModule = {
                         </div>
                     </div>
                 </div>
+            `;
+            container.innerHTML = html;
+            if(window.lucide) window.lucide.createIcons();
+            this.renderServiceChart(svcLabels, svcChartData, svcData);
+            this.renderServiceTable(svcData);
+            
+        } else {
+            const cmpData = this.parseComplaintsData(cty, this.complaintMonthFilter);
+            const cmpMonths = this.getUniqueMonths(window.mockData ? window.mockData.complaints_raw : null, 4);
+            let cmpCompanyStats = {};
+            cmpData.forEach(d => {
+                let cName = d.cty || 'Khác';
+                if(!cmpCompanyStats[cName]) cmpCompanyStats[cName] = 0;
+                cmpCompanyStats[cName] += 1;
+            });
+            const cmpLabels = Object.keys(cmpCompanyStats);
+            const cmpChartData = Object.values(cmpCompanyStats);
+            
+            let cmpMonthOpts = `<option value="all">Tất cả các tháng</option>`;
+            cmpMonths.forEach(m => { cmpMonthOpts += `<option value="${m}" ${this.complaintMonthFilter == m ? 'selected' : ''}>Tháng ${m}</option>`; });
 
-                <!-- ============================== -->
-                <!-- 2. BÁO CÁO KHIẾU NẠI KHÁCH HÀNG -->
-                <!-- ============================== -->
-                <div style="display: flex; flex-direction: column;">
+            html += `
+                <div style="display: flex; flex-direction: column; animation: fadeIn 0.3s ease;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h2 style="font-size: 1.5rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 5px solid #ef4444; padding-left: 10px;">BÁO CÁO KHIẾU NẠI KHÁCH HÀNG</h2>
+                        <h2 style="font-size: 1.25rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 4px solid #ef4444; padding-left: 10px;">BÁO CÁO KHIẾU NẠI KHÁCH HÀNG</h2>
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn thời gian:</label>
+                            <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn tháng:</label>
                             <select style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 12px; background: white; font-weight: bold; outline: none; cursor: pointer;" onchange="window.ServiceModule.changeMonth('complaint', this.value)">
                                 ${cmpMonthOpts}
                             </select>
@@ -280,13 +326,12 @@ window.ServiceModule = {
                             <div style="height: 200px; display: flex; justify-content: center;">
                                 <canvas id="complaintRatioChart"></canvas>
                             </div>
-                            <div style="text-align: center; font-size: 0.75rem; color: #94a3b8; margin-top: 5px;">(Click vào biểu đồ để lọc dữ liệu)</div>
                         </div>
                         
                         <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px;">
-                            <div style="background: #fef2f2; border-radius: 8px; padding: 20px; text-align: center;">
-                                <div style="color: #ef4444; font-size: 0.875rem; font-weight: bold; margin-bottom: 8px;">TỔNG SỐ VỤ KHIẾU NẠI</div>
-                                <div style="font-size: 2.5rem; font-weight: 900; color: #b91c1c;" id="cmp-total">${cmpChartData.reduce((a,b)=>a+b, 0)}</div>
+                            <div style="background: #fef2f2; border-radius: 8px; padding: 15px; text-align: center;">
+                                <div style="color: #ef4444; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">TỔNG SỐ VỤ KHIẾU NẠI</div>
+                                <div style="font-size: 2rem; font-weight: 900; color: #b91c1c;" id="cmp-total">${cmpChartData.reduce((a,b)=>a+b, 0)}</div>
                             </div>
                         </div>
                     </div>
@@ -295,7 +340,7 @@ window.ServiceModule = {
                         <div style="padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-weight: bold; color: #334155;" id="complaint-table-title">Chi tiết: Tất cả đơn vị</span>
                         </div>
-                        <div style="overflow: auto; max-height: 400px;">
+                        <div style="overflow: auto; max-height: 50vh;">
                             <table style="width: 100%; min-width: 1200px; text-align: center; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 0.875rem;">
                                 <thead style="background-color: #fee2e2; color: #333; position: sticky; top: 0; z-index: 10;">
                                     <tr>
@@ -317,16 +362,12 @@ window.ServiceModule = {
                         </div>
                     </div>
                 </div>
-
-            </div>
-        `;
-        
-        container.innerHTML = html;
-        this.renderServiceChart(svcLabels, svcChartData, svcData);
-        this.renderServiceTable(svcData);
-        
-        this.renderComplaintChart(cmpLabels, cmpChartData, cmpData);
-        this.renderComplaintTable(cmpData);
+            `;
+            container.innerHTML = html;
+            if(window.lucide) window.lucide.createIcons();
+            this.renderComplaintChart(cmpLabels, cmpChartData, cmpData);
+            this.renderComplaintTable(cmpData);
+        }
     },
 
     changeMonth(type, month) {
@@ -421,37 +462,6 @@ window.ServiceModule = {
         });
     },
 
-    aggregateServiceData(data) {
-        let map = {};
-        data.forEach(d => {
-            if (!map[d.code]) {
-                map[d.code] = { ...d, count: 1 };
-            } else {
-                map[d.code].tasks += d.tasks;
-                map[d.code].avgScore += d.avgScore;
-                map[d.code].totalScore += d.totalScore;
-                map[d.code].responseTime += d.responseTime;
-                map[d.code].travelTo += d.travelTo;
-                map[d.code].processingTime += d.processingTime;
-                map[d.code].travelBack += d.travelBack;
-                map[d.code].reportCreated += d.reportCreated;
-                map[d.code].reportReplaced += d.reportReplaced;
-                map[d.code].materialRecovered += d.materialRecovered;
-                map[d.code].count += 1;
-            }
-        });
-        return Object.values(map).map(d => {
-            if (d.count > 1) {
-                d.avgScore = parseFloat((d.avgScore / d.count).toFixed(2));
-                d.responseTime = parseFloat((d.responseTime / d.count).toFixed(3));
-                d.travelTo = parseFloat((d.travelTo / d.count).toFixed(3));
-                d.processingTime = parseFloat((d.processingTime / d.count).toFixed(3));
-                d.travelBack = parseFloat((d.travelBack / d.count).toFixed(3));
-            }
-            return d;
-        });
-    },
-
     renderServiceTable(data) {
         const tbody = document.getElementById('service-table-body');
         const title = document.getElementById('service-table-title');
@@ -459,7 +469,7 @@ window.ServiceModule = {
 
         let tableData = this.aggregateServiceData(data);
         if (this.localCompanyFilter) {
-            tableData = data.filter(d => d.cty === this.localCompanyFilter);
+            tableData = tableData.filter(d => d.cty === this.localCompanyFilter);
             if(title) title.innerHTML = `Chi tiết: <span style="color:#4f46e5; font-weight:bold;">${this.localCompanyFilter}</span> <button onclick="window.ServiceModule.clearFilter('service')" style="margin-left:10px; font-size:0.75rem; background:#fee2e2; color:#ef4444; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Hiển thị Tất cả</button>`;
         } else {
             if(title) title.innerHTML = `Chi tiết: Tất cả đơn vị`;
@@ -472,7 +482,7 @@ window.ServiceModule = {
 
         tbody.innerHTML = tableData.map((d, i) => `
             <tr style="background: white; border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.stt || (i+1)}</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${i+1}</td>
                 <td style="padding: 8px 12px; border: 1px solid #e2e8f0; text-align: left; font-weight: 500; color: #1e293b;">${d.name}</td>
                 <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.code}</td>
                 <td style="padding: 8px; border: 1px solid #e2e8f0;">${d.dept}</td>
@@ -495,7 +505,7 @@ window.ServiceModule = {
         const title = document.getElementById('complaint-table-title');
         if (!tbody) return;
 
-        let tableData = this.aggregateServiceData(data);
+        let tableData = data;
         if (this.complaintCompanyFilter) {
             tableData = data.filter(d => d.cty === this.complaintCompanyFilter);
             if(title) title.innerHTML = `Chi tiết: <span style="color:#ef4444; font-weight:bold;">${this.complaintCompanyFilter}</span> <button onclick="window.ServiceModule.clearFilter('complaint')" style="margin-left:10px; font-size:0.75rem; background:#fee2e2; color:#ef4444; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Hiển thị Tất cả</button>`;
@@ -504,7 +514,7 @@ window.ServiceModule = {
         }
 
         const cmpTotal = document.getElementById('cmp-total');
-        if(cmpTotal) cmpTotal.textContent = tableData.length; // 1 complaint per row
+        if(cmpTotal) cmpTotal.textContent = tableData.length;
 
         tbody.innerHTML = tableData.map((d, i) => `
             <tr style="background: white; border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='white'">
