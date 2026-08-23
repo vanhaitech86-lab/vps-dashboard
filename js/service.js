@@ -1,16 +1,13 @@
-// Dịch Vụ Tận Tâm Module
+// Dịch Vụ Tận Tâm Module - Table Only Version
 
 window.ServiceModule = {
     name: 'Dịch Vụ Tận Tâm',
-    chartInstances: {},
     
     mockData: [
-        { stt: 1, name: "Cổ Phước Thịnh", code: "THINHCY", dept: "ENGI", tasks: 13, avgScore: 0, totalScore: 0, responseTime: 14.536, travelTo: 0.438, processingTime: 1.549, travelBack: 0.515, reportCreated: 0, reportReplaced: 0, materialRecovered: 0, cty: "Tân Hồng Hà", month: 8 },
-        { stt: 2, name: "Hồ Trung Nam", code: "NAMHT", dept: "ENGI", tasks: 57, avgScore: 0, totalScore: 0, responseTime: 21.117, travelTo: 0.248, processingTime: 0.168, travelBack: 0, reportCreated: 0, reportReplaced: 14, materialRecovered: 14, cty: "Tân Hồng Hà", month: 8 },
-        { stt: 3, name: "Phan Văn Nguyện", code: "NGUYENPV", dept: "ENGI", tasks: 66, avgScore: 0, totalScore: 0, responseTime: 15.884, travelTo: 0.446, processingTime: 0.726, travelBack: 0.052, reportCreated: 0, reportReplaced: 23, materialRecovered: 21, cty: "Việt", month: 8 },
-        { stt: 4, name: "Trương Quốc Bảo", code: "BAOTQ", dept: "ENGI", tasks: 44, avgScore: 0, totalScore: 0, responseTime: 14.863, travelTo: 0.631, processingTime: 0.416, travelBack: 0.001, reportCreated: 0, reportReplaced: 9, materialRecovered: 18, cty: "Xem Sơn", month: 8 },
-        { stt: 5, name: "Hồ Lộc Minh", code: "MINHHL", dept: "ENGI", tasks: 55, avgScore: 0, totalScore: 0, responseTime: 11.887, travelTo: 0.679, processingTime: 0.817, travelBack: 0, reportCreated: 7, reportReplaced: 5, materialRecovered: 11, cty: "ITSS", month: 8 },
-        { stt: 6, name: "Trần Nguyễn Quốc Thắng", code: "THANGTNQ", dept: "ENGI", tasks: 64, avgScore: 0, totalScore: 0, responseTime: 21.661, travelTo: 0, processingTime: 0.171, travelBack: 0, reportCreated: 2, reportReplaced: 14, materialRecovered: 14, cty: "VPS M", month: 8 },
+        { stt: 1, name: "Cổ Phước Thịnh", code: "THINHCY", dept: "ENGI", cty: "Tân Hồng Hà", tasks: 13, avgScore: 0, totalScore: 0, responseTime: 14.536, travelTo: 0.438, processingTime: 1.549, travelBack: 0.515, reportCreated: 0, reportReplaced: 0, materialRecovered: 0 },
+        { stt: 2, name: "Hồ Trung Nam", code: "NAMHT", dept: "ENGI", cty: "Việt", tasks: 57, avgScore: 0, totalScore: 0, responseTime: 21.117, travelTo: 0.248, processingTime: 0.168, travelBack: 0, reportCreated: 0, reportReplaced: 14, materialRecovered: 14 },
+        { stt: 3, name: "Phan Văn Nguyện", code: "NGUYENPV", dept: "ENGI", cty: "VPS M", tasks: 66, avgScore: 0, totalScore: 0, responseTime: 15.884, travelTo: 0.446, processingTime: 0.726, travelBack: 0.052, reportCreated: 0, reportReplaced: 23, materialRecovered: 21 },
+        { stt: 4, name: "Trương Quốc Bảo", code: "BAOTQ", dept: "ENGI", cty: "Xem Sơn", tasks: 44, avgScore: 0, totalScore: 0, responseTime: 14.863, travelTo: 0.631, processingTime: 0.416, travelBack: 0.001, reportCreated: 0, reportReplaced: 9, materialRecovered: 18 }
     ],
 
     init() {
@@ -26,13 +23,13 @@ window.ServiceModule = {
             let parsed = [];
             for (let i = 1; i < csv.length; i++) {
                 let row = csv[i];
-                if (!row || !row[0]) continue;
+                if (!row || !row[1]) continue; // check if Name exists
                 parsed.push({
-                    cty: row[0].toString().trim(),
-                    month: row[1] || 8,
-                    name: row[2] || '',
-                    code: row[3] || '',
-                    dept: row[4] || '',
+                    stt: row[0] || i,
+                    name: row[1] || '',
+                    code: row[2] || '',
+                    dept: row[3] || '',
+                    cty: row[4] ? row[4].toString().trim() : '',
                     tasks: parseFloat(row[5]) || 0,
                     avgScore: parseFloat(row[6]) || 0,
                     totalScore: parseFloat(row[7]) || 0,
@@ -73,161 +70,60 @@ window.ServiceModule = {
 
         const data = this.parseData(cty);
 
-        let totalTasks = 0;
-        let avgProcess = 0;
-        let totalMatRecov = 0;
-        let totalReplaced = 0;
-
-        data.forEach(d => {
-            totalTasks += d.tasks;
-            avgProcess += d.processingTime;
-            totalMatRecov += d.materialRecovered;
-            totalReplaced += d.reportReplaced;
-        });
-        if(data.length > 0) avgProcess = (avgProcess / data.length).toFixed(2);
-        else avgProcess = "0.00";
-        
-        let recovRate = totalReplaced > 0 ? ((totalMatRecov / totalReplaced) * 100).toFixed(1) : 0;
-
         let html = `
-            <div class="animate-fade-in">
-                <div class="flex justify-between items-center mb-6">
+            <div class="animate-fade-in" style="height: calc(100vh - 150px); display: flex; flex-direction: column;">
+                <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">Báo Cáo Chất Lượng Dịch Vụ</h2>
+                    <div class="text-sm text-gray-500">Dữ liệu hiển thị chi tiết theo định dạng báo cáo Excel</div>
                 </div>
 
-                <!-- KPIs -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="text-gray-500 text-sm mb-1">Nhân Viên Dịch Vụ</div>
-                        <div class="text-3xl font-bold text-blue-600">${data.length}</div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="text-gray-500 text-sm mb-1">Tổng Số Công Việc</div>
-                        <div class="text-3xl font-bold text-indigo-600">${totalTasks}</div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="text-gray-500 text-sm mb-1">TB TG Xử Lý (giờ)</div>
-                        <div class="text-3xl font-bold text-orange-500">${avgProcess}</div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <div class="text-gray-500 text-sm mb-1">Tỉ Lệ Thu Hồi Vật Tư</div>
-                        <div class="text-3xl font-bold text-green-500">${recovRate}%</div>
-                    </div>
-                </div>
-
-                <!-- Charts -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <h3 class="text-lg font-bold text-gray-800 mb-4">Số Công Việc / NV (Top 5)</h3>
-                        <div style="height: 250px"><canvas id="serviceTasksChart"></canvas></div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                        <h3 class="text-lg font-bold text-gray-800 mb-4">Thời Gian Xử Lý & Di Chuyển</h3>
-                        <div style="height: 250px"><canvas id="serviceTimeChart"></canvas></div>
-                    </div>
-                </div>
-
-                <!-- Table -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div class="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                        <h3 class="text-lg font-bold text-gray-800">Chi Tiết Chất Lượng Dịch Vụ</h3>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm text-left whitespace-nowrap">
-                            <thead class="bg-gray-50 text-gray-600 font-medium border-b border-gray-200">
-                                <tr>
-                                    <th class="px-4 py-3">STT</th>
-                                    <th class="px-4 py-3">Tên Nhân Viên</th>
-                                    <th class="px-4 py-3">Công Ty</th>
-                                    <th class="px-4 py-3 text-right">Số Việc</th>
-                                    <th class="px-4 py-3 text-right">TG Đáp Ứng</th>
-                                    <th class="px-4 py-3 text-right">TG Xử Lý</th>
-                                    <th class="px-4 py-3 text-right">KTra Thay</th>
-                                    <th class="px-4 py-3 text-right">Thu Hồi VT</th>
+                <div class="bg-white shadow-sm border border-gray-200 overflow-auto" style="flex: 1; border-radius: 4px;">
+                    <table class="min-w-full text-sm text-center whitespace-nowrap border-collapse" style="font-family: Arial, sans-serif;">
+                        <thead style="background-color: #E6E6FA; color: #333; position: sticky; top: 0; z-index: 10;">
+                            <tr>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">STT</th>
+                                <th class="px-3 py-3 border border-gray-300 font-bold">HỌ VÀ TÊN NHÂN VIÊN</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">MÃ NV</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">BỘ PHẬN</th>
+                                <th class="px-3 py-3 border border-gray-300 font-bold">CÔNG TY</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">SỐ CÔNG VIỆC</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">SỐ ĐIỂM TB</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">TỔNG ĐIỂM</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">TB THỜI GIAN ĐÁP ỨNG</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">TB THỜI GIAN DI CHUYỂN ĐI</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">TB THỜI GIAN XỬ LÝ</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">TB THỜI GIAN DI CHUYỂN VỀ</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">SỐ BIÊN BẢN KTRA LẬP</th>
+                                <th class="px-2 py-3 border border-gray-300 font-bold">SỐ BIÊN BẢN KTRA THAY</th>
+                                <th class="px-3 py-3 border border-gray-300 font-bold">SỐ LẦN ĐÃ THU HỒI VẬT TƯ CŨ</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            ${data.map((d, i) => `
+                                <tr class="hover:bg-gray-50 bg-white">
+                                    <td class="px-2 py-2 border border-gray-200">${d.stt || (i+1)}</td>
+                                    <td class="px-3 py-2 border border-gray-200 text-left font-medium">${d.name}</td>
+                                    <td class="px-2 py-2 border border-gray-200">${d.code}</td>
+                                    <td class="px-2 py-2 border border-gray-200">${d.dept}</td>
+                                    <td class="px-3 py-2 border border-gray-200">${d.cty}</td>
+                                    <td class="px-2 py-2 border border-gray-200 font-bold">${d.tasks}</td>
+                                    <td class="px-2 py-2 border border-gray-200" style="color: #16a34a;">${d.avgScore || 0}</td>
+                                    <td class="px-2 py-2 border border-gray-200" style="color: #16a34a;">${d.totalScore || 0}</td>
+                                    <td class="px-2 py-2 border border-gray-200">${d.responseTime}</td>
+                                    <td class="px-2 py-2 border border-gray-200">${d.travelTo}</td>
+                                    <td class="px-2 py-2 border border-gray-200">${d.processingTime}</td>
+                                    <td class="px-2 py-2 border border-gray-200">${d.travelBack}</td>
+                                    <td class="px-2 py-2 border border-gray-200">${d.reportCreated}</td>
+                                    <td class="px-2 py-2 border border-gray-200">${d.reportReplaced}</td>
+                                    <td class="px-3 py-2 border border-gray-200 font-bold">${d.materialRecovered}</td>
                                 </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                ${data.map((d, i) => `
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3">${i+1}</td>
-                                        <td class="px-4 py-3 font-medium text-gray-800">${d.name}<div class="text-xs text-gray-400">${d.code} - ${d.dept}</div></td>
-                                        <td class="px-4 py-3 text-gray-500">${d.cty}</td>
-                                        <td class="px-4 py-3 text-right font-medium">${d.tasks}</td>
-                                        <td class="px-4 py-3 text-right">${d.responseTime}</td>
-                                        <td class="px-4 py-3 text-right">${d.processingTime}</td>
-                                        <td class="px-4 py-3 text-right">${d.reportReplaced}</td>
-                                        <td class="px-4 py-3 text-right text-indigo-600 font-medium">${d.materialRecovered}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
+                            `).join('')}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         `;
         
         container.innerHTML = html;
-        this.renderCharts(data);
-    },
-
-    renderCharts(data) {
-        if (this.chartInstances.tasks) this.chartInstances.tasks.destroy();
-        if (this.chartInstances.time) this.chartInstances.time.destroy();
-
-        let topTasks = [...data].sort((a,b) => b.tasks - a.tasks).slice(0, 5);
-
-        const ctxTasks = document.getElementById('serviceTasksChart');
-        if (ctxTasks) {
-            this.chartInstances.tasks = new Chart(ctxTasks, {
-                type: 'bar',
-                data: {
-                    labels: topTasks.map(d => { let p = d.name.split(' '); return p[p.length-1]; }),
-                    datasets: [{
-                        label: 'Số công việc',
-                        data: topTasks.map(d => d.tasks),
-                        backgroundColor: '#4F46E5',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-
-        let topTime = [...data].sort((a,b) => b.processingTime - a.processingTime).slice(0, 5);
-        const ctxTime = document.getElementById('serviceTimeChart');
-        if (ctxTime) {
-            this.chartInstances.time = new Chart(ctxTime, {
-                type: 'bar',
-                data: {
-                    labels: topTime.map(d => { let p = d.name.split(' '); return p[p.length-1]; }),
-                    datasets: [
-                        {
-                            label: 'TG Xử lý',
-                            data: topTime.map(d => d.processingTime),
-                            backgroundColor: '#F97316',
-                            stack: 'Stack 0',
-                        },
-                        {
-                            label: 'TG Di chuyển',
-                            data: topTime.map(d => d.travelTo + d.travelBack),
-                            backgroundColor: '#93C5FD',
-                            stack: 'Stack 0',
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { stacked: true },
-                        y: { stacked: true }
-                    }
-                }
-            });
-        }
     }
 };
