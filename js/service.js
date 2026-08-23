@@ -198,7 +198,7 @@ window.ServiceModule = {
 
         // Initialize HTML with TABS
         let html = `
-            <div style="display: flex; flex-direction: column; gap: 10px; padding-bottom: 10px;">
+            <div style="margin-top: -20px; display: flex; flex-direction: column; gap: 10px; padding-bottom: 50px;">
                 
                 <!-- TABS NAVIGATION -->
                 <div style="display: flex; gap: 10px; border-bottom: 2px solid #e2e8f0; margin-bottom: 10px;">
@@ -229,7 +229,7 @@ window.ServiceModule = {
             html += `
                 <div style="display: flex; flex-direction: column; animation: fadeIn 0.3s ease;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h2 style="font-size: 1.25rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 4px solid #4f46e5; padding-left: 10px;">CHẤT LƯỢNG DỊCH VỤ TẬN TÂM</h2>
+                        <h2 style="font-size: 1rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 4px solid #4f46e5; padding-left: 10px;">CHẤT LƯỢNG DỊCH VỤ TẬN TÂM</h2>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn tháng:</label>
                             <select style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 12px; background: white; font-weight: bold; outline: none; cursor: pointer;" onchange="window.ServiceModule.changeMonth('service', this.value)">
@@ -248,11 +248,11 @@ window.ServiceModule = {
                         
                         <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px;">
                             <div style="background: #eef2ff; border-radius: 8px; padding: 15px; text-align: center;">
-                                <div style="color: #4f46e5; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">TỔNG NHÂN VIÊN DỊCH VỤ</div>
+                                <div style="color: #4f46e5; font-size: 0.8rem; font-weight: bold; margin-bottom: 0px;">TỔNG NHÂN VIÊN DỊCH VỤ</div>
                                 <div style="font-size: 2rem; font-weight: 900; color: #3730a3;" id="srv-total-emp">${this.aggregateServiceData(svcData).length}</div>
                             </div>
                             <div style="background: #f0fdf4; border-radius: 8px; padding: 15px; text-align: center;">
-                                <div style="color: #16a34a; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">TỔNG SỐ CÔNG VIỆC</div>
+                                <div style="color: #16a34a; font-size: 0.8rem; font-weight: bold; margin-bottom: 0px;">TỔNG SỐ CÔNG VIỆC</div>
                                 <div style="font-size: 2rem; font-weight: 900; color: #166534;" id="srv-total-tasks">${svcChartData.reduce((a,b)=>a+b, 0)}</div>
                             </div>
                         </div>
@@ -311,7 +311,7 @@ window.ServiceModule = {
             html += `
                 <div style="display: flex; flex-direction: column; animation: fadeIn 0.3s ease;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h2 style="font-size: 1.25rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 4px solid #ef4444; padding-left: 10px;">BÁO CÁO KHIẾU NẠI KHÁCH HÀNG</h2>
+                        <h2 style="font-size: 1rem; font-weight: bold; color: #1e293b; margin: 0; border-left: 4px solid #ef4444; padding-left: 10px;">BÁO CÁO KHIẾU NẠI KHÁCH HÀNG</h2>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <label style="font-size: 0.9rem; font-weight: bold; color: #475569;">Chọn tháng:</label>
                             <select style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px 12px; background: white; font-weight: bold; outline: none; cursor: pointer;" onchange="window.ServiceModule.changeMonth('complaint', this.value)">
@@ -330,7 +330,7 @@ window.ServiceModule = {
                         
                         <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px;">
                             <div style="background: #fef2f2; border-radius: 8px; padding: 15px; text-align: center;">
-                                <div style="color: #ef4444; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">TỔNG SỐ VỤ KHIẾU NẠI</div>
+                                <div style="color: #ef4444; font-size: 0.8rem; font-weight: bold; margin-bottom: 0px;">TỔNG SỐ VỤ KHIẾU NẠI</div>
                                 <div style="font-size: 2rem; font-weight: 900; color: #b91c1c;" id="cmp-total">${cmpChartData.reduce((a,b)=>a+b, 0)}</div>
                             </div>
                         </div>
