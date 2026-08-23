@@ -411,3 +411,17 @@
         display: none; /* Hide global filter on small mobile, move to a menu later */
     }
 }
+
+/* BRUTE FORCE REMOVE ALL GAPS */
+.dashboard-views {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    display: block !important;
+}
+#view-service {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+.topbar {
+    margin-bottom: 0 !important;
+}
