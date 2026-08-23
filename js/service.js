@@ -192,20 +192,28 @@ window.ServiceModule = {
         const container = document.getElementById('view-service');
         if (!container) return;
         
-        // ULTIMATE FIX: FORCE TO TOP
-        container.style.position = 'absolute';
-        container.style.top = '10px';
-        container.style.left = '15px';
-        container.style.right = '15px';
+        // ULTIMATE FIX: USE FLEX TO FORCE TO TOP WITHOUT BREAKING SCROLL
+        container.style.position = 'relative';
         container.style.marginTop = '0px';
         container.style.paddingTop = '0px';
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.justifyContent = 'flex-start';
+        // Remove the absolute positioning
+        container.style.top = '';
+        container.style.left = '';
+        container.style.right = '';
         
         const parent = container.parentElement;
         if(parent && parent.classList.contains('dashboard-views')) {
-            parent.style.position = 'relative';
+            parent.style.display = 'flex';
+            parent.style.flexDirection = 'column';
+            parent.style.justifyContent = 'flex-start';
+            parent.style.paddingTop = '0px';
+            parent.style.marginTop = '0px';
         }
 
-        let cty = 'all';
+        let cty = 'all';        let cty = 'all';
 
         if(window.FilterManager && window.FilterManager.currentCompany) {
             cty = window.FilterManager.currentCompany;
