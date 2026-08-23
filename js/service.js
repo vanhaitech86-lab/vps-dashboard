@@ -192,12 +192,17 @@ window.ServiceModule = {
         const container = document.getElementById('view-service');
         if (!container) return;
         
-        // FORCIBLY REMOVE ANY PADDING OR GAP FROM THE PARENT CONTAINER
+        // ULTIMATE FIX: FORCE TO TOP
+        container.style.position = 'absolute';
+        container.style.top = '10px';
+        container.style.left = '15px';
+        container.style.right = '15px';
+        container.style.marginTop = '0px';
+        container.style.paddingTop = '0px';
+        
         const parent = container.parentElement;
         if(parent && parent.classList.contains('dashboard-views')) {
-            parent.style.paddingTop = '0px';
-            parent.style.marginTop = '0px';
-            parent.style.display = 'block';
+            parent.style.position = 'relative';
         }
 
         let cty = 'all';
