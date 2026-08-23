@@ -22,7 +22,8 @@ window.ServiceModule = {
     complaintMockData: [
         { customerName: "CÔNG TY TNHH KHÁCH SẠN GRAND", customerCode: "KH5425", device: "FFC2060-330195", contract: "XMK-KH5425-002", date: "2026-08-03", content: "KẸT GIẤY - GỌI DỨT ĐIỂM", complainer: "PHÁT", staff: "Lê Chí Công", processContent: "", result: "Hướng dẫn KH in khổ giấy nhỏ", cty: "Tân Hồng Hà", month: '8' },
         { customerName: "CÔNG TY CP TM DV XNK D", customerCode: "KH017910", device: "AP5570-130210", contract: "XMK-KH017910-001", date: "2026-08-11", content: "SCAN BỊ MÉO", complainer: "A TÙNG", staff: "Lê Chí Công", processContent: "", result: "Chỉnh cân đối lại", cty: "Việt", month: '8' },
-        { customerName: "CÔNG TY TNHH PHÁT TRIỂN PHÚ HƯNG", customerCode: "KH4012", device: "DCIV3065-122243", contract: "XTM-KH4012-010", date: "2026-09-05", content: "KO SCAN ĐƯỢC + MÁY HAY KẸT GIẤY", complainer: "C.TUYẾT", staff: "Vũ Anh Tài", processContent: "", result: "Thay lô sấy", cty: "Xem Sơn", month: '9' }
+        { customerName: "CÔNG TY TNHH PHÁT TRIỂN PHÚ HƯNG", customerCode: "KH4012", device: "DCIV3065-122243", contract: "XTM-KH4012-010", date: "2026-09-05", content: "KO SCAN ĐƯỢC + MÁY HAY KẸT GIẤY", complainer: "C.TUYẾT", staff: "Vũ Anh Tài", processContent: "", result: "Thay lô sấy", cty: "Xem Sơn", month: '9' },
+        { customerName: "CÔNG TY CP XYZ", customerCode: "KH9999", device: "AP5570", contract: "HD-001", date: "2026-08-15", content: "LỖI BẢN IN", complainer: "ANH A", staff: "Nguyễn Văn B", processContent: "", result: "Đã sửa", cty: "VPS M", month: '8' }
     ],
 
     init() {
@@ -192,7 +193,7 @@ window.ServiceModule = {
 
         // --- RENDER HTML ---
         let html = `
-            <div style="display: flex; flex-direction: column; gap: 40px; padding-bottom: 80px; height: calc(100vh - 80px); overflow-y: auto;">
+            <div style="display: flex; flex-direction: column; gap: 40px; padding-bottom: 40px;">
                 
                 <!-- ============================== -->
                 <!-- 1. BÁO CÁO CHẤT LƯỢNG DỊCH VỤ -->
