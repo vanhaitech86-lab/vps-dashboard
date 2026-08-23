@@ -13,12 +13,16 @@ window.ServiceModule = {
     serviceMockData: [
         { stt: 1, name: "Cổ Phước Thịnh", code: "THINHCY", dept: "ENGI", cty: "Tân Hồng Hà", tasks: 13, avgScore: 0, totalScore: 0, responseTime: 14.536, travelTo: 0.438, processingTime: 1.549, travelBack: 0.515, reportCreated: 0, reportReplaced: 0, materialRecovered: 0, month: '8' },
         { stt: 2, name: "Hồ Trung Nam", code: "NAMHT", dept: "ENGI", cty: "Việt", tasks: 57, avgScore: 0, totalScore: 0, responseTime: 21.117, travelTo: 0.248, processingTime: 0.168, travelBack: 0, reportCreated: 0, reportReplaced: 14, materialRecovered: 14, month: '8' },
-        { stt: 3, name: "Phan Văn Nguyện", code: "NGUYENPV", dept: "ENGI", cty: "VPS M", tasks: 66, avgScore: 0, totalScore: 0, responseTime: 15.884, travelTo: 0.446, processingTime: 0.726, travelBack: 0.052, reportCreated: 0, reportReplaced: 23, materialRecovered: 21, month: '8' }
+        { stt: 3, name: "Phan Văn Nguyện", code: "NGUYENPV", dept: "ENGI", cty: "VPS M", tasks: 66, avgScore: 0, totalScore: 0, responseTime: 15.884, travelTo: 0.446, processingTime: 0.726, travelBack: 0.052, reportCreated: 0, reportReplaced: 23, materialRecovered: 21, month: '8' },
+        { stt: 4, name: "Trương Quốc Bảo", code: "BAOTQ", dept: "ENGI", cty: "Xem Sơn", tasks: 44, avgScore: 0, totalScore: 0, responseTime: 14.863, travelTo: 0.631, processingTime: 0.416, travelBack: 0.001, reportCreated: 0, reportReplaced: 9, materialRecovered: 18, month: '8' },
+        { stt: 1, name: "Cổ Phước Thịnh", code: "THINHCY", dept: "ENGI", cty: "Tân Hồng Hà", tasks: 20, avgScore: 0, totalScore: 0, responseTime: 12.0, travelTo: 0.5, processingTime: 1.2, travelBack: 0.5, reportCreated: 0, reportReplaced: 0, materialRecovered: 0, month: '9' },
+        { stt: 2, name: "Hồ Trung Nam", code: "NAMHT", dept: "ENGI", cty: "Việt", tasks: 40, avgScore: 0, totalScore: 0, responseTime: 20.0, travelTo: 0.3, processingTime: 0.2, travelBack: 0, reportCreated: 0, reportReplaced: 10, materialRecovered: 10, month: '9' }
     ],
 
     complaintMockData: [
         { customerName: "CÔNG TY TNHH KHÁCH SẠN GRAND", customerCode: "KH5425", device: "FFC2060-330195", contract: "XMK-KH5425-002", date: "2026-08-03", content: "KẸT GIẤY - GỌI DỨT ĐIỂM", complainer: "PHÁT", staff: "Lê Chí Công", processContent: "", result: "Hướng dẫn KH in khổ giấy nhỏ", cty: "Tân Hồng Hà", month: '8' },
-        { customerName: "CÔNG TY CP TM DV XNK D", customerCode: "KH017910", device: "AP5570-130210", contract: "XMK-KH017910-001", date: "2026-08-11", content: "SCAN BỊ MÉO", complainer: "A TÙNG", staff: "Lê Chí Công", processContent: "", result: "Chỉnh cân đối lại", cty: "Việt", month: '8' }
+        { customerName: "CÔNG TY CP TM DV XNK D", customerCode: "KH017910", device: "AP5570-130210", contract: "XMK-KH017910-001", date: "2026-08-11", content: "SCAN BỊ MÉO", complainer: "A TÙNG", staff: "Lê Chí Công", processContent: "", result: "Chỉnh cân đối lại", cty: "Việt", month: '8' },
+        { customerName: "CÔNG TY TNHH PHÁT TRIỂN PHÚ HƯNG", customerCode: "KH4012", device: "DCIV3065-122243", contract: "XTM-KH4012-010", date: "2026-09-05", content: "KO SCAN ĐƯỢC + MÁY HAY KẸT GIẤY", complainer: "C.TUYẾT", staff: "Vũ Anh Tài", processContent: "", result: "Thay lô sấy", cty: "Xem Sơn", month: '9' }
     ],
 
     init() {
@@ -188,7 +192,7 @@ window.ServiceModule = {
 
         // --- RENDER HTML ---
         let html = `
-            <div style="display: flex; flex-direction: column; gap: 40px; padding-bottom: 40px;">
+            <div style="display: flex; flex-direction: column; gap: 40px; padding-bottom: 80px; height: calc(100vh - 80px); overflow-y: auto;">
                 
                 <!-- ============================== -->
                 <!-- 1. BÁO CÁO CHẤT LƯỢNG DỊCH VỤ -->
@@ -416,12 +420,43 @@ window.ServiceModule = {
         });
     },
 
+    aggregateServiceData(data) {
+        let map = {};
+        data.forEach(d => {
+            if (!map[d.code]) {
+                map[d.code] = { ...d, count: 1 };
+            } else {
+                map[d.code].tasks += d.tasks;
+                map[d.code].avgScore += d.avgScore;
+                map[d.code].totalScore += d.totalScore;
+                map[d.code].responseTime += d.responseTime;
+                map[d.code].travelTo += d.travelTo;
+                map[d.code].processingTime += d.processingTime;
+                map[d.code].travelBack += d.travelBack;
+                map[d.code].reportCreated += d.reportCreated;
+                map[d.code].reportReplaced += d.reportReplaced;
+                map[d.code].materialRecovered += d.materialRecovered;
+                map[d.code].count += 1;
+            }
+        });
+        return Object.values(map).map(d => {
+            if (d.count > 1) {
+                d.avgScore = parseFloat((d.avgScore / d.count).toFixed(2));
+                d.responseTime = parseFloat((d.responseTime / d.count).toFixed(3));
+                d.travelTo = parseFloat((d.travelTo / d.count).toFixed(3));
+                d.processingTime = parseFloat((d.processingTime / d.count).toFixed(3));
+                d.travelBack = parseFloat((d.travelBack / d.count).toFixed(3));
+            }
+            return d;
+        });
+    },
+
     renderServiceTable(data) {
         const tbody = document.getElementById('service-table-body');
         const title = document.getElementById('service-table-title');
         if (!tbody) return;
 
-        let tableData = data;
+        let tableData = this.aggregateServiceData(data);
         if (this.localCompanyFilter) {
             tableData = data.filter(d => d.cty === this.localCompanyFilter);
             if(title) title.innerHTML = `Chi tiết: <span style="color:#4f46e5; font-weight:bold;">${this.localCompanyFilter}</span> <button onclick="window.ServiceModule.clearFilter('service')" style="margin-left:10px; font-size:0.75rem; background:#fee2e2; color:#ef4444; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Hiển thị Tất cả</button>`;
@@ -459,7 +494,7 @@ window.ServiceModule = {
         const title = document.getElementById('complaint-table-title');
         if (!tbody) return;
 
-        let tableData = data;
+        let tableData = this.aggregateServiceData(data);
         if (this.complaintCompanyFilter) {
             tableData = data.filter(d => d.cty === this.complaintCompanyFilter);
             if(title) title.innerHTML = `Chi tiết: <span style="color:#ef4444; font-weight:bold;">${this.complaintCompanyFilter}</span> <button onclick="window.ServiceModule.clearFilter('complaint')" style="margin-left:10px; font-size:0.75rem; background:#fee2e2; color:#ef4444; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Hiển thị Tất cả</button>`;
