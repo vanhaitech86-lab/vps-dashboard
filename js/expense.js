@@ -32,6 +32,78 @@ window.ExpenseModule = {
     },
     
     generateData() {
+        // Build categories based on Google Sheets if available
+        if (window.mockData && window.mockData.expense_raw && window.mockData.expense_raw.length > 1) {
+            let csv = window.mockData.expense_raw;
+            let catMap = {};
+            
+            for(let i=1; i<csv.length; i++) {
+                let row = csv[i];
+                if(!row || !row[0]) continue;
+                
+                let cty = row[0].toString().trim();
+                let nhom = (row[2] || 'Khác').toString().trim();
+                let hangMuc = (row[3] || 'Chi phí khác').toString().trim();
+                let valStr = (row[4] || 0).toString().replace(/,/g, '');
+                let val = parseFloat(valStr) || 0;
+                
+                if(!catMap[nhom]) {
+                    let cg = 0;
+                    if(nhom.includes('I.')) cg = 0;
+                    if(nhom.includes('II.')) cg = 1;
+                    if(nhom.includes('III.')) cg = 2;
+                    if(nhom.includes('IV.')) cg = 3;
+                    if(nhom.includes('V.')) cg = 4;
+                    
+                    catMap[nhom] = {
+                        stt: nhom.split('.')[0] || '',
+                        name: nhom,
+                        code: '',
+                        chartGroup: cg,
+                        items: [],
+                        itemMap: {}
+                    };
+                }
+                
+                if(!catMap[nhom].itemMap[hangMuc]) {
+                    let itemObj = { code: "", name: hangMuc, amounts: {
+                        'THH': 0, 'Viet': 0, 'XemSon': 0, 'ITSS': 0, 'VPSM': 0, 'VPVPS': 0
+                    }};
+                    catMap[nhom].items.push(itemObj);
+                    catMap[nhom].itemMap[hangMuc] = itemObj;
+                }
+                
+                // Map cty string to ID
+                let cid = '';
+                let clower = cty.toLowerCase();
+                if(clower.includes('hồng hà') || clower.includes('thh')) cid = 'THH';
+                else if(clower.includes('việt')) cid = 'Viet';
+                else if(clower.includes('xem') || clower.includes('sơn')) cid = 'XemSon';
+                else if(clower.includes('itss')) cid = 'ITSS';
+                else if(clower.includes('vps m') || clower.includes('vpsm')) cid = 'VPSM';
+                else if(clower.includes('văn phòng') || clower.includes('vpvps')) cid = 'VPVPS';
+                else cid = 'THH'; // default fallback
+                
+                catMap[nhom].itemMap[hangMuc].amounts[cid] += val;
+            }
+            
+            // Only overwrite if we actually found items
+            let cats = Object.values(catMap);
+            if(cats.length > 0) {
+                this.categories = cats;
+                // Pre-calculate block totals for UI since we removed random logic
+                cats.forEach(cat => {
+                    cat.items.forEach(item => {
+                        item.total = 0;
+                        for(let k in item.amounts) {
+                            item.total += item.amounts[k];
+                        }
+                    });
+                });
+                return; // Skip the hardcoded generation
+            }
+        }
+
         this.categories = [
             {
                 stt: "I",

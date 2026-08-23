@@ -50,6 +50,59 @@ window.IsoModule = {
     },
 
     init() {
+        
+        // Parse Google Sheets data if available
+        if (window.mockData && window.mockData.iso_raw && window.mockData.iso_raw.length > 1) {
+            let csv = window.mockData.iso_raw;
+            let sumData = {};
+            let detData = {};
+            
+            // Expected headers: CÔNG TY, PHÒNG BAN, TÊN QUY TRÌNH / QUY ĐỊNH, PHÂN LOẠI
+            for(let i=1; i<csv.length; i++) {
+                let row = csv[i];
+                if(!row || !row[0]) continue;
+                
+                let c = row[0].toString().trim().toUpperCase();
+                let p = (row[1] || 'Khác').toString().trim().toUpperCase();
+                let t = (row[2] || '').toString().trim();
+                let loai = (row[3] || '').toString().trim().toLowerCase();
+                
+                // normalize company name
+                let cid = 'TÂN HỒNG HÀ';
+                if(c.includes('VIỆT') || c === 'VIET' || c === 'VI?T') cid = 'VIỆT';
+                else if(c.includes('SƠN') || c.includes('SON')) cid = 'XEM SƠN';
+                else if(c.includes('ITSS')) cid = 'ITSS';
+                else if(c.includes('VPS M') || c === 'VPSM') cid = 'VPSM';
+                else if(c.includes('VĂN PHÒNG') || c.includes('VP')) cid = 'VĂN PHÒNG VPS';
+                else if(c === 'VPS') cid = 'VPS';
+                else cid = c; // Fallback
+                
+                if(!sumData[cid]) sumData[cid] = { name: cid, qt: 0, qd: 0, total: 0 };
+                if(!detData[cid]) detData[cid] = {};
+                if(!detData[cid][p]) detData[cid][p] = { dept: p, qt: 0, qtList: [], qd: 0, qdList: [] };
+                
+                let isQt = loai.includes('trình') || loai.includes('qt');
+                
+                if (isQt) {
+                    sumData[cid].qt++;
+                    detData[cid][p].qt++;
+                    detData[cid][p].qtList.push(t);
+                } else {
+                    sumData[cid].qd++;
+                    detData[cid][p].qd++;
+                    detData[cid][p].qdList.push(t);
+                }
+                sumData[cid].total++;
+            }
+            
+            this.summaryData = Object.values(sumData);
+            let finalDetail = {};
+            for (let c in detData) {
+                finalDetail[c] = Object.values(detData[c]);
+            }
+            this.detailData = finalDetail;
+        }
+        
         this.renderSummaryTable();
         this.renderChart();
     },

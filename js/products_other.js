@@ -27,6 +27,93 @@ window.ProductsOtherModule = {
         }
         
         this.generateMockData();
+        
+        // Parse from Google Sheets if available
+        if (window.mockData && window.mockData.products_raw && window.mockData.products_raw.length > 1) {
+            let csv = window.mockData.products_raw;
+            let valMap = {};
+            for (let i=1; i<csv.length; i++) {
+                let row = csv[i];
+                if(!row || !row[0]) continue;
+                
+                let cty = row[0].toString().trim().toUpperCase();
+                let hang = (row[2] || '').toString().trim().toUpperCase();
+                let nhom = (row[3] || '').toString().trim().toUpperCase();
+                let valStr = (row[4] || 0).toString().replace(/,/g, '');
+                let val = parseFloat(valStr) || 0;
+                
+                // Only process matching Hang
+                let targetHang = "KHAC".toUpperCase();
+                if (targetHang === 'KHAC') {
+                    if (hang === 'HP' || hang === 'FUJIFILM') continue;
+                } else {
+                    if (hang !== targetHang) continue;
+                }
+                
+                let cid = 'thh';
+                if(cty.includes('VIỆT') || cty === 'VIET' || cty === 'VI?T') cid = 'viet';
+                else if(cty.includes('SƠN') || cty.includes('SON')) cid = 'xesco';
+                else if(cty.includes('ITSS')) cid = 'itss';
+                else if(cty.includes('VPS M') || cty === 'VPSM') cid = 'vpsm';
+                
+                let key = nhom + '|' + cid;
+                valMap[key] = (valMap[key] || 0) + val;
+            }
+            
+            // Override the generated random data with CSV data
+            this.mockRows.forEach(row => {
+                if (row.isSum || !row.id) return; // Skip headers/totals
+                let upperName = row.name.replace(/&nbsp;/g, '').trim().toUpperCase();
+                
+                ['thh', 'viet', 'xesco', 'itss', 'vpsm'].forEach(cid => {
+                    let key = upperName + '|' + cid;
+                    if(valMap[key]) {
+                        row.data[cid].th_ds = valMap[key];
+                    } else {
+                        // Fuzzy match
+                        for(let k in valMap) {
+                            if(k.includes(upperName) && k.endsWith('|'+cid)) {
+                                row.data[cid].th_ds += valMap[k];
+                            }
+                        }
+                    }
+                });
+                
+                // Recalculate totals
+                ['thh', 'viet', 'xesco', 'itss', 'vpsm'].forEach(cid => {
+                    let d = row.data[cid];
+                    d.pct = (d.th_ds / (d.kh_ds || 1) * 100).toFixed(1);
+                });
+            });
+            
+            // Recalculate 'all' column
+            this.mockRows.forEach(row => {
+                let d = row.data['all'];
+                d.th_ds = 0; d.kh_ds = 0; d.th_sl = 0; d.kh_sl = 0;
+                ['thh', 'viet', 'xesco', 'itss', 'vpsm'].forEach(cid => {
+                    d.th_ds += row.data[cid].th_ds;
+                    d.kh_ds += row.data[cid].kh_ds;
+                    d.th_sl += row.data[cid].th_sl || 0;
+                    if(typeof d.kh_sl !== 'string') d.kh_sl += (row.data[cid].kh_sl || 0);
+                });
+                d.pct = (d.th_ds / (d.kh_ds || 1) * 100).toFixed(1);
+            });
+            
+            // Recalculate 'tong' row
+            let tongRow = this.mockRows.find(r => r.id === 'tong');
+            if (tongRow) {
+                ['thh', 'viet', 'xesco', 'itss', 'vpsm', 'all'].forEach(cid => {
+                    tongRow.data[cid].th_ds = 0;
+                    this.mockRows.forEach(r => {
+                        if (r.id !== 'tong' && r.id !== 'hp' && r.id !== 'fujifilm' && r.id !== 'khac' && !r.name.includes('&nbsp;')) {
+                            tongRow.data[cid].th_ds += r.data[cid].th_ds;
+                        }
+                    });
+                    tongRow.data[cid].pct = (tongRow.data[cid].th_ds / (tongRow.data[cid].kh_ds || 1) * 100).toFixed(1);
+                });
+            }
+        }
+
         this.renderUI('all');
     },
 

@@ -55,7 +55,10 @@ window.GoogleSheetsService = {
                 debt: { total: 0, byCompany: {} },
                 customers: { total: 0, trend: window.mockData.customers.trend, matrix: {}, plan2026: window.mockData.customers.plan2026, byCompany: {} },
                 inventory: { totalItems: 0, totalValue: 0, categories: [], byCompany: {} },
-                hr: { totalEmployees: 0, newHires: 0, resignations: 0, probation: 0, byDepartment: {}, byCompany: {} }
+                hr: { totalEmployees: 0, newHires: 0, resignations: 0, probation: 0, byDepartment: {}, byCompany: {} },
+                products_raw: spCsv || [],
+                expense_raw: cpCsv || [],
+                iso_raw: isoCsv || []
             };
 
             // ========== Parse Revenue ==========
@@ -288,6 +291,9 @@ window.GoogleSheetsService = {
             }
             // Always write HR from Google Sheets (even if values are 0, the structure is correct)
             window.mockData.hr = newData.hr;
+            window.mockData.products_raw = newData.products_raw;
+            window.mockData.expense_raw = newData.expense_raw;
+            window.mockData.iso_raw = newData.iso_raw;
             
             console.log("Successfully loaded data from Google Sheets:", newData);
             return window.mockData;
