@@ -455,6 +455,9 @@ window.GoogleSheetsService = {
             }
 
             // ── Cập nhật mockData.revenue ──
+            if (!window.mockData) window.mockData = {};
+            if (!window.mockData.inventory) window.mockData.inventory = {};
+            if (!window.mockData.customers) window.mockData.customers = {};
             const totalRevTy = parseFloat((totalRevVND / 1e9).toFixed(3));
             window.mockData.revenue = {
                 total: totalRevTy,

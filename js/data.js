@@ -977,31 +977,36 @@ window.CrmConnector = {
             return data;
         } catch (error) {
             console.error("[CrmConnector] Lỗi kết nối API:", error);
-            return null;
         }
     }
 };
 
+window.mockData = mockData;
+
 window.DataService = {
     async getCustomersData(period = 'month', company = 'all') {
-        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.customers, period)), 200));
+        const d = (window.mockData && window.mockData.customers) ? window.mockData.customers : mockData.customers;
+        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(d, period)), 100));
     },
     
     async getRevenueData(period = 'month', company = 'all') {
-        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.revenue, period)), 200));
+        const d = (window.mockData && window.mockData.revenue) ? window.mockData.revenue : mockData.revenue;
+        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(d, period)), 100));
     },
     
     async getDebtData(period = 'month', company = 'all') {
-        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.debt, period)), 200));
+        const d = (window.mockData && window.mockData.debt) ? window.mockData.debt : mockData.debt;
+        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(d, period)), 100));
     },
 
     async getInventoryData(period = 'month', company = 'all') {
-        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(mockData.inventory, period)), 200));
+        const d = (window.mockData && window.mockData.inventory) ? window.mockData.inventory : mockData.inventory;
+        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(d, period)), 100));
     },
 
     async getHrData(period = 'month', company = 'all') {
-        // mockData.hr is updated by google_sheets.js loadAllData()
-        return new Promise(resolve => setTimeout(() => resolve(mockData.hr), 200));
+        const d = (window.mockData && window.mockData.hr) ? window.mockData.hr : mockData.hr;
+        return new Promise(resolve => setTimeout(() => resolve(d), 100));
     }
 };
 
