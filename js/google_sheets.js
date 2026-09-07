@@ -127,28 +127,47 @@ async function fetchCsv(sheetName) {
 // PARSE DOANH THU TỪ 1 FILE ĐƠN VỊ
 // Format CSV: Row0=header, Row1+ = data
 // Col: [0]=Tháng/Năm, [1]=Công ty, [2]=KH, [3]=TH, [4]=TLG, [5]=CP, [6]=LNTT
+// Xử lý cả trường hợp cột tháng bị trống (như file THH)
 // ============================================================
 function parseRevenueFromFile(csv, cId) {
     const results = {};
+    // Lấy tháng từ header (row[0]) nếu có
+    let headerMonth = '';
+    if (csv.length > 0 && csv[0]) {
+        const h = csv[0][0] ? csv[0][0].toString() : '';
+        const mMatch = h.match(/(\d{2}\/\d{4})/);
+        if (mMatch) headerMonth = mMatch[1];
+    }
+    
     for (let i = 1; i < csv.length; i++) {
         const row = csv[i];
-        if (!row || !row[0]) continue;
-        const thang = row[0].toString().trim();
-        if (!thang.includes('/') && !thang.match(/^\d{2}\/\d{4}$/)) continue;
+        if (!row) continue;
+        
+        // Xác định tháng: lấy từ col[0], nếu không có thì dùng headerMonth
+        let thang = row[0] ? row[0].toString().trim() : '';
+        if (!thang.match(/\d{2}\/\d{4}/)) {
+            thang = headerMonth || '08/2026';
+        } else {
+            const m = thang.match(/(\d{2}\/\d{4})/);
+            thang = m ? m[1] : headerMonth || '08/2026';
+        }
 
-        // Tìm cột công ty để xác định đúng công ty
         const plan   = parseNumber(row[2]);
         const actual = parseNumber(row[3]);
         const lgPct  = parseNumber(row[4]);
         const cp     = parseNumber(row[5]);
         const lntt   = parseNumber(row[6]);
 
-        if (actual > 0 || plan > 0) {
+        // Ghi nhận nếu có ít nhất 1 giá trị > 0
+        if (actual > 0 || plan > 0 || cp > 0 || lntt > 0) {
             if (!results[thang]) {
-                results[thang] = {
-                    plan, actual, ttlg: 0, lg_pct: lgPct,
-                    cp_lg_pct: 0, cp, lntt
-                };
+                results[thang] = { plan, actual, ttlg: 0, lg_pct: lgPct, cp_lg_pct: 0, cp, lntt };
+            } else {
+                // Cộng dồn nếu cùng tháng (nhiều dòng)
+                results[thang].plan   += plan;
+                results[thang].actual += actual;
+                results[thang].cp     += cp;
+                results[thang].lntt   += lntt;
             }
         }
     }
