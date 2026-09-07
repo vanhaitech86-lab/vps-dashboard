@@ -89,8 +89,8 @@ window.RevenueModule = {
                 if (!kh || kh <= 0) {
                     return { text: '-', color: '#666' };
                 }
-                if (!th || th <= 0) {
-                    return { text: '0%', color: '#dc2626' };
+                if (th === null || th === undefined || th === '' || th === 0) {
+                    return { text: '-', color: '#666' };
                 }
                 const pct = (th / kh) * 100;
                 const text = pct.toFixed(1) + '%';
