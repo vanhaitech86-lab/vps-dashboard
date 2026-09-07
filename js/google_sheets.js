@@ -106,13 +106,14 @@ function parseRawCSV(text) {
 }
 
 async function fetchSheetCsv(sheetId, sheetName) {
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+    const t = Date.now();
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&_t=${t}`;
     try {
         let res = await fetch(url);
         // Fallback for case sensitivity e.g. 'Chi Phí' vs 'Chi phí'
         if ((!res.ok || res.status === 400) && sheetName.includes('Chi')) {
             const altName = sheetName === 'Chi Phí' ? 'Chi phí' : 'Chi Phí';
-            const altUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(altName)}`;
+            const altUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(altName)}&_t=${t}`;
             res = await fetch(altUrl);
         }
         if (!res.ok) return [];

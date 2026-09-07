@@ -19,16 +19,15 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="css/dashboard.css?v=1788748943">
-    <link rel="stylesheet" href="css/customers.css?v=1788748943">
-    <link rel="stylesheet" href="css/revenue.css?v=1788748943">
-    <link rel="stylesheet" href="css/debt.css?v=1788748943">
+    <link rel="stylesheet" href="css/dashboard.css?v=1788750504">
+    <link rel="stylesheet" href="css/customers.css?v=1788750504">
+    <link rel="stylesheet" href="css/revenue.css?v=1788750504">
+    <link rel="stylesheet" href="css/debt.css?v=1788750504">
 <style>.chart-container { position: relative; width: 100%; }    html, body { height: 100%; width: 100%; }
 
         #page-title { white-space: nowrap !important; font-size: 1.1rem !important; }
         .dashboard-views { padding-bottom: 250px !important; }
-    
-        
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 
     <style>
@@ -133,7 +132,12 @@
                     <h1 id="page-title">DASHBOARD</h1>
                 </div>
                 
-                <div class="topbar-right">
+                <div class="topbar-right" style="display: flex; align-items: center; gap: 10px;">
+                    <!-- Nút Đồng bộ Google Sheets Trực tiếp -->
+                    <button id="btn-sync-sheets" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #0f172a; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; white-space: nowrap;" title="Nhấn để cập nhật ngay số liệu mới nhất từ 5 file Google Sheets">
+                        <i data-lucide="refresh-cw" id="sync-icon" style="width: 14px; height: 14px;"></i>
+                        <span id="sync-text">Đồng bộ</span>
+                    </button>
                     <!-- Global Time Filter -->
                     <div class="time-filter">
                         <button class="filter-btn" data-period="day">Ngày</button>
@@ -1261,34 +1265,34 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/connectors.js?v=1788748943"></script>
+    <script src="js/connectors.js?v=1788750504"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="js/data.js?v=1788748943"></script>
-    <script src="js/google_sheets.js?v=1788748943"></script>
-    <script src="js/auth.js?v=1788748943"></script>
-    <script src="js/filters.js?v=1788748943"></script>
-    <script src="js/charts.js?v=1788748943"></script>
-    <script src="js/overview.js?v=1788748943"></script>
-    <script src="js/customers.js?v=1788748943"></script>
-    <script src="js/products.js?v=1788748943"></script>
-    <script src="js/fujifilm.js?v=1788748943"></script>
-    <script src="js/products_other.js?v=1788748943"></script>
-    <script src="js/revenue.js?v=1788748943"></script>
-    <script src="js/inventory.js?v=1788748943"></script>
-    <script src="js/debt.js?v=1788748943"></script>
-    <script src="js/hr.js?v=1788748943"></script>
-    <script src="js/admin.js?v=1788748943"></script>
-    <script src="js/culture.js?v=1788748943"></script>
-    <script src="js/iso.js?v=1788748943"></script>
-    <script src="js/training.js?v=1788748943"></script>
-    <script src="js/service.js?v=1788748943"></script>
-    <script src="js/brand.js?v=1788748943"></script>
-    <script src="js/app.js?v=1788748943"></script>
+    <script src="js/data.js?v=1788750504"></script>
+    <script src="js/google_sheets.js?v=1788750504"></script>
+    <script src="js/auth.js?v=1788750504"></script>
+    <script src="js/filters.js?v=1788750504"></script>
+    <script src="js/charts.js?v=1788750504"></script>
+    <script src="js/overview.js?v=1788750504"></script>
+    <script src="js/customers.js?v=1788750504"></script>
+    <script src="js/products.js?v=1788750504"></script>
+    <script src="js/fujifilm.js?v=1788750504"></script>
+    <script src="js/products_other.js?v=1788750504"></script>
+    <script src="js/revenue.js?v=1788750504"></script>
+    <script src="js/inventory.js?v=1788750504"></script>
+    <script src="js/debt.js?v=1788750504"></script>
+    <script src="js/hr.js?v=1788750504"></script>
+    <script src="js/admin.js?v=1788750504"></script>
+    <script src="js/culture.js?v=1788750504"></script>
+    <script src="js/iso.js?v=1788750504"></script>
+    <script src="js/training.js?v=1788750504"></script>
+    <script src="js/service.js?v=1788750504"></script>
+    <script src="js/brand.js?v=1788750504"></script>
+    <script src="js/app.js?v=1788750504"></script>
     
     <script>
         lucide.createIcons();
     </script>
-    <script src="js/expense.js?v=1788748943"></script>
+    <script src="js/expense.js?v=1788750504"></script>
 
 </body>
 </html>

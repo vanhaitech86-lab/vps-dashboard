@@ -78,6 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.menu-toggle').addEventListener('click', () => {
                 document.querySelector('.sidebar').classList.toggle('open');
             });
+
+            // Nút đồng bộ thủ công Google Sheets
+            const btnSync = document.getElementById('btn-sync-sheets');
+            if (btnSync) {
+                btnSync.addEventListener('click', async () => {
+                    await this.syncData(true);
+                });
+            }
         },
 
         showLogin() {
@@ -163,6 +171,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     );
                 }
             }, 500);
+
+            // Thiết lập chu kỳ tự động đồng bộ mỗi 60 giây trong nền
+            if (!this._syncInterval) {
+                this._syncInterval = setInterval(() => {
+                    this.syncData(false);
+                }, 60000);
+            }
+        },
+
+        async syncData(isManual = false) {
+            const btnSync = document.getElementById('btn-sync-sheets');
+            const syncIcon = document.getElementById('sync-icon');
+            const syncText = document.getElementById('sync-text');
+            if (syncIcon) syncIcon.style.animation = 'spin 0.8s linear infinite';
+            if (syncText) syncText.textContent = 'Đang tải...';
+
+            if (window.GoogleSheetsService) {
+                try {
+                    await window.GoogleSheetsService.loadAllData();
+                    if (window.FilterManager) {
+                        window.FilterManager.triggerFilterChange();
+                    }
+                    const now = new Date();
+                    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+                    if (syncText) syncText.textContent = 'Đã cập nhật';
+                    if (btnSync) btnSync.title = `Lần đồng bộ gần nhất: ${timeStr} (Nhấn để đồng bộ lại)`;
+                } catch(e) {
+                    console.warn('Sync failed:', e);
+                    if (syncText) syncText.textContent = 'Lỗi tải';
+                }
+            }
+
+            setTimeout(() => {
+                if (syncIcon) syncIcon.style.animation = '';
+                if (syncText) syncText.textContent = 'Đồng bộ';
+            }, 1800);
         },
 
         showView(viewId) {
@@ -192,6 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Show target
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            if (window.FilterManager) {
+                window.FilterManager.triggerFilterChange();
+            }
         }
     };
 
