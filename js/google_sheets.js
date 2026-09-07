@@ -112,17 +112,29 @@ async function fetchSheetCsv(sheetId, sheetName) {
     const t = Date.now();
     const baseNames = [sheetName];
     if (sheetName.includes('Chi')) {
-        baseNames.push('Chi phí', 'Chi Phí');
+        baseNames.push('Chi phí', 'Chi Phí', '5. Chi phí', '5. Chi Phí', 'Chi phi');
     } else if (sheetName.includes('Đào tạo') || sheetName.includes('Đào Tạo')) {
-        baseNames.push('Đào Tạo', 'Đào tạo');
+        baseNames.push('Đào Tạo', 'Đào tạo', '10. Đào tạo', '10. Đào Tạo', 'Đào tạo 2026', 'Dao tao', 'DAO TAO');
     } else if (sheetName.includes('Dịch vụ') || sheetName.includes('Dịch Vụ')) {
-        baseNames.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ');
+        baseNames.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ', '8. Dịch vụ', '8. Dịch Vụ', '8. Dịch vụ tận tâm', '8. Dịch Vụ Tận Tâm', 'DV tận tâm', 'Dich vu');
     } else if (sheetName.includes('Văn hóa') || sheetName.includes('Văn Hóa')) {
-        baseNames.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp');
+        baseNames.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp', 'Văn hóa DN', 'Văn Hóa DN', '11. Văn hóa', '11. Văn hóa DN', '11. Văn hóa doanh nghiệp', 'Van hoa');
     } else if (sheetName.includes('Thương hiệu') || sheetName.includes('Thương Hiệu')) {
-        baseNames.push('Thương Hiệu', 'Thương hiệu');
+        baseNames.push('Thương Hiệu', 'Thương hiệu', '12. Thương hiệu', '12. Thương Hiệu', 'Thuong hieu', 'THƯƠNG HIỆU');
     } else if (sheetName.includes('Sản')) {
-        baseNames.push('Sản Phẩm', 'Sản phẩm');
+        baseNames.push('Sản Phẩm', 'Sản phẩm', '3. Sản phẩm', '3. Sản Phẩm', 'San pham');
+    } else if (sheetName.includes('Công nợ') || sheetName.includes('Công Nợ')) {
+        baseNames.push('Công nợ', 'Công Nợ', '6. Công nợ', '6. Công Nợ', 'Cong no');
+    } else if (sheetName.includes('Khách')) {
+        baseNames.push('Khách hàng', 'Khách Hàng', '7. Khách hàng', '7. Khách Hàng', 'Khach hang');
+    } else if (sheetName.includes('Tồn')) {
+        baseNames.push('Tồn kho', 'Tồn Kho', '4. Tồn kho', '4. Tồn Kho', 'Ton kho');
+    } else if (sheetName.includes('Nhân')) {
+        baseNames.push('Nhân sự', 'Nhân Sự', '1. CCTC Nhân sự', 'CCTC Nhân sự', 'Nhan su');
+    } else if (sheetName.includes('ISO')) {
+        baseNames.push('ISO', 'iso', '9. ISO', '9. iso');
+    } else if (sheetName.includes('Doanh thu') || sheetName.includes('Doanh Thu')) {
+        baseNames.push('Doanh thu', 'Doanh Thu', '2. Doanh thu', '2. Doanh Thu', 'Doanh số', 'Doanh Số');
     }
 
     const prefixes = [
@@ -134,6 +146,7 @@ async function fetchSheetCsv(sheetId, sheetName) {
         'Copy of ',
         'Copy of Copy of '
     ];
+
 
     let candidates = [];
     for (const p of prefixes) {
