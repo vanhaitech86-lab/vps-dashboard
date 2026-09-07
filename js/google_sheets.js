@@ -432,33 +432,89 @@ window.GoogleSheetsService = {
             });
 
             // ── Tổng hợp Kế hoạch Tài chính 2026 (ĐVT: Triệu VNĐ) cho bảng revenuePlanTable ──
-            const plan2026 = {
-                'all': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+            const BASELINE_PLAN = {
+                'THH':    { ds: 17010, lg_pct: 14, cp: 1350, lntt: 1031 },
+                'Viet':   { ds: 8779,  lg_pct: 22, cp: 1170, lntt: 761 },
+                'XemSon': { ds: 14000, lg_pct: 26, cp: 2580, lntt: 1060 },
+                'VPSM':   { ds: 3000,  lg_pct: 19, cp: 350,  lntt: 220 },
+                'ITSS':   { ds: 1137,  lg_pct: 25, cp: 240,  lntt: 44 }
             };
+
+            const plan2026 = {
+                'all': {
+                    ds: 0, actual: 0,
+                    ttlg: 0, actual_ttlg: 0,
+                    lg_pct: 0, actual_lg_pct: 0,
+                    cp_lg_pct: 0, actual_cp_lg_pct: 0,
+                    cp: 0, actual_cp: 0,
+                    lntt: 0, actual_lntt: 0
+                }
+            };
+
             companyIds.forEach(cId => {
                 const r = revenueByCompany[cId];
                 if (r) {
-                    const dsTr   = Math.round((r.planRaw || 0) / 1e6);
-                    const actTr  = Math.round((r.actualRaw || 0) / 1e6);
-                    const cpTr   = Math.round((r.cp || 0) / 1e6);
-                    const lnttTr = Math.round((r.lntt || 0) / 1e6);
+                    const base = BASELINE_PLAN[cId] || {};
+                    const ds_kh = r.planRaw > 0 ? Math.round(r.planRaw / 1e6) : (base.ds || 0);
+                    const ds_th = Math.round((r.actualRaw || 0) / 1e6);
+
+                    // % Lãi gộp: nếu file có tỷ lệ gộp thì dùng, nếu không dùng baseline
+                    const lg_pct_th = r.lg_pct || (base.lg_pct || 0);
+                    const lg_pct_kh = base.lg_pct || (r.lg_pct || 0);
+
+                    // TT Lãi gộp (Triệu VNĐ)
+                    const ttlg_kh = lg_pct_kh > 0 ? Math.round(ds_kh * lg_pct_kh / 100) : 0;
+                    const ttlg_th = lg_pct_th > 0 ? Math.round(ds_th * lg_pct_th / 100) : 0;
+
+                    // Chi phí (Triệu VNĐ)
+                    const cp_th = r.cp > 0 ? Math.round(r.cp / 1e6) : 0;
+                    const cp_kh = base.cp || (cp_th > 0 ? Math.round(cp_th * 1.1) : 0);
+
+                    // % CP / Lãi gộp
+                    const cp_lg_pct_kh = (ttlg_kh > 0 && cp_kh > 0) ? parseFloat(((cp_kh / ttlg_kh) * 100).toFixed(1)) : 60;
+                    const cp_lg_pct_th = (ttlg_th > 0 && cp_th > 0) ? parseFloat(((cp_th / ttlg_th) * 100).toFixed(1)) : 0;
+
+                    // LNTT (Triệu VNĐ)
+                    const lntt_th = r.lntt > 0 ? Math.round(r.lntt / 1e6) : (ttlg_th > 0 && cp_th > 0 ? (ttlg_th - cp_th) : 0);
+                    const lntt_kh = base.lntt || (ttlg_kh > 0 && cp_kh > 0 ? (ttlg_kh - cp_kh) : 0);
+
                     plan2026[cId] = {
-                        ds: dsTr,
-                        actual: actTr,
-                        ttlg: 0,
-                        lg_pct: r.lg_pct || 0,
-                        cp_lg_pct: 0,
-                        cp: cpTr,
-                        lntt: lnttTr
+                        ds: ds_kh,
+                        actual: ds_th,
+                        ttlg: ttlg_kh,
+                        actual_ttlg: ttlg_th,
+                        lg_pct: lg_pct_kh,
+                        actual_lg_pct: lg_pct_th,
+                        cp_lg_pct: cp_lg_pct_kh,
+                        actual_cp_lg_pct: cp_lg_pct_th,
+                        cp: cp_kh,
+                        actual_cp: cp_th,
+                        lntt: lntt_kh,
+                        actual_lntt: lntt_th
                     };
-                    plan2026['all'].ds     += dsTr;
-                    plan2026['all'].actual += actTr;
-                    plan2026['all'].cp     += cpTr;
-                    plan2026['all'].lntt   += lnttTr;
+
+                    plan2026['all'].ds += ds_kh;
+                    plan2026['all'].actual += ds_th;
+                    plan2026['all'].ttlg += ttlg_kh;
+                    plan2026['all'].actual_ttlg += ttlg_th;
+                    plan2026['all'].cp += cp_kh;
+                    plan2026['all'].actual_cp += cp_th;
+                    plan2026['all'].lntt += lntt_kh;
+                    plan2026['all'].actual_lntt += lntt_th;
                 }
             });
-            if (plan2026['all'].actual > 0 && plan2026['all'].ds > 0) {
-                plan2026['all'].lg_pct = parseFloat(((plan2026['all'].actual / plan2026['all'].ds) * 100).toFixed(1));
+
+            if (plan2026['all'].ds > 0) {
+                plan2026['all'].lg_pct = parseFloat(((plan2026['all'].ttlg / plan2026['all'].ds) * 100).toFixed(1));
+            }
+            if (plan2026['all'].actual > 0) {
+                plan2026['all'].actual_lg_pct = parseFloat(((plan2026['all'].actual_ttlg / plan2026['all'].actual) * 100).toFixed(1));
+            }
+            if (plan2026['all'].ttlg > 0 && plan2026['all'].cp > 0) {
+                plan2026['all'].cp_lg_pct = parseFloat(((plan2026['all'].cp / plan2026['all'].ttlg) * 100).toFixed(1));
+            }
+            if (plan2026['all'].actual_ttlg > 0 && plan2026['all'].actual_cp > 0) {
+                plan2026['all'].actual_cp_lg_pct = parseFloat(((plan2026['all'].actual_cp / plan2026['all'].actual_ttlg) * 100).toFixed(1));
             }
 
             // ── Cập nhật mockData.revenue ──
