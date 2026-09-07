@@ -114,6 +114,7 @@ window.DebtModule = {
         
         tbody.innerHTML = '';
         
+        if (!list || !Array.isArray(list)) list = [];
         const filteredList = companyFilter === 'all' 
             ? list 
             : list.filter(item => item.company === companyFilter);

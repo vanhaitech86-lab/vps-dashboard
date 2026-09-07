@@ -40,6 +40,13 @@ function parseNumber(val) {
     let s = val.toString().trim()
         .replace(/đ/gi, '').replace(/vnd/gi, '')
         .replace(/%/g, '').trim();
+
+    // Nếu chuỗi là các nhóm 3 chữ số cách nhau bởi dấu chấm hoặc phẩy (VD: "8,779,000.000" hoặc "14.000.000.000")
+    // thì tất cả đều là dấu phân cách ngàn
+    if (/^\d{1,3}(?:[.,]\d{3})+$/.test(s)) {
+        return parseFloat(s.replace(/[.,]/g, '')) || 0;
+    }
+
     const dotCount  = (s.match(/\./g)  || []).length;
     const commaCount= (s.match(/,/g)   || []).length;
     if (dotCount > 1)        s = s.replace(/\./g, '');
@@ -470,7 +477,14 @@ window.GoogleSheetsService = {
             const totalDebtTy = parseFloat((totalDebtVND / 1e9).toFixed(3));
             window.mockData.debt = {
                 total: totalDebtTy,
-                byCompany: debtByCompany
+                byCompany: debtByCompany,
+                badDebtsList: window.mockData.debt?.badDebtsList || [
+                    { id: 1, customer: 'Công ty Cổ phần Alpha', company: 'THH', amount: 250000000, daysOverdue: 120, status: 'Khoá tài khoản' },
+                    { id: 2, customer: 'Tập đoàn Beta', company: 'XemSon', amount: 500000000, daysOverdue: 95, status: 'Đang pháp lý' },
+                    { id: 3, customer: 'Đại lý Gamma', company: 'Viet', amount: 120000000, daysOverdue: 150, status: 'Khoá tài khoản' },
+                    { id: 4, customer: 'Cửa hàng Delta', company: 'ITSS', amount: 85000000, daysOverdue: 110, status: 'Chờ thanh toán' },
+                    { id: 5, customer: 'Đại lý Epsilon', company: 'VPSM', amount: 150000000, daysOverdue: 60, status: 'Đang theo dõi' }
+                ]
             };
 
             // ── Cập nhật mockData.hr ──
