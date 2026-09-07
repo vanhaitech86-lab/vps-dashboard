@@ -110,38 +110,53 @@ function parseRawCSV(text) {
 
 async function fetchSheetCsv(sheetId, sheetName) {
     const t = Date.now();
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&_t=${t}`;
-    try {
-        let res = await fetch(url);
-        // Fallback for case sensitivity or alternative names
-        if (!res.ok || res.status === 400) {
-            let altNames = [];
-            if (sheetName.includes('Chi')) altNames = ['Chi phí', 'Chi Phí'];
-            else if (sheetName.includes('Đào tạo') || sheetName.includes('Đào Tạo')) altNames = ['Đào Tạo', 'Đào tạo'];
-            else if (sheetName.includes('Dịch vụ') || sheetName.includes('Dịch Vụ')) altNames = ['Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ'];
-            else if (sheetName.includes('Văn hóa') || sheetName.includes('Văn Hóa')) altNames = ['Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp'];
-            else if (sheetName.includes('Thương hiệu') || sheetName.includes('Thương Hiệu')) altNames = ['Thương Hiệu', 'Thương hiệu'];
+    let candidates = [sheetName, `Bản sao của ${sheetName}`];
+    if (sheetName.includes('Chi')) {
+        candidates.push('Chi phí', 'Chi Phí', 'Bản sao của Chi phí', 'Bản sao của Chi Phí');
+    } else if (sheetName.includes('Đào tạo') || sheetName.includes('Đào Tạo')) {
+        candidates.push('Đào Tạo', 'Đào tạo', 'Bản sao của Đào tạo', 'Bản sao của Đào Tạo');
+    } else if (sheetName.includes('Dịch vụ') || sheetName.includes('Dịch Vụ')) {
+        candidates.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ', 'Bản sao của Dịch vụ tận tâm', 'Bản sao của Dịch Vụ Tận Tâm');
+    } else if (sheetName.includes('Văn hóa') || sheetName.includes('Văn Hóa')) {
+        candidates.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp', 'Bản sao của Văn hóa doanh nghiệp', 'Bản sao của Văn Hóa Doanh Nghiệp');
+    } else if (sheetName.includes('Thương hiệu') || sheetName.includes('Thương Hiệu')) {
+        candidates.push('Thương Hiệu', 'Thương hiệu', 'Bản sao của Thương hiệu', 'Bản sao của Thương Hiệu');
+    } else if (sheetName.includes('Sản')) {
+        candidates.push('Sản Phẩm', 'Sản phẩm', 'Bản sao của Sản Phẩm', 'Bản sao của Sản phẩm');
+    }
 
-            for (const alt of altNames) {
-                if (alt === sheetName) continue;
-                const altUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(alt)}&_t=${t}`;
-                const altRes = await fetch(altUrl);
-                if (altRes.ok) {
-                    res = altRes;
-                    break;
+    candidates = [...new Set(candidates)];
+    let validText = '';
+
+    for (const name of candidates) {
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&_t=${t}`;
+        try {
+            const res = await fetch(url);
+            if (!res.ok) continue;
+            const text = await res.text();
+            if (text.includes('google.visualization.Query.setResponse') && text.includes('error')) continue;
+            
+            // Nếu tìm sheet không phải Doanh thu mà kết quả trả về bắt đầu bằng "BÁO CÁO DOANH THU & LỢI NHUẬN",
+            // nghĩa là Google Sheets không tìm thấy sheet này và tự động nhảy về sheet đầu tiên (Doanh thu).
+            // Ta bỏ qua để tìm các tên khác trong candidates (ví dụ "Bản sao của ...").
+            if (!sheetName.toLowerCase().includes('doanh thu')) {
+                const firstLine = (text.split('\n')[0] || '').toLowerCase();
+                if (firstLine.includes('báo cáo doanh thu') || firstLine.includes('doanh số kế hoạch')) {
+                    continue;
                 }
             }
-        }
-        if (!res.ok) return [];
-        const text = await res.text();
-        if (text.includes('google.visualization.Query.setResponse') && text.includes('error')) return [];
-        if (window.Papa) {
-            return await new Promise(resolve => {
-                Papa.parse(text, { header: false, skipEmptyLines: true, complete: r => resolve(r.data) });
-            });
-        }
-        return parseRawCSV(text);
-    } catch(e) { return []; }
+            validText = text;
+            break;
+        } catch(e) {}
+    }
+
+    if (!validText) return [];
+    if (window.Papa) {
+        return await new Promise(resolve => {
+            Papa.parse(validText, { header: false, skipEmptyLines: true, complete: r => resolve(r.data) });
+        });
+    }
+    return parseRawCSV(validText);
 }
 
 // ============================================================
