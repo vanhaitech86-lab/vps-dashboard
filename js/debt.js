@@ -146,7 +146,7 @@ window.DebtModule = {
                 <td><strong>${item.customer}</strong></td>
                 <td><span class="badge" style="background:#eee; color:#333; padding:2px 6px; border-radius:4px;">${item.company}</span></td>
                 <td style="color:var(--clr-danger); font-weight:600;">${amountFormatted}</td>
-                <td><span class="status-overdue">${item.daysOverdue} ngày</span></td>
+                <td><span class="status-overdue">${item.daysOverdue.toString().includes('ngày') ? item.daysOverdue : item.daysOverdue + ' ngày'}</span></td>
                 <td>${item.status}</td>
             `;
             tbody.appendChild(tr);
