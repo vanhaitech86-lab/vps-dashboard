@@ -139,23 +139,28 @@ async function fetchSheetCsv(sheetId, sheetName) {
 
     const prefixes = [
         '',
+        ' ',
+        '  ',
         'Bản sao của ',
+        ' Bản sao của ',
         'Bản sao của Bản sao của ',
+        ' Bản sao của Bản sao của ',
         'Bản sao của Bản sao của Bản sao của ',
-        'Bản sao của Bản sao của Bản sao của Bản sao của ',
         'Copy of ',
         'Copy of Copy of '
     ];
-
 
     let candidates = [];
     for (const p of prefixes) {
         for (const b of baseNames) {
             candidates.push(p + b);
+            candidates.push(p + b + ' ');
+            candidates.push(p + b + '  ');
         }
     }
     candidates = [...new Set(candidates)];
     let validText = '';
+
 
 
     for (const name of candidates) {
