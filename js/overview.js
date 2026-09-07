@@ -135,7 +135,15 @@ window.OverviewModule = {
         }
         
         let valEl = document.getElementById('overview-revenue-val');
-        if(valEl) valEl.textContent = (totalActualRev / 1000).toFixed(1) + ' Tỷ đ';
+        if (valEl) {
+            if (totalActualRev >= 1e9) {
+                valEl.textContent = (totalActualRev / 1e9).toFixed(1) + ' Tỷ đ';
+            } else if (totalActualRev >= 1000) {
+                valEl.textContent = (totalActualRev / 1000).toFixed(1) + ' Tỷ đ';
+            } else {
+                valEl.textContent = totalActualRev.toFixed(1) + ' Tỷ đ';
+            }
+        }
         
         window.ChartManager.createChart('overviewRevenueChart', 'bar', {
             labels: revLabels,

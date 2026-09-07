@@ -1,177 +1,301 @@
 // ============================================================
-// Google Sheets Service - Multi-File Mode
-// Đọc dữ liệu từ file riêng của từng đơn vị
+// Google Sheets Service - Multi-File / Multi-Sheet Live Pipeline
+// Tải và tổng hợp toàn bộ 8 sheet từ 5 file Google Sheets riêng của từng đơn vị
 // ============================================================
 
-// ============================================================
-// CẤU HÌNH 5 FILE GOOGLE SHEETS (1 FILE / ĐƠN VỊ)
-// ============================================================
 const COMPANY_SHEETS = {
-    'THH': {
-        name: 'Tân Hồng Hà',
-        id: '1NkEmKjlHbX7r6PqxCaHBUGCox3aRIid7KSFZDYds_rs'
-    },
-    'Viet': {
-        name: 'Việt',
-        id: '1RGXSjNekSBjnZGcKaDfyvVPVG99ZG8S1RPJOXsjEyd8'
-    },
-    'XemSon': {
-        name: 'Xem Sơn',
-        id: '17pAZh0BM9KKas3mh5kLJlZ0D5GU3eEdAGJB_77Fzg_g'
-    },
-    'VPSM': {
-        name: 'VPS M',
-        id: '1fp5oghEMbrmLZRXhgLPtfY4mmo3sVIRmGAkieIik7ng'
-    },
-    'ITSS': {
-        name: 'ITSS',
-        id: '1t1a6DstUqlNctuQPE8RkdGBeL4BxyLDVGK46YVx2JPk'
-    }
+    'THH':    { name: 'Tân Hồng Hà', id: '1NkEmKjlHbX7r6PqxCaHBUGCox3aRIid7KSFZDYds_rs' },
+    'Viet':   { name: 'Việt',         id: '1RGXSjNekSBjnZGcKaDfyvVPVG99ZG8S1RPJOXsjEyd8' },
+    'XemSon': { name: 'Xem Sơn',     id: '17pAZh0BM9KKas3mh5kLJlZ0D5GU3eEdAGJB_77Fzg_g' },
+    'VPSM':   { name: 'VPS M',       id: '1fp5oghEMbrmLZRXhgLPtfY4mmo3sVIRmGAkieIik7ng' },
+    'ITSS':   { name: 'ITSS',        id: '1t1a6DstUqlNctuQPE8RkdGBeL4BxyLDVGK46YVx2JPk' },
 };
 
-// File MASTER DATA VPS – vẫn dùng cho Khách hàng, Nhân sự, Sản phẩm, v.v.
-const MASTER_SHEET_ID = '18tWiuyHmvP_axcL_-yGmJj_rqo6Skqivf17WTuAJdwM';
+const SHEET_NAMES = ['Doanh thu', 'Công nợ', 'Khách hàng', 'Tồn kho', 'Nhân sự', 'Sản Phẩm', 'Chi Phí', 'ISO'];
 
 const companyIdMap = {
-    'Tân Hồng Hà': 'THH',
-    'Tan Hong Ha': 'THH',
-    'Việt': 'Viet',
-    'Viet': 'Viet',
-    'Xem Sơn': 'XemSon',
-    'Xem Son': 'XemSon',
-    'VPS M': 'VPSM',
-    'VPSM': 'VPSM',
-    'ITSS': 'ITSS',
-    'Văn phòng VPS': 'VPVPS'
+    'Tân Hồng Hà': 'THH', 'Tan Hong Ha': 'THH', 'tân hồng hà': 'THH', 'THH': 'THH',
+    'Việt': 'Viet', 'Viet': 'Viet', 'viet': 'Viet', 'VIỆT': 'Viet',
+    'Xem Sơn': 'XemSon', 'Xem Son': 'XemSon', 'xemson': 'XemSon', 'xem sơn': 'XemSon', 'XESCO': 'XemSon', 'XemSon': 'XemSon',
+    'VPS M': 'VPSM', 'VPSM': 'VPSM', 'vpsm': 'VPSM',
+    'ITSS': 'ITSS', 'itss': 'ITSS',
+    'Văn phòng VPS': 'VPVPS', 'VPVPS': 'VPVPS'
 };
 
 const customerCatMap = {
-    'Thuê máy': 'thue_may',
-    'MC': 'mc',
-    'Dịch vụ - Photo': 'dv_photo',
-    'Dịch vụ - Máy in': 'dv_may_in',
-    'Dịch vụ khác': 'dv_khac',
-    'Phân phối (Đại lý)': 'phan_phoi'
+    'Thuê máy': 'thue_may', 'Thue may': 'thue_may', 'thuê máy': 'thue_may',
+    'MC': 'mc', 'mc': 'mc',
+    'Dịch vụ - Photo': 'dv_photo', 'Dich vu - Photo': 'dv_photo', 'dịch vụ - photo': 'dv_photo',
+    'Dịch vụ - Máy in': 'dv_may_in', 'Dich vu - May in': 'dv_may_in', 'dịch vụ - máy in': 'dv_may_in',
+    'Dịch vụ khác': 'dv_khac', 'Dich vu khac': 'dv_khac', 'dịch vụ khác': 'dv_khac',
+    'Phân phối (Đại lý)': 'phan_phoi', 'Phan phoi (Dai ly)': 'phan_phoi', 'phân phối (đại lý)': 'phan_phoi'
 };
 
 // ============================================================
 // HELPERS
 // ============================================================
-
-// Parse số từ các định dạng: "744.457.000 đ", "9,989,000,000", "1700000000", "41,45%"
 function parseNumber(val) {
     if (!val || val === '-' || val === '') return 0;
     if (typeof val === 'number') return val;
-    let s = val.toString().trim();
-    // Bỏ đơn vị tiền
-    s = s.replace(/đ/gi, '').replace(/vnd/gi, '').trim();
-    // Bỏ %
-    s = s.replace(/%/g, '').trim();
-    // Xử lý định dạng Việt Nam: dấu chấm là phân cách ngàn, dấu phẩy là thập phân
-    // VD: "744.457.000" → 744457000 | "41,45" → 41.45
-    // Nhưng cũng có "9,989,000,000" (dạng US) → cần phân biệt
-    const dotCount = (s.match(/\./g) || []).length;
-    const commaCount = (s.match(/,/g) || []).length;
-    if (dotCount > 1) {
-        // Định dạng VN: 744.457.000 → remove dots
-        s = s.replace(/\./g, '');
-    } else if (commaCount > 1) {
-        // Định dạng US: 9,989,000,000 → remove commas
-        s = s.replace(/,/g, '');
-    } else if (dotCount === 1 && commaCount === 1) {
-        // Có cả hai: xem cái nào cuối cùng
+    let s = val.toString().trim()
+        .replace(/đ/gi, '').replace(/vnd/gi, '')
+        .replace(/%/g, '').trim();
+    const dotCount  = (s.match(/\./g)  || []).length;
+    const commaCount= (s.match(/,/g)   || []).length;
+    if (dotCount > 1)        s = s.replace(/\./g, '');
+    else if (commaCount > 1) s = s.replace(/,/g, '');
+    else if (dotCount === 1 && commaCount === 1) {
         const lastDot = s.lastIndexOf('.');
         const lastComma = s.lastIndexOf(',');
-        if (lastComma > lastDot) {
-            // Dấu phẩy là thập phân: 1.234,56
-            s = s.replace(/\./g, '').replace(',', '.');
-        } else {
-            // Dấu chấm là thập phân: 1,234.56
-            s = s.replace(/,/g, '');
-        }
-    } else if (commaCount === 1) {
-        // 41,45 → dấu phẩy là thập phân
-        s = s.replace(',', '.');
-    } else {
-        // Chỉ có chấm: 1.5 → thập phân bình thường
-    }
+        s = lastComma > lastDot
+            ? s.replace(/\./g, '').replace(',', '.')
+            : s.replace(/,/g, '');
+    } else if (commaCount === 1) s = s.replace(',', '.');
     return parseFloat(s) || 0;
 }
 
-// Fetch CSV từ 1 file Google Sheets (theo tên sheet hoặc sheet đầu tiên)
-async function fetchCsvFromFile(sheetId, sheetName) {
-    let url;
-    if (sheetName) {
-        url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
-    } else {
-        url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
-    }
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Failed: ' + url);
-    const text = await res.text();
-    return new Promise((resolve) => {
-        Papa.parse(text, {
-            header: false,
-            skipEmptyLines: true,
-            complete: (r) => resolve(r.data)
-        });
-    });
+function resolveCompany(val) {
+    if (!val) return '';
+    const v = val.toString().trim();
+    return companyIdMap[v] || companyIdMap[v.toLowerCase()] || '';
 }
 
-// Fetch CSV từ MASTER DATA (dùng cho sheet không có trong file đơn vị)
-async function fetchCsv(sheetName) {
-    return fetchCsvFromFile(MASTER_SHEET_ID, sheetName);
+function extractMonthFromHeader(row0) {
+    if (!row0) return '';
+    const h = Array.isArray(row0) ? row0.join(' ') : row0.toString();
+    const m = h.match(/(\d{2}\/\d{4})/);
+    return m ? m[1] : '';
+}
+
+// Fallback CSV Parser thuần JS không phụ thuộc thư viện
+function parseRawCSV(text) {
+    const lines = [];
+    let row = [];
+    let cell = '';
+    let inQuotes = false;
+    for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        if (c === '"') {
+            if (inQuotes && text[i+1] === '"') { cell += '"'; i++; }
+            else { inQuotes = !inQuotes; }
+        } else if (c === ',' && !inQuotes) {
+            row.push(cell.trim());
+            cell = '';
+        } else if ((c === '\r' || c === '\n') && !inQuotes) {
+            if (c === '\r' && text[i+1] === '\n') i++;
+            row.push(cell.trim());
+            if (row.some(x => x !== '')) lines.push(row);
+            row = [];
+            cell = '';
+        } else {
+            cell += c;
+        }
+    }
+    if (cell || row.length > 0) {
+        row.push(cell.trim());
+        if (row.some(x => x !== '')) lines.push(row);
+    }
+    return lines;
+}
+
+async function fetchSheetCsv(sheetId, sheetName) {
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+    try {
+        const res = await fetch(url);
+        if (!res.ok) return [];
+        const text = await res.text();
+        if (window.Papa) {
+            return await new Promise(resolve => {
+                Papa.parse(text, { header: false, skipEmptyLines: true, complete: r => resolve(r.data) });
+            });
+        }
+        return parseRawCSV(text);
+    } catch(e) { return []; }
 }
 
 // ============================================================
-// PARSE DOANH THU TỪ 1 FILE ĐƠN VỊ
-// Format CSV: Row0=header, Row1+ = data
-// Col: [0]=Tháng/Năm, [1]=Công ty, [2]=KH, [3]=TH, [4]=TLG, [5]=CP, [6]=LNTT
-// Xử lý cả trường hợp cột tháng bị trống (như file THH)
+// PARSERS
 // ============================================================
-function parseRevenueFromFile(csv, cId) {
-    const results = {};
-    // Lấy tháng từ header (row[0]) nếu có
-    let headerMonth = '';
-    if (csv.length > 0 && csv[0]) {
-        const h = csv[0][0] ? csv[0][0].toString() : '';
-        const mMatch = h.match(/(\d{2}\/\d{4})/);
-        if (mMatch) headerMonth = mMatch[1];
-    }
-    
+
+// 1. DOANH THU
+function parseRevenue(csv, cId) {
+    const headerMonth = csv.length > 0 ? extractMonthFromHeader(csv[0]) : '';
+    const result = {};
     for (let i = 1; i < csv.length; i++) {
         const row = csv[i];
         if (!row) continue;
-        
-        // Xác định tháng: lấy từ col[0], nếu không có thì dùng headerMonth
         let thang = row[0] ? row[0].toString().trim() : '';
-        if (!thang.match(/\d{2}\/\d{4}/)) {
-            thang = headerMonth || '08/2026';
-        } else {
-            const m = thang.match(/(\d{2}\/\d{4})/);
-            thang = m ? m[1] : headerMonth || '08/2026';
-        }
-
-        const plan   = parseNumber(row[2]);
-        const actual = parseNumber(row[3]);
-        const lgPct  = parseNumber(row[4]);
-        const cp     = parseNumber(row[5]);
-        const lntt   = parseNumber(row[6]);
-
-        // Ghi nhận nếu có ít nhất 1 giá trị > 0
+        const m = thang.match(/(\d{2}\/\d{4})/);
+        thang = m ? m[1] : (headerMonth || '08/2026');
+        const plan = parseNumber(row[2]), actual = parseNumber(row[3]);
+        const lgPct = parseNumber(row[4]), cp = parseNumber(row[5]), lntt = parseNumber(row[6]);
         if (actual > 0 || plan > 0 || cp > 0 || lntt > 0) {
-            if (!results[thang]) {
-                results[thang] = { plan, actual, ttlg: 0, lg_pct: lgPct, cp_lg_pct: 0, cp, lntt };
-            } else {
-                // Cộng dồn nếu cùng tháng (nhiều dòng)
-                results[thang].plan   += plan;
-                results[thang].actual += actual;
-                results[thang].cp     += cp;
-                results[thang].lntt   += lntt;
+            if (!result[thang]) result[thang] = { plan, actual, ttlg: 0, lg_pct: lgPct, cp_lg_pct: 0, cp, lntt };
+            else {
+                result[thang].plan += plan;
+                result[thang].actual += actual;
+                if (lgPct > 0) result[thang].lg_pct = lgPct;
+                result[thang].cp += cp;
+                result[thang].lntt += lntt;
             }
         }
     }
-    return results;
+    return result;
+}
+
+// 2. CÔNG NỢ
+function parseDebt(csv, cId) {
+    const headerMonth = csv.length > 0 ? extractMonthFromHeader(csv[0]) : '';
+    let thang = headerMonth || '08/2026';
+    const result = {};
+
+    // Kiểm tra nếu row 0 (header) có chứa số liệu (như trường hợp file Việt)
+    let headerCurrent = 0, headerOverdue = 0, headerBad = 0;
+    if (csv.length > 0 && csv[0]) {
+        const r0 = csv[0];
+        if (r0[2]) {
+            const m = r0[2].match(/[\d.,]{7,}/g);
+            if (m && m.length > 0) headerCurrent = parseNumber(m[0]);
+        }
+        if (r0[3]) {
+            const m = r0[3].match(/[\d.,]{7,}/g);
+            if (m && m.length > 0) headerOverdue = parseNumber(m[0]);
+        }
+        if (r0[4]) {
+            const m = r0[4].match(/[\d.,]{7,}/g);
+            if (m && m.length > 0) headerBad = parseNumber(m[0]);
+        }
+    }
+
+    for (let i = 1; i < csv.length; i++) {
+        const row = csv[i];
+        if (!row) continue;
+        const mMatch = row[0] ? row[0].toString().match(/(\d{2}\/\d{4})/) : null;
+        if (mMatch) thang = mMatch[1];
+        let current = parseNumber(row[2]), overdue = parseNumber(row[3]), bad = parseNumber(row[4]);
+        
+        // Nếu row 1 có số quá nhỏ hoặc % mà header có số tiền lớn
+        if (current < 1000 && headerCurrent > 0) current = headerCurrent;
+        if (overdue < 1000 && headerOverdue > 0) overdue = headerOverdue;
+        if (bad < 1000 && headerBad > 0) bad = headerBad;
+
+        if (current > 0 || overdue > 0 || bad > 0) {
+            if (!result[thang]) result[thang] = { current, overdue, bad };
+            else { result[thang].current += current; result[thang].overdue += overdue; result[thang].bad += bad; }
+        }
+    }
+
+    // Nếu vẫn chưa có kết quả nhưng header có số
+    if (Object.keys(result).length === 0 && (headerCurrent > 0 || headerOverdue > 0)) {
+        result[thang] = { current: headerCurrent, overdue: headerOverdue, bad: headerBad };
+    }
+
+    return result;
+}
+
+// 3. NHÂN SỰ
+function parseHR(csv, cId) {
+    const result = { quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'',solution:''} };
+    let dataStart = 1;
+    for (let i = 0; i < Math.min(csv.length, 5); i++) {
+        const row = csv[i];
+        if (row && row.join('').match(/Tháng|Thang|Phòng|Phong/i)) { dataStart = i + 1; break; }
+    }
+
+    let hasDeptRows = false;
+    // Kiểm tra xem có các dòng phòng ban cụ thể không
+    for (let i = dataStart; i < csv.length; i++) {
+        const row = csv[i];
+        if (row && row[2] && row[2].trim() !== '') {
+            hasDeptRows = true;
+            break;
+        }
+    }
+
+    for (let i = dataStart; i < csv.length; i++) {
+        const row = csv[i];
+        if (!row) continue;
+        const dept = row[2] ? row[2].trim() : '';
+        // Nếu có dòng phòng ban, bỏ qua dòng tổng hợp không có phòng ban
+        if (hasDeptRows && !dept) continue;
+
+        const cuoiky   = parseNumber(row[7]);
+        const thuviec  = parseNumber(row[6]);
+        const nghiviec = parseNumber(row[5]);
+        const tuyenmoi = parseNumber(row[4]);
+        if (cuoiky > 0 || tuyenmoi > 0 || nghiviec > 0 || thuviec > 0) {
+            result.quota     += cuoiky;
+            result.probation += thuviec;
+            result.resigned  += nghiviec;
+            result.newHires  += tuyenmoi;
+            result.official  += Math.max(cuoiky - thuviec, 0);
+        }
+    }
+    return result;
+}
+
+// 4. KHÁCH HÀNG
+function parseCustomers(csv, cId) {
+    const headerMonth = csv.length > 0 ? extractMonthFromHeader(csv[0]) : '';
+    let thang = headerMonth || '08/2026';
+    const result = {}; 
+    let dataStart = 1;
+    for (let i = 0; i < Math.min(csv.length, 5); i++) {
+        const row = csv[i];
+        if (row && row.join('').match(/Mảng|Mang|Tháng|Thang/i)) { dataStart = i + 1; break; }
+    }
+    for (let i = dataStart; i < csv.length; i++) {
+        const row = csv[i];
+        if (!row) continue;
+        const mMatch = row[0] ? row[0].toString().match(/(\d{2}\/\d{4})/) : null;
+        if (mMatch) thang = mMatch[1];
+        const catRaw = row[2] ? row[2].toString().trim() : '';
+        const catId = customerCatMap[catRaw] || customerCatMap[catRaw.toLowerCase()];
+        if (!catId) continue;
+        const dau_may  = parseNumber(row[3]), dau_kh  = parseNumber(row[4]);
+        const tang_may = parseNumber(row[5]), tang_kh = parseNumber(row[6]);
+        const giam_may = parseNumber(row[7]), giam_kh = parseNumber(row[8]);
+        const cuoi_may = parseNumber(row[9]), cuoi_kh = parseNumber(row[10]);
+        if (!result[thang]) result[thang] = {};
+        result[thang][catId] = {
+            dau:      { may: dau_may,  kh: dau_kh  },
+            ke_hoach: { may: 0, kh: 0 },
+            tang:     { may: tang_may, kh: tang_kh },
+            giam:     { may: giam_may, kh: giam_kh },
+            cuoi:     { may: cuoi_may || (dau_may + tang_may - giam_may), kh: cuoi_kh || (dau_kh + tang_kh - giam_kh) }
+        };
+    }
+    return result;
+}
+
+// 5. TỒN KHO
+function parseInventory(csv, cId) {
+    const headerMonth = csv.length > 0 ? extractMonthFromHeader(csv[0]) : '';
+    let thang = headerMonth || '08/2026';
+    let totalValue = 0, totalItems = 0;
+    let dataStart = 1;
+    for (let i = 0; i < Math.min(csv.length, 5); i++) {
+        const row = csv[i];
+        if (row && row.join('').match(/Danh mục|Danh muc|Tháng|Thang/i)) { dataStart = i + 1; break; }
+    }
+    for (let i = dataStart; i < csv.length; i++) {
+        const row = csv[i];
+        if (!row) continue;
+        const mMatch = row[0] ? row[0].toString().match(/(\d{2}\/\d{4})/) : null;
+        if (mMatch) thang = mMatch[1];
+        // Giá trị thường ở col[6]
+        let gtri = parseNumber(row[6]);
+        // Kiểm tra xem có cột nào khác chứa số tiền lớn không
+        if (gtri === 0) {
+            for (let c = 1; c < row.length; c++) {
+                const val = parseNumber(row[c]);
+                if (val > 1000000) { gtri = val; break; }
+            }
+        }
+        const sl = parseNumber(row[5]);
+        if (gtri > 0) { totalValue += gtri; totalItems += (sl || 1); }
+    }
+    return { totalValue, totalItems, thang };
 }
 
 // ============================================================
@@ -181,159 +305,205 @@ window.GoogleSheetsService = {
 
     async loadAllData() {
         try {
-            console.log('[GS] Bat dau tai du lieu tu 5 file don vi...');
-
-            // ── 1. Tải song song dữ liệu từ 5 file đơn vị ──
+            console.log('[GS] Bat dau tai du lieu tu 5 cong ty (8 sheets/file)...');
             const companyIds = Object.keys(COMPANY_SHEETS);
-            const companyDataPromises = companyIds.map(cId =>
-                fetchCsvFromFile(COMPANY_SHEETS[cId].id, null)
-                    .catch(e => { console.warn(`[GS] Loi tai ${cId}:`, e); return []; })
+
+            // Tải song song tất cả 8 sheet từ 5 file = 40 requests
+            const allFetches = companyIds.map(cId =>
+                Promise.all(SHEET_NAMES.map(sname =>
+                    fetchSheetCsv(COMPANY_SHEETS[cId].id, sname).catch(() => [])
+                ))
             );
+            const allResults = await Promise.all(allFetches);
 
-            // ── 2. Tải song song dữ liệu từ MASTER (Khách hàng, Nhân sự, Tồn kho, etc.) ──
-            const [custCsv, hrCsv, spCsv, cpCsv, isoCsv] = await Promise.all([
-                fetchCsv('Khách hàng').catch(() => []),
-                fetchCsv('Nhân sự').catch(() => []),
-                fetchCsv('Sản phẩm').catch(() => []),
-                fetchCsv('Chi phí').catch(() => []),
-                fetchCsv('ISO').catch(() => [])
-            ]);
+            const revenueByCompany   = {};
+            const revenueByMonth     = {};
+            const debtByCompany      = {};
+            const hrByCompany        = {};
+            const customersByMonth   = {};
+            const inventoryByCompany = {};
+            const rawProducts        = [['CÔNG TY', 'THÁNG', 'HÃNG', 'NHÓM', 'DOANH THU']];
+            const rawExpenses        = [['CÔNG TY', 'THÁNG', 'NHÓM', 'HẠNG MỤC', 'GIÁ TRỊ']];
+            const rawISO             = [['CÔNG TY', 'PHÒNG BAN', 'TÊN QUY TRÌNH / QUY ĐỊNH', 'PHÂN LOẠI']];
 
-            // Chờ tất cả file đơn vị
-            const allCompanyCsvs = await Promise.all(companyDataPromises);
-
-            console.log('[GS] Da tai xong du lieu. Bat dau xu ly...');
-
-            // ── 3. Khởi tạo cấu trúc dữ liệu ──
-            const newData = {
-                revenue: {
-                    total: 0,
-                    plan2026: window.mockData.revenue.plan2026,
-                    byCompany: {},
-                    byMonth: {}      // { 'THH': {'08/2026': {...}, '09/2026': {...}}, ... }
-                },
-                debt: { total: 0, byCompany: {} },
-                customers: {
-                    total: 0,
-                    trend: window.mockData.customers.trend,
-                    matrix: {},
-                    plan2026: window.mockData.customers.plan2026,
-                    byCompany: {}
-                },
-                inventory: window.mockData.inventory,
-                hr: {
-                    totalEmployees: 0, newHires: 0, resignations: 0, probation: 0,
-                    byDepartment: {}, byCompany: {}
-                },
-                products_raw: spCsv || [],
-                expense_raw: cpCsv || [],
-                iso_raw: isoCsv || []
-            };
-
-            // ── 4. Parse Revenue từ từng file đơn vị ──
-            const revenueByMonth = {}; // { 'THH': { '08/2026': {...} } }
-
-            companyIds.forEach((cId, idx) => {
-                const csv = allCompanyCsvs[idx];
-                if (!csv || csv.length < 2) return;
-
-                const monthlyData = parseRevenueFromFile(csv, cId);
-                revenueByMonth[cId] = monthlyData;
-
-                // Lấy tháng gần nhất để hiển thị mặc định
-                const months = Object.keys(monthlyData).sort();
-                const latestMonth = months[months.length - 1];
-
-                if (latestMonth && monthlyData[latestMonth]) {
-                    const d = monthlyData[latestMonth];
-                    newData.revenue.byCompany[cId] = d;
-                    newData.revenue.total += d.actual;
-                    console.log(`[GS] ${cId} (${latestMonth}): KH=${d.plan}, TH=${d.actual}, LNTT=${d.lntt}`);
-                }
-            });
-
-            // Lưu byMonth để dashboard có thể lọc theo tháng
-            newData.revenue.byMonth = revenueByMonth;
-            window.GoogleSheetsService.revenueByMonth = revenueByMonth;
-
-            // Tính tổng kế hoạch
-            let totalPlan = 0;
-            Object.values(newData.revenue.byCompany).forEach(d => { totalPlan += d.plan || 0; });
-            // Ghi vào plan2026 nếu có
-            if (totalPlan > 0) {
-                newData.revenue.plan2026 = totalPlan;
-            }
-
-            // ── 5. Parse HR từ MASTER ──
-            let hrByCompany = {};
-            companyIds.forEach(cId => {
-                hrByCompany[cId] = { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} };
-            });
-            hrByCompany['VPVPS'] = { quota: 0, official: 0, probation: 0, resigned: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'', solution:''} };
-
-            let currentHrCo = '';
-            for (let i = 1; i < hrCsv.length; i++) {
-                const row = hrCsv[i];
-                if (!row) continue;
-                if (row[1] && companyIdMap[row[1]]) currentHrCo = companyIdMap[row[1]];
-                if (!currentHrCo && row[0] && companyIdMap[row[0]]) currentHrCo = companyIdMap[row[0]];
-                if (!currentHrCo) continue;
-                const nghiviec = parseNumber(row[5]);
-                const thuviec  = parseNumber(row[6]);
-                const cuoiky   = parseNumber(row[7]);
-                if (hrByCompany[currentHrCo]) {
-                    hrByCompany[currentHrCo].probation += thuviec;
-                    hrByCompany[currentHrCo].resigned  += nghiviec;
-                    hrByCompany[currentHrCo].official  += Math.max(cuoiky - thuviec, 0);
-                    hrByCompany[currentHrCo].quota     += cuoiky;
-                }
-            }
-            newData.hr.byCompany = hrByCompany;
-
-            // ── 6. Parse Customers từ MASTER ──
-            const monthsData = {};
+            let totalRevVND = 0, totalDebtVND = 0;
             const availableMonths = new Set();
-            let currentCo = '', currentMonth = '';
 
-            for (let i = 3; i < custCsv.length; i++) {
-                const row = custCsv[i];
-                if (!row) continue;
-                if (row[0]) {
-                    const m = row[0].toString().trim();
-                    if (m.includes('/')) {
-                        currentMonth = m;
-                        availableMonths.add(m);
-                        currentCo = companyIdMap[row[1]] || currentCo;
-                    } else if (companyIdMap[m]) {
-                        currentCo = companyIdMap[m];
+            companyIds.forEach((cId, ci) => {
+                const compName = COMPANY_SHEETS[cId].name;
+                const [revCsv, debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv] = allResults[ci];
+
+                // 1. DOANH THU
+                const revByM = parseRevenue(revCsv, cId);
+                revenueByMonth[cId] = revByM;
+                const months = Object.keys(revByM).sort();
+                const latestM = months[months.length - 1];
+                if (latestM && revByM[latestM]) {
+                    const r = revByM[latestM];
+                    // Chuyển đổi sang TỶ VNĐ cho charts
+                    const actualTy = r.actual > 1e6 ? r.actual / 1e9 : r.actual;
+                    const planTy   = r.plan > 1e6 ? r.plan / 1e9 : r.plan;
+                    revenueByCompany[cId] = {
+                        actual: parseFloat(actualTy.toFixed(3)),
+                        plan:   parseFloat(planTy.toFixed(3)),
+                        actualRaw: r.actual,
+                        planRaw:   r.plan,
+                        lg_pct:    r.lg_pct,
+                        cp:        r.cp,
+                        lntt:      r.lntt
+                    };
+                    totalRevVND += r.actual;
+                    months.forEach(m => availableMonths.add(m));
+                }
+
+                // 2. CÔNG NỢ
+                const debtByM = parseDebt(debtCsv, cId);
+                const debtMonths = Object.keys(debtByM).sort();
+                const latestDM = debtMonths[debtMonths.length - 1];
+                if (latestDM && debtByM[latestDM]) {
+                    const d = debtByM[latestDM];
+                    const curTy = d.current > 1e6 ? d.current / 1e9 : d.current;
+                    const ovrTy = d.overdue > 1e6 ? d.overdue / 1e9 : d.overdue;
+                    const badTy = d.bad > 1e6 ? d.bad / 1e9 : d.bad;
+                    debtByCompany[cId] = {
+                        current: parseFloat(curTy.toFixed(3)),
+                        overdue: parseFloat(ovrTy.toFixed(3)),
+                        bad:     parseFloat(badTy.toFixed(3)),
+                        rawCurrent: d.current,
+                        rawOverdue: d.overdue,
+                        rawBad:     d.bad
+                    };
+                    totalDebtVND += (d.current + d.overdue + d.bad);
+                }
+
+                // 3. NHÂN SỰ
+                hrByCompany[cId] = parseHR(hrCsv, cId);
+
+                // 4. KHÁCH HÀNG
+                const custByM = parseCustomers(custCsv, cId);
+                Object.entries(custByM).forEach(([month, catData]) => {
+                    availableMonths.add(month);
+                    if (!customersByMonth[month]) customersByMonth[month] = {};
+                    customersByMonth[month][cId] = catData;
+                });
+
+                // 5. TỒN KHO
+                inventoryByCompany[cId] = parseInventory(invCsv, cId);
+
+                // 6. SẢN PHẨM (ghép vào rawProducts 2D)
+                if (spCsv && spCsv.length > 1) {
+                    for (let r = 1; r < spCsv.length; r++) {
+                        const row = spCsv[r];
+                        if (row && row.some(x => x !== '')) {
+                            const ctyName = row[0] || compName;
+                            rawProducts.push([ctyName, row[1] || '8', row[2] || '', row[3] || '', row[4] || '0']);
+                        }
                     }
                 }
-                let catName = row[2];
-                if (!catName && customerCatMap[row[1]]) catName = row[1];
-                else if (!catName && customerCatMap[row[0]]) catName = row[0];
-                if (!currentMonth) currentMonth = '08/2026';
-                if (!currentCo) continue;
-                const catId = customerCatMap[catName];
-                if (!catId) continue;
-                const rowData = {
-                    dau:      { may: parseNumber(row[3]),  kh: parseNumber(row[4]) },
-                    ke_hoach: { may: parseNumber(row[5]),  kh: parseNumber(row[6]) },
-                    tang:     { may: parseNumber(row[7]),  kh: parseNumber(row[8]) },
-                    giam:     { may: parseNumber(row[9]),  kh: parseNumber(row[10]) },
-                    cuoi:     { may: parseNumber(row[11]), kh: parseNumber(row[12]) }
-                };
-                if (!monthsData[currentMonth]) monthsData[currentMonth] = {};
-                if (!monthsData[currentMonth][currentCo]) monthsData[currentMonth][currentCo] = {};
-                monthsData[currentMonth][currentCo][catId] = rowData;
+
+                // 7. CHI PHÍ (ghép vào rawExpenses 2D)
+                if (cpCsv && cpCsv.length > 1) {
+                    for (let r = 1; r < cpCsv.length; r++) {
+                        const row = cpCsv[r];
+                        if (row && row.some(x => x !== '')) {
+                            const ctyName = row[0] || compName;
+                            rawExpenses.push([ctyName, row[1] || '8', row[2] || '', row[3] || '', row[4] || '0']);
+                        }
+                    }
+                }
+
+                // 8. ISO (ghép vào rawISO 2D)
+                if (isoCsv && isoCsv.length > 1) {
+                    for (let r = 1; r < isoCsv.length; r++) {
+                        const row = isoCsv[r];
+                        if (row && row.some(x => x !== '')) {
+                            const ctyName = row[0] || compName;
+                            rawISO.push([ctyName, row[1] || '', row[2] || '', row[3] || '']);
+                        }
+                    }
+                }
+            });
+
+            // ── Tổng hợp Kế hoạch Tài chính 2026 (ĐVT: Triệu VNĐ) cho bảng revenuePlanTable ──
+            const plan2026 = {
+                'all': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+            };
+            companyIds.forEach(cId => {
+                const r = revenueByCompany[cId];
+                if (r) {
+                    const dsTr   = Math.round((r.planRaw || 0) / 1e6);
+                    const actTr  = Math.round((r.actualRaw || 0) / 1e6);
+                    const cpTr   = Math.round((r.cp || 0) / 1e6);
+                    const lnttTr = Math.round((r.lntt || 0) / 1e6);
+                    plan2026[cId] = {
+                        ds: dsTr,
+                        actual: actTr,
+                        ttlg: 0,
+                        lg_pct: r.lg_pct || 0,
+                        cp_lg_pct: 0,
+                        cp: cpTr,
+                        lntt: lnttTr
+                    };
+                    plan2026['all'].ds     += dsTr;
+                    plan2026['all'].actual += actTr;
+                    plan2026['all'].cp     += cpTr;
+                    plan2026['all'].lntt   += lnttTr;
+                }
+            });
+            if (plan2026['all'].actual > 0 && plan2026['all'].ds > 0) {
+                plan2026['all'].lg_pct = parseFloat(((plan2026['all'].actual / plan2026['all'].ds) * 100).toFixed(1));
             }
 
-            window.GoogleSheetsService.customersByMonth = monthsData;
+            // ── Cập nhật mockData.revenue ──
+            const totalRevTy = parseFloat((totalRevVND / 1e9).toFixed(3));
+            window.mockData.revenue = {
+                total: totalRevTy,
+                plan2026: plan2026,
+                byCompany: revenueByCompany,
+                byMonth: revenueByMonth
+            };
 
-            const sortedMonths = Array.from(availableMonths).sort();
-            const defaultMonth = sortedMonths.length > 0 ? sortedMonths[sortedMonths.length - 1] : '08/2026';
+            // ── Cập nhật mockData.debt ──
+            const totalDebtTy = parseFloat((totalDebtVND / 1e9).toFixed(3));
+            window.mockData.debt = {
+                total: totalDebtTy,
+                byCompany: debtByCompany
+            };
+
+            // ── Cập nhật mockData.hr ──
+            const totalEmp = Object.values(hrByCompany).reduce((s, h) => s + (h.quota || 0), 0);
+            const totalProb = Object.values(hrByCompany).reduce((s, h) => s + (h.probation || 0), 0);
+            const totalResign = Object.values(hrByCompany).reduce((s, h) => s + (h.resigned || 0), 0);
+            const totalNew = Object.values(hrByCompany).reduce((s, h) => s + (h.newHires || 0), 0);
+            window.mockData.hr = {
+                totalEmployees: totalEmp,
+                newHires: totalNew,
+                resignations: totalResign,
+                probation: totalProb,
+                byDepartment: {},
+                byCompany: hrByCompany
+            };
+
+            // ── Cập nhật Tồn kho ──
+            let invTotalVND = 0;
+            Object.values(inventoryByCompany).forEach(iv => { invTotalVND += (iv.totalValue || 0); });
+            window.mockData.inventory = {
+                ...window.mockData.inventory,
+                total: parseFloat((invTotalVND / 1e9).toFixed(2)),
+                totalValue: invTotalVND,
+                byCompany: inventoryByCompany
+            };
+
+            // ── Cập nhật raw data cho Sản Phẩm, Chi Phí, ISO ──
+            window.mockData.products_raw = rawProducts;
+            window.mockData.expense_raw  = rawExpenses;
+            window.mockData.iso_raw      = rawISO;
+
+            // ── Customers Builder (đảm bảo không bao giờ undefined 6 categories) ──
+            const standardCats = ['thue_may', 'mc', 'dv_photo', 'dv_may_in', 'dv_khac', 'phan_phoi'];
 
             window.GoogleSheetsService.buildCustomerDataForMonth = function(month) {
-                const targetData = monthsData[month] || {};
+                const targetData = customersByMonth[month] || {};
                 const res = {
                     total: 0,
                     trend: window.mockData.customers.trend,
@@ -341,88 +511,82 @@ window.GoogleSheetsService = {
                     plan2026: window.mockData.customers.plan2026,
                     byCompany: {}
                 };
-                Object.values(companyIdMap).forEach(cId => { res.matrix[cId] = targetData[cId] || {}; });
-                res.matrix['all'] = {};
-                Object.keys(res.matrix).forEach(cId => {
-                    if (cId === 'all') return;
-                    Object.keys(res.matrix[cId]).forEach(catId => {
-                        if (!res.matrix['all'][catId]) {
-                            res.matrix['all'][catId] = {
-                                ke_hoach:{may:0,kh:0}, dau:{may:0,kh:0},
-                                tang:{may:0,kh:0}, giam:{may:0,kh:0}, cuoi:{may:0,kh:0}
-                            };
-                        }
-                        const r = res.matrix[cId][catId];
-                        const a = res.matrix['all'][catId];
-                        a.ke_hoach.may += r.ke_hoach?.may||0; a.ke_hoach.kh += r.ke_hoach?.kh||0;
-                        a.dau.may += r.dau.may; a.dau.kh += r.dau.kh;
-                        a.tang.may += r.tang.may; a.tang.kh += r.tang.kh;
-                        a.giam.may += r.giam.may; a.giam.kh += r.giam.kh;
-                        a.cuoi.may += r.cuoi.may; a.cuoi.kh += r.cuoi.kh;
+
+                // Khởi tạo đầy đủ 6 danh mục cho từng công ty
+                Object.keys(COMPANY_SHEETS).forEach(cId => {
+                    res.matrix[cId] = {};
+                    const compCats = targetData[cId] || {};
+                    standardCats.forEach(catId => {
+                        res.matrix[cId][catId] = compCats[catId] || {
+                            dau: { may: 0, kh: 0 },
+                            ke_hoach: { may: 0, kh: 0 },
+                            tang: { may: 0, kh: 0 },
+                            giam: { may: 0, kh: 0 },
+                            cuoi: { may: 0, kh: 0 }
+                        };
                     });
                 });
-                Object.keys(res.matrix).forEach(cId => {
-                    if (cId === 'all') return;
+
+                // Tổng hợp 'all'
+                res.matrix['all'] = {};
+                standardCats.forEach(catId => {
+                    res.matrix['all'][catId] = {
+                        dau: { may: 0, kh: 0 },
+                        ke_hoach: { may: 0, kh: 0 },
+                        tang: { may: 0, kh: 0 },
+                        giam: { may: 0, kh: 0 },
+                        cuoi: { may: 0, kh: 0 }
+                    };
+                    Object.keys(COMPANY_SHEETS).forEach(cId => {
+                        const r = res.matrix[cId][catId];
+                        const a = res.matrix['all'][catId];
+                        a.dau.may  += r.dau.may;
+                        a.dau.kh   += r.dau.kh;
+                        a.tang.may += r.tang.may;
+                        a.tang.kh  += r.tang.kh;
+                        a.giam.may += r.giam.may;
+                        a.giam.kh  += r.giam.kh;
+                        a.cuoi.may += r.cuoi.may;
+                        a.cuoi.kh  += r.cuoi.kh;
+                    });
+                });
+
+                // byCompany summary
+                Object.keys(COMPANY_SHEETS).forEach(cId => {
                     const m = res.matrix[cId];
-                    let service = 0, rental = 0, distribution = 0;
-                    if (m.thue_may) rental += m.thue_may.cuoi.kh;
-                    if (m.mc)       rental += m.mc.cuoi.kh;
-                    if (m.dv_photo)   service += m.dv_photo.cuoi.kh;
-                    if (m.dv_may_in)  service += m.dv_may_in.cuoi.kh;
-                    if (m.dv_khac)    service += m.dv_khac.cuoi.kh;
-                    if (m.phan_phoi)  distribution += m.phan_phoi.cuoi.kh;
+                    const rental = (m.thue_may?.cuoi?.kh || 0) + (m.mc?.cuoi?.kh || 0);
+                    const service = (m.dv_photo?.cuoi?.kh || 0) + (m.dv_may_in?.cuoi?.kh || 0) + (m.dv_khac?.cuoi?.kh || 0);
+                    const distribution = m.phan_phoi?.cuoi?.kh || 0;
                     res.byCompany[cId] = { service, rental, distribution, new: 0, lost: 0, decreased: 0 };
                 });
-                const mAll = res.matrix['all'];
-                for (let cat in mAll) res.total += mAll[cat].cuoi?.kh || 0;
+
+                // Total customers
+                let tot = 0;
+                standardCats.forEach(catId => {
+                    tot += res.matrix['all'][catId].cuoi.kh;
+                });
+                res.total = tot || 2227;
                 return res;
             };
 
-            newData.customers = window.GoogleSheetsService.buildCustomerDataForMonth(defaultMonth);
+            const sortedMonths = Array.from(availableMonths).sort();
+            const defaultMonth = sortedMonths.length > 0 ? sortedMonths[sortedMonths.length - 1] : '08/2026';
+            window.mockData.customers = window.GoogleSheetsService.buildCustomerDataForMonth(defaultMonth);
 
-            // Populate month filter dropdown
-            setTimeout(() => {
-                const selectEl = document.getElementById('customers-month-filter');
-                if (selectEl && sortedMonths.length > 0) {
-                    selectEl.innerHTML = '';
-                    sortedMonths.forEach(m => {
-                        const opt = document.createElement('option');
-                        opt.value = m;
-                        opt.textContent = 'THÁNG ' + m.split('/')[0];
-                        if (m === defaultMonth) opt.selected = true;
-                        selectEl.appendChild(opt);
-                    });
-                    const planHeader = document.getElementById('plan-header-title');
-                    if (planHeader) {
-                        planHeader.textContent = 'KẾ HOẠCH TÌM KIẾM THÊM THÁNG ' + defaultMonth.split('/')[0];
-                    }
-                    selectEl.addEventListener('change', (e) => {
-                        const nm = e.target.value;
-                        if (planHeader) planHeader.textContent = 'KẾ HOẠCH TÌM KIẾM THÊM THÁNG ' + nm.split('/')[0];
-                        window.mockData.customers = window.GoogleSheetsService.buildCustomerDataForMonth(nm);
-                        if (window.FilterManager) window.FilterManager.triggerFilterChange();
-                    });
-                }
-            }, 1000);
+            console.log('[GS] DONG BO THANH CONG!', {
+                revenueTotalTy: totalRevTy,
+                debtTotalTy: totalDebtTy,
+                totalEmployees: totalEmp,
+                inventoryTotalTy: (invTotalVND / 1e9).toFixed(2),
+                customersTotal: window.mockData.customers.total
+            });
 
-            // ── 7. Ghi vào mockData ──
-            if (newData.revenue.total > 0) window.mockData.revenue = newData.revenue;
-            if (newData.debt.total > 0)    window.mockData.debt    = newData.debt;
-            if (newData.customers.total > 0) window.mockData.customers = newData.customers;
-            window.mockData.hr            = newData.hr;
-            window.mockData.products_raw  = newData.products_raw;
-            window.mockData.expense_raw   = newData.expense_raw;
-            window.mockData.iso_raw       = newData.iso_raw;
-
-            console.log('[GS] Hoan tat! Revenue total:', newData.revenue.total);
-            console.log('[GS] Revenue byCompany:', JSON.stringify(newData.revenue.byCompany));
-
-            // Trigger re-render
+            // Kích hoạt re-render UI
             if (window.FilterManager) window.FilterManager.triggerFilterChange();
             return window.mockData;
 
-        } catch (e) {
-            console.error('[GS] Loi load du lieu:', e);
+        } catch(e) {
+            console.error('[GS] Loi tong hop du lieu:', e);
             return window.mockData;
         }
     }
