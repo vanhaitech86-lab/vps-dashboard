@@ -46,22 +46,32 @@ window.DebtModule = {
 
         // Chart
         let labels = [], currentData = [], overdueData = [], badData = [];
+        const compOrder = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS'];
         
         if (company === 'all') {
-            for (const [compName, compData] of Object.entries(data.byCompany)) {
+            compOrder.forEach(compName => {
+                const compData = (data.byCompany && data.byCompany[compName]) ? data.byCompany[compName] : { current: 0, overdue: 0, bad: 0 };
                 labels.push(compName);
-                currentData.push(compData.current);
-                overdueData.push(compData.overdue);
-                badData.push(compData.bad);
+                currentData.push(compData.current || 0);
+                overdueData.push(compData.overdue || 0);
+                badData.push(compData.bad || 0);
+            });
+            if (data.byCompany) {
+                for (const [compName, compData] of Object.entries(data.byCompany)) {
+                    if (!compOrder.includes(compName) && compName !== 'all' && compName !== 'VPVPS') {
+                        labels.push(compName);
+                        currentData.push(compData.current || 0);
+                        overdueData.push(compData.overdue || 0);
+                        badData.push(compData.bad || 0);
+                    }
+                }
             }
         } else {
-            const compData = data.byCompany[dataKey];
-            if(compData) {
-                labels = [company];
-                currentData = [compData.current];
-                overdueData = [compData.overdue];
-                badData = [compData.bad];
-            }
+            const compData = (data.byCompany && data.byCompany[dataKey]) ? data.byCompany[dataKey] : { current: 0, overdue: 0, bad: 0 };
+            labels = [company];
+            currentData = [compData.current || 0];
+            overdueData = [compData.overdue || 0];
+            badData = [compData.bad || 0];
         }
 
         const chartData = {
@@ -93,12 +103,12 @@ window.DebtModule = {
             plugins: {
                 datalabels: {
                     color: '#ffffff',
-                    font: { weight: 'bold', size: 12 },
+                    font: { weight: 'bold', size: 11 },
                     formatter: function(value) {
-                        if (value === 0) return '';
-                        return value;
+                        if (!value || value === 0) return '';
+                        return Number(value).toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
                     },
-                    textStrokeColor: 'rgba(0,0,0,0.3)',
+                    textStrokeColor: 'rgba(0,0,0,0.5)',
                     textStrokeWidth: 2
                 }
             }

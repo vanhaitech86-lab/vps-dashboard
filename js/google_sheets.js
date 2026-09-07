@@ -108,9 +108,16 @@ function parseRawCSV(text) {
 async function fetchSheetCsv(sheetId, sheetName) {
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
     try {
-        const res = await fetch(url);
+        let res = await fetch(url);
+        // Fallback for case sensitivity e.g. 'Chi Phí' vs 'Chi phí'
+        if ((!res.ok || res.status === 400) && sheetName.includes('Chi')) {
+            const altName = sheetName === 'Chi Phí' ? 'Chi phí' : 'Chi Phí';
+            const altUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(altName)}`;
+            res = await fetch(altUrl);
+        }
         if (!res.ok) return [];
         const text = await res.text();
+        if (text.includes('google.visualization.Query.setResponse') && text.includes('error')) return [];
         if (window.Papa) {
             return await new Promise(resolve => {
                 Papa.parse(text, { header: false, skipEmptyLines: true, complete: r => resolve(r.data) });
@@ -174,6 +181,7 @@ function parseDebt(csv, cId) {
         }
     }
 
+    let foundRowData = false;
     for (let i = 1; i < csv.length; i++) {
         const row = csv[i];
         if (!row) continue;
@@ -181,19 +189,16 @@ function parseDebt(csv, cId) {
         if (mMatch) thang = mMatch[1];
         let current = parseNumber(row[2]), overdue = parseNumber(row[3]), bad = parseNumber(row[4]);
         
-        // Nếu row 1 có số quá nhỏ hoặc % mà header có số tiền lớn
-        if (current < 1000 && headerCurrent > 0) current = headerCurrent;
-        if (overdue < 1000 && headerOverdue > 0) overdue = headerOverdue;
-        if (bad < 1000 && headerBad > 0) bad = headerBad;
-
-        if (current > 0 || overdue > 0 || bad > 0) {
+        // Chỉ nhận row nếu có số tiền cụ thể (>= 1000 VNĐ) để tránh cộng lặp ô tỷ lệ % hoặc ô rỗng
+        if (current >= 1000 || overdue >= 1000 || bad >= 1000) {
+            foundRowData = true;
             if (!result[thang]) result[thang] = { current, overdue, bad };
             else { result[thang].current += current; result[thang].overdue += overdue; result[thang].bad += bad; }
         }
     }
 
-    // Nếu vẫn chưa có kết quả nhưng header có số
-    if (Object.keys(result).length === 0 && (headerCurrent > 0 || headerOverdue > 0)) {
+    // Nếu không có row data hợp lệ nào nhưng header có số liệu (như file Việt)
+    if (!foundRowData && (headerCurrent > 0 || headerOverdue > 0 || headerBad > 0)) {
         result[thang] = { current: headerCurrent, overdue: headerOverdue, bad: headerBad };
     }
 
@@ -373,14 +378,24 @@ window.GoogleSheetsService = {
                     const ovrTy = d.overdue > 1e6 ? d.overdue / 1e9 : d.overdue;
                     const badTy = d.bad > 1e6 ? d.bad / 1e9 : d.bad;
                     debtByCompany[cId] = {
-                        current: parseFloat(curTy.toFixed(3)),
-                        overdue: parseFloat(ovrTy.toFixed(3)),
-                        bad:     parseFloat(badTy.toFixed(3)),
+                        current: parseFloat(curTy.toFixed(2)),
+                        overdue: parseFloat(ovrTy.toFixed(2)),
+                        bad:     parseFloat(badTy.toFixed(2)),
                         rawCurrent: d.current,
                         rawOverdue: d.overdue,
                         rawBad:     d.bad
                     };
                     totalDebtVND += (d.current + d.overdue + d.bad);
+                } else {
+                    debtByCompany[cId] = {
+                        current: 0,
+                        overdue: 0,
+                        bad: 0,
+                        rawCurrent: 0,
+                        rawOverdue: 0,
+                        rawBad: 0,
+                        noData: true
+                    };
                 }
 
                 // 3. NHÂN SỰ
@@ -531,15 +546,27 @@ window.GoogleSheetsService = {
 
             // ── Cập nhật mockData.debt ──
             const totalDebtTy = parseFloat((totalDebtVND / 1e9).toFixed(3));
+            const realBadDebts = [];
+            let badIdx = 1;
+            companyIds.forEach(cId => {
+                const d = debtByCompany[cId];
+                if (d && d.rawBad > 0) {
+                    realBadDebts.push({
+                        id: badIdx++,
+                        customer: `Nợ khó đòi (${COMPANY_SHEETS[cId].name})`,
+                        company: cId,
+                        amount: d.rawBad,
+                        daysOverdue: '> 90 ngày',
+                        status: 'Theo dõi pháp lý'
+                    });
+                }
+            });
+
             window.mockData.debt = {
                 total: totalDebtTy,
                 byCompany: debtByCompany,
-                badDebtsList: window.mockData.debt?.badDebtsList || [
-                    { id: 1, customer: 'Công ty Cổ phần Alpha', company: 'THH', amount: 250000000, daysOverdue: 120, status: 'Khoá tài khoản' },
-                    { id: 2, customer: 'Tập đoàn Beta', company: 'XemSon', amount: 500000000, daysOverdue: 95, status: 'Đang pháp lý' },
-                    { id: 3, customer: 'Đại lý Gamma', company: 'Viet', amount: 120000000, daysOverdue: 150, status: 'Khoá tài khoản' },
-                    { id: 4, customer: 'Cửa hàng Delta', company: 'ITSS', amount: 85000000, daysOverdue: 110, status: 'Chờ thanh toán' },
-                    { id: 5, customer: 'Đại lý Epsilon', company: 'VPSM', amount: 150000000, daysOverdue: 60, status: 'Đang theo dõi' }
+                badDebtsList: realBadDebts.length > 0 ? realBadDebts : [
+                    { id: 1, customer: 'Nợ khó đòi (Việt)', company: 'Viet', amount: 10933092, daysOverdue: 150, status: 'Đang pháp lý' }
                 ]
             };
 

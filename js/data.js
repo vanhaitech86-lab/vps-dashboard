@@ -946,8 +946,12 @@ function applyPeriodMultiplier(data, period) {
     // Naive recursive multiplication for numbers (except ids and daysOverdue)
     function multiplyNumbers(obj) {
         for (let key in obj) {
-            if (typeof obj[key] === 'number' && key !== 'id' && key !== 'daysOverdue' && key !== 'percentage') {
-                obj[key] = Math.round(obj[key] * multiplier);
+            if (typeof obj[key] === 'number' && key !== 'id' && key !== 'daysOverdue' && key !== 'percentage' && !key.endsWith('_pct')) {
+                if (obj[key] < 100) {
+                    obj[key] = parseFloat((obj[key] * multiplier).toFixed(2));
+                } else {
+                    obj[key] = Math.round(obj[key] * multiplier);
+                }
             } else if (typeof obj[key] === 'object' && obj[key] !== null) {
                 multiplyNumbers(obj[key]);
             }
@@ -996,12 +1000,14 @@ window.DataService = {
     
     async getDebtData(period = 'month', company = 'all') {
         const d = (window.mockData && window.mockData.debt) ? window.mockData.debt : mockData.debt;
-        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(d, period)), 100));
+        // Công nợ là số dư thời điểm (không nhân hệ số chu kỳ)
+        return new Promise(resolve => setTimeout(() => resolve(d), 100));
     },
 
     async getInventoryData(period = 'month', company = 'all') {
         const d = (window.mockData && window.mockData.inventory) ? window.mockData.inventory : mockData.inventory;
-        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(d, period)), 100));
+        // Tồn kho là giá trị tài sản thời điểm (không nhân hệ số chu kỳ)
+        return new Promise(resolve => setTimeout(() => resolve(d), 100));
     },
 
     async getHrData(period = 'month', company = 'all') {
