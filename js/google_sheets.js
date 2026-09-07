@@ -110,23 +110,40 @@ function parseRawCSV(text) {
 
 async function fetchSheetCsv(sheetId, sheetName) {
     const t = Date.now();
-    let candidates = [sheetName, `Bản sao của ${sheetName}`];
+    const baseNames = [sheetName];
     if (sheetName.includes('Chi')) {
-        candidates.push('Chi phí', 'Chi Phí', 'Bản sao của Chi phí', 'Bản sao của Chi Phí');
+        baseNames.push('Chi phí', 'Chi Phí');
     } else if (sheetName.includes('Đào tạo') || sheetName.includes('Đào Tạo')) {
-        candidates.push('Đào Tạo', 'Đào tạo', 'Bản sao của Đào tạo', 'Bản sao của Đào Tạo');
+        baseNames.push('Đào Tạo', 'Đào tạo');
     } else if (sheetName.includes('Dịch vụ') || sheetName.includes('Dịch Vụ')) {
-        candidates.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ', 'Bản sao của Dịch vụ tận tâm', 'Bản sao của Dịch Vụ Tận Tâm');
+        baseNames.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ');
     } else if (sheetName.includes('Văn hóa') || sheetName.includes('Văn Hóa')) {
-        candidates.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp', 'Bản sao của Văn hóa doanh nghiệp', 'Bản sao của Văn Hóa Doanh Nghiệp');
+        baseNames.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp');
     } else if (sheetName.includes('Thương hiệu') || sheetName.includes('Thương Hiệu')) {
-        candidates.push('Thương Hiệu', 'Thương hiệu', 'Bản sao của Thương hiệu', 'Bản sao của Thương Hiệu');
+        baseNames.push('Thương Hiệu', 'Thương hiệu');
     } else if (sheetName.includes('Sản')) {
-        candidates.push('Sản Phẩm', 'Sản phẩm', 'Bản sao của Sản Phẩm', 'Bản sao của Sản phẩm');
+        baseNames.push('Sản Phẩm', 'Sản phẩm');
     }
 
+    const prefixes = [
+        '',
+        'Bản sao của ',
+        'Bản sao của Bản sao của ',
+        'Bản sao của Bản sao của Bản sao của ',
+        'Bản sao của Bản sao của Bản sao của Bản sao của ',
+        'Copy of ',
+        'Copy of Copy of '
+    ];
+
+    let candidates = [];
+    for (const p of prefixes) {
+        for (const b of baseNames) {
+            candidates.push(p + b);
+        }
+    }
     candidates = [...new Set(candidates)];
     let validText = '';
+
 
     for (const name of candidates) {
         const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&_t=${t}`;
