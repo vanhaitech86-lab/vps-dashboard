@@ -35,6 +35,21 @@ window.ServiceModule = {
             this.complaintCompanyFilter = null;
             this.render();
         });
+        document.addEventListener('vps_filter_changed', (e) => {
+            if (e.detail && e.detail.company) {
+                const mapCty = {
+                    'THH': 'Tân Hồng Hà',
+                    'Viet': 'Việt',
+                    'XemSon': 'Xem Sơn',
+                    'VPSM': 'VPS M',
+                    'ITSS': 'ITSS',
+                    'all': null
+                };
+                this.localCompanyFilter = mapCty[e.detail.company] !== undefined ? mapCty[e.detail.company] : null;
+                this.complaintCompanyFilter = this.localCompanyFilter;
+            }
+            this.render();
+        });
     },
 
     switchTab(tab) {

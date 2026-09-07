@@ -111,6 +111,20 @@ window.BrandModule = {
     // ============================================================
     init() {
         this.render();
+        document.addEventListener('vps_filter_changed', (e) => {
+            if (e.detail && e.detail.company) {
+                const mapCty = {
+                    'THH': 'Tân Hồng Hà',
+                    'Viet': 'Việt',
+                    'XemSon': 'Xem Sơn',
+                    'VPSM': 'VPS M',
+                    'ITSS': 'ITSS',
+                    'all': 'all'
+                };
+                this.selectedCompany = mapCty[e.detail.company] || e.detail.company;
+            }
+            this.render();
+        });
     },
 
     switchTab(tab) {
@@ -121,6 +135,17 @@ window.BrandModule = {
     setCompany(cty) {
         this.selectedCompany = cty;
         this.render();
+    },
+
+    getCompanyBrandData(c) {
+        let d = { ...(this.brandData[c] || {}) };
+        if (window.mockData && window.mockData.brand_data) {
+            const live = window.mockData.brand_data[c];
+            if (live) {
+                d = { ...d, ...live };
+            }
+        }
+        return d;
     },
 
     // ============================================================
@@ -143,7 +168,7 @@ window.BrandModule = {
         };
         let n = this.companies.length;
         for (const c of this.companies) {
-            const d = this.brandData[c];
+            const d = this.getCompanyBrandData(c);
             agg.marketSharePlan += d.marketSharePlan;
             agg.marketShareActual += d.marketShareActual;
             agg.revenueContribPlan += d.revenueContribPlan;
@@ -186,7 +211,7 @@ window.BrandModule = {
 
         const d = this.selectedCompany === 'all'
             ? this.getAggData()
-            : this.brandData[this.selectedCompany];
+            : this.getCompanyBrandData(this.selectedCompany);
 
         const mktRate = this.getRate(d.marketShareActual, d.marketSharePlan);
         const revRate = this.getRate(d.revenueContribActual, d.revenueContribPlan);
@@ -412,7 +437,7 @@ window.BrandModule = {
 
     renderMetricBlock(m) {
         const rows = this.companies.map(c => {
-            const d = this.brandData[c];
+            const d = this.getCompanyBrandData(c);
             const plan = d[m.planKey];
             const actual = d[m.actualKey];
             const rate = this.getRate(actual, plan);
@@ -528,19 +553,19 @@ window.BrandModule = {
         const datasets = [
             {
                 label: 'Thị Phần (%)',
-                data: this.companies.map(c => this.getRate(this.brandData[c].marketShareActual, this.brandData[c].marketSharePlan)),
+                data: this.companies.map(c => this.getRate(this.getCompanyBrandData(c).marketShareActual, this.getCompanyBrandData(c).marketSharePlan)),
                 backgroundColor: '#4f46e5',
                 borderRadius: 4,
             },
             {
                 label: 'D.Số TT (%)',
-                data: this.companies.map(c => this.getRate(this.brandData[c].revenueContribActual, this.brandData[c].revenueContribPlan)),
+                data: this.companies.map(c => this.getRate(this.getCompanyBrandData(c).revenueContribActual, this.getCompanyBrandData(c).revenueContribPlan)),
                 backgroundColor: '#10B981',
                 borderRadius: 4,
             },
             {
                 label: 'Thương Hiệu (%)',
-                data: this.companies.map(c => this.getRate(this.brandData[c].brandAwarenessActual, this.brandData[c].brandAwarenessPlan)),
+                data: this.companies.map(c => this.getRate(this.getCompanyBrandData(c).brandAwarenessActual, this.getCompanyBrandData(c).brandAwarenessPlan)),
                 backgroundColor: '#F59E0B',
                 borderRadius: 4,
             },
@@ -577,8 +602,8 @@ window.BrandModule = {
         metrics.forEach(m => {
             const ctx = document.getElementById(`detailChart_${m.key}`);
             if (!ctx) return;
-            const plans = this.companies.map(c => this.brandData[c][m.planKey]);
-            const actuals = this.companies.map(c => this.brandData[c][m.actualKey]);
+            const plans = this.companies.map(c => this.getCompanyBrandData(c)[m.planKey]);
+            const actuals = this.companies.map(c => this.getCompanyBrandData(c)[m.actualKey]);
             this.charts[m.key] = new Chart(ctx, {
                 type: 'bar',
                 data: {

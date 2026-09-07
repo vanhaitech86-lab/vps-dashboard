@@ -11,7 +11,10 @@ const COMPANY_SHEETS = {
     'ITSS':   { name: 'ITSS',        id: '1t1a6DstUqlNctuQPE8RkdGBeL4BxyLDVGK46YVx2JPk' },
 };
 
-const SHEET_NAMES = ['Doanh thu', 'Công nợ', 'Khách hàng', 'Tồn kho', 'Nhân sự', 'Sản Phẩm', 'Chi Phí', 'ISO'];
+const SHEET_NAMES = [
+    'Doanh thu', 'Công nợ', 'Khách hàng', 'Tồn kho', 'Nhân sự', 'Sản Phẩm', 'Chi Phí', 'ISO',
+    'Đào tạo', 'Dịch vụ tận tâm', 'Văn hóa doanh nghiệp', 'Thương hiệu'
+];
 
 const companyIdMap = {
     'Tân Hồng Hà': 'THH', 'Tan Hong Ha': 'THH', 'tân hồng hà': 'THH', 'THH': 'THH',
@@ -110,11 +113,24 @@ async function fetchSheetCsv(sheetId, sheetName) {
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&_t=${t}`;
     try {
         let res = await fetch(url);
-        // Fallback for case sensitivity e.g. 'Chi Phí' vs 'Chi phí'
-        if ((!res.ok || res.status === 400) && sheetName.includes('Chi')) {
-            const altName = sheetName === 'Chi Phí' ? 'Chi phí' : 'Chi Phí';
-            const altUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(altName)}&_t=${t}`;
-            res = await fetch(altUrl);
+        // Fallback for case sensitivity or alternative names
+        if (!res.ok || res.status === 400) {
+            let altNames = [];
+            if (sheetName.includes('Chi')) altNames = ['Chi phí', 'Chi Phí'];
+            else if (sheetName.includes('Đào tạo') || sheetName.includes('Đào Tạo')) altNames = ['Đào Tạo', 'Đào tạo'];
+            else if (sheetName.includes('Dịch vụ') || sheetName.includes('Dịch Vụ')) altNames = ['Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ'];
+            else if (sheetName.includes('Văn hóa') || sheetName.includes('Văn Hóa')) altNames = ['Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp'];
+            else if (sheetName.includes('Thương hiệu') || sheetName.includes('Thương Hiệu')) altNames = ['Thương Hiệu', 'Thương hiệu'];
+
+            for (const alt of altNames) {
+                if (alt === sheetName) continue;
+                const altUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(alt)}&_t=${t}`;
+                const altRes = await fetch(altUrl);
+                if (altRes.ok) {
+                    res = altRes;
+                    break;
+                }
+            }
         }
         if (!res.ok) return [];
         const text = await res.text();
@@ -311,6 +327,144 @@ function parseInventory(csv, cId) {
     return { totalValue, totalItems, thang };
 }
 
+function isClonedRevenueSheet(csv) {
+    if (!csv || csv.length === 0) return true;
+    const header = (csv[0] || []).join(' ').toLowerCase();
+    return header.includes('báo cáo doanh thu') || header.includes('doanh số kế hoạch');
+}
+
+function parseTraining(csv, compName) {
+    if (!csv || csv.length === 0 || isClonedRevenueSheet(csv)) return null;
+    let planCol = -1, actCol = -1, dataStart = 1;
+    for (let i = 0; i < Math.min(csv.length, 5); i++) {
+        const row = csv[i] || [];
+        for (let c = 0; c < row.length; c++) {
+            const cell = (row[c] || '').toString().toLowerCase();
+            if (cell.includes('kế hoạch') || cell.includes('kh')) planCol = c;
+            if (cell.includes('thực tế') || cell.includes('thực hiện') || cell.includes('đã học') || cell.includes('th')) actCol = c;
+        }
+        if (planCol !== -1 && actCol !== -1) {
+            dataStart = i + 1;
+            break;
+        }
+    }
+    if (planCol === -1 || actCol === -1) {
+        planCol = 2; actCol = 3;
+    }
+    let totalPlan = 0, totalAct = 0, found = false;
+    for (let i = dataStart; i < csv.length; i++) {
+        const row = csv[i];
+        if (!row || row.length === 0) continue;
+        const p = parseNumber(row[planCol]);
+        const a = parseNumber(row[actCol]);
+        if (p > 0 || a > 0) {
+            totalPlan += p;
+            totalAct += a;
+            found = true;
+        }
+    }
+    return found ? { name: compName, plan: totalPlan, actual: totalAct } : null;
+}
+
+function parseService(csv, compName, rawService) {
+    if (!csv || csv.length === 0 || isClonedRevenueSheet(csv)) return;
+    let dataStart = 1;
+    for (let i = 0; i < Math.min(csv.length, 5); i++) {
+        const row = csv[i] || [];
+        const str = row.join(' ').toLowerCase();
+        if (str.includes('họ và tên') || str.includes('mã nv') || str.includes('lượt việc')) {
+            dataStart = i + 1;
+            break;
+        }
+    }
+    for (let i = dataStart; i < csv.length; i++) {
+        const row = csv[i];
+        if (!row || !row[1]) continue;
+        const copy = [...row];
+        if (!copy[4] || copy[4].trim() === '') copy[4] = compName;
+        rawService.push(copy);
+    }
+}
+
+function parseCulture(csv, compName) {
+    if (!csv || csv.length === 0 || isClonedRevenueSheet(csv)) return null;
+    let actCol = 3;
+    let dataStart = 1;
+    for (let i = 0; i < Math.min(csv.length, 5); i++) {
+        const row = csv[i] || [];
+        for (let c = 0; c < row.length; c++) {
+            const cell = (row[c] || '').toString().toLowerCase();
+            if (cell.includes('thực hiện') || cell.includes('kết quả') || cell.includes('th')) {
+                actCol = c;
+            }
+        }
+        if (row.join(' ').toLowerCase().includes('chỉ tiêu') || row.join(' ').toLowerCase().includes('kế hoạch')) {
+            dataStart = i + 1;
+            break;
+        }
+    }
+    const criteriaRates = [];
+    for (let i = dataStart; i < csv.length; i++) {
+        const row = csv[i];
+        if (!row || row.length === 0) continue;
+        const stt = parseInt(row[0]);
+        const rate = parseNumber(row[actCol]);
+        if (!isNaN(stt) && stt >= 1 && stt <= 6) {
+            criteriaRates[stt - 1] = rate;
+        } else if (criteriaRates.length < 6 && (rate > 0 || row[1])) {
+            criteriaRates.push(rate);
+        }
+    }
+    return criteriaRates.length > 0 ? criteriaRates : null;
+}
+
+function parseBrand(csv, compName) {
+    if (!csv || csv.length === 0 || isClonedRevenueSheet(csv)) return null;
+    let planCol = 2, actCol = 3, dataStart = 1;
+    for (let i = 0; i < Math.min(csv.length, 5); i++) {
+        const row = csv[i] || [];
+        for (let c = 0; c < row.length; c++) {
+            const cell = (row[c] || '').toString().toLowerCase();
+            if (cell.includes('kế hoạch') || cell.includes('kh')) planCol = c;
+            if (cell.includes('thực hiện') || cell.includes('thực tế') || cell.includes('th')) actCol = c;
+        }
+        if (row.join(' ').toLowerCase().includes('chỉ tiêu') || row.join(' ').toLowerCase().includes('kế hoạch')) {
+            dataStart = i + 1;
+            break;
+        }
+    }
+    const result = {};
+    for (let i = dataStart; i < csv.length; i++) {
+        const row = csv[i];
+        if (!row || row.length === 0) continue;
+        const name = (row[1] || '').toString().toLowerCase();
+        const plan = parseNumber(row[planCol]);
+        const act = parseNumber(row[actCol]);
+        const stt = parseInt(row[0]);
+
+        if (name.includes('thị phần') || stt === 1) {
+            result.marketSharePlan = plan;
+            result.marketShareActual = act;
+        } else if (name.includes('doanh số') || name.includes('trực tiếp') || stt === 2) {
+            result.revenueContribPlan = plan;
+            result.revenueContribActual = act;
+        } else if (name.includes('nhận diện') || name.includes('hài lòng') || stt === 3) {
+            result.brandAwarenessPlan = plan;
+            result.brandAwarenessActual = act;
+        } else if (name.includes('lẻ') || stt === 4) {
+            result.newRetailPlan = plan;
+            result.newRetailActual = act;
+        } else if (name.includes('đại lý') || stt === 5) {
+            result.newAgencyPlan = plan;
+            result.newAgencyActual = act;
+        } else if (name.includes('trọng điểm') || stt === 6) {
+            result.premiumPlan = plan;
+            result.premiumActual = act;
+        }
+    }
+    return Object.keys(result).length > 0 ? result : null;
+}
+
 // ============================================================
 // MAIN SERVICE
 // ============================================================
@@ -318,10 +472,10 @@ window.GoogleSheetsService = {
 
     async loadAllData() {
         try {
-            console.log('[GS] Bat dau tai du lieu tu 5 cong ty (8 sheets/file)...');
+            console.log('[GS] Bat dau tai du lieu tu 5 cong ty (12 sheets/file)...');
             const companyIds = Object.keys(COMPANY_SHEETS);
 
-            // Tải song song tất cả 8 sheet từ 5 file = 40 requests
+            // Tải song song tất cả 12 sheet từ 5 file = 60 requests
             const allFetches = companyIds.map(cId =>
                 Promise.all(SHEET_NAMES.map(sname =>
                     fetchSheetCsv(COMPANY_SHEETS[cId].id, sname).catch(() => [])
@@ -338,13 +492,17 @@ window.GoogleSheetsService = {
             const rawProducts        = [['CÔNG TY', 'THÁNG', 'HÃNG', 'NHÓM', 'DOANH THU']];
             const rawExpenses        = [['CÔNG TY', 'THÁNG', 'NHÓM', 'HẠNG MỤC', 'GIÁ TRỊ']];
             const rawISO             = [['CÔNG TY', 'PHÒNG BAN', 'TÊN QUY TRÌNH / QUY ĐỊNH', 'PHÂN LOẠI']];
+            const rawService         = [['STT', 'Họ và tên', 'Mã NV', 'Bộ phận', 'Công ty', 'Số lượt việc', 'Điểm TB', 'Tổng điểm', 'TG phản hồi (h)', 'TG đến (h)', 'TG xử lý (h)', 'TG về (h)', 'Biên bản lập', 'Biên bản thay thế', 'Thu hồi vật tư', 'Tháng']];
+            const trainingSummary    = [];
+            const cultureData        = {};
+            const brandData          = {};
 
             let totalRevVND = 0, totalDebtVND = 0;
             const availableMonths = new Set();
 
             companyIds.forEach((cId, ci) => {
                 const compName = COMPANY_SHEETS[cId].name;
-                const [revCsv, debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv] = allResults[ci];
+                const [revCsv, debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv, trainingCsv, serviceCsv, cultureCsv, brandCsv] = allResults[ci];
 
                 // 1. DOANH THU
                 const revByM = parseRevenue(revCsv, cId);
@@ -444,6 +602,24 @@ window.GoogleSheetsService = {
                             rawISO.push([ctyName, row[1] || '', row[2] || '', row[3] || '']);
                         }
                     }
+                }
+
+                // 9. ĐÀO TẠO
+                const tr = parseTraining(trainingCsv, compName);
+                if (tr) trainingSummary.push(tr);
+
+                // 10. DỊCH VỤ TẬN TÂM
+                parseService(serviceCsv, compName, rawService);
+
+                // 11. VĂN HÓA DOANH NGHIỆP
+                const cul = parseCulture(cultureCsv, compName);
+                if (cul) cultureData[cId] = cul;
+
+                // 12. THƯƠNG HIỆU
+                const br = parseBrand(brandCsv, compName);
+                if (br) {
+                    brandData[compName] = br;
+                    brandData[cId] = br;
                 }
             });
 
@@ -599,6 +775,20 @@ window.GoogleSheetsService = {
             window.mockData.products_raw = rawProducts;
             window.mockData.expense_raw  = rawExpenses;
             window.mockData.iso_raw      = rawISO;
+
+            // ── Cập nhật dữ liệu cho Dịch Vụ, Đào Tạo, Văn Hóa, Thương Hiệu ──
+            if (rawService.length > 1) {
+                window.mockData.service_raw = rawService;
+            }
+            if (trainingSummary.length > 0) {
+                window.mockData.training_summary = trainingSummary;
+            }
+            if (Object.keys(cultureData).length > 0) {
+                window.mockData.culture_data = cultureData;
+            }
+            if (Object.keys(brandData).length > 0) {
+                window.mockData.brand_data = brandData;
+            }
 
             // ── Customers Builder (đảm bảo không bao giờ undefined 6 categories) ──
             const standardCats = ['thue_may', 'mc', 'dv_photo', 'dv_may_in', 'dv_khac', 'phan_phoi'];

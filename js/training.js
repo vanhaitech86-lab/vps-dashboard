@@ -50,9 +50,31 @@ window.TrainingModule = {
         return rows;
     },
 
+    getSummaryData() {
+        let data = JSON.parse(JSON.stringify(this.summaryData));
+        if (window.mockData && window.mockData.training_summary && window.mockData.training_summary.length > 0) {
+            data = data.map(item => {
+                const live = window.mockData.training_summary.find(x => {
+                    const xn = (x.name || '').toLowerCase();
+                    const iname = item.name.toLowerCase();
+                    return xn.includes(iname) || iname.includes(xn) || (iname.includes('xesco') && xn.includes('xem'));
+                });
+                if (live && (live.plan > 0 || live.actual > 0)) {
+                    return { ...item, plan: live.plan, actual: live.actual };
+                }
+                return item;
+            });
+        }
+        return data;
+    },
+
     init() {
         this.renderSummaryTable();
         this.renderChart();
+        document.addEventListener('vps_filter_changed', () => {
+            this.renderSummaryTable();
+            this.renderChart();
+        });
     },
 
     renderSummaryTable() {
@@ -62,11 +84,12 @@ window.TrainingModule = {
         let html = '';
         let totalPlan = 0;
         let totalActual = 0;
+        const currentData = this.getSummaryData();
 
-        this.summaryData.forEach((row, idx) => {
+        currentData.forEach((row, idx) => {
             totalPlan += row.plan;
             totalActual += row.actual;
-            const percent = ((row.actual / row.plan) * 100).toFixed(1);
+            const percent = row.plan > 0 ? ((row.actual / row.plan) * 100).toFixed(1) : 0;
             let color = '#2ecc71';
             if (percent < 90) color = '#e67e22';
             if (percent < 80) color = '#e74c3c';
@@ -82,7 +105,7 @@ window.TrainingModule = {
             `;
         });
 
-        const totalPercent = ((totalActual / totalPlan) * 100).toFixed(1);
+        const totalPercent = totalPlan > 0 ? ((totalActual / totalPlan) * 100).toFixed(1) : 0;
         html += `
             <tr style="background: #f8f9fa; font-weight: bold; font-size: 1rem;">
                 <td colspan="2" style="text-align: right;">TỔNG CỘNG:</td>
@@ -102,9 +125,10 @@ window.TrainingModule = {
         const ctx = canvas.getContext('2d');
         if (this.chart) this.chart.destroy();
 
-        const labels = this.summaryData.map(d => d.name);
-        const planData = this.summaryData.map(d => d.plan);
-        const actualData = this.summaryData.map(d => d.actual);
+        const currentData = this.getSummaryData();
+        const labels = currentData.map(d => d.name);
+        const planData = currentData.map(d => d.plan);
+        const actualData = currentData.map(d => d.actual);
 
         this.chart = new Chart(ctx, {
             type: 'bar',
