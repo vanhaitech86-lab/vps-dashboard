@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.TrainingModule) window.TrainingModule.init();
             if(window.ServiceModule) window.ServiceModule.init();
             if(window.BrandModule) window.BrandModule.init();
+            if(window.KqkdModule) window.KqkdModule.init();
             
             // Trigger CRM API Backend Test
             if(window.CrmConnector) window.CrmConnector.fetchDashboardData(new Date().getMonth() + 1, user.company);
@@ -225,6 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'training': '10. Đào Tạo',
                 'culture': '11. Văn Hóa Doanh Nghiệp',
                 'brand': '12. Thương Hiệu',
+                'kqkd': '13. Báo Cáo Kết Quả Kinh Doanh',
                 'admin': 'Quản trị Hệ thống'
             };
             document.getElementById('page-title').textContent = titles[viewId] || 'Dashboard';
@@ -235,7 +237,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             // Show target
-            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            const targetEl = document.getElementById(`view-${viewId}`);
+            if (targetEl) targetEl.classList.remove('hidden');
+            if (viewId === 'kqkd' && window.KqkdModule) {
+                window.KqkdModule.render();
+            }
             if (window.FilterManager) {
                 window.FilterManager.triggerFilterChange();
             }

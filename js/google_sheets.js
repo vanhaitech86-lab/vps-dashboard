@@ -13,7 +13,7 @@ const COMPANY_SHEETS = {
 
 const SHEET_NAMES = [
     'Doanh thu', 'Công nợ', 'Khách hàng', 'Tồn kho', 'Nhân sự', 'Sản Phẩm', 'Chi Phí', 'ISO',
-    'Đào tạo', 'Dịch vụ tận tâm', 'Văn hóa doanh nghiệp', 'Thương hiệu'
+    'Đào tạo', 'Dịch vụ tận tâm', 'Văn hóa doanh nghiệp', 'Thương hiệu', 'Kết quả kinh doanh'
 ];
 
 const companyIdMap = {
@@ -135,6 +135,8 @@ async function fetchSheetCsv(sheetId, sheetName) {
         baseNames.push('ISO', 'iso', '9. ISO', '9. iso');
     } else if (sheetName.includes('Doanh thu') || sheetName.includes('Doanh Thu')) {
         baseNames.push('Doanh thu', 'Doanh Thu', '2. Doanh thu', '2. Doanh Thu', 'Doanh số', 'Doanh Số');
+    } else if (sheetName.includes('Kinh doanh') || sheetName.includes('KQKD') || sheetName.includes('Kết quả') || sheetName.includes('P&L')) {
+        baseNames.push('Kết quả kinh doanh', 'KQKD', 'P&L', '13. Kết quả kinh doanh', '13. KQKD', 'Ket qua kinh doanh', 'KET QUA KINH DOANH');
     }
 
     const prefixes = [

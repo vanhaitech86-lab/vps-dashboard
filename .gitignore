@@ -6,3 +6,5 @@ test_scripts.js
 check_dashboard.js
 dashboard.png
 *.py
+scratch/
+~$*
