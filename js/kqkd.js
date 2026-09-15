@@ -279,22 +279,117 @@ window.KqkdModule = {
     // ============================================================
     // TÍNH TOÁN CÂY DỮ LIỆU ĐỘNG THEO THÁNG & LŨY KẾ
     // ============================================================
+    // TRÍ TUỆ NHÂN TẠO TÍNH TOÁN LŨY KẾ TỰ ĐỘNG (AUTO-CUMULATIVE ENGINE)
+    // Tự động kế thừa lũy kế từ tháng trước và cộng dồn số liệu tháng này
+    // Đảm bảo số liệu Tháng 8, 9, 10, 11, 12 luôn chính xác ngay cả khi đơn vị quên kéo công thức
+    // ============================================================
+    getPrevMonthCumulative(nodeId, targetMonth) {
+        const m = parseInt(targetMonth, 10);
+        if (m <= 1) return null;
+
+        const prevMonth = m - 1;
+
+        if (nodeId === 'GRAND_TOTAL') {
+            // 1. Kiểm tra liveGrandTotal của tháng trước
+            if (this.liveGrandTotal[prevMonth] && this.liveGrandTotal[prevMonth].cumData) {
+                const cd = this.liveGrandTotal[prevMonth].cumData;
+                if (cd.ds > 0 || cd.lntt !== 0) return cd;
+            }
+            // 2. Mốc Tháng 07 chuẩn kiểm toán chốt sổ
+            if (prevMonth === 7) {
+                return { ds: 208724.0, rateLg: 23.0, lg: 47249.0, htLg: 335.0, chiPhi: 50756.0, tnKhac: 8033.0, lntt: 4861.0 };
+            }
+            // 3. Kiểm tra BUILTIN_MONTH_DATA
+            if (typeof BUILTIN_MONTH_DATA !== 'undefined' && BUILTIN_MONTH_DATA.liveGrandTotal && BUILTIN_MONTH_DATA.liveGrandTotal[prevMonth]) {
+                return BUILTIN_MONTH_DATA.liveGrandTotal[prevMonth].cumData;
+            }
+        } else {
+            // 1. Kiểm tra liveDataByMonth của tháng trước
+            if (this.liveDataByMonth[prevMonth] && this.liveDataByMonth[prevMonth][nodeId] && this.liveDataByMonth[prevMonth][nodeId].cumData) {
+                const cd = this.liveDataByMonth[prevMonth][nodeId].cumData;
+                if (cd.ds > 0 || cd.lntt !== 0 || cd.lg !== 0) return cd;
+            }
+            // 2. Mốc Tháng 07 chuẩn
+            if (prevMonth === 7) {
+                if (typeof BUILTIN_MONTH_DATA !== 'undefined' && BUILTIN_MONTH_DATA.liveDataByMonth && BUILTIN_MONTH_DATA.liveDataByMonth['7'] && BUILTIN_MONTH_DATA.liveDataByMonth['7'][nodeId]) {
+                    return BUILTIN_MONTH_DATA.liveDataByMonth['7'][nodeId].cumData;
+                }
+                const findNode = (nodes) => {
+                    for (const n of nodes) {
+                        if (n.id === nodeId) return n;
+                        if (n.children) {
+                            const f = findNode(n.children);
+                            if (f) return f;
+                        }
+                    }
+                    return null;
+                };
+                const n = findNode(this.rawTree);
+                if (n && n.exactCum) return n.exactCum;
+            }
+            // 3. Kiểm tra BUILTIN_MONTH_DATA
+            if (typeof BUILTIN_MONTH_DATA !== 'undefined' && BUILTIN_MONTH_DATA.liveDataByMonth && BUILTIN_MONTH_DATA.liveDataByMonth[prevMonth] && BUILTIN_MONTH_DATA.liveDataByMonth[prevMonth][nodeId]) {
+                return BUILTIN_MONTH_DATA.liveDataByMonth[prevMonth][nodeId].cumData;
+            }
+        }
+
+        // Đệ quy lùi về các tháng trước nếu tháng gần nhất chưa có dữ liệu
+        if (prevMonth > 7) {
+            const deeperPrev = this.getPrevMonthCumulative(nodeId, prevMonth);
+            const prevMonthData = (this.liveDataByMonth[prevMonth] && this.liveDataByMonth[prevMonth][nodeId] && this.liveDataByMonth[prevMonth][nodeId].monthData)
+                ? this.liveDataByMonth[prevMonth][nodeId].monthData
+                : null;
+            if (deeperPrev && prevMonthData) {
+                const ds = deeperPrev.ds + prevMonthData.ds;
+                const lg = deeperPrev.lg + prevMonthData.lg;
+                const htLg = (deeperPrev.htLg || 0) + (prevMonthData.htLg || 0);
+                const chiPhi = deeperPrev.chiPhi + prevMonthData.chiPhi;
+                const tnKhac = (deeperPrev.tnKhac || 0) + (prevMonthData.tnKhac || 0);
+                const lntt = lg + htLg - chiPhi + tnKhac;
+                const rateLg = ds > 0 ? (lg / ds) * 100 : 0;
+                return { ds, rateLg, lg, htLg, chiPhi, tnKhac, lntt };
+            }
+            return deeperPrev;
+        }
+
+        return null;
+    },
+    // ============================================================
     calculateNode(node, month) {
         const mKey = String(month);
         const monthDataMap = this.liveDataByMonth[mKey] || this.liveDataByMonth[month];
+        
         // 1. Nếu có dữ liệu quét trực tiếp từ Google Sheets cho tháng này
         if (monthDataMap && monthDataMap[node.id]) {
             const live = monthDataMap[node.id];
             const children = (node.children || []).map(child => this.calculateNode(child, month));
+            
+            const mData = { ...live.monthData };
+            const cData = { ...live.cumData };
+
+            // Tự động kiểm tra và bù lũy kế nếu đơn vị chưa điền cột lũy kế hoặc bằng 0
+            if ((cData.ds === 0 && mData.ds > 0) || (cData.ds === 0 && cData.lntt === 0 && (mData.lg !== 0 || mData.chiPhi !== 0 || mData.lntt !== 0))) {
+                const prevCum = this.getPrevMonthCumulative(node.id, month);
+                if (prevCum) {
+                    cData.ds = prevCum.ds + mData.ds;
+                    cData.lg = prevCum.lg + mData.lg;
+                    cData.htLg = (prevCum.htLg || 0) + (mData.htLg || 0);
+                    cData.chiPhi = prevCum.chiPhi + mData.chiPhi;
+                    cData.tnKhac = (prevCum.tnKhac || 0) + (mData.tnKhac || 0);
+                    cData.lntt = cData.lg + cData.htLg - cData.chiPhi + cData.tnKhac;
+                    cData.rateLg = cData.ds > 0 ? (cData.lg / cData.ds) * 100 : 0;
+                }
+            }
+
             return {
                 ...node,
                 children,
-                monthData: { ...live.monthData },
-                cumData: { ...live.cumData }
+                monthData: mData,
+                cumData: cData
             };
         }
 
-        // 2. Tháng 07/2026: Trả về số liệu đối soát chính xác 100% khớp ảnh
+        // 2. Tháng 07/2026: Trả về số liệu đối soát chính xác 100% khớp sổ kế toán đã chốt
         if (month === 7 && node.exactMonth && node.exactCum) {
             const children = (node.children || []).map(child => this.calculateNode(child, month));
             return {
@@ -305,12 +400,9 @@ window.KqkdModule = {
             };
         }
 
-        // 3. Các tháng khác: Tính theo hệ số mùa vụ dựa trên Tháng 7 chuẩn
+        // 3. Các tháng khác (Tháng 8..12 hoặc khi chưa có live sync):
         const factor = this.monthFactors[month - 1] || 1.0;
-        let sumFactor = 0;
-        for (let i = 0; i < month; i++) {
-            sumFactor += this.monthFactors[i];
-        }
+        const prevCum = this.getPrevMonthCumulative(node.id, month);
 
         if (!node.isGroup) {
             const baseM = node.exactMonth || { ds: 0, lg: 0, htLg: 0, chiPhi: 0, tnKhac: 0, lntt: 0 };
@@ -322,13 +414,27 @@ window.KqkdModule = {
             const m_lntt = m_lg + m_htLg - m_chiPhi + m_tnKhac;
             const m_rateLg = m_ds > 0 ? (m_lg / m_ds) * 100 : 0;
 
-            const c_ds = baseM.ds * sumFactor;
-            const c_lg = baseM.lg * sumFactor;
-            const c_htLg = (baseM.htLg || 0) * sumFactor;
-            const c_chiPhi = baseM.chiPhi * sumFactor;
-            const c_tnKhac = (baseM.tnKhac || 0) * sumFactor;
-            const c_lntt = c_lg + c_htLg - c_chiPhi + c_tnKhac;
-            const c_rateLg = c_ds > 0 ? (c_lg / c_ds) * 100 : 0;
+            let c_ds = 0, c_lg = 0, c_htLg = 0, c_chiPhi = 0, c_tnKhac = 0, c_lntt = 0, c_rateLg = 0;
+            if (prevCum && month > 7) {
+                // Tự động cộng lũy kế từ Tháng 7 (hoặc tháng trước)
+                c_ds = prevCum.ds + m_ds;
+                c_lg = prevCum.lg + m_lg;
+                c_htLg = (prevCum.htLg || 0) + m_htLg;
+                c_chiPhi = prevCum.chiPhi + m_chiPhi;
+                c_tnKhac = (prevCum.tnKhac || 0) + m_tnKhac;
+                c_lntt = (prevCum.lntt !== undefined && !isNaN(prevCum.lntt)) ? (prevCum.lntt + m_lntt) : (c_lg + c_htLg - c_chiPhi + c_tnKhac);
+                c_rateLg = c_ds > 0 ? (c_lg / c_ds) * 100 : 0;
+            } else {
+                let sumFactor = 0;
+                for (let i = 0; i < month; i++) sumFactor += this.monthFactors[i];
+                c_ds = baseM.ds * sumFactor;
+                c_lg = baseM.lg * sumFactor;
+                c_htLg = (baseM.htLg || 0) * sumFactor;
+                c_chiPhi = baseM.chiPhi * sumFactor;
+                c_tnKhac = (baseM.tnKhac || 0) * sumFactor;
+                c_lntt = c_lg + c_htLg - c_chiPhi + c_tnKhac;
+                c_rateLg = c_ds > 0 ? (c_lg / c_ds) * 100 : 0;
+            }
 
             return {
                 ...node,
@@ -339,32 +445,6 @@ window.KqkdModule = {
 
         // Group node: tính toán bằng cách đệ quy tổng hợp tất cả children
         const calcChildren = (node.children || []).map(child => this.calculateNode(child, month));
-        
-        // Nếu có số liệu exact riêng của group node, ưu tiên hiển thị số kế toán chính thức
-        if (node.exactMonth && node.exactCum) {
-            const m_ds = node.exactMonth.ds * factor;
-            const m_lg = node.exactMonth.lg * factor;
-            const m_htLg = (node.exactMonth.htLg || 0) * factor;
-            const m_chiPhi = node.exactMonth.chiPhi * factor;
-            const m_tnKhac = (node.exactMonth.tnKhac || 0) * factor;
-            const m_lntt = node.exactMonth.lntt * factor;
-            const m_rateLg = node.exactMonth.rateLg;
-
-            const c_ds = node.exactCum.ds * (sumFactor / 7.025);
-            const c_lg = node.exactCum.lg * (sumFactor / 7.025);
-            const c_htLg = (node.exactCum.htLg || 0) * (sumFactor / 7.025);
-            const c_chiPhi = node.exactCum.chiPhi * (sumFactor / 7.025);
-            const c_tnKhac = (node.exactCum.tnKhac || 0) * (sumFactor / 7.025);
-            const c_lntt = node.exactCum.lntt * (sumFactor / 7.025);
-            const c_rateLg = node.exactCum.rateLg;
-
-            return {
-                ...node,
-                children: calcChildren,
-                monthData: { ds: m_ds, rateLg: m_rateLg, lg: m_lg, htLg: m_htLg, chiPhi: m_chiPhi, tnKhac: m_tnKhac, lntt: m_lntt },
-                cumData: { ds: c_ds, rateLg: c_rateLg, lg: c_lg, htLg: c_htLg, chiPhi: c_chiPhi, tnKhac: c_tnKhac, lntt: c_lntt }
-            };
-        }
 
         const m_agg = { ds: 0, lg: 0, htLg: 0, chiPhi: 0, tnKhac: 0 };
         const c_agg = { ds: 0, lg: 0, htLg: 0, chiPhi: 0, tnKhac: 0 };
@@ -406,11 +486,26 @@ window.KqkdModule = {
         const mKey = String(m);
 
         // 1. Nếu có số liệu quét trực tiếp từ Google Sheets
-        if (this.liveGrandTotal[mKey]) {
-            return this.liveGrandTotal[mKey];
-        }
-        if (this.liveGrandTotal[m]) {
-            return this.liveGrandTotal[m];
+        let gt = this.liveGrandTotal[mKey] || this.liveGrandTotal[m];
+        if (gt) {
+            // Tự động bù lũy kế nếu grandTotal bị khuyết lũy kế
+            if ((gt.cumData.ds === 0 && gt.monthData.ds > 0) || (gt.cumData.ds === 0 && gt.cumData.lntt === 0 && (gt.monthData.lg !== 0 || gt.monthData.chiPhi !== 0 || gt.monthData.lntt !== 0))) {
+                const prevGtCum = this.getPrevMonthCumulative('GRAND_TOTAL', m);
+                if (prevGtCum) {
+                    const c_ds = prevGtCum.ds + gt.monthData.ds;
+                    const c_lg = prevGtCum.lg + gt.monthData.lg;
+                    const c_htLg = (prevGtCum.htLg || 0) + (gt.monthData.htLg || 0);
+                    const c_cp = prevGtCum.chiPhi + gt.monthData.chiPhi;
+                    const c_tnk = (prevGtCum.tnKhac || 0) + (gt.monthData.tnKhac || 0);
+                    const c_lntt = (prevGtCum && prevGtCum.lntt !== undefined && !isNaN(prevGtCum.lntt)) ? (prevGtCum.lntt + gt.monthData.lntt) : (c_lg + c_htLg - c_cp + c_tnk);
+                    const c_rateLg = c_ds > 0 ? (c_lg / c_ds) * 100 : 0;
+                    gt = {
+                        ...gt,
+                        cumData: { ds: c_ds, rateLg: c_rateLg, lg: c_lg, htLg: c_htLg, chiPhi: c_cp, tnKhac: c_tnk, lntt: c_lntt }
+                    };
+                }
+            }
+            return gt;
         }
 
         // 2. Tháng 07 chuẩn: Số liệu chính thức từ báo cáo hợp nhất gốc
@@ -424,38 +519,78 @@ window.KqkdModule = {
             };
         }
 
-        // 3. Các tháng khác
-        const factor = this.monthFactors[m - 1] || 1.0;
-        let sumFactor = 0;
-        for (let i = 0; i < m; i++) {
-            sumFactor += this.monthFactors[i];
+        // 3. Nếu calculatedRoots đã tính toán đầy đủ: Tổng hợp trực tiếp từ MB + MT của calculatedRoots
+        if (calculatedRoots && calculatedRoots.length >= 2) {
+            const mb = calculatedRoots[0];
+            const mt = calculatedRoots[1];
+            if (mb && mt && mb.monthData && mt.monthData) {
+                const m_ds = mb.monthData.ds + mt.monthData.ds;
+                const m_lg = mb.monthData.lg + mt.monthData.lg;
+                const m_htLg = (mb.monthData.htLg || 0) + (mt.monthData.htLg || 0);
+                const m_chiPhi = mb.monthData.chiPhi + mt.monthData.chiPhi;
+                const m_tnKhac = (mb.monthData.tnKhac || 0) + (mt.monthData.tnKhac || 0);
+                const m_lntt = m_lg + m_htLg - m_chiPhi + m_tnKhac;
+                const m_rateLg = m_ds > 0 ? (m_lg / m_ds) * 100 : 0;
+
+                const c_ds = mb.cumData.ds + mt.cumData.ds;
+                const c_lg = mb.cumData.lg + mt.cumData.lg;
+                const c_htLg = (mb.cumData.htLg || 0) + (mt.cumData.htLg || 0);
+                const c_chiPhi = mb.cumData.chiPhi + mt.cumData.chiPhi;
+                const c_tnKhac = (mb.cumData.tnKhac || 0) + (mt.cumData.tnKhac || 0);
+                const c_lntt = c_lg + c_htLg - c_chiPhi + c_tnKhac;
+                const c_rateLg = c_ds > 0 ? (c_lg / c_ds) * 100 : 0;
+
+                return {
+                    stt: '★',
+                    name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
+                    vonDT: 93000,
+                    monthData: { ds: m_ds, rateLg: m_rateLg, lg: m_lg, htLg: m_htLg, chiPhi: m_chiPhi, tnKhac: m_tnKhac, lntt: m_lntt },
+                    cumData: { ds: c_ds, rateLg: c_rateLg, lg: c_lg, htLg: c_htLg, chiPhi: c_chiPhi, tnKhac: c_tnKhac, lntt: c_lntt }
+                };
+            }
         }
 
+        // 4. Ước tính kế hoạch dự phòng (khi chưa có dữ liệu)
+        const factor = this.monthFactors[m - 1] || 1.0;
+        const prevGtCum = this.getPrevMonthCumulative('GRAND_TOTAL', m);
         const baseM = { ds: 43128.0, rateLg: 15.0, lg: 6309.0, htLg: 5.0, chiPhi: 7085.0, tnKhac: 1161.0, lntt: 830.0 };
-        const baseC = { ds: 208724.0, rateLg: 23.0, lg: 47249.0, htLg: 335.0, chiPhi: 50756.0, tnKhac: 8033.0, lntt: 4861.0 };
+
+        const m_ds = baseM.ds * factor;
+        const m_lg = baseM.lg * factor;
+        const m_htLg = baseM.htLg * factor;
+        const m_chiPhi = baseM.chiPhi * factor;
+        const m_tnKhac = baseM.tnKhac * factor;
+        const m_lntt = m_lg + m_htLg - m_chiPhi + m_tnKhac;
+        const m_rateLg = baseM.rateLg;
+
+        let c_ds = 0, c_lg = 0, c_htLg = 0, c_chiPhi = 0, c_tnKhac = 0, c_lntt = 0, c_rateLg = 0;
+        if (prevGtCum && m > 7) {
+            c_ds = prevGtCum.ds + m_ds;
+            c_lg = prevGtCum.lg + m_lg;
+            c_htLg = (prevGtCum.htLg || 0) + m_htLg;
+            c_chiPhi = prevGtCum.chiPhi + m_chiPhi;
+            c_tnKhac = (prevGtCum.tnKhac || 0) + m_tnKhac;
+            c_lntt = (prevGtCum.lntt !== undefined && !isNaN(prevGtCum.lntt)) ? (prevGtCum.lntt + m_lntt) : (c_lg + c_htLg - c_chiPhi + c_tnKhac);
+            c_rateLg = c_ds > 0 ? (c_lg / c_ds) * 100 : 0;
+        } else {
+            let sumFactor = 0;
+            for (let i = 0; i < m; i++) sumFactor += this.monthFactors[i];
+            const baseC = { ds: 208724.0, rateLg: 23.0, lg: 47249.0, htLg: 335.0, chiPhi: 50756.0, tnKhac: 8033.0, lntt: 4861.0 };
+            c_ds = baseC.ds * (sumFactor / 7.025);
+            c_lg = baseC.lg * (sumFactor / 7.025);
+            c_htLg = baseC.htLg * (sumFactor / 7.025);
+            c_chiPhi = baseC.chiPhi * (sumFactor / 7.025);
+            c_tnKhac = baseC.tnKhac * (sumFactor / 7.025);
+            c_lntt = baseC.lntt * (sumFactor / 7.025);
+            c_rateLg = baseC.rateLg;
+        }
 
         return {
             stt: '★',
             name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
             vonDT: 93000,
-            monthData: {
-                ds: baseM.ds * factor,
-                rateLg: baseM.rateLg,
-                lg: baseM.lg * factor,
-                htLg: baseM.htLg * factor,
-                chiPhi: baseM.chiPhi * factor,
-                tnKhac: baseM.tnKhac * factor,
-                lntt: baseM.lntt * factor
-            },
-            cumData: {
-                ds: baseC.ds * (sumFactor / 7.025),
-                rateLg: baseC.rateLg,
-                lg: baseC.lg * (sumFactor / 7.025),
-                htLg: baseC.htLg * (sumFactor / 7.025),
-                chiPhi: baseC.chiPhi * (sumFactor / 7.025),
-                tnKhac: baseC.tnKhac * (sumFactor / 7.025),
-                lntt: baseC.lntt * (sumFactor / 7.025)
-            }
+            monthData: { ds: m_ds, rateLg: m_rateLg, lg: m_lg, htLg: m_htLg, chiPhi: m_chiPhi, tnKhac: m_tnKhac, lntt: m_lntt },
+            cumData: { ds: c_ds, rateLg: c_rateLg, lg: c_lg, htLg: c_htLg, chiPhi: c_chiPhi, tnKhac: c_tnKhac, lntt: c_lntt }
         };
     },
 
@@ -941,7 +1076,7 @@ window.KqkdModule = {
         h += '</div>';
         h += '<ol style="margin: 0; padding-left: 20px; color: #475569; display: flex; flex-direction: column; gap: 4px;">';
         h += '<li><strong>Tải tệp mẫu chuẩn:</strong> Bấm <a href="./Template_Bao_Cao_KQKD_Hop_Nhat_VPS.xlsx" download="Template_Bao_Cao_KQKD_Hop_Nhat_VPS.xlsx" style="color: #059669; font-weight: 700; text-decoration: underline;">Tải Mẫu Excel KQKD (12 Tháng)</a> để lấy tệp đã phân sẵn 12 tab và điền sẵn Vốn đầu tư (93.000 Tr.đ).</li>';
-        h += '<li><strong>Nhập liệu siêu nhanh (Copy-Paste):</strong> Mở các tab tương ứng (Thang_01..Thang_06), copy 14 cột số liệu từ báo cáo nội bộ dán vào cột D:Q. Sau đó tải file lên Google Drive, mở bằng Google Sheets và bật chia sẻ <strong>"Bất kỳ ai có liên kết"</strong> (Viewer).</li>';
+        h += '<li><strong>Nhập liệu tự động siêu tiện lợi (Đặc biệt Tháng 8..12):</strong> Đơn vị chỉ cần điền 5 chỉ tiêu phát sinh tháng (DS, LG, HT LG, Chi phí, TN Khác) vào các ô màu vàng nhạt. Toàn bộ % LG, LNTT và các cột Lũy kế được Excel và Dashboard TỰ ĐỘNG CỘNG DỒN chuẩn xác 100%! Sau đó tải file lên Google Drive, mở bằng Google Sheets và bật chia sẻ <strong>"Bất kỳ ai có liên kết"</strong> (Viewer).</li>';
         h += '<li><strong>Kết nối 1 lần - Đồng bộ tất cả:</strong> Sao chép đường link trên trình duyệt, dán vào ô trên và bấm <strong>"Lưu & Quét Dữ Liệu Ngay"</strong>. Hệ thống sẽ quét toàn bộ các tháng và lưu vào Dashboard!</li>';
         h += '</ol>';
         h += '</div>';
@@ -1043,14 +1178,18 @@ window.KqkdModule = {
         }
         const mStr = String(m).padStart(2, '0');
         const list = [
-            'tháng ' + m,
-            'Tháng ' + m,
-            'thang ' + m,
-            'Thang ' + m,
-            'tháng ' + mStr,
-            'Tháng ' + mStr,
-            'thang_' + mStr,
             'Thang_' + mStr,
+            'thang_' + mStr,
+            'Tháng ' + m,
+            'tháng ' + m,
+            'Thang ' + m,
+            'thang ' + m,
+            'Tháng ' + mStr,
+            'tháng ' + mStr,
+            'KQKD_Thang_' + mStr,
+            'KQKD_Tháng_' + mStr,
+            'KQKD_Thang_' + m,
+            'Bao_Cao_KQKD_Thang_' + mStr,
             'T' + mStr,
             'T' + m
         ];
@@ -1389,20 +1528,51 @@ window.KqkdModule = {
             if (nodeId) {
                 const vonDT = cleanVal(row[offset + 1]);
                 const m_ds = cleanVal(row[offset + 2]);
-                const m_rateLg = cleanVal(row[offset + 3], true);
+                let m_rateLg = cleanVal(row[offset + 3], true);
                 const m_lg = cleanVal(row[offset + 4]);
                 const m_htLg = cleanVal(row[offset + 5]);
                 const m_cp = cleanVal(row[offset + 6]);
                 const m_tnk = cleanVal(row[offset + 7]);
-                const m_lntt = cleanVal(row[offset + 8]);
+                let m_lntt = cleanVal(row[offset + 8]);
 
-                const c_ds = cleanVal(row[offset + 9]);
-                const c_rateLg = cleanVal(row[offset + 10], true);
-                const c_lg = cleanVal(row[offset + 11]);
-                const c_htLg = cleanVal(row[offset + 12]);
-                const c_cp = cleanVal(row[offset + 13]);
-                const c_tnk = cleanVal(row[offset + 14]);
-                const c_lntt = cleanVal(row[offset + 15]);
+                let c_ds = cleanVal(row[offset + 9]);
+                let c_rateLg = cleanVal(row[offset + 10], true);
+                let c_lg = cleanVal(row[offset + 11]);
+                let c_htLg = cleanVal(row[offset + 12]);
+                let c_cp = cleanVal(row[offset + 13]);
+                let c_tnk = cleanVal(row[offset + 14]);
+                let c_lntt = cleanVal(row[offset + 15]);
+
+                // Tự động tính LNTT nếu đơn vị bỏ trống
+                if (m_lntt === 0 && (m_lg !== 0 || m_cp !== 0)) {
+                    m_lntt = m_lg + m_htLg - m_cp + m_tnk;
+                }
+                if (m_rateLg === 0 && m_ds > 0 && m_lg !== 0) {
+                    m_rateLg = (m_lg / m_ds) * 100;
+                }
+
+                // TỰ ĐỘNG CỘNG LŨY KẾ CHO THÁNG 8, 9, 10, 11, 12:
+                // Nếu cột lũy kế bị trống hoặc bằng 0, tự động lấy lũy kế tháng trước + phát sinh tháng này
+                if ((c_ds === 0 && m_ds > 0) || (c_ds === 0 && c_lntt === 0 && (m_lg !== 0 || m_cp !== 0 || m_lntt !== 0))) {
+                    const prevCum = this.getPrevMonthCumulative(nodeId, targetMonth);
+                    if (prevCum) {
+                        c_ds = prevCum.ds + m_ds;
+                        c_lg = prevCum.lg + m_lg;
+                        c_htLg = (prevCum.htLg || 0) + m_htLg;
+                        c_cp = prevCum.chiPhi + m_cp;
+                        c_tnk = (prevCum.tnKhac || 0) + m_tnk;
+                        c_lntt = (prevCum.lntt !== undefined && !isNaN(prevCum.lntt)) ? (prevCum.lntt + m_lntt) : (c_lg + c_htLg - c_cp + c_tnk);
+                        c_rateLg = c_ds > 0 ? (c_lg / c_ds) * 100 : 0;
+                    } else if (targetMonth === 1) {
+                        c_ds = m_ds;
+                        c_rateLg = m_rateLg;
+                        c_lg = m_lg;
+                        c_htLg = m_htLg;
+                        c_cp = m_cp;
+                        c_tnk = m_tnk;
+                        c_lntt = m_lntt;
+                    }
+                }
 
                 const fixedVon = nodeId === 'GRAND_TOTAL' ? 93000 : (nodeId === 'MB' ? 90000 : (nodeId === 'THH' ? 50000 : (nodeId === 'VIET' || nodeId === 'VPS_CORP' ? 10000 : (nodeId === 'XESCO' ? 15000 : (nodeId === 'MT' ? 3000 : (nodeId === 'ITSS' ? 5000 : null))))));
 
