@@ -208,12 +208,22 @@ window.KqkdModule = {
     // KHỞI TẠO MODULE
     // ============================================================
     init() {
+        // Tự động khôi phục dữ liệu các tháng đã quét từ bộ nhớ cache
+        try {
+            const cached = localStorage.getItem('vps_kqkd_live_data_all');
+            if (cached) {
+                const parsed = JSON.parse(cached);
+                if (parsed.liveDataByMonth) this.liveDataByMonth = parsed.liveDataByMonth;
+                if (parsed.liveGrandTotal) this.liveGrandTotal = parsed.liveGrandTotal;
+            }
+        } catch(e) {}
+
         // Tự động kiểm tra Google Sheet đã lưu
         const savedSheetId = localStorage.getItem('vps_kqkd_sheet_id');
         if (savedSheetId) {
             this.sheetConfig.sheetId = savedSheetId;
             this.sheetConfig.isConnected = true;
-            setTimeout(() => { this.syncGoogleSheet(false); }, 1000);
+            setTimeout(() => { this.syncAllMonths(false); }, 1000);
         }
         this.render();
     },
@@ -576,16 +586,24 @@ window.KqkdModule = {
 
         // STATUS BAR (Nếu đã kết nối Google Sheets)
         if (isConn) {
-            html += '<div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 8px 16px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #065f46;">';
-            html += '<div style="display: flex; align-items: center; gap: 8px;">';
+            const scannedMonths = Object.keys(this.liveDataByMonth).filter(m => {
+                const nodes = this.liveDataByMonth[m];
+                return nodes && Object.keys(nodes).length > 0;
+            }).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+
+            html += '<div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 8px 16px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #065f46; flex-wrap: wrap; gap: 8px;">';
+            html += '<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">';
             html += '<span>⚡ <strong>Quét Tự Động:</strong> Đang kết nối trực tiếp với Google Sheet KQKD</span>';
+            if (scannedMonths.length > 0) {
+                html += '<span style="background: #d1fae5; color: #065f46; padding: 2px 8px; border-radius: 12px; font-weight: 700; font-size: 0.75rem; border: 1px solid #a7f3d0;">Đã nạp: T' + scannedMonths.join(', T') + '</span>';
+            }
             if (this.sheetConfig.lastSync) {
-                html += '<span style="color: #047857;">(Đồng bộ gần nhất: ' + this.sheetConfig.lastSync + ')</span>';
+                html += '<span style="color: #047857;">(Đồng bộ: ' + this.sheetConfig.lastSync + ')</span>';
             }
             html += '</div>';
             html += '<div style="display: flex; gap: 10px;">';
-            html += '<button onclick="window.KqkdModule.syncGoogleSheet(true)" style="background: #059669; color: #ffffff; border: none; padding: 3px 10px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.78rem;">🔄 Quét Ngay</button>';
-            html += '<button onclick="window.KqkdModule.openSheetModal()" style="background: transparent; color: #059669; border: 1px solid #059669; padding: 3px 8px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.78rem;">⚙️ Cài đặt</button>';
+            html += '<button onclick="window.KqkdModule.syncAllMonths(true)" style="background: #059669; color: #ffffff; border: none; padding: 4px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 4px;">🔄 Quét Cả 12 Tháng</button>';
+            html += '<button onclick="window.KqkdModule.openSheetModal()" style="background: transparent; color: #059669; border: 1px solid #059669; padding: 4px 8px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.78rem;">⚙️ Cài đặt</button>';
             html += '</div></div>';
         }
 
@@ -863,12 +881,12 @@ window.KqkdModule = {
         // Guidance block
         h += '<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 20px; font-size: 0.8rem; line-height: 1.5;">';
         h += '<div style="font-weight: 700; color: #0f172a; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">';
-        h += '<span>📋 Hướng dẫn 3 bước thiết lập:</span>';
+        h += '<span>📋 Quy trình 3 bước nhập liệu nhanh & đồng bộ tự động:</span>';
         h += '</div>';
-        h += '<ol style="margin: 0; padding-left: 20px; color: #475569;">';
-        h += '<li>Bấm nút <a href="./Template_Bao_Cao_KQKD_Hop_Nhat_VPS.xlsx" download="Template_Bao_Cao_KQKD_Hop_Nhat_VPS.xlsx" style="color: #059669; font-weight: 700; text-decoration: underline;">Tải Mẫu Excel KQKD</a> để tải tệp mẫu chuẩn của VPS.</li>';
-        h += '<li>Tải file lên Google Drive của bạn, mở bằng Google Sheets, và cài đặt chia sẻ: <strong>"Bất kỳ ai có liên kết"</strong> (Viewer).</li>';
-        h += '<li>Sao chép đường link trên trình duyệt, dán vào ô bên trên và bấm <strong>"Lưu & Quét Dữ Liệu Ngay"</strong>.</li>';
+        h += '<ol style="margin: 0; padding-left: 20px; color: #475569; display: flex; flex-direction: column; gap: 4px;">';
+        h += '<li><strong>Tải tệp mẫu chuẩn:</strong> Bấm <a href="./Template_Bao_Cao_KQKD_Hop_Nhat_VPS.xlsx" download="Template_Bao_Cao_KQKD_Hop_Nhat_VPS.xlsx" style="color: #059669; font-weight: 700; text-decoration: underline;">Tải Mẫu Excel KQKD (12 Tháng)</a> để lấy tệp đã phân sẵn 12 tab và điền sẵn Vốn đầu tư (93.000 Tr.đ).</li>';
+        h += '<li><strong>Nhập liệu siêu nhanh (Copy-Paste):</strong> Mở các tab tương ứng (Thang_01..Thang_06), copy 14 cột số liệu từ báo cáo nội bộ dán vào cột D:Q. Sau đó tải file lên Google Drive, mở bằng Google Sheets và bật chia sẻ <strong>"Bất kỳ ai có liên kết"</strong> (Viewer).</li>';
+        h += '<li><strong>Kết nối 1 lần - Đồng bộ tất cả:</strong> Sao chép đường link trên trình duyệt, dán vào ô trên và bấm <strong>"Lưu & Quét Dữ Liệu Ngay"</strong>. Hệ thống sẽ quét toàn bộ các tháng và lưu vào Dashboard!</li>';
         h += '</ol>';
         h += '</div>';
 
@@ -928,38 +946,132 @@ window.KqkdModule = {
             statusBox.style.background = '#eff6ff';
             statusBox.style.color = '#1e40af';
             statusBox.style.border = '1px solid #bfdbfe';
-            statusBox.innerHTML = '⏳ Đang quét dữ liệu từ Google Sheets... Vui lòng đợi trong giây lát.';
+            statusBox.innerHTML = '⏳ Đang quét toàn bộ các tab tháng (Thang_01..Thang_12) từ Google Sheets... Vui lòng đợi trong giây lát.';
         }
         if (btnSave) btnSave.disabled = true;
 
-        const success = await this.syncGoogleSheet(true);
+        const res = await this.syncAllMonths(true);
 
         if (btnSave) btnSave.disabled = false;
 
-        if (success) {
+        if (res && res.success) {
+            const mList = res.syncedMonths && res.syncedMonths.length > 0 ? res.syncedMonths.join(', Tháng ') : this.selectedMonth;
             if (statusBox) {
                 statusBox.style.background = '#ecfdf5';
                 statusBox.style.color = '#065f46';
                 statusBox.style.border = '1px solid #a7f3d0';
-                statusBox.innerHTML = '✅ Quét dữ liệu thành công! Đã đồng bộ số liệu vào Dashboard.';
+                statusBox.innerHTML = '✅ Quét dữ liệu thành công! Đã nạp số liệu cho Tháng ' + mList + ' vào Dashboard.';
             }
             setTimeout(() => {
                 this.closeSheetModal();
                 this.render();
-            }, 1200);
+            }, 1500);
         } else {
             if (statusBox) {
                 statusBox.style.background = '#fef2f2';
                 statusBox.style.color = '#991b1b';
                 statusBox.style.border = '1px solid #fecaca';
-                statusBox.innerHTML = '⚠️ Không thể đọc dữ liệu từ sheet. Vui lòng kiểm tra quyền chia sẻ "Bất kỳ ai có liên kết" và tên sheet!';
+                statusBox.innerHTML = '⚠️ Không thể đọc dữ liệu từ sheet. Vui lòng kiểm tra quyền chia sẻ "Bất kỳ ai có liên kết" và tên các tab (Thang_01..Thang_12)!';
             }
         }
     },
 
     // ============================================================
-    // PIPELINE QUÉT DỮ LIỆU TỰ ĐỘNG TỪ GOOGLE SHEETS CSV
+    // PIPELINE QUÉT DỮ LIỆU TỰ ĐỘNG TẤT CẢ CÁC THÁNG (BATCH SYNC)
     // ============================================================
+    async syncAllMonths(showFeedback = false) {
+        const sheetId = this.sheetConfig.sheetId;
+        if (!sheetId) return { success: false, syncedMonths: [] };
+
+        this.isScanning = true;
+        const syncedMonths = [];
+        const t = Date.now();
+
+        // Quét đồng thời 12 tháng từ Thang_01 đến Thang_12
+        const scanPromises = [];
+        for (let m = 1; m <= 12; m++) {
+            const mStr = String(m).padStart(2, '0');
+            const candidates = [
+                'Thang_' + mStr,
+                'Bao_Cao_KQKD_Thang_' + mStr,
+                'Tháng ' + mStr,
+                'T' + mStr,
+                'KQKD_Thang_' + mStr
+            ];
+            if (m === this.selectedMonth && this.sheetConfig.sheetName && !candidates.includes(this.sheetConfig.sheetName)) {
+                candidates.unshift(this.sheetConfig.sheetName);
+            }
+
+            scanPromises.push((async () => {
+                for (const name of candidates) {
+                    if (!name || name === 'Tự động') continue;
+                    const url = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(name) + '&_t=' + t;
+                    try {
+                        const res = await fetch(url);
+                        if (!res.ok) continue;
+                        const text = await res.text();
+                        if (text.includes('google.visualization.Query.setResponse') && text.includes('error')) continue;
+                        if (!text || text.length < 50) continue;
+
+                        if (window.Papa) {
+                            const parsed = Papa.parse(text, { header: false, skipEmptyLines: true });
+                            if (parsed.data && parsed.data.length > 5) {
+                                const parsedData = this.parseKqkdCsvRows(parsed.data, m);
+                                const hasData = (parsedData.grandTotal && (parsedData.grandTotal.monthData.ds > 0 || parsedData.grandTotal.cumData.ds > 0)) ||
+                                    Object.values(parsedData.nodes).some(n => n.monthData.ds > 0 || n.monthData.lntt !== 0 || n.cumData.ds > 0);
+
+                                if (hasData) {
+                                    if (!this.liveDataByMonth[m]) this.liveDataByMonth[m] = {};
+                                    Object.assign(this.liveDataByMonth[m], parsedData.nodes);
+                                    if (parsedData.grandTotal) {
+                                        this.liveGrandTotal[m] = parsedData.grandTotal;
+                                    }
+                                    syncedMonths.push(m);
+                                    return true;
+                                }
+                            }
+                        }
+                    } catch(e) {
+                        // ignore and try next
+                    }
+                }
+                return false;
+            })());
+        }
+
+        await Promise.allSettled(scanPromises);
+        this.isScanning = false;
+
+        if (syncedMonths.length > 0) {
+            syncedMonths.sort((a, b) => a - b);
+            const now = new Date();
+            const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+            this.sheetConfig.lastSync = timeStr;
+            this.sheetConfig.isConnected = true;
+            localStorage.setItem('vps_kqkd_last_sync', timeStr);
+
+            try {
+                localStorage.setItem('vps_kqkd_live_data_all', JSON.stringify({
+                    liveDataByMonth: this.liveDataByMonth,
+                    liveGrandTotal: this.liveGrandTotal
+                }));
+            } catch(e) {
+                console.warn('[KQKD Sync] Cannot save cache to localStorage:', e);
+            }
+
+            console.log('[KQKD Sync] Đã đồng bộ thành công các tháng:', syncedMonths);
+            if (showFeedback) {
+                this.render();
+            }
+            return { success: true, syncedMonths };
+        } else {
+            // Fallback sang sync cho riêng tháng hiện tại
+            const fallbackOk = await this.syncGoogleSheet(showFeedback);
+            return { success: fallbackOk, syncedMonths: fallbackOk ? [this.selectedMonth] : [] };
+        }
+    },
+
+    // Quét riêng cho 1 tháng (mặc định là selectedMonth)
     async syncGoogleSheet(showFeedback = false) {
         const sheetId = this.sheetConfig.sheetId;
         if (!sheetId) return false;
@@ -967,11 +1079,10 @@ window.KqkdModule = {
         const month = this.selectedMonth;
         const mStr = String(month).padStart(2, '0');
 
-        // Danh sách tên sheet ứng viên để quét
         const candidates = [
             this.sheetConfig.sheetName,
-            'Bao_Cao_KQKD_Thang_' + mStr,
             'Thang_' + mStr,
+            'Bao_Cao_KQKD_Thang_' + mStr,
             'Tháng ' + mStr,
             'T' + mStr,
             'KQKD_Thang_' + mStr,
@@ -1008,11 +1119,10 @@ window.KqkdModule = {
         }
 
         if (!validRows) {
-            console.warn('[KQKD Sync] Khong the tai sheet tu Google Sheets');
+            console.warn('[KQKD Sync] Khong the tai sheet tu Google Sheets cho thang ' + month);
             return false;
         }
 
-        // PARSE CSV VÀ GÁN DỮ LIỆU
         try {
             const parsedData = this.parseKqkdCsvRows(validRows, month);
             if (!this.liveDataByMonth[month]) this.liveDataByMonth[month] = {};
@@ -1028,7 +1138,14 @@ window.KqkdModule = {
             this.sheetConfig.isConnected = true;
             localStorage.setItem('vps_kqkd_last_sync', timeStr);
 
-            console.log('[KQKD Sync] Dong bo thanh cong ' + Object.keys(parsedData.nodes).length + ' chi tieu tu Google Sheets!');
+            try {
+                localStorage.setItem('vps_kqkd_live_data_all', JSON.stringify({
+                    liveDataByMonth: this.liveDataByMonth,
+                    liveGrandTotal: this.liveGrandTotal
+                }));
+            } catch(e) {}
+
+            console.log('[KQKD Sync] Dong bo thanh cong Tháng ' + month + ' (' + Object.keys(parsedData.nodes).length + ' chi tieu)!');
             if (showFeedback) {
                 this.render();
             }
@@ -1077,16 +1194,15 @@ window.KqkdModule = {
         }
         if (startRowIdx < 0) startRowIdx = 6;
 
-        // Bảng map từ STT hoặc tên sang ID node
         const mapKeyToId = {
             'i': 'MB', 'mb': 'MB', 'miền bắc': 'MB', 'mien bac': 'MB',
             '1': 'THH', 'thh': 'THH', 'tân hồng hà': 'THH',
             'a': 'THH_DVKT', 'khối dịch vụ kỹ thuật': 'THH_DVKT',
             'a.1': 'THH_DVKT_1', 'tổ dịch vụ': 'THH_DVKT_1',
             'a.2': 'THH_DVKT_2', 'tổ mực in': 'THH_DVKT_2',
-            'a.3': 'THH_DVKT_3', 'thuê máy': 'THH_DVKT_3',
-            'a.4': 'THH_DVKT_4', 'metercharge': 'THH_DVKT_4',
-            'a.5': 'THH_DVKT_5', 'kinh doanh online': 'THH_DVKT_5',
+            'a.3': 'THH_DVKT_3',
+            'a.4': 'THH_DVKT_4',
+            'a.5': 'THH_DVKT_5',
             'b': 'THH_KDTH', 'kinh doanh tổng hợp': 'THH_KDTH',
             'c': 'THH_KDBB', 'kinh doanh bán buôn': 'THH_KDBB',
             'd': 'THH_DUAN', 'dự án': 'THH_DUAN',
@@ -1106,15 +1222,16 @@ window.KqkdModule = {
             '★': 'GRAND_TOTAL', '*': 'GRAND_TOTAL', 'tổng cộng': 'GRAND_TOTAL'
         };
 
+        let currentParent = '';
+
         for (let i = startRowIdx; i < rows.length; i++) {
             const row = rows[i];
-            if (!row || row.length < 5) continue;
+            if (!row || row.length < 3) continue;
 
             const stt = (row[0] || '').toString().trim();
             const name = (row[1] || '').toString().trim();
             const vonDT = parseNum(row[2]);
 
-            // Cột Tháng: D(3)=DS, E(4)=%LG, F(5)=LG, G(6)=HT LG, H(7)=Chi phí, I(8)=TN Khác, J(9)=LNTT
             const m_ds = parseNum(row[3]);
             const m_rateLg = parseNum(row[4]);
             const m_lg = parseNum(row[5]);
@@ -1123,7 +1240,6 @@ window.KqkdModule = {
             const m_tnk = parseNum(row[8]);
             const m_lntt = parseNum(row[9]);
 
-            // Cột Lũy Kế: K(10)=DS, L(11)=%LG, M(12)=LG, N(13)=HT LG, O(14)=Chi phí, P(15)=TN Khác, Q(16)=LNTT
             const c_ds = parseNum(row[10]);
             const c_rateLg = parseNum(row[11]);
             const c_lg = parseNum(row[12]);
@@ -1134,7 +1250,37 @@ window.KqkdModule = {
 
             const sttLower = stt.toLowerCase();
             const nameLower = name.toLowerCase();
-            let matchedId = mapKeyToId[sttLower] || mapKeyToId[nameLower];
+
+            // Nhận diện phân nhánh theo dòng để phân biệt các mục trùng tên
+            if (sttLower === '5.1' || nameLower.includes('xesco - kd')) currentParent = 'XESCO_KD';
+            else if (sttLower === '5.2' || nameLower.includes('xesco - kt')) currentParent = 'XESCO_KT';
+            else if (sttLower === 'ii' || nameLower.includes('miền trung')) currentParent = 'MT';
+            else if (['i', '1', '2', '3', '4', '★'].includes(sttLower)) currentParent = '';
+
+            let matchedId = null;
+
+            if (currentParent === 'XESCO_KD') {
+                if (nameLower.includes('máy lẻ')) matchedId = 'XESCO_KD_1';
+                else if (nameLower.includes('sỉ') || nameLower.includes('bán sỉ')) matchedId = 'XESCO_KD_2';
+                else if (nameLower.includes('online')) matchedId = 'XESCO_KD_3';
+                else if (nameLower.includes('thuê máy')) matchedId = 'XESCO_KD_4';
+            } else if (currentParent === 'XESCO_KT') {
+                if (nameLower.includes('thuê máy')) matchedId = 'XESCO_KT_1';
+                else if (nameLower.includes('metercharge')) matchedId = 'XESCO_KT_2';
+                else if (nameLower.includes('dịch vụ')) matchedId = 'XESCO_KT_3';
+            } else if (currentParent === 'MT') {
+                if (nameLower.includes('linh kiện')) matchedId = 'MT_2';
+                else if (nameLower.includes('máy - bán buôn') || (nameLower.includes('máy') && nameLower.includes('buôn'))) matchedId = 'MT_1';
+                else if (nameLower.includes('shopee') || nameLower.includes('online')) matchedId = 'MT_3';
+                else if (nameLower.includes('toàn phần')) matchedId = 'MT_6';
+                else if (nameLower.includes('dịch vụ')) matchedId = 'MT_4';
+                else if (nameLower.includes('thuê máy')) matchedId = 'MT_5';
+                else if (nameLower.includes('bán lẻ')) matchedId = 'MT_7';
+            }
+
+            if (!matchedId) {
+                matchedId = mapKeyToId[sttLower] || mapKeyToId[nameLower];
+            }
 
             if (!matchedId) {
                 for (const [k, id] of Object.entries(mapKeyToId)) {
@@ -1145,11 +1291,11 @@ window.KqkdModule = {
                 }
             }
 
-            if (matchedId === 'GRAND_TOTAL' || nameLower.includes('tổng cộng')) {
+            if (matchedId === 'GRAND_TOTAL' || nameLower.includes('tổng cộng') || sttLower === '★') {
                 grandTotal = {
                     stt: '★',
                     name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
-                    vonDT: vonDT || 83000,
+                    vonDT: vonDT || 93000,
                     monthData: { ds: m_ds, rateLg: m_rateLg, lg: m_lg, htLg: m_htLg, chiPhi: m_cp, tnKhac: m_tnk, lntt: m_lntt },
                     cumData: { ds: c_ds, rateLg: c_rateLg, lg: c_lg, htLg: c_htLg, chiPhi: c_cp, tnKhac: c_tnk, lntt: c_lntt }
                 };
