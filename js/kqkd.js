@@ -334,7 +334,7 @@ window.KqkdModule = {
         }
 
         // Đệ quy lùi về các tháng trước nếu tháng gần nhất chưa có dữ liệu
-        if (prevMonth > 7) {
+        if (prevMonth > 1) {
             const deeperPrev = this.getPrevMonthCumulative(nodeId, prevMonth);
             const prevMonthData = (this.liveDataByMonth[prevMonth] && this.liveDataByMonth[prevMonth][nodeId] && this.liveDataByMonth[prevMonth][nodeId].monthData)
                 ? this.liveDataByMonth[prevMonth][nodeId].monthData
@@ -355,14 +355,37 @@ window.KqkdModule = {
         return null;
     },
     // ============================================================
-    calculateNode(node, month) {
-        const mKey = String(month);
-        const monthDataMap = this.liveDataByMonth[mKey] || this.liveDataByMonth[month];
+        // ============================================================
+    // KIỂM TRA DỮ LIỆU ĐÃ CÓ HAY CHƯA
+    // Tháng 1..4 và 7: Luôn có số liệu kiểm toán chốt sổ
+    // Tháng 5, 6, 8..12: Kiểm tra xem đã có dữ liệu quét trực tiếp chưa
+    // ============================================================
+    hasMonthData(month) {
+        const m = parseInt(month, 10);
+        if (m === 7 || (m >= 1 && m <= 4)) return true;
+        const nodes = this.liveDataByMonth[m] || this.liveDataByMonth[String(m)];
+        if (!nodes || Object.keys(nodes).length === 0) return false;
+        return Object.values(nodes).some(n => n && n.monthData && (n.monthData.ds > 0 || n.monthData.lntt !== 0 || n.monthData.lg !== 0));
+    },
+
+calculateNode(node, month) {
+        let effMonth = month;
+        // Nếu Tháng 5 hoặc Tháng 6 chưa có dữ liệu: Tạm thời lấy dữ liệu Tháng 4
+        if ((month === 5 || month === 6) && !this.hasMonthData(month)) {
+            if (month === 6 && this.hasMonthData(5)) {
+                effMonth = 5;
+            } else {
+                effMonth = 4;
+            }
+        }
+
+        const mKey = String(effMonth);
+        const monthDataMap = this.liveDataByMonth[mKey] || this.liveDataByMonth[effMonth];
         
         // 1. Nếu có dữ liệu quét trực tiếp từ Google Sheets cho tháng này
         if (monthDataMap && monthDataMap[node.id]) {
             const live = monthDataMap[node.id];
-            const children = (node.children || []).map(child => this.calculateNode(child, month));
+            const children = (node.children || []).map(child => this.calculateNode(child, effMonth));
             
             const mData = { ...live.monthData };
             const cData = { ...live.cumData };
@@ -391,7 +414,7 @@ window.KqkdModule = {
 
         // 2. Tháng 07/2026: Trả về số liệu đối soát chính xác 100% khớp sổ kế toán đã chốt
         if (month === 7 && node.exactMonth && node.exactCum) {
-            const children = (node.children || []).map(child => this.calculateNode(child, month));
+            const children = (node.children || []).map(child => this.calculateNode(child, effMonth));
             return {
                 ...node,
                 children,
@@ -444,7 +467,7 @@ window.KqkdModule = {
         }
 
         // Group node: tính toán bằng cách đệ quy tổng hợp tất cả children
-        const calcChildren = (node.children || []).map(child => this.calculateNode(child, month));
+        const calcChildren = (node.children || []).map(child => this.calculateNode(child, effMonth));
 
         const m_agg = { ds: 0, lg: 0, htLg: 0, chiPhi: 0, tnKhac: 0 };
         const c_agg = { ds: 0, lg: 0, htLg: 0, chiPhi: 0, tnKhac: 0 };
@@ -483,7 +506,16 @@ window.KqkdModule = {
     // Tổng hợp toàn tập đoàn
     getGrandTotal(calculatedRoots, month) {
         const m = month !== undefined ? month : this.selectedMonth;
-        const mKey = String(m);
+        let effM = m;
+        // Nếu Tháng 5 hoặc Tháng 6 chưa có dữ liệu: Lấy tổng hợp Tháng 4
+        if ((m === 5 || m === 6) && !this.hasMonthData(m)) {
+            if (m === 6 && this.hasMonthData(5)) {
+                effM = 5;
+            } else {
+                effM = 4;
+            }
+        }
+        const mKey = String(effM);
 
         // 1. Nếu có số liệu quét trực tiếp từ Google Sheets
         let gt = this.liveGrandTotal[mKey] || this.liveGrandTotal[m];
@@ -796,6 +828,17 @@ window.KqkdModule = {
             html += '<button onclick="window.KqkdModule.syncAllMonths(true)" style="background: #059669; color: #ffffff; border: none; padding: 4px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 4px;">🔄 Quét Cả 12 Tháng</button>';
             html += '<button onclick="window.KqkdModule.openSheetModal()" style="background: transparent; color: #059669; border: 1px solid #059669; padding: 4px 8px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.78rem;">⚙️ Cài đặt</button>';
             html += '</div></div>';
+        }
+
+                // BANNER THÔNG BÁO CHO THÁNG 5 & THÁNG 6 KHI CHƯA CÓ DỮ LIỆU
+        if ((this.selectedMonth === 5 || this.selectedMonth === 6) && !this.hasMonthData(this.selectedMonth)) {
+            html += '<div style="background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 12px 18px; margin-bottom: 18px; font-size: 0.85rem; color: #1e40af; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">';
+            html += '<div style="display: flex; align-items: center; gap: 10px;">';
+            html += '<span style="font-size: 1.3rem;">ℹ️</span>';
+            html += '<span><strong>Thông báo kỳ báo cáo Tháng ' + this.selectedMonth + ':</strong> Hiện chưa có dữ liệu nhập cho Tháng ' + this.selectedMonth + '. Hệ thống đang <strong>tạm thời hiển thị số liệu Tháng 4</strong> làm căn cứ. Sau khi quý đơn vị bổ sung nhập dữ liệu Tháng ' + this.selectedMonth + ', hệ thống sẽ tự động quét và tính toán lũy kế theo logic.</span>';
+            html += '</div>';
+            html += '<button onclick="window.KqkdModule.openSheetModal()" style="background: #2563eb; color: #ffffff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.8rem; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">📥 Nhập dữ liệu Tháng ' + this.selectedMonth + '</button>';
+            html += '</div>';
         }
 
         // EXECUTIVE FINANCIAL KPI CARDS
