@@ -250,14 +250,17 @@ window.KqkdModule = {
             }
         } catch(e) {}
 
-        // Đảm bảo dữ liệu Tháng 7 trong bộ nhớ luôn khớp 100% chuẩn đối soát (không bị nhiễm Tháng 1)
-        if (this.liveGrandTotal['7'] && (this.liveGrandTotal['7'].monthData.ds === 39947 || this.liveGrandTotal['7'].monthData.lntt === 4267)) {
-            if (typeof BUILTIN_MONTH_DATA !== 'undefined') {
-                this.liveGrandTotal['7'] = BUILTIN_MONTH_DATA.liveGrandTotal['7'];
-                this.liveDataByMonth['7'] = BUILTIN_MONTH_DATA.liveDataByMonth['7'];
-            } else {
-                delete this.liveGrandTotal['7'];
-                delete this.liveDataByMonth['7'];
+        // Đảm bảo dữ liệu Tháng 7 luôn khớp 100% chuẩn đối soát chính thức (xóa mọi cache bị 0 hoặc lệch)
+        if (this.liveGrandTotal['7']) {
+            const g7 = this.liveGrandTotal['7'];
+            if (!g7.monthData || g7.monthData.ds === 0 || g7.monthData.ds === 39947 || g7.monthData.lntt === 530000 || g7.monthData.lntt === 4267) {
+                if (typeof BUILTIN_MONTH_DATA !== 'undefined' && BUILTIN_MONTH_DATA.liveGrandTotal['7']) {
+                    this.liveGrandTotal['7'] = JSON.parse(JSON.stringify(BUILTIN_MONTH_DATA.liveGrandTotal['7']));
+                    this.liveDataByMonth['7'] = JSON.parse(JSON.stringify(BUILTIN_MONTH_DATA.liveDataByMonth['7']));
+                } else {
+                    delete this.liveGrandTotal['7'];
+                    delete this.liveDataByMonth['7'];
+                }
             }
         }
 
@@ -1034,6 +1037,10 @@ window.KqkdModule = {
     // ============================================================
     getTabCandidates(month) {
         const m = parseInt(month, 10);
+        // Tháng 7 là mốc chuẩn đối soát chính thức đã chốt của Tập đoàn, không quét đè từ Google Sheets
+        if (m === 7) {
+            return [];
+        }
         const mStr = String(m).padStart(2, '0');
         const list = [
             'tháng ' + m,
@@ -1044,14 +1051,9 @@ window.KqkdModule = {
             'Tháng ' + mStr,
             'thang_' + mStr,
             'Thang_' + mStr,
-            'Bao_Cao_KQKD_Thang_' + mStr,
-            'KQKD_Thang_' + mStr,
             'T' + mStr,
             'T' + m
         ];
-        if (m === 7) {
-            list.unshift('Bao_Cao_KQKD_Thang_07');
-        }
         // Chỉ thêm sheetName tùy chỉnh nếu có cấu hình rõ ràng và tên sheet phù hợp với tháng
         if (this.sheetConfig.sheetName) {
             const sn = this.sheetConfig.sheetName.toLowerCase();
@@ -1156,6 +1158,10 @@ window.KqkdModule = {
         if (!sheetId) return false;
 
         const month = this.selectedMonth;
+        if (month === 7) {
+            console.log('[KQKD Sync] Tháng 7 là chuẩn đối soát cố định đã chốt, không quét đè.');
+            return true;
+        }
         const candidates = this.getTabCandidates(month);
 
         let validRows = null;
@@ -1233,7 +1239,7 @@ window.KqkdModule = {
         const cleanVal = (valStr, isPct = false) => {
             if (!valStr && valStr !== 0) return 0;
             let s = valStr.toString().trim().replace(/đ/gi, '').replace(/vnd/gi, '').replace(/%/g, '').trim();
-            if (!s || s === '-' || s === '#DIV/0!' || s === '######') return 0;
+            if (!s || s === '-' || s === '#DIV/0!' || s === '######' || s.toLowerCase() === 'none' || s.toLowerCase() === 'null') return 0;
             if (s.startsWith('(') && s.endsWith(')')) {
                 return -cleanVal(s.substring(1, s.length - 1), isPct);
             }
@@ -1244,25 +1250,44 @@ window.KqkdModule = {
                     return Math.round(v * 1000) / 10;
                 } catch(e) { return 0; }
             }
-            if (s.includes(',') && s.includes('.')) {
-                return parseFloat(s.replace(/,/g, '')) || 0;
-            } else if (s.includes(',')) {
+
+            // Có cả dấu chấm và dấu phẩy (vd: 83.000,0 hoặc 4.861,0 hoặc 1,103.1)
+            if (s.includes('.') && s.includes(',')) {
+                const lastDot = s.lastIndexOf('.');
+                const lastComma = s.lastIndexOf(',');
+                if (lastComma > lastDot) {
+                    // Dấu chấm là phân cách hàng nghìn, dấu phẩy là phần thập phân (chuẩn VN: 83.000,0 -> 83000)
+                    s = s.replace(/\./g, '').replace(',', '.');
+                } else {
+                    // Dấu phẩy là phân cách hàng nghìn, dấu chấm là phần thập phân (chuẩn US: 1,103.1 -> 1103.1)
+                    s = s.replace(/,/g, '');
+                }
+                return parseFloat(s) || 0;
+            }
+
+            // Chỉ có dấu phẩy (vd: 46,0 hoặc 39,947 hoặc 27,44)
+            if (s.includes(',')) {
                 const parts = s.split(',');
                 if (parts.length === 2) {
                     const intPart = parts[0];
                     const decPart = parts[1];
+                    // Phân cách hàng nghìn 3 chữ số (vd: 39,947 -> 39947)
                     if (decPart.length === 3) return parseFloat(intPart + decPart) || 0;
-                    if (decPart.length === 2) return parseFloat(intPart + decPart + '0') || 0;
-                    if (decPart.length === 1) return parseFloat(intPart + decPart + '00') || 0;
+                    // Số thập phân (vd: 46,0 -> 46.0; 27,44 -> 27.44)
+                    return parseFloat(intPart + '.' + decPart) || 0;
                 }
-            } else if (s.includes('.')) {
+            }
+
+            // Chỉ có dấu chấm (vd: 39.947 hoặc 46.0)
+            if (s.includes('.')) {
                 const parts = s.split('.');
                 if (parts.length === 2) {
                     const intPart = parts[0];
                     const decPart = parts[1];
+                    // Phân cách hàng nghìn 3 chữ số (vd: 39.947 -> 39947)
                     if (decPart.length === 3) return parseFloat(intPart + decPart) || 0;
-                    if (decPart.length === 2) return parseFloat(intPart + decPart + '0') || 0;
-                    if (decPart.length === 1) return parseFloat(intPart + decPart + '00') || 0;
+                    // Số thập phân (vd: 46.0 -> 46)
+                    return parseFloat(intPart + '.' + decPart) || 0;
                 }
             }
             return parseFloat(s) || 0;
@@ -1398,6 +1423,54 @@ window.KqkdModule = {
                 } else {
                     nodes[nodeId] = nodeObj;
                 }
+            }
+        }
+
+        // Nếu dòng GRAND_TOTAL trong sheet bị rỗng hoặc bằng 0, tự động cộng tổng từ Miền Bắc (MB) và Miền Trung (MT)
+        if (!grandTotal || (grandTotal.monthData.ds === 0 && grandTotal.cumData.ds === 0)) {
+            let sum_m_ds = 0, sum_m_lg = 0, sum_m_ht = 0, sum_m_cp = 0, sum_m_tnk = 0, sum_m_lntt = 0;
+            let sum_c_ds = 0, sum_c_lg = 0, sum_c_ht = 0, sum_c_cp = 0, sum_c_tnk = 0, sum_c_lntt = 0;
+            ['MB', 'MT'].forEach(id => {
+                if (nodes[id]) {
+                    sum_m_ds += nodes[id].monthData.ds || 0;
+                    sum_m_lg += nodes[id].monthData.lg || 0;
+                    sum_m_ht += nodes[id].monthData.htLg || 0;
+                    sum_m_cp += nodes[id].monthData.chiPhi || 0;
+                    sum_m_tnk += nodes[id].monthData.tnKhac || 0;
+                    sum_m_lntt += nodes[id].monthData.lntt || 0;
+
+                    sum_c_ds += nodes[id].cumData.ds || 0;
+                    sum_c_lg += nodes[id].cumData.lg || 0;
+                    sum_c_ht += nodes[id].cumData.htLg || 0;
+                    sum_c_cp += nodes[id].cumData.chiPhi || 0;
+                    sum_c_tnk += nodes[id].cumData.tnKhac || 0;
+                    sum_c_lntt += nodes[id].cumData.lntt || 0;
+                }
+            });
+            if (sum_m_ds > 0 || sum_c_ds > 0) {
+                grandTotal = {
+                    stt: '★',
+                    name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
+                    vonDT: 93000,
+                    monthData: {
+                        ds: sum_m_ds,
+                        rateLg: sum_m_ds > 0 ? (sum_m_lg / sum_m_ds) * 100 : 0,
+                        lg: sum_m_lg,
+                        htLg: sum_m_ht,
+                        chiPhi: sum_m_cp,
+                        tnKhac: sum_m_tnk,
+                        lntt: sum_m_lntt
+                    },
+                    cumData: {
+                        ds: sum_c_ds,
+                        rateLg: sum_c_ds > 0 ? (sum_c_lg / sum_c_ds) * 100 : 0,
+                        lg: sum_c_lg,
+                        htLg: sum_c_ht,
+                        chiPhi: sum_c_cp,
+                        tnKhac: sum_c_tnk,
+                        lntt: sum_c_lntt
+                    }
+                };
             }
         }
 
