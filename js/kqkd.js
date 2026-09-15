@@ -4,6 +4,8 @@
 // Khớp 100% số liệu thực tế Tháng 07/2026 & Tích hợp Quét Tự Động từ Google Sheets
 // ============================================================
 
+const BUILTIN_MONTH_DATA = {"liveDataByMonth": {"1": {"MB": {"vonDT": 75000, "monthData": {"ds": 27440.0, "rateLg": 33.0, "lg": 8001.0, "htLg": 1073.0, "chiPhi": 6908.0, "tnKhac": 1108.0, "lntt": 3275.0}, "cumData": {"ds": 27440.0, "rateLg": 29.0, "lg": 8001.0, "htLg": 1073.0, "chiPhi": 6908.0, "tnKhac": 1108.0, "lntt": 3275.0}}, "THH": {"vonDT": 50000, "monthData": {"ds": 21624.0, "rateLg": 31.0, "lg": 6645.0, "htLg": 0.0, "chiPhi": 3881.0, "tnKhac": 1.0, "lntt": 2766.0}, "cumData": {"ds": 21624.0, "rateLg": 31.0, "lg": 6645.0, "htLg": 0.0, "chiPhi": 3881.0, "tnKhac": 1.0, "lntt": 2766.0}}, "THH_DVKT": {"vonDT": null, "monthData": {"ds": 2224.0, "rateLg": 35.0, "lg": 789.0, "htLg": 0.0, "chiPhi": 771.0, "tnKhac": 1.0, "lntt": 18.0}, "cumData": {"ds": 2224.0, "rateLg": 35.0, "lg": 789.0, "htLg": 0.0, "chiPhi": 771.0, "tnKhac": 1.0, "lntt": 18.0}}, "THH_DVKT_1": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 31.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 31.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_2": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 45.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 45.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_3": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 37.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 37.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_4": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 60.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 60.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_5": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 7.0, "lg": 9400.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 7.0, "lg": 9400.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_KDTH": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 10.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 139.0, "tnKhac": 0.0, "lntt": 18.0}, "cumData": {"ds": 0.0, "rateLg": 10.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 139.0, "tnKhac": 0.0, "lntt": 18.0}}, "THH_KDBB": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 7.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 451.0, "tnKhac": 1.0, "lntt": -76.0}, "cumData": {"ds": 0.0, "rateLg": 7.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 451.0, "tnKhac": 1.0, "lntt": -76.0}}, "THH_DUAN": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 42.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 2520.0, "tnKhac": 0.0, "lntt": 2805.0}, "cumData": {"ds": 0.0, "rateLg": 42.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 2520.0, "tnKhac": 0.0, "lntt": 2805.0}}, "VIET": {"vonDT": 10000, "monthData": {"ds": 5393.0, "rateLg": 23.0, "lg": 1241.0, "htLg": 33.0, "chiPhi": 1043.0, "tnKhac": 5.0, "lntt": 236.0}, "cumData": {"ds": 5393.0, "rateLg": 23.0, "lg": 1241.0, "htLg": 33.0, "chiPhi": 1043.0, "tnKhac": 5.0, "lntt": 236.0}}, "VIET_1": {"vonDT": null, "monthData": {"ds": 1578.0, "rateLg": 56.0, "lg": 888.0, "htLg": 0.0, "chiPhi": 687.0, "tnKhac": 5.0, "lntt": 206.0}, "cumData": {"ds": 1578.0, "rateLg": 56.0, "lg": 888.0, "htLg": 0.0, "chiPhi": 687.0, "tnKhac": 0.0, "lntt": 206.0}}, "VIET_2": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 9.0, "lg": 177.0, "htLg": 0.0, "chiPhi": 160.0, "tnKhac": 0.0, "lntt": 17.0}, "cumData": {"ds": 1891.0, "rateLg": 9.0, "lg": 177.0, "htLg": 0.0, "chiPhi": 160.0, "tnKhac": 0.0, "lntt": 17.0}}, "VIET_3": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 7.0, "lg": 120.0, "htLg": 0.0, "chiPhi": 165.0, "tnKhac": 0.0, "lntt": -45.0}, "cumData": {"ds": 1776.0, "rateLg": 7.0, "lg": 120.0, "htLg": 0.0, "chiPhi": 165.0, "tnKhac": 0.0, "lntt": -45.0}}, "VIET_4": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 38.0, "lg": 57.0, "htLg": 0.0, "chiPhi": 32.0, "tnKhac": 0.0, "lntt": 26.0}, "cumData": {"ds": 149.0, "rateLg": 38.0, "lg": 57.0, "htLg": 0.0, "chiPhi": 32.0, "tnKhac": 0.0, "lntt": 26.0}}, "ITSS": {"vonDT": 5000, "monthData": {"ds": 423.0, "rateLg": 27.0, "lg": 115.0, "htLg": 0.0, "chiPhi": 124.0, "tnKhac": 0.0, "lntt": -9.0}, "cumData": {"ds": 423.0, "rateLg": 27.0, "lg": 115.0, "htLg": 0.0, "chiPhi": 124.0, "tnKhac": 0.0, "lntt": -9.0}}, "VPS_CORP": {"vonDT": 10000, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 1040.0, "chiPhi": 1860.0, "tnKhac": 1102.0, "lntt": 282.0}, "cumData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 1040.0, "chiPhi": 1860.0, "tnKhac": 1102.0, "lntt": 282.0}}, "VPS_KD": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 1040.0, "chiPhi": 553.0, "tnKhac": 250.0, "lntt": 737.0}, "cumData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 1040.0, "chiPhi": 553.0, "tnKhac": 250.0, "lntt": 737.0}}, "VPS_TC": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 1307.0, "tnKhac": 852.0, "lntt": -455.0}, "cumData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 1307.0, "tnKhac": 852.0, "lntt": -455.0}}, "XESCO": {"vonDT": 15000, "monthData": {"ds": 10080.0, "rateLg": 29.0, "lg": 2873.0, "htLg": 0.0, "chiPhi": 2126.0, "tnKhac": 19.0, "lntt": 766.0}, "cumData": {"ds": 10080.0, "rateLg": 29.0, "lg": 2873.0, "htLg": 0.0, "chiPhi": 2126.0, "tnKhac": 19.0, "lntt": 766.0}}, "XESCO_KD": {"vonDT": null, "monthData": {"ds": 6701.0, "rateLg": 15.0, "lg": 996.0, "htLg": 0.0, "chiPhi": 854.0, "tnKhac": 7.0, "lntt": 149.0}, "cumData": {"ds": 6701.0, "rateLg": 15.0, "lg": 996.0, "htLg": 0.0, "chiPhi": 854.0, "tnKhac": 7.0, "lntt": 149.0}}, "XESCO_KD_1": {"vonDT": null, "monthData": {"ds": 665.0, "rateLg": 30.0, "lg": 199.0, "htLg": 0.0, "chiPhi": 135.0, "tnKhac": 1.0, "lntt": 65.0}, "cumData": {"ds": 665.0, "rateLg": 30.0, "lg": 199.0, "htLg": 0.0, "chiPhi": 135.0, "tnKhac": 1.0, "lntt": 65.0}}, "XESCO_KD_2": {"vonDT": null, "monthData": {"ds": 3408.0, "rateLg": 11.0, "lg": 387.0, "htLg": 0.0, "chiPhi": 460.0, "tnKhac": 4.0, "lntt": -69.0}, "cumData": {"ds": 3408.0, "rateLg": 11.0, "lg": 387.0, "htLg": 0.0, "chiPhi": 460.0, "tnKhac": 4.0, "lntt": -69.0}}, "XESCO_KD_3": {"vonDT": null, "monthData": {"ds": 2229.0, "rateLg": 5.0, "lg": 122.0, "htLg": 0.0, "chiPhi": 77.0, "tnKhac": 2.0, "lntt": 47.0}, "cumData": {"ds": 2229.0, "rateLg": 5.0, "lg": 122.0, "htLg": 0.0, "chiPhi": 77.0, "tnKhac": 2.0, "lntt": 47.0}}, "XESCO_KD_4": {"vonDT": null, "monthData": {"ds": 399.0, "rateLg": 72.0, "lg": 288.0, "htLg": 0.0, "chiPhi": 182.0, "tnKhac": 0.0, "lntt": 106.0}, "cumData": {"ds": 399.0, "rateLg": 72.0, "lg": 288.0, "htLg": 0.0, "chiPhi": 182.0, "tnKhac": 0.0, "lntt": 106.0}}, "XESCO_KT": {"vonDT": null, "monthData": {"ds": 3379.0, "rateLg": 56.0, "lg": 1877.0, "htLg": 0.0, "chiPhi": 1272.0, "tnKhac": 11.0, "lntt": 616.0}, "cumData": {"ds": 3379.0, "rateLg": 56.0, "lg": 1877.0, "htLg": 0.0, "chiPhi": 1272.0, "tnKhac": 11.0, "lntt": 616.0}}, "XESCO_KT_1": {"vonDT": null, "monthData": {"ds": 1714.0, "rateLg": 70.0, "lg": 1199.0, "htLg": 0.0, "chiPhi": 870.0, "tnKhac": 9.0, "lntt": 338.0}, "cumData": {"ds": 1714.0, "rateLg": 70.0, "lg": 1199.0, "htLg": 0.0, "chiPhi": 870.0, "tnKhac": 9.0, "lntt": 338.0}}, "XESCO_KT_2": {"vonDT": null, "monthData": {"ds": 280.0, "rateLg": 60.0, "lg": 167.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 167.0}, "cumData": {"ds": 280.0, "rateLg": 60.0, "lg": 167.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 167.0}}, "XESCO_KT_3": {"vonDT": null, "monthData": {"ds": 1385.0, "rateLg": 37.0, "lg": 511.0, "htLg": 0.0, "chiPhi": 402.0, "tnKhac": 2.0, "lntt": 111.0}, "cumData": {"ds": 1385.0, "rateLg": 37.0, "lg": 511.0, "htLg": 0.0, "chiPhi": 402.0, "tnKhac": 2.0, "lntt": 111.0}}, "MT": {"vonDT": 3000, "monthData": {"ds": 2427.0, "rateLg": 19.0, "lg": 457.0, "htLg": 0.0, "chiPhi": 230.0, "tnKhac": 0.0, "lntt": 227.0}, "cumData": {"ds": 2427.0, "rateLg": 19.0, "lg": 457.0, "htLg": 0.0, "chiPhi": 230.0, "tnKhac": 0.0, "lntt": 227.0}}, "MT_1": {"vonDT": null, "monthData": {"ds": 1620.0, "rateLg": 11.0, "lg": 172.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 11.0, "lg": 172.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_2": {"vonDT": null, "monthData": {"ds": 306.0, "rateLg": 16.0, "lg": 49.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 16.0, "lg": 49.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_3": {"vonDT": null, "monthData": {"ds": 106.0, "rateLg": 8.0, "lg": 9.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 8.0, "lg": 9.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_4": {"vonDT": null, "monthData": {"ds": 166.0, "rateLg": 49.0, "lg": 81.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 49.0, "lg": 81.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_5": {"vonDT": null, "monthData": {"ds": 86.0, "rateLg": 73.0, "lg": 62.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 73.0, "lg": 62.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_6": {"vonDT": null, "monthData": {"ds": 117.0, "rateLg": 67.0, "lg": 79.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 67.0, "lg": 79.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_7": {"vonDT": null, "monthData": {"ds": 26.0, "rateLg": 19.0, "lg": 5.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 25500.0, "rateLg": 19.0, "lg": 5.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "GRAND_TOTAL": {"vonDT": 93000, "monthData": {"ds": 39947.0, "rateLg": 28.0, "lg": 11331.0, "htLg": 1073.0, "chiPhi": 9264.0, "tnKhac": 1127.0, "lntt": 4267.0}, "cumData": {"ds": 39947.0, "rateLg": 28.0, "lg": 11331.0, "htLg": 1073.0, "chiPhi": 9264.0, "tnKhac": 1127.0, "lntt": 4267.0}}}, "2": {"MB": {"vonDT": 75000, "monthData": {"ds": 8344.0, "rateLg": 22.0, "lg": 1756.0, "htLg": 79.0, "chiPhi": 3703.0, "tnKhac": 1061.0, "lntt": -2123.0}, "cumData": {"ds": 35784.0, "rateLg": 27.0, "lg": 9757.0, "htLg": 1152.0, "chiPhi": 11927.0, "tnKhac": 2169.0, "lntt": 1151.0}}, "THH": {"vonDT": 50000, "monthData": {"ds": 4434.0, "rateLg": 15.0, "lg": 667.0, "htLg": 0.0, "chiPhi": 1791.0, "tnKhac": 0.0, "lntt": -1124.0}, "cumData": {"ds": 26058.0, "rateLg": 28.0, "lg": 7312.0, "htLg": 0.0, "chiPhi": 5672.0, "tnKhac": 1.0, "lntt": 1642.0}}, "THH_DVKT": {"vonDT": null, "monthData": {"ds": 1473.0, "rateLg": 29.0, "lg": 426.0, "htLg": 0.0, "chiPhi": 753.0, "tnKhac": 0.0, "lntt": -327.0}, "cumData": {"ds": 3697.0, "rateLg": 33.0, "lg": 1214.0, "htLg": 0.0, "chiPhi": 1524.0, "tnKhac": 1.0, "lntt": -309.0}}, "THH_DVKT_1": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 32.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 31.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_2": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 61.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 50.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_3": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 16.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 27.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_4": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 36.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 50.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_5": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 3.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 5.0, "lg": 12400.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_KDTH": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 4.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 166.0, "tnKhac": 0.0, "lntt": -112.0}, "cumData": {"ds": 0.0, "rateLg": 7.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 305.0, "tnKhac": 0.0, "lntt": -94.0}}, "THH_KDBB": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 11.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 369.0, "tnKhac": 0.0, "lntt": -181.0}, "cumData": {"ds": 0.0, "rateLg": 8.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 820.0, "tnKhac": 1.0, "lntt": -257.0}}, "THH_DUAN": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 503.0, "tnKhac": 0.0, "lntt": -503.0}, "cumData": {"ds": 0.0, "rateLg": 42.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 3023.0, "tnKhac": 0.0, "lntt": 2302.0}}, "VIET": {"vonDT": 10000, "monthData": {"ds": 3246.0, "rateLg": 29.0, "lg": 935.0, "htLg": 1.0, "chiPhi": 967.0, "tnKhac": 0.0, "lntt": -31.0}, "cumData": {"ds": 8639.0, "rateLg": 25.0, "lg": 2176.0, "htLg": 34.0, "chiPhi": 2010.0, "tnKhac": 5.0, "lntt": 205.0}}, "VIET_1": {"vonDT": null, "monthData": {"ds": 1334.0, "rateLg": 57.0, "lg": 760.0, "htLg": 0.0, "chiPhi": 644.0, "tnKhac": 0.0, "lntt": 116.0}, "cumData": {"ds": 2911.0, "rateLg": 57.0, "lg": 1647.0, "htLg": 0.0, "chiPhi": 1331.0, "tnKhac": 0.0, "lntt": 322.0}}, "VIET_2": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 10.0, "lg": 93.0, "htLg": 0.0, "chiPhi": 139.0, "tnKhac": 0.0, "lntt": -46.0}, "cumData": {"ds": 2849.0, "rateLg": 9.0, "lg": 270.0, "htLg": 0.0, "chiPhi": 299.0, "tnKhac": 0.0, "lntt": -29.0}}, "VIET_3": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 8.0, "lg": 70.0, "htLg": 0.0, "chiPhi": 151.0, "tnKhac": 0.0, "lntt": -81.0}, "cumData": {"ds": 2714.0, "rateLg": 7.0, "lg": 190.0, "htLg": 0.0, "chiPhi": 316.0, "tnKhac": 0.0, "lntt": -126.0}}, "VIET_4": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 74.0, "lg": 12.0, "htLg": 0.0, "chiPhi": 33.0, "tnKhac": 0.0, "lntt": -21.0}, "cumData": {"ds": 165.0, "rateLg": 42.0, "lg": 69.0, "htLg": 0.0, "chiPhi": 65.0, "tnKhac": 0.0, "lntt": 4.0}}, "ITSS": {"vonDT": 5000, "monthData": {"ds": 232.0, "rateLg": 32.0, "lg": 75.0, "htLg": 0.0, "chiPhi": 116.0, "tnKhac": 0.0, "lntt": -41.0}, "cumData": {"ds": 655.0, "rateLg": 29.0, "lg": 190.0, "htLg": 0.0, "chiPhi": 240.0, "tnKhac": 0.0, "lntt": -50.0}}, "VPS_CORP": {"vonDT": 10000, "monthData": {"ds": 432.0, "rateLg": 0.0, "lg": 79.0, "htLg": 78.0, "chiPhi": 829.0, "tnKhac": 1061.0, "lntt": -928.0}, "cumData": {"ds": 432.0, "rateLg": 0.0, "lg": 0.0, "htLg": 1118.0, "chiPhi": 4006.0, "tnKhac": 2163.0, "lntt": -646.0}}, "VPS_KD": {"vonDT": null, "monthData": {"ds": 432.0, "rateLg": 18.0, "lg": 79.0, "htLg": 78.0, "chiPhi": 829.0, "tnKhac": 383.0, "lntt": -289.0}, "cumData": {"ds": 432.0, "rateLg": 18.0, "lg": 79.0, "htLg": 1118.0, "chiPhi": 1382.0, "tnKhac": 633.0, "lntt": 448.0}}, "VPS_TC": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 1317.0, "tnKhac": 678.0, "lntt": -639.0}, "cumData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 2624.0, "tnKhac": 1530.0, "lntt": -1094.0}}, "XESCO": {"vonDT": 15000, "monthData": {"ds": 6330.0, "rateLg": 34.0, "lg": 2176.0, "htLg": 0.0, "chiPhi": 2033.0, "tnKhac": -8.0, "lntt": 135.0}, "cumData": {"ds": 16410.0, "rateLg": 31.0, "lg": 5049.0, "htLg": 0.0, "chiPhi": 4159.0, "tnKhac": 10.0, "lntt": 900.0}}, "XESCO_KD": {"vonDT": null, "monthData": {"ds": 3856.0, "rateLg": 19.0, "lg": 718.0, "htLg": 0.0, "chiPhi": 760.0, "tnKhac": -5.0, "lntt": -47.0}, "cumData": {"ds": 10557.0, "rateLg": 16.0, "lg": 1714.0, "htLg": 0.0, "chiPhi": 1614.0, "tnKhac": 3.0, "lntt": 103.0}}, "XESCO_KD_1": {"vonDT": null, "monthData": {"ds": 327.0, "rateLg": 24.0, "lg": 79.0, "htLg": 0.0, "chiPhi": 109.0, "tnKhac": 0.0, "lntt": -30.0}, "cumData": {"ds": 992.0, "rateLg": 28.0, "lg": 278.0, "htLg": 0.0, "chiPhi": 244.0, "tnKhac": 1.0, "lntt": 35.0}}, "XESCO_KD_2": {"vonDT": null, "monthData": {"ds": 2004.0, "rateLg": 20.0, "lg": 397.0, "htLg": 0.0, "chiPhi": 440.0, "tnKhac": -3.0, "lntt": -46.0}, "cumData": {"ds": 5412.0, "rateLg": 14.0, "lg": 784.0, "htLg": 0.0, "chiPhi": 900.0, "tnKhac": 1.0, "lntt": -115.0}}, "XESCO_KD_3": {"vonDT": null, "monthData": {"ds": 1198.0, "rateLg": 2.0, "lg": 26.0, "htLg": 0.0, "chiPhi": 85.0, "tnKhac": -2.0, "lntt": -61.0}, "cumData": {"ds": 3427.0, "rateLg": 4.0, "lg": 147.0, "htLg": 0.0, "chiPhi": 162.0, "tnKhac": 1.0, "lntt": -14.0}}, "XESCO_KD_4": {"vonDT": null, "monthData": {"ds": 327.0, "rateLg": 66.0, "lg": 216.0, "htLg": 0.0, "chiPhi": 126.0, "tnKhac": 0.0, "lntt": 90.0}, "cumData": {"ds": 725.0, "rateLg": 69.0, "lg": 504.0, "htLg": 0.0, "chiPhi": 308.0, "tnKhac": 0.0, "lntt": 196.0}}, "XESCO_KT": {"vonDT": null, "monthData": {"ds": 2474.0, "rateLg": 59.0, "lg": 1458.0, "htLg": 0.0, "chiPhi": 1273.0, "tnKhac": -4.0, "lntt": 181.0}, "cumData": {"ds": 5853.0, "rateLg": 57.0, "lg": 3335.0, "htLg": 0.0, "chiPhi": 2545.0, "tnKhac": 7.0, "lntt": 797.0}}, "XESCO_KT_1": {"vonDT": null, "monthData": {"ds": 1434.0, "rateLg": 71.0, "lg": 1018.0, "htLg": 0.0, "chiPhi": 851.0, "tnKhac": -2.0, "lntt": 165.0}, "cumData": {"ds": 3148.0, "rateLg": 70.0, "lg": 2217.0, "htLg": 0.0, "chiPhi": 1721.0, "tnKhac": 7.0, "lntt": 503.0}}, "XESCO_KT_2": {"vonDT": null, "monthData": {"ds": 241.0, "rateLg": 70.0, "lg": 168.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 168.0}, "cumData": {"ds": 521.0, "rateLg": 64.0, "lg": 335.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 335.0}}, "XESCO_KT_3": {"vonDT": null, "monthData": {"ds": 799.0, "rateLg": 34.0, "lg": 272.0, "htLg": 0.0, "chiPhi": 422.0, "tnKhac": -2.0, "lntt": -152.0}, "cumData": {"ds": 2184.0, "rateLg": 36.0, "lg": 783.0, "htLg": 0.0, "chiPhi": 824.0, "tnKhac": 0.0, "lntt": -41.0}}, "MT": {"vonDT": 3000, "monthData": {"ds": 1030.0, "rateLg": 25.0, "lg": 261.0, "htLg": 0.0, "chiPhi": 201.0, "tnKhac": 0.0, "lntt": 60.0}, "cumData": {"ds": 3457.0, "rateLg": 21.0, "lg": 717.0, "htLg": 0.0, "chiPhi": 431.0, "tnKhac": 0.0, "lntt": 286.0}}, "MT_1": {"vonDT": null, "monthData": {"ds": 498.0, "rateLg": 10.0, "lg": 51.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 11.0, "lg": 222.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_2": {"vonDT": null, "monthData": {"ds": 193.0, "rateLg": 16.0, "lg": 31.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 16.0, "lg": 80.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_3": {"vonDT": null, "monthData": {"ds": 28.0, "rateLg": 9.0, "lg": 2.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 8.0, "lg": 11.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_4": {"vonDT": null, "monthData": {"ds": 134.0, "rateLg": 50.0, "lg": 67.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 49.0, "lg": 148.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_5": {"vonDT": null, "monthData": {"ds": 75.0, "rateLg": 66.0, "lg": 49.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 70.0, "lg": 112.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_6": {"vonDT": null, "monthData": {"ds": 69.0, "rateLg": 66.0, "lg": 46.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 67.0, "lg": 124.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_7": {"vonDT": null, "monthData": {"ds": 34.0, "rateLg": 43.0, "lg": 15.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 33.0, "lg": 19.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "GRAND_TOTAL": {"vonDT": 93000, "monthData": {"ds": 15703.0, "rateLg": 27.0, "lg": 4193.0, "htLg": 79.0, "chiPhi": 5937.0, "tnKhac": 1053.0, "lntt": -1929.0}, "cumData": {"ds": 55650.0, "rateLg": 28.0, "lg": 15524.0, "htLg": 1152.0, "chiPhi": 16517.0, "tnKhac": 2179.0, "lntt": 2337.0}}}, "3": {"MB": {"vonDT": 75000, "monthData": {"ds": 15688.0, "rateLg": 20.0, "lg": 2894.0, "htLg": 317.0, "chiPhi": 3253.0, "tnKhac": 1118.0, "lntt": 1.0}, "cumData": {"ds": 51470.0, "rateLg": 25.0, "lg": 12650.0, "htLg": 1468.0, "chiPhi": 16324.0, "tnKhac": 3289.0, "lntt": 1084.0}}, "THH": {"vonDT": 50000, "monthData": {"ds": 8494.0, "rateLg": 21.0, "lg": 1752.0, "htLg": 0.0, "chiPhi": 1372.0, "tnKhac": 5.0, "lntt": 386.0}, "cumData": {"ds": 34551.0, "rateLg": 26.0, "lg": 9065.0, "htLg": 0.0, "chiPhi": 7043.0, "tnKhac": 6.0, "lntt": 2028.0}}, "THH_DVKT": {"vonDT": null, "monthData": {"ds": 2649.0, "rateLg": 39.0, "lg": 1037.0, "htLg": 0.0, "chiPhi": 802.0, "tnKhac": -1.0, "lntt": 234.0}, "cumData": {"ds": 6346.0, "rateLg": 35.0, "lg": 2251.0, "htLg": 0.0, "chiPhi": 2326.0, "tnKhac": 0.0, "lntt": -75.0}}, "THH_DVKT_1": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 38.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 34.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_2": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 49.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 50.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_3": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 28.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 28.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_4": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 61.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 55.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_5": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 4.0, "lg": 12900.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_KDTH": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 9.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 173.0, "tnKhac": 3.0, "lntt": 23.0}, "cumData": {"ds": 0.0, "rateLg": 8.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 478.0, "tnKhac": 3.0, "lntt": -71.0}}, "THH_KDBB": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 14.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 335.0, "tnKhac": 3.0, "lntt": 190.0}, "cumData": {"ds": 0.0, "rateLg": 10.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 1155.0, "tnKhac": 4.0, "lntt": -67.0}}, "THH_DUAN": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 62.0, "tnKhac": 0.0, "lntt": -62.0}, "cumData": {"ds": 0.0, "rateLg": 42.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 3084.0, "tnKhac": 0.0, "lntt": 2241.0}}, "VIET": {"vonDT": 10000, "monthData": {"ds": 6144.0, "rateLg": 18.0, "lg": 1100.0, "htLg": 2.0, "chiPhi": 934.0, "tnKhac": 0.0, "lntt": 170.0}, "cumData": {"ds": 14781.0, "rateLg": 22.0, "lg": 3275.0, "htLg": 36.0, "chiPhi": 2944.0, "tnKhac": 7.0, "lntt": 374.0}}, "VIET_1": {"vonDT": null, "monthData": {"ds": 1451.0, "rateLg": 56.0, "lg": 814.0, "htLg": 0.0, "chiPhi": 605.0, "tnKhac": 1.0, "lntt": 210.0}, "cumData": {"ds": 4362.0, "rateLg": 56.0, "lg": 2461.0, "htLg": 0.0, "chiPhi": 1936.0, "tnKhac": 0.0, "lntt": 531.0}}, "VIET_2": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 6.0, "lg": 118.0, "htLg": 0.0, "chiPhi": 138.0, "tnKhac": 1.0, "lntt": -19.0}, "cumData": {"ds": 4708.0, "rateLg": 8.0, "lg": 388.0, "htLg": 0.0, "chiPhi": 437.0, "tnKhac": 0.0, "lntt": -48.0}}, "VIET_3": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 5.0, "lg": 139.0, "htLg": 0.0, "chiPhi": 160.0, "tnKhac": 0.0, "lntt": -21.0}, "cumData": {"ds": 5459.0, "rateLg": 6.0, "lg": 328.0, "htLg": 0.0, "chiPhi": 476.0, "tnKhac": 0.0, "lntt": -148.0}}, "VIET_4": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 34.0, "lg": 29.0, "htLg": 0.0, "chiPhi": 31.0, "tnKhac": 0.0, "lntt": -2.0}, "cumData": {"ds": 252.0, "rateLg": 39.0, "lg": 98.0, "htLg": 0.0, "chiPhi": 96.0, "tnKhac": 0.0, "lntt": 2.0}}, "ITSS": {"vonDT": 5000, "monthData": {"ds": 179.0, "rateLg": 24.0, "lg": 43.0, "htLg": 0.0, "chiPhi": 118.0, "tnKhac": 0.0, "lntt": -75.0}, "cumData": {"ds": 834.0, "rateLg": 28.0, "lg": 233.0, "htLg": 0.0, "chiPhi": 358.0, "tnKhac": 0.0, "lntt": -125.0}}, "VPS_CORP": {"vonDT": 10000, "monthData": {"ds": 872.0, "rateLg": 0.0, "lg": -1.0, "htLg": 315.0, "chiPhi": 829.0, "tnKhac": 1113.0, "lntt": -480.0}, "cumData": {"ds": 1304.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 5979.0, "tnKhac": 3276.0, "lntt": -1193.0}}, "VPS_KD": {"vonDT": null, "monthData": {"ds": 872.0, "rateLg": 0.0, "lg": -1.0, "htLg": 315.0, "chiPhi": 658.0, "tnKhac": 422.0, "lntt": 78.0}, "cumData": {"ds": 1304.0, "rateLg": 6.0, "lg": 78.0, "htLg": 1432.0, "chiPhi": 2045.0, "tnKhac": 1055.0, "lntt": 520.0}}, "VPS_TC": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 1249.0, "tnKhac": 691.0, "lntt": -558.0}, "cumData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 3934.0, "tnKhac": 2221.0, "lntt": -1713.0}}, "XESCO": {"vonDT": 15000, "monthData": {"ds": 11914.0, "rateLg": 21.0, "lg": 2524.0, "htLg": 0.0, "chiPhi": 2097.0, "tnKhac": -7.0, "lntt": 420.0}, "cumData": {"ds": 28324.0, "rateLg": 27.0, "lg": 7574.0, "htLg": 0.0, "chiPhi": 6256.0, "tnKhac": 2.0, "lntt": 1320.0}}, "XESCO_KD": {"vonDT": null, "monthData": {"ds": 8926.0, "rateLg": 12.0, "lg": 1031.0, "htLg": 0.0, "chiPhi": 760.0, "tnKhac": -6.0, "lntt": 265.0}, "cumData": {"ds": 19483.0, "rateLg": 14.0, "lg": 2744.0, "htLg": 0.0, "chiPhi": 2374.0, "tnKhac": -4.0, "lntt": 366.0}}, "XESCO_KD_1": {"vonDT": null, "monthData": {"ds": 347.0, "rateLg": 30.0, "lg": 105.0, "htLg": 0.0, "chiPhi": 71.0, "tnKhac": 1.0, "lntt": 35.0}, "cumData": {"ds": 1339.0, "rateLg": 29.0, "lg": 384.0, "htLg": 0.0, "chiPhi": 315.0, "tnKhac": 1.0, "lntt": 70.0}}, "XESCO_KD_2": {"vonDT": null, "monthData": {"ds": 4169.0, "rateLg": 11.0, "lg": 455.0, "htLg": 0.0, "chiPhi": 434.0, "tnKhac": -4.0, "lntt": 17.0}, "cumData": {"ds": 9581.0, "rateLg": 13.0, "lg": 1239.0, "htLg": 0.0, "chiPhi": 1334.0, "tnKhac": -3.0, "lntt": -98.0}}, "XESCO_KD_3": {"vonDT": null, "monthData": {"ds": 3997.0, "rateLg": 4.0, "lg": 165.0, "htLg": 0.0, "chiPhi": 109.0, "tnKhac": -3.0, "lntt": 53.0}, "cumData": {"ds": 7424.0, "rateLg": 4.0, "lg": 312.0, "htLg": 0.0, "chiPhi": 271.0, "tnKhac": -2.0, "lntt": 39.0}}, "XESCO_KD_4": {"vonDT": null, "monthData": {"ds": 413.0, "rateLg": 74.0, "lg": 306.0, "htLg": 0.0, "chiPhi": 146.0, "tnKhac": 0.0, "lntt": 160.0}, "cumData": {"ds": 1139.0, "rateLg": 71.0, "lg": 810.0, "htLg": 0.0, "chiPhi": 454.0, "tnKhac": 0.0, "lntt": 356.0}}, "XESCO_KT": {"vonDT": null, "monthData": {"ds": 2988.0, "rateLg": 50.0, "lg": 1494.0, "htLg": 0.0, "chiPhi": 1337.0, "tnKhac": -2.0, "lntt": 155.0}, "cumData": {"ds": 8841.0, "rateLg": 55.0, "lg": 4829.0, "htLg": 0.0, "chiPhi": 3882.0, "tnKhac": 4.0, "lntt": 951.0}}, "XESCO_KT_1": {"vonDT": null, "monthData": {"ds": 1392.0, "rateLg": 61.0, "lg": 848.0, "htLg": 0.0, "chiPhi": 820.0, "tnKhac": -1.0, "lntt": 27.0}, "cumData": {"ds": 4540.0, "rateLg": 68.0, "lg": 3065.0, "htLg": 0.0, "chiPhi": 2541.0, "tnKhac": 5.0, "lntt": 529.0}}, "XESCO_KT_2": {"vonDT": null, "monthData": {"ds": 268.0, "rateLg": 54.0, "lg": 146.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 146.0}, "cumData": {"ds": 789.0, "rateLg": 61.0, "lg": 481.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 481.0}}, "XESCO_KT_3": {"vonDT": null, "monthData": {"ds": 1327.0, "rateLg": 38.0, "lg": 500.0, "htLg": 0.0, "chiPhi": 517.0, "tnKhac": -1.0, "lntt": -18.0}, "cumData": {"ds": 3511.0, "rateLg": 37.0, "lg": 1283.0, "htLg": 0.0, "chiPhi": 1341.0, "tnKhac": -1.0, "lntt": -59.0}}, "MT": {"vonDT": 3000, "monthData": {"ds": 1981.0, "rateLg": 18.0, "lg": 356.0, "htLg": 0.0, "chiPhi": 202.0, "tnKhac": 0.0, "lntt": 154.0}, "cumData": {"ds": 5438.0, "rateLg": 20.0, "lg": 1073.0, "htLg": 0.0, "chiPhi": 633.0, "tnKhac": 0.0, "lntt": 440.0}}, "MT_1": {"vonDT": null, "monthData": {"ds": 1107.0, "rateLg": 7.0, "lg": 75.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 3225.0, "rateLg": 9.0, "lg": 298.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_2": {"vonDT": null, "monthData": {"ds": 329.0, "rateLg": 18.0, "lg": 61.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 828.0, "rateLg": 17.0, "lg": 141.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_3": {"vonDT": null, "monthData": {"ds": 116.0, "rateLg": 7.0, "lg": 8.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 251.0, "rateLg": 8.0, "lg": 19.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_4": {"vonDT": null, "monthData": {"ds": 203.0, "rateLg": 47.0, "lg": 96.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 503.0, "rateLg": 49.0, "lg": 245.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_5": {"vonDT": null, "monthData": {"ds": 106.0, "rateLg": 78.0, "lg": 83.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 267.0, "rateLg": 73.0, "lg": 195.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_6": {"vonDT": null, "monthData": {"ds": 46.0, "rateLg": 66.0, "lg": 30.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 232.0, "rateLg": 66.0, "lg": 154.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_7": {"vonDT": null, "monthData": {"ds": 73.0, "rateLg": 4.0, "lg": 3.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 132.0, "rateLg": 17.0, "lg": 22.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "GRAND_TOTAL": {"vonDT": 93000, "monthData": {"ds": 29583.0, "rateLg": 20.0, "lg": 5775.0, "htLg": 317.0, "chiPhi": 5552.0, "tnKhac": 1111.0, "lntt": 575.0}, "cumData": {"ds": 85232.0, "rateLg": 25.0, "lg": 21297.0, "htLg": 1468.0, "chiPhi": 23213.0, "tnKhac": 3291.0, "lntt": 2844.0}}}, "4": {"MB": {"vonDT": 75000, "monthData": {"ds": 14820.0, "rateLg": 20.0, "lg": 2927.0, "htLg": 2.0, "chiPhi": 3293.0, "tnKhac": 1114.0, "lntt": -611.0}, "cumData": {"ds": 66289.0, "rateLg": 23.0, "lg": 15577.0, "htLg": 1470.0, "chiPhi": 20981.0, "tnKhac": 4629.0, "lntt": 695.0}}, "THH": {"vonDT": 50000, "monthData": {"ds": 8436.0, "rateLg": 17.0, "lg": 1463.0, "htLg": 0.0, "chiPhi": 1390.0, "tnKhac": 1.0, "lntt": 74.0}, "cumData": {"ds": 42987.0, "rateLg": 24.0, "lg": 10528.0, "htLg": 0.0, "chiPhi": 8433.0, "tnKhac": 7.0, "lntt": 2102.0}}, "THH_DVKT": {"vonDT": null, "monthData": {"ds": 2455.0, "rateLg": 37.0, "lg": 917.0, "htLg": 0.0, "chiPhi": 819.0, "tnKhac": 1.0, "lntt": 99.0}, "cumData": {"ds": 8801.0, "rateLg": 36.0, "lg": 3168.0, "htLg": 0.0, "chiPhi": 3145.0, "tnKhac": 0.0, "lntt": 23.0}}, "THH_DVKT_1": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 36.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 35.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_2": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 50.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 50.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_3": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 34.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 29.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_4": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 40.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 51.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_DVKT_5": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 0.0, "rateLg": 3.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "THH_KDTH": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 7.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 172.0, "tnKhac": 0.0, "lntt": 2.0}, "cumData": {"ds": 0.0, "rateLg": 8.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 650.0, "tnKhac": 3.0, "lntt": -69.0}}, "THH_KDBB": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 11.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 338.0, "tnKhac": 0.0, "lntt": 35.0}, "cumData": {"ds": 0.0, "rateLg": 11.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 1492.0, "tnKhac": 3.0, "lntt": -32.0}}, "THH_DUAN": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 62.0, "tnKhac": 0.0, "lntt": -62.0}, "cumData": {"ds": 0.0, "rateLg": 42.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 3147.0, "tnKhac": 0.0, "lntt": 2179.0}}, "VIET": {"vonDT": 10000, "monthData": {"ds": 5816.0, "rateLg": 23.0, "lg": 1355.0, "htLg": 2.0, "chiPhi": 960.0, "tnKhac": 0.0, "lntt": 401.0}, "cumData": {"ds": 20597.0, "rateLg": 22.0, "lg": 4629.0, "htLg": 38.0, "chiPhi": 3905.0, "tnKhac": 13.0, "lntt": 776.0}}, "VIET_1": {"vonDT": null, "monthData": {"ds": 1770.0, "rateLg": 57.0, "lg": 1014.0, "htLg": 0.0, "chiPhi": 629.0, "tnKhac": 4.0, "lntt": 388.0}, "cumData": {"ds": 6132.0, "rateLg": 57.0, "lg": 3475.0, "htLg": 0.0, "chiPhi": 2565.0, "tnKhac": 0.0, "lntt": 920.0}}, "VIET_2": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 9.0, "lg": 117.0, "htLg": 0.0, "chiPhi": 141.0, "tnKhac": 0.0, "lntt": -24.0}, "cumData": {"ds": 6045.0, "rateLg": 8.0, "lg": 505.0, "htLg": 0.0, "chiPhi": 577.0, "tnKhac": 0.0, "lntt": -71.0}}, "VIET_3": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 6.0, "lg": 159.0, "htLg": 0.0, "chiPhi": 158.0, "tnKhac": 0.0, "lntt": 1.0}, "cumData": {"ds": 8052.0, "rateLg": 6.0, "lg": 487.0, "htLg": 0.0, "chiPhi": 634.0, "tnKhac": 0.0, "lntt": -147.0}}, "VIET_4": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 56.0, "lg": 65.0, "htLg": 0.0, "chiPhi": 32.0, "tnKhac": 0.0, "lntt": 33.0}, "cumData": {"ds": 369.0, "rateLg": 44.0, "lg": 163.0, "htLg": 0.0, "chiPhi": 128.0, "tnKhac": 0.0, "lntt": 35.0}}, "ITSS": {"vonDT": 5000, "monthData": {"ds": 257.0, "rateLg": 33.0, "lg": 86.0, "htLg": 0.0, "chiPhi": 114.0, "tnKhac": 0.0, "lntt": -28.0}, "cumData": {"ds": 1090.0, "rateLg": 29.0, "lg": 319.0, "htLg": 0.0, "chiPhi": 472.0, "tnKhac": 0.0, "lntt": -153.0}}, "VPS_CORP": {"vonDT": 10000, "monthData": {"ds": 312.0, "rateLg": 0.0, "lg": 23.0, "htLg": 0.0, "chiPhi": 829.0, "tnKhac": 1113.0, "lntt": -1057.0}, "cumData": {"ds": 1615.0, "rateLg": 0.0, "lg": 0.0, "htLg": 1432.0, "chiPhi": 8171.0, "tnKhac": 4609.0, "lntt": -2029.0}}, "VPS_KD": {"vonDT": null, "monthData": {"ds": 312.0, "rateLg": 7.0, "lg": 23.0, "htLg": 0.0, "chiPhi": 607.0, "tnKhac": 422.0, "lntt": -162.0}, "cumData": {"ds": 1615.0, "rateLg": 6.0, "lg": 101.0, "htLg": 1432.0, "chiPhi": 2651.0, "tnKhac": 1697.0, "lntt": 579.0}}, "VPS_TC": {"vonDT": null, "monthData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 1586.0, "tnKhac": 691.0, "lntt": -895.0}, "cumData": {"ds": 0.0, "rateLg": 0.0, "lg": 0.0, "htLg": 0.0, "chiPhi": 5520.0, "tnKhac": 2912.0, "lntt": -2608.0}}, "XESCO": {"vonDT": 15000, "monthData": {"ds": 10140.0, "rateLg": 27.0, "lg": 2703.0, "htLg": 0.0, "chiPhi": 2036.0, "tnKhac": -14.0, "lntt": 653.0}, "cumData": {"ds": 38464.0, "rateLg": 27.0, "lg": 10277.0, "htLg": 0.0, "chiPhi": 8292.0, "tnKhac": -12.0, "lntt": 1973.0}}, "XESCO_KD": {"vonDT": null, "monthData": {"ds": 7296.0, "rateLg": 14.0, "lg": 1053.0, "htLg": 0.0, "chiPhi": 735.0, "tnKhac": -10.0, "lntt": 308.0}, "cumData": {"ds": 26780.0, "rateLg": 14.0, "lg": 3798.0, "htLg": 0.0, "chiPhi": 3109.0, "tnKhac": -8.0, "lntt": 681.0}}, "XESCO_KD_1": {"vonDT": null, "monthData": {"ds": 270.0, "rateLg": 21.0, "lg": 58.0, "htLg": 0.0, "chiPhi": 58.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 1609.0, "rateLg": 27.0, "lg": 442.0, "htLg": 0.0, "chiPhi": 373.0, "tnKhac": -1.0, "lntt": 68.0}}, "XESCO_KD_2": {"vonDT": null, "monthData": {"ds": 3530.0, "rateLg": 18.0, "lg": 647.0, "htLg": 0.0, "chiPhi": 428.0, "tnKhac": -5.0, "lntt": 214.0}, "cumData": {"ds": 13112.0, "rateLg": 14.0, "lg": 1885.0, "htLg": 0.0, "chiPhi": 1762.0, "tnKhac": 0.0, "lntt": 123.0}}, "XESCO_KD_3": {"vonDT": null, "monthData": {"ds": 3116.0, "rateLg": 3.0, "lg": 79.0, "htLg": 0.0, "chiPhi": 107.0, "tnKhac": -4.0, "lntt": -32.0}, "cumData": {"ds": 10540.0, "rateLg": 4.0, "lg": 392.0, "htLg": 0.0, "chiPhi": 378.0, "tnKhac": -6.0, "lntt": 8.0}}, "XESCO_KD_4": {"vonDT": null, "monthData": {"ds": 380.0, "rateLg": 71.0, "lg": 269.0, "htLg": 0.0, "chiPhi": 142.0, "tnKhac": -1.0, "lntt": 126.0}, "cumData": {"ds": 1519.0, "rateLg": 71.0, "lg": 1079.0, "htLg": 0.0, "chiPhi": 596.0, "tnKhac": -1.0, "lntt": 482.0}}, "XESCO_KT": {"vonDT": null, "monthData": {"ds": 2844.0, "rateLg": 58.0, "lg": 1650.0, "htLg": 0.0, "chiPhi": 1301.0, "tnKhac": -4.0, "lntt": 345.0}, "cumData": {"ds": 11684.0, "rateLg": 55.0, "lg": 6479.0, "htLg": 0.0, "chiPhi": 5183.0, "tnKhac": -6.0, "lntt": 1290.0}}, "XESCO_KT_1": {"vonDT": null, "monthData": {"ds": 1451.0, "rateLg": 71.0, "lg": 1024.0, "htLg": 0.0, "chiPhi": 801.0, "tnKhac": -2.0, "lntt": 221.0}, "cumData": {"ds": 5991.0, "rateLg": 68.0, "lg": 4089.0, "htLg": 0.0, "chiPhi": 3342.0, "tnKhac": -4.0, "lntt": 743.0}}, "XESCO_KT_2": {"vonDT": null, "monthData": {"ds": 270.0, "rateLg": 74.0, "lg": 200.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 200.0}, "cumData": {"ds": 1059.0, "rateLg": 64.0, "lg": 681.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 681.0}}, "XESCO_KT_3": {"vonDT": null, "monthData": {"ds": 1123.0, "rateLg": 38.0, "lg": 426.0, "htLg": 0.0, "chiPhi": 500.0, "tnKhac": -2.0, "lntt": -76.0}, "cumData": {"ds": 4634.0, "rateLg": 37.0, "lg": 1709.0, "htLg": 0.0, "chiPhi": 1841.0, "tnKhac": -2.0, "lntt": -134.0}}, "MT": {"vonDT": 3000, "monthData": {"ds": 1477.0, "rateLg": 22.0, "lg": 332.0, "htLg": 0.0, "chiPhi": 213.0, "tnKhac": 0.0, "lntt": 120.0}, "cumData": {"ds": 6916.0, "rateLg": 20.0, "lg": 1406.0, "htLg": 0.0, "chiPhi": 846.0, "tnKhac": 0.0, "lntt": 560.0}}, "MT_1": {"vonDT": null, "monthData": {"ds": 446.0, "rateLg": 7.0, "lg": 32.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 3671.0, "rateLg": 9.0, "lg": 330.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_2": {"vonDT": null, "monthData": {"ds": 280.0, "rateLg": 17.0, "lg": 49.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 1108.0, "rateLg": 17.0, "lg": 190.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_3": {"vonDT": null, "monthData": {"ds": 293.0, "rateLg": 6.0, "lg": 17.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 544.0, "rateLg": 7.0, "lg": 37.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_4": {"vonDT": null, "monthData": {"ds": 263.0, "rateLg": 55.0, "lg": 145.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 766.0, "rateLg": 51.0, "lg": 389.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_5": {"vonDT": null, "monthData": {"ds": 81.0, "rateLg": 63.0, "lg": 51.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 348.0, "rateLg": 70.0, "lg": 245.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_6": {"vonDT": null, "monthData": {"ds": 48.0, "rateLg": 68.0, "lg": 33.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 280.0, "rateLg": 67.0, "lg": 187.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "MT_7": {"vonDT": null, "monthData": {"ds": 67.0, "rateLg": 9.0, "lg": 6.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}, "cumData": {"ds": 199.0, "rateLg": 14.0, "lg": 28.0, "htLg": 0.0, "chiPhi": 0.0, "tnKhac": 0.0, "lntt": 0.0}}, "GRAND_TOTAL": {"vonDT": 93000, "monthData": {"ds": 26437.0, "rateLg": 23.0, "lg": 5962.0, "htLg": 2.0, "chiPhi": 5542.0, "tnKhac": 1100.0, "lntt": 162.0}, "cumData": {"ds": 111669.0, "rateLg": 24.0, "lg": 27260.0, "htLg": 1470.0, "chiPhi": 30119.0, "tnKhac": 4617.0, "lntt": 3228.0}}}}, "liveGrandTotal": {"1": {"stt": "★", "name": "TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)", "vonDT": 93000, "monthData": {"ds": 39947.0, "rateLg": 28.0, "lg": 11331.0, "htLg": 1073.0, "chiPhi": 9264.0, "tnKhac": 1127.0, "lntt": 4267.0}, "cumData": {"ds": 39947.0, "rateLg": 28.0, "lg": 11331.0, "htLg": 1073.0, "chiPhi": 9264.0, "tnKhac": 1127.0, "lntt": 4267.0}}, "2": {"stt": "★", "name": "TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)", "vonDT": 93000, "monthData": {"ds": 15703.0, "rateLg": 27.0, "lg": 4193.0, "htLg": 79.0, "chiPhi": 5937.0, "tnKhac": 1053.0, "lntt": -1929.0}, "cumData": {"ds": 55650.0, "rateLg": 28.0, "lg": 15524.0, "htLg": 1152.0, "chiPhi": 16517.0, "tnKhac": 2179.0, "lntt": 2337.0}}, "3": {"stt": "★", "name": "TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)", "vonDT": 93000, "monthData": {"ds": 29583.0, "rateLg": 20.0, "lg": 5775.0, "htLg": 317.0, "chiPhi": 5552.0, "tnKhac": 1111.0, "lntt": 575.0}, "cumData": {"ds": 85232.0, "rateLg": 25.0, "lg": 21297.0, "htLg": 1468.0, "chiPhi": 23213.0, "tnKhac": 3291.0, "lntt": 2844.0}}, "4": {"stt": "★", "name": "TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)", "vonDT": 93000, "monthData": {"ds": 26437.0, "rateLg": 23.0, "lg": 5962.0, "htLg": 2.0, "chiPhi": 5542.0, "tnKhac": 1100.0, "lntt": 162.0}, "cumData": {"ds": 111669.0, "rateLg": 24.0, "lg": 27260.0, "htLg": 1470.0, "chiPhi": 30119.0, "tnKhac": 4617.0, "lntt": 3228.0}}}};
+
 window.KqkdModule = {
     name: 'Kết Quả Kinh Doanh',
     selectedMonth: 7,
@@ -12,16 +14,16 @@ window.KqkdModule = {
     searchTerm: '',
     collapsedNodes: {},
     charts: {},
-    liveDataByMonth: {},   // { [month]: { [nodeId]: { monthData, cumData } } }
-    liveGrandTotal: {},    // { [month]: grandTotalObject }
+    liveDataByMonth: (typeof BUILTIN_MONTH_DATA !== 'undefined' && BUILTIN_MONTH_DATA.liveDataByMonth) ? JSON.parse(JSON.stringify(BUILTIN_MONTH_DATA.liveDataByMonth)) : {},
+    liveGrandTotal: (typeof BUILTIN_MONTH_DATA !== 'undefined' && BUILTIN_MONTH_DATA.liveGrandTotal) ? JSON.parse(JSON.stringify(BUILTIN_MONTH_DATA.liveGrandTotal)) : {},
     isScanning: false,
 
     // Cấu hình Google Sheet KQKD
     sheetConfig: {
-        sheetId: localStorage.getItem('vps_kqkd_sheet_id') || '',
-        sheetName: localStorage.getItem('vps_kqkd_sheet_name') || 'Bao_Cao_KQKD_Thang_07',
-        lastSync: localStorage.getItem('vps_kqkd_last_sync') || null,
-        isConnected: false
+        sheetId: localStorage.getItem('vps_kqkd_sheet_id') || '1ZdOX3c3ms3PtTaj9tvej8WmPzII8LHeE',
+        sheetName: localStorage.getItem('vps_kqkd_sheet_name') || 'tháng 1',
+        lastSync: localStorage.getItem('vps_kqkd_last_sync') || '13:15:00',
+        isConnected: true
     },
 
     // Hệ số mùa vụ mô phỏng cho các tháng chưa có dữ liệu quét trực tiếp
@@ -208,23 +210,35 @@ window.KqkdModule = {
     // KHỞI TẠO MODULE
     // ============================================================
     init() {
-        // Tự động khôi phục dữ liệu các tháng đã quét từ bộ nhớ cache
+        // Nạp dữ liệu mặc định đã quét từ Google Sheet cho Tháng 1, 2, 3, 4
+        if (typeof BUILTIN_MONTH_DATA !== 'undefined') {
+            if (BUILTIN_MONTH_DATA.liveDataByMonth) {
+                Object.assign(this.liveDataByMonth, BUILTIN_MONTH_DATA.liveDataByMonth);
+            }
+            if (BUILTIN_MONTH_DATA.liveGrandTotal) {
+                Object.assign(this.liveGrandTotal, BUILTIN_MONTH_DATA.liveGrandTotal);
+            }
+        }
+
+        // Tự động khôi phục dữ liệu các tháng đã quét từ bộ nhớ cache (nếu có cập nhật mới hơn)
         try {
             const cached = localStorage.getItem('vps_kqkd_live_data_all');
             if (cached) {
                 const parsed = JSON.parse(cached);
-                if (parsed.liveDataByMonth) this.liveDataByMonth = parsed.liveDataByMonth;
-                if (parsed.liveGrandTotal) this.liveGrandTotal = parsed.liveGrandTotal;
+                if (parsed.liveDataByMonth) Object.assign(this.liveDataByMonth, parsed.liveDataByMonth);
+                if (parsed.liveGrandTotal) Object.assign(this.liveGrandTotal, parsed.liveGrandTotal);
             }
         } catch(e) {}
 
         // Tự động kiểm tra Google Sheet đã lưu
-        const savedSheetId = localStorage.getItem('vps_kqkd_sheet_id');
-        if (savedSheetId) {
-            this.sheetConfig.sheetId = savedSheetId;
-            this.sheetConfig.isConnected = true;
-            setTimeout(() => { this.syncAllMonths(false); }, 1000);
-        }
+        const savedSheetId = localStorage.getItem('vps_kqkd_sheet_id') || '1ZdOX3c3ms3PtTaj9tvej8WmPzII8LHeE';
+        this.sheetConfig.sheetId = savedSheetId;
+        this.sheetConfig.isConnected = true;
+        localStorage.setItem('vps_kqkd_sheet_id', savedSheetId);
+        
+        // Quét tự động ngầm để kiểm tra nếu có tab mới (vd: tháng 5, 6)
+        setTimeout(() => { this.syncAllMonths(false); }, 1500);
+
         this.render();
     },
 
@@ -232,9 +246,11 @@ window.KqkdModule = {
     // TÍNH TOÁN CÂY DỮ LIỆU ĐỘNG THEO THÁNG & LŨY KẾ
     // ============================================================
     calculateNode(node, month) {
+        const mKey = String(month);
+        const monthDataMap = this.liveDataByMonth[mKey] || this.liveDataByMonth[month];
         // 1. Nếu có dữ liệu quét trực tiếp từ Google Sheets cho tháng này
-        if (this.liveDataByMonth[month] && this.liveDataByMonth[month][node.id]) {
-            const live = this.liveDataByMonth[month][node.id];
+        if (monthDataMap && monthDataMap[node.id]) {
+            const live = monthDataMap[node.id];
             const children = (node.children || []).map(child => this.calculateNode(child, month));
             return {
                 ...node,
@@ -351,14 +367,20 @@ window.KqkdModule = {
     },
 
     // Tổng hợp toàn tập đoàn
-    getGrandTotal(calculatedRoots) {
+    getGrandTotal(calculatedRoots, month) {
+        const m = month !== undefined ? month : this.selectedMonth;
+        const mKey = String(m);
+
         // 1. Nếu có số liệu quét trực tiếp từ Google Sheets
-        if (this.liveGrandTotal[this.selectedMonth]) {
-            return this.liveGrandTotal[this.selectedMonth];
+        if (this.liveGrandTotal[mKey]) {
+            return this.liveGrandTotal[mKey];
+        }
+        if (this.liveGrandTotal[m]) {
+            return this.liveGrandTotal[m];
         }
 
         // 2. Tháng 07 chuẩn: Số liệu chính thức từ báo cáo hợp nhất gốc
-        if (this.selectedMonth === 7) {
+        if (m === 7 || mKey === '7') {
             return {
                 stt: '★',
                 name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
@@ -369,9 +391,9 @@ window.KqkdModule = {
         }
 
         // 3. Các tháng khác
-        const factor = this.monthFactors[this.selectedMonth - 1] || 1.0;
+        const factor = this.monthFactors[m - 1] || 1.0;
         let sumFactor = 0;
-        for (let i = 0; i < this.selectedMonth; i++) {
+        for (let i = 0; i < m; i++) {
             sumFactor += this.monthFactors[i];
         }
 
@@ -731,7 +753,7 @@ window.KqkdModule = {
         html += this.renderTableRows(visibleRoots, 0);
 
         // GRAND TOTAL ROW
-        html += '<tr style="background: #0f172a; color: #ffffff; font-weight: 800; border-top: 3px solid #3b82f6;">';
+        html += '<tr class="kqkd-row-grand" style="background: #0f172a; color: #ffffff; font-weight: 800; border-top: 3px solid #3b82f6;">';
         html += '<td style="padding: 12px 8px; text-align: center; border: 1px solid #334155; position: sticky; left: 0; background: #0f172a; z-index: 3;">★</td>';
         html += '<td style="padding: 12px 14px; text-align: left; border: 1px solid #334155; position: sticky; left: 45px; background: #0f172a; z-index: 3; color: #fbbf24;">TỔNG CỘNG TOÀN TẬP ĐOÀN</td>';
         html += '<td style="padding: 12px 10px; text-align: right; border: 1px solid #334155; color: #facc15;">' + (grandTotal.vonDT ? grandTotal.vonDT.toLocaleString('vi-VN') : '-') + '</td>';
@@ -992,9 +1014,15 @@ window.KqkdModule = {
         for (let m = 1; m <= 12; m++) {
             const mStr = String(m).padStart(2, '0');
             const candidates = [
+                'tháng ' + m,
+                'Tháng ' + m,
+                'thang ' + m,
+                'Thang ' + m,
                 'Thang_' + mStr,
+                'thang_' + mStr,
                 'Bao_Cao_KQKD_Thang_' + mStr,
                 'Tháng ' + mStr,
+                'tháng ' + mStr,
                 'T' + mStr,
                 'KQKD_Thang_' + mStr
             ];
@@ -1081,16 +1109,18 @@ window.KqkdModule = {
 
         const candidates = [
             this.sheetConfig.sheetName,
+            'tháng ' + month,
+            'Tháng ' + month,
+            'thang ' + month,
+            'Thang ' + month,
             'Thang_' + mStr,
+            'thang_' + mStr,
             'Bao_Cao_KQKD_Thang_' + mStr,
             'Tháng ' + mStr,
             'T' + mStr,
             'KQKD_Thang_' + mStr,
             'Bao_Cao_Tong_Hop_12_Thang',
-            'Kết quả kinh doanh',
-            'KQKD',
-            'P&L',
-            'Bao_Cao_KQKD'
+            'P&L'
         ];
 
         let validRows = null;
@@ -1160,150 +1190,174 @@ window.KqkdModule = {
         const nodes = {};
         let grandTotal = null;
 
-        const parseNum = (val) => {
-            if (!val) return 0;
-            if (typeof val === 'number') return val;
-            let s = val.toString().trim().replace(/đ/gi, '').replace(/vnd/gi, '').replace(/%/g, '').trim();
+        const cleanVal = (valStr, isPct = false) => {
+            if (!valStr && valStr !== 0) return 0;
+            let s = valStr.toString().trim().replace(/đ/gi, '').replace(/vnd/gi, '').replace(/%/g, '').trim();
+            if (!s || s === '-' || s === '#DIV/0!' || s === '######') return 0;
             if (s.startsWith('(') && s.endsWith(')')) {
-                s = '-' + s.substring(1, s.length - 1);
+                return -cleanVal(s.substring(1, s.length - 1), isPct);
             }
-            if (/^\d{1,3}(?:[.,]\d{3})+$/.test(s)) {
-                return parseFloat(s.replace(/[.,]/g, '')) || 0;
+            if (isPct) {
+                try {
+                    let v = parseFloat(s.replace(',', '.'));
+                    if (v > 1) v = v / 100.0;
+                    return Math.round(v * 1000) / 10;
+                } catch(e) { return 0; }
             }
-            const dotCount = (s.match(/\./g) || []).length;
-            const commaCount = (s.match(/,/g) || []).length;
-            if (dotCount > 1) s = s.replace(/\./g, '');
-            else if (commaCount > 1) s = s.replace(/,/g, '');
-            else if (dotCount === 1 && commaCount === 1) {
-                const lastDot = s.lastIndexOf('.');
-                const lastComma = s.lastIndexOf(',');
-                s = lastComma > lastDot ? s.replace(/\./g, '').replace(',', '.') : s.replace(/,/g, '');
-            } else if (commaCount === 1) s = s.replace(',', '.');
+            if (s.includes(',') && s.includes('.')) {
+                return parseFloat(s.replace(/,/g, '')) || 0;
+            } else if (s.includes(',')) {
+                const parts = s.split(',');
+                if (parts.length === 2) {
+                    const intPart = parts[0];
+                    const decPart = parts[1];
+                    if (decPart.length === 3) return parseFloat(intPart + decPart) || 0;
+                    if (decPart.length === 2) return parseFloat(intPart + decPart + '0') || 0;
+                    if (decPart.length === 1) return parseFloat(intPart + decPart + '00') || 0;
+                }
+            } else if (s.includes('.')) {
+                const parts = s.split('.');
+                if (parts.length === 2) {
+                    const intPart = parts[0];
+                    const decPart = parts[1];
+                    if (decPart.length === 3) return parseFloat(intPart + decPart) || 0;
+                    if (decPart.length === 2) return parseFloat(intPart + decPart + '0') || 0;
+                    if (decPart.length === 1) return parseFloat(intPart + decPart + '00') || 0;
+                }
+            }
             return parseFloat(s) || 0;
         };
 
-        // Tìm dòng bắt đầu số liệu (sau dòng header chứa DS, % LG, LG...)
-        let startRowIdx = -1;
-        for (let i = 0; i < Math.min(rows.length, 10); i++) {
+        // Tự động nhận diện dòng bắt đầu và vị trí cột tên (offset = 0 nếu cột 0 là tên, 1 nếu cột 1 là tên)
+        let startRowIdx = 0;
+        let offset = 0;
+        for (let i = 0; i < Math.min(rows.length, 12); i++) {
             const r = rows[i] || [];
             const rStr = r.join(' ').toLowerCase();
-            if (rStr.includes('lntt') || (rStr.includes('ds') && rStr.includes('lg'))) {
-                startRowIdx = i + 1;
+            if (rStr.includes('miền bắc') || rStr.includes('tân hồng hà') || rStr.includes('thh')) {
+                startRowIdx = i;
+                offset = (r[1] && (r[1].toLowerCase().includes('miền bắc') || r[1].toLowerCase().includes('thh'))) ? 1 : 0;
                 break;
             }
         }
-        if (startRowIdx < 0) startRowIdx = 6;
-
-        const mapKeyToId = {
-            'i': 'MB', 'mb': 'MB', 'miền bắc': 'MB', 'mien bac': 'MB',
-            '1': 'THH', 'thh': 'THH', 'tân hồng hà': 'THH',
-            'a': 'THH_DVKT', 'khối dịch vụ kỹ thuật': 'THH_DVKT',
-            'a.1': 'THH_DVKT_1', 'tổ dịch vụ': 'THH_DVKT_1',
-            'a.2': 'THH_DVKT_2', 'tổ mực in': 'THH_DVKT_2',
-            'a.3': 'THH_DVKT_3',
-            'a.4': 'THH_DVKT_4',
-            'a.5': 'THH_DVKT_5',
-            'b': 'THH_KDTH', 'kinh doanh tổng hợp': 'THH_KDTH',
-            'c': 'THH_KDBB', 'kinh doanh bán buôn': 'THH_KDBB',
-            'd': 'THH_DUAN', 'dự án': 'THH_DUAN',
-            '2': 'VIET', 'việt': 'VIET', 'viet': 'VIET',
-            '2.1': 'VIET_1',
-            '2.2': 'VIET_2',
-            '2.3': 'VIET_3',
-            '2.4': 'VIET_4',
-            '3': 'ITSS', 'itss': 'ITSS',
-            '4': 'VPS_CORP', 'cty vps': 'VPS_CORP', 'vps': 'VPS_CORP',
-            '4.1': 'VPS_KD',
-            '4.2': 'VPS_TC',
-            '5': 'XESCO', 'xesco': 'XESCO', 'xem sơn': 'XESCO',
-            '5.1': 'XESCO_KD',
-            '5.2': 'XESCO_KT',
-            'ii': 'MT', 'mt': 'MT', 'vps miền trung': 'MT', 'vps m': 'MT',
-            '★': 'GRAND_TOTAL', '*': 'GRAND_TOTAL', 'tổng cộng': 'GRAND_TOTAL'
-        };
 
         let currentParent = '';
 
         for (let i = startRowIdx; i < rows.length; i++) {
             const row = rows[i];
-            if (!row || row.length < 3) continue;
+            if (!row || row.length < offset + 4) continue;
 
-            const stt = (row[0] || '').toString().trim();
-            const name = (row[1] || '').toString().trim();
-            const vonDT = parseNum(row[2]);
-
-            const m_ds = parseNum(row[3]);
-            const m_rateLg = parseNum(row[4]);
-            const m_lg = parseNum(row[5]);
-            const m_htLg = parseNum(row[6]);
-            const m_cp = parseNum(row[7]);
-            const m_tnk = parseNum(row[8]);
-            const m_lntt = parseNum(row[9]);
-
-            const c_ds = parseNum(row[10]);
-            const c_rateLg = parseNum(row[11]);
-            const c_lg = parseNum(row[12]);
-            const c_htLg = parseNum(row[13]);
-            const c_cp = parseNum(row[14]);
-            const c_tnk = parseNum(row[15]);
-            const c_lntt = parseNum(row[16]);
-
-            const sttLower = stt.toLowerCase();
+            const name = (row[offset] || '').toString().trim();
+            if (!name) continue;
             const nameLower = name.toLowerCase();
 
-            // Nhận diện phân nhánh theo dòng để phân biệt các mục trùng tên
-            if (sttLower === '5.1' || nameLower.includes('xesco - kd')) currentParent = 'XESCO_KD';
-            else if (sttLower === '5.2' || nameLower.includes('xesco - kt')) currentParent = 'XESCO_KT';
-            else if (sttLower === 'ii' || nameLower.includes('miền trung')) currentParent = 'MT';
-            else if (['i', '1', '2', '3', '4', '★'].includes(sttLower)) currentParent = '';
-
-            let matchedId = null;
-
-            if (currentParent === 'XESCO_KD') {
-                if (nameLower.includes('máy lẻ')) matchedId = 'XESCO_KD_1';
-                else if (nameLower.includes('sỉ') || nameLower.includes('bán sỉ')) matchedId = 'XESCO_KD_2';
-                else if (nameLower.includes('online')) matchedId = 'XESCO_KD_3';
-                else if (nameLower.includes('thuê máy')) matchedId = 'XESCO_KD_4';
+            let nodeId = null;
+            if (nameLower.includes('miền bắc')) {
+                nodeId = 'MB';
+                currentParent = 'MB';
+            } else if (nameLower === 'thh' || nameLower.includes('tân hồng hà')) {
+                nodeId = 'THH';
+                currentParent = 'THH';
+            } else if (nameLower === 'việt' || nameLower === 'viet') {
+                nodeId = 'VIET';
+                currentParent = 'VIET';
+            } else if (nameLower === 'itss') {
+                nodeId = 'ITSS';
+                currentParent = 'ITSS';
+            } else if (nameLower.includes('cty vps') || nameLower === 'vps') {
+                nodeId = 'VPS_CORP';
+                currentParent = 'VPS_CORP';
+            } else if (nameLower === 'xesco' || nameLower.includes('xem sơn')) {
+                nodeId = 'XESCO';
+                currentParent = 'XESCO';
+            } else if (nameLower.includes('xesco - kd')) {
+                nodeId = 'XESCO_KD';
+                currentParent = 'XESCO_KD';
+            } else if (nameLower.includes('xesco - kt')) {
+                nodeId = 'XESCO_KT';
+                currentParent = 'XESCO_KT';
+            } else if (nameLower.includes('miền trung')) {
+                nodeId = 'MT';
+                currentParent = 'MT';
+            } else if (nameLower.includes('tổng cộng') || nameLower.includes('★')) {
+                nodeId = 'GRAND_TOTAL';
+                currentParent = '';
+            } else if (nameLower.includes('khối dịch vụ kỹ thuật')) {
+                nodeId = 'THH_DVKT';
+                currentParent = 'THH_DVKT';
+            } else if (currentParent === 'THH' || currentParent === 'THH_DVKT') {
+                if (nameLower.includes('tổ dịch vụ')) nodeId = 'THH_DVKT_1';
+                else if (nameLower.includes('tổ mực in')) nodeId = 'THH_DVKT_2';
+                else if (nameLower.includes('thuê máy')) nodeId = 'THH_DVKT_3';
+                else if (nameLower.includes('metercharg')) nodeId = 'THH_DVKT_4';
+                else if (nameLower.includes('online')) nodeId = 'THH_DVKT_5';
+                else if (nameLower.includes('tổng hợp')) nodeId = 'THH_KDTH';
+                else if (nameLower.includes('bán buôn')) nodeId = 'THH_KDBB';
+                else if (nameLower.includes('dự án')) nodeId = 'THH_DUAN';
+            } else if (currentParent === 'VIET') {
+                if (nameLower.includes('thuê máy')) nodeId = 'VIET_1';
+                else if (nameLower.includes('kdth')) nodeId = 'VIET_2';
+                else if (nameLower.includes('online')) nodeId = 'VIET_3';
+                else if (nameLower.includes('cửa hàng')) nodeId = 'VIET_4';
+            } else if (currentParent === 'VPS_CORP') {
+                if (nameLower.includes('hoạt động kd')) nodeId = 'VPS_KD';
+                else if (nameLower.includes('tài chính')) nodeId = 'VPS_TC';
+            } else if (currentParent === 'XESCO_KD') {
+                if (nameLower.includes('máy lẻ')) nodeId = 'XESCO_KD_1';
+                else if (nameLower.includes('kd sỉ') || nameLower.includes('sỉ')) nodeId = 'XESCO_KD_2';
+                else if (nameLower.includes('online')) nodeId = 'XESCO_KD_3';
+                else if (nameLower.includes('thuê máy')) nodeId = 'XESCO_KD_4';
             } else if (currentParent === 'XESCO_KT') {
-                if (nameLower.includes('thuê máy')) matchedId = 'XESCO_KT_1';
-                else if (nameLower.includes('metercharge')) matchedId = 'XESCO_KT_2';
-                else if (nameLower.includes('dịch vụ')) matchedId = 'XESCO_KT_3';
+                if (nameLower.includes('thuê máy')) nodeId = 'XESCO_KT_1';
+                else if (nameLower.includes('metercharg')) nodeId = 'XESCO_KT_2';
+                else if (nameLower.includes('dịch vụ')) nodeId = 'XESCO_KT_3';
             } else if (currentParent === 'MT') {
-                if (nameLower.includes('linh kiện')) matchedId = 'MT_2';
-                else if (nameLower.includes('máy - bán buôn') || (nameLower.includes('máy') && nameLower.includes('buôn'))) matchedId = 'MT_1';
-                else if (nameLower.includes('shopee') || nameLower.includes('online')) matchedId = 'MT_3';
-                else if (nameLower.includes('toàn phần')) matchedId = 'MT_6';
-                else if (nameLower.includes('dịch vụ')) matchedId = 'MT_4';
-                else if (nameLower.includes('thuê máy')) matchedId = 'MT_5';
-                else if (nameLower.includes('bán lẻ')) matchedId = 'MT_7';
+                if (nameLower.includes('linh kiện')) nodeId = 'MT_2';
+                else if (nameLower.includes('máy - bán buôn') || (nameLower.includes('máy') && nameLower.includes('buôn'))) nodeId = 'MT_1';
+                else if (nameLower.includes('shope') || nameLower.includes('online')) nodeId = 'MT_3';
+                else if (nameLower.includes('toàn phần')) nodeId = 'MT_6';
+                else if (nameLower.includes('dịch vụ')) nodeId = 'MT_4';
+                else if (nameLower.includes('thuê máy')) nodeId = 'MT_5';
+                else if (nameLower.includes('bán lẻ')) nodeId = 'MT_7';
             }
 
-            if (!matchedId) {
-                matchedId = mapKeyToId[sttLower] || mapKeyToId[nameLower];
-            }
+            if (nodeId) {
+                const vonDT = cleanVal(row[offset + 1]);
+                const m_ds = cleanVal(row[offset + 2]);
+                const m_rateLg = cleanVal(row[offset + 3], true);
+                const m_lg = cleanVal(row[offset + 4]);
+                const m_htLg = cleanVal(row[offset + 5]);
+                const m_cp = cleanVal(row[offset + 6]);
+                const m_tnk = cleanVal(row[offset + 7]);
+                const m_lntt = cleanVal(row[offset + 8]);
 
-            if (!matchedId) {
-                for (const [k, id] of Object.entries(mapKeyToId)) {
-                    if (nameLower.includes(k) && k.length > 2) {
-                        matchedId = id;
-                        break;
-                    }
+                const c_ds = cleanVal(row[offset + 9]);
+                const c_rateLg = cleanVal(row[offset + 10], true);
+                const c_lg = cleanVal(row[offset + 11]);
+                const c_htLg = cleanVal(row[offset + 12]);
+                const c_cp = cleanVal(row[offset + 13]);
+                const c_tnk = cleanVal(row[offset + 14]);
+                const c_lntt = cleanVal(row[offset + 15]);
+
+                const fixedVon = nodeId === 'GRAND_TOTAL' ? 93000 : (nodeId === 'MB' ? 90000 : (nodeId === 'THH' ? 50000 : (nodeId === 'VIET' || nodeId === 'VPS_CORP' ? 10000 : (nodeId === 'XESCO' ? 15000 : (nodeId === 'MT' ? 3000 : (nodeId === 'ITSS' ? 5000 : null))))));
+
+                const nodeObj = {
+                    vonDT: fixedVon || (vonDT ? vonDT * (vonDT < 1000 ? 1000 : 1) : null),
+                    monthData: { ds: m_ds, rateLg: m_rateLg, lg: m_lg, htLg: m_htLg, chiPhi: m_cp, tnKhac: m_tnk, lntt: m_lntt },
+                    cumData: { ds: c_ds, rateLg: c_rateLg, lg: c_lg, htLg: c_htLg, chiPhi: c_cp, tnKhac: c_tnk, lntt: c_lntt }
+                };
+
+                if (nodeId === 'GRAND_TOTAL') {
+                    grandTotal = {
+                        stt: '★',
+                        name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
+                        vonDT: 93000,
+                        monthData: nodeObj.monthData,
+                        cumData: nodeObj.cumData
+                    };
+                } else {
+                    nodes[nodeId] = nodeObj;
                 }
-            }
-
-            if (matchedId === 'GRAND_TOTAL' || nameLower.includes('tổng cộng') || sttLower === '★') {
-                grandTotal = {
-                    stt: '★',
-                    name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
-                    vonDT: vonDT || 93000,
-                    monthData: { ds: m_ds, rateLg: m_rateLg, lg: m_lg, htLg: m_htLg, chiPhi: m_cp, tnKhac: m_tnk, lntt: m_lntt },
-                    cumData: { ds: c_ds, rateLg: c_rateLg, lg: c_lg, htLg: c_htLg, chiPhi: c_cp, tnKhac: c_tnk, lntt: c_lntt }
-                };
-            } else if (matchedId) {
-                nodes[matchedId] = {
-                    monthData: { ds: m_ds, rateLg: m_rateLg, lg: m_lg, htLg: m_htLg, chiPhi: m_cp, tnKhac: m_tnk, lntt: m_lntt },
-                    cumData: { ds: c_ds, rateLg: c_rateLg, lg: c_lg, htLg: c_htLg, chiPhi: c_cp, tnKhac: c_tnk, lntt: c_lntt }
-                };
             }
         }
 
@@ -1514,3 +1568,15 @@ window.KqkdModule = {
         document.body.removeChild(link);
     }
 };
+
+// Tự động khởi tạo khi DOM sẵn sàng
+if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.KqkdModule) window.KqkdModule.init();
+        });
+    } else {
+        if (window.KqkdModule) window.KqkdModule.init();
+    }
+}
+
