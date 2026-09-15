@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'iso': '9. ISO',
                 'training': '10. Đào Tạo',
                 'culture': '11. Văn Hóa Doanh Nghiệp',
-                'brand': '12. Thương Hiệu',
+                'brand': '12. Marketing',
                 'kqkd': '13. Báo Cáo Kết Quả Kinh Doanh',
                 'admin': 'Quản trị Hệ thống'
             };

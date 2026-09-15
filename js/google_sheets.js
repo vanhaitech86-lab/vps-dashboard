@@ -119,8 +119,8 @@ async function fetchSheetCsv(sheetId, sheetName) {
         baseNames.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ', '8. Dịch vụ', '8. Dịch Vụ', '8. Dịch vụ tận tâm', '8. Dịch Vụ Tận Tâm', 'DV tận tâm', 'Dich vu');
     } else if (sheetName.includes('Văn hóa') || sheetName.includes('Văn Hóa')) {
         baseNames.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp', 'Văn hóa DN', 'Văn Hóa DN', '11. Văn hóa', '11. Văn hóa DN', '11. Văn hóa doanh nghiệp', 'Van hoa');
-    } else if (sheetName.includes('Thương hiệu') || sheetName.includes('Thương Hiệu')) {
-        baseNames.push('Thương Hiệu', 'Thương hiệu', '12. Thương hiệu', '12. Thương Hiệu', 'Thuong hieu', 'THƯƠNG HIỆU');
+    } else if (sheetName.includes('Thương hiệu') || sheetName.includes('Thương Hiệu') || sheetName.includes('Marketing') || sheetName.includes('marketing')) {
+        baseNames.push('Marketing', 'marketing', '12. Marketing', 'MARKETING', 'Thương Hiệu', 'Thương hiệu', '12. Thương hiệu', '12. Thương Hiệu', 'Thuong hieu', 'THƯƠNG HIỆU');
     } else if (sheetName.includes('Sản')) {
         baseNames.push('Sản Phẩm', 'Sản phẩm', '3. Sản phẩm', '3. Sản Phẩm', 'San pham');
     } else if (sheetName.includes('Công nợ') || sheetName.includes('Công Nợ')) {

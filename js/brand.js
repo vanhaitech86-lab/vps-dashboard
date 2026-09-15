@@ -4,7 +4,7 @@
 // ============================================================
 
 window.BrandModule = {
-    name: 'Thương Hiệu',
+    name: 'Marketing',
     currentTab: 'dashboard',  // 'dashboard' | 'detail'
     selectedCompany: 'all',
     charts: {},
@@ -244,7 +244,7 @@ window.BrandModule = {
             <!-- TAB BAR -->
             <div style="display:flex; align-items:center; border-bottom: 2px solid #e2e8f0; background:#fff; padding: 0 16px; position: sticky; top:0; z-index:10; gap:4px;">
                 <button onclick="window.BrandModule.switchTab('dashboard')" style="${tabStyle('dashboard')}">
-                    📊 TỔNG QUAN THƯƠNG HIỆU
+                    📊 TỔNG QUAN MARKETING
                 </button>
                 <button onclick="window.BrandModule.switchTab('detail')" style="${tabStyle('detail')}">
                     📋 CHI TIẾT THEO ĐƠN VỊ
@@ -305,7 +305,7 @@ window.BrandModule = {
         <div style="display:flex; align-items:center; margin-bottom:16px; gap:12px;">
             <div style="width:4px; height:32px; background:linear-gradient(180deg,#4f46e5,#7c3aed); border-radius:2px;"></div>
             <div>
-                <h2 style="margin:0; font-size:1.1rem; font-weight:800; color:#1e293b;">BÁO CÁO THƯƠNG HIỆU</h2>
+                <h2 style="margin:0; font-size:1.1rem; font-weight:800; color:#1e293b;">BÁO CÁO MARKETING</h2>
                 <p style="margin:0; font-size:0.8rem; color:#64748b;">${title} · Năm 2026</p>
             </div>
         </div>
@@ -348,7 +348,7 @@ window.BrandModule = {
         <!-- BẢNG TÓM TẮT -->
         <div style="background:#fff; border-radius:12px; box-shadow:0 1px 6px rgba(0,0,0,0.08); overflow:hidden;">
             <div style="padding:12px 16px; background:linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff;">
-                <h3 style="margin:0; font-size:0.9rem; font-weight:700;">📋 Bảng Tổng Hợp Chỉ Tiêu Thương Hiệu - 5 Đơn Vị</h3>
+                <h3 style="margin:0; font-size:0.9rem; font-weight:700;">📋 Bảng Tổng Hợp Chỉ Tiêu Marketing - 5 Đơn Vị</h3>
             </div>
             <div style="overflow-x:auto;">
                 <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
