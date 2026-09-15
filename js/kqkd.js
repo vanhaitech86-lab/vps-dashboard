@@ -43,15 +43,15 @@ window.KqkdModule = {
         // I. MIỀN BẮC
         // ========================================================
         {
-            id: 'MB', stt: 'I', name: 'MIỀN BẮC', vonDT: 80000, company: 'group', isHeader: true, isGroup: true,
-            exactMonth: { ds: 63264.1, rateLg: 10.0, lg: 8479.1, htLg: 5.0, chiPhi: 7843.2, tnKhac: 1095.0, lntt: -89.0 },
-            exactCum: { ds: 418000.0, rateLg: 21.0, lg: 87780.0, htLg: 335.0, chiPhi: 80000.0, tnKhac: 7731.0, lntt: -234.0 },
+            id: 'MB', stt: 'I', name: 'MIỀN BẮC', vonDT: 90000, company: 'group', isHeader: true, isGroup: true,
+            exactMonth: { ds: 41454.0, rateLg: 10.0, lg: 6070.0, htLg: 5.0, chiPhi: 6865.0, tnKhac: 1095.0, lntt: -89.0 },
+            exactCum: { ds: 197473.0, rateLg: 21.0, lg: 44982.0, htLg: 335.0, chiPhi: 49241.0, tnKhac: 7731.0, lntt: -234.0 },
             children: [
                 // 1. THH (Tân Hồng Hà)
                 {
                     id: 'THH', stt: '1', name: 'THH (Tân Hồng Hà)', vonDT: 50000, company: 'Tân Hồng Hà', isGroup: true,
-                    exactMonth: { ds: 31215.1, rateLg: 18.0, lg: 3515.1, htLg: 5.0, chiPhi: 2317.2, tnKhac: 8.0, lntt: 245.0 },
-                    exactCum: { ds: 219307.7, rateLg: 21.0, lg: 46054.6, htLg: 335.0, chiPhi: 16000.0, tnKhac: 57.0, lntt: 2376.0 },
+                    exactMonth: { ds: 8804.0, rateLg: 18.0, lg: 1568.0, htLg: 5.0, chiPhi: 1341.0, tnKhac: 8.0, lntt: 245.0 },
+                    exactCum: { ds: 66583.0, rateLg: 21.0, lg: 10082.0, htLg: 335.0, chiPhi: 12453.0, tnKhac: 57.0, lntt: 2376.0 },
                     children: [
                         {
                             id: 'THH_DVKT', stt: 'a', name: 'Khối dịch vụ kỹ thuật', vonDT: null, company: 'Tân Hồng Hà', isGroup: true,
@@ -88,7 +88,7 @@ window.KqkdModule = {
                 },
                 // 2. Việt
                 {
-                    id: 'VIET', stt: '2', name: 'Việt', vonDT: null, company: 'Việt', isGroup: true,
+                    id: 'VIET', stt: '2', name: 'Việt', vonDT: 10000, company: 'Việt', isGroup: true,
                     exactMonth: { ds: 6848.0, rateLg: 20.3, lg: 1390.0, htLg: 0, chiPhi: 983.0, tnKhac: 7.0, lntt: 382.0 },
                     exactCum: { ds: 40294.0, rateLg: 21.0, lg: 8562.0, htLg: 0, chiPhi: 6903.0, tnKhac: 13.0, lntt: 1672.0 },
                     children: [
@@ -352,9 +352,9 @@ window.KqkdModule = {
             return {
                 stt: '★',
                 name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
-                vonDT: 83000,
-                monthData: { ds: 64938.1, rateLg: 15.0, lg: 8718.1, htLg: 5.0, chiPhi: 8063.2, tnKhac: 1161.0, lntt: 830.0 },
-                cumData: { ds: 429252.0, rateLg: 23.0, lg: 90046.0, htLg: 335.0, chiPhi: 81515.0, tnKhac: 8033.0, lntt: 4861.0 }
+                vonDT: 93000,
+                monthData: { ds: 43128.0, rateLg: 15.0, lg: 6309.0, htLg: 5.0, chiPhi: 7085.0, tnKhac: 1161.0, lntt: 830.0 },
+                cumData: { ds: 208724.0, rateLg: 23.0, lg: 47249.0, htLg: 335.0, chiPhi: 50756.0, tnKhac: 8033.0, lntt: 4861.0 }
             };
         }
 
@@ -365,13 +365,13 @@ window.KqkdModule = {
             sumFactor += this.monthFactors[i];
         }
 
-        const baseM = { ds: 64938.1, rateLg: 15.0, lg: 8718.1, htLg: 5.0, chiPhi: 8063.2, tnKhac: 1161.0, lntt: 830.0 };
-        const baseC = { ds: 429252.0, rateLg: 23.0, lg: 90046.0, htLg: 335.0, chiPhi: 81515.0, tnKhac: 8033.0, lntt: 4861.0 };
+        const baseM = { ds: 43128.0, rateLg: 15.0, lg: 6309.0, htLg: 5.0, chiPhi: 7085.0, tnKhac: 1161.0, lntt: 830.0 };
+        const baseC = { ds: 208724.0, rateLg: 23.0, lg: 47249.0, htLg: 335.0, chiPhi: 50756.0, tnKhac: 8033.0, lntt: 4861.0 };
 
         return {
             stt: '★',
             name: 'TỔNG CỘNG TOÀN TẬP ĐOÀN (VPS GROUP)',
-            vonDT: 83000,
+            vonDT: 93000,
             monthData: {
                 ds: baseM.ds * factor,
                 rateLg: baseM.rateLg,
