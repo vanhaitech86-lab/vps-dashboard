@@ -926,6 +926,14 @@ window.GoogleSheetsService = {
 
             // Kích hoạt re-render UI
             if (window.FilterManager) window.FilterManager.triggerFilterChange();
+
+            // Tự động quét và đồng bộ báo cáo KQKD (P&L) nếu có cấu hình Google Sheets
+            if (window.KqkdModule && typeof window.KqkdModule.syncGoogleSheet === 'function') {
+                window.KqkdModule.syncGoogleSheet(false).catch(err => {
+                    console.warn('[GS] KQKD sync failed silently:', err);
+                });
+            }
+
             return window.mockData;
 
         } catch(e) {
