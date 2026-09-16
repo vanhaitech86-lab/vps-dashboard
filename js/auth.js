@@ -13,7 +13,7 @@ const ROLES = {
 
 // Default Mock Users Database
 const DEFAULT_USERS = {
-    'ADMIN': { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' },
+    'ADMIN': { password: 'Admin123a@', role: ROLES.CEO, name: 'ADMIN', company: 'all' },
     'CEO': { password: '123a@', role: ROLES.CEO, name: 'CEO/TỔNG GIÁM ĐỐC VPS', company: 'all' },
     'THH': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC TÂN HỒNG HÀ', company: 'Tân Hồng Hà' },
     'VCOPY': { password: '123a@', role: ROLES.DIRECTOR, name: 'GIÁM ĐỐC VIỆT', company: 'Việt' },
@@ -40,12 +40,12 @@ window.AuthService = {
                 usersDB = JSON.parse(JSON.stringify(DEFAULT_USERS));
             }
             // Master override: NEVER allow missing ADMIN
-            usersDB['ADMIN'] = { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
+            usersDB['ADMIN'] = { password: 'Admin123a@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
             localStorage.setItem('vps_users_db', JSON.stringify(usersDB));
         } catch(err) {
             console.error('Fatal loadUsers error', err);
             usersDB = JSON.parse(JSON.stringify(DEFAULT_USERS));
-            usersDB['ADMIN'] = { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
+            usersDB['ADMIN'] = { password: 'Admin123a@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
         }
     },
 
@@ -77,8 +77,8 @@ window.AuthService = {
             const p = password.trim();
             
             // Master override for admin
-            if (u === 'admin' && (p === 'Admin123@' || p === 'admin123' || p === 'admin123@' || p === 'Admin123')) {
-                this.currentUser = usersDB['ADMIN'] || { password: 'Admin123@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
+            if (u === 'admin' && (p === 'Admin123a@' || p === 'admin123a@' || p === 'Admin123@' || p === 'admin123@' || p === 'Admin123' || p === 'admin123')) {
+                this.currentUser = usersDB['ADMIN'] || { password: 'Admin123a@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
                 localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
                 return true;
             }
