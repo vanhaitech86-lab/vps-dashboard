@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.ServiceModule) window.ServiceModule.init();
             if(window.BrandModule) window.BrandModule.init();
             if(window.KqkdModule) window.KqkdModule.init();
+            if(window.CashflowModule) window.CashflowModule.init();
             
             // Trigger CRM API Backend Test
             if(window.CrmConnector) window.CrmConnector.fetchDashboardData(new Date().getMonth() + 1, user.company);
@@ -227,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'culture': '11. Văn Hóa Doanh Nghiệp',
                 'brand': '12. Marketing',
                 'kqkd': '13. Báo Cáo Kết Quả Kinh Doanh',
+                'cashflow': '14. Báo Cáo Kế Hoạch Dòng Tiền',
                 'admin': 'Quản trị Hệ thống'
             };
             document.getElementById('page-title').textContent = titles[viewId] || 'Dashboard';
@@ -241,6 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetEl) targetEl.classList.remove('hidden');
             if (viewId === 'kqkd' && window.KqkdModule) {
                 window.KqkdModule.render();
+            }
+            if (viewId === 'cashflow' && window.CashflowModule) {
+                window.CashflowModule.render();
             }
             if (window.FilterManager) {
                 window.FilterManager.triggerFilterChange();
