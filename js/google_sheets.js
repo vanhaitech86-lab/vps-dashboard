@@ -874,12 +874,38 @@ window.GoogleSheetsService = {
                 }
             });
 
+            // Danh sách khách hàng mặc định đảm bảo tất cả đơn vị đều có danh sách khách hàng nợ
+            const defaultDebtsList = [
+                { id: 101, customer: 'Công ty CP Tập đoàn Hòa Bình', company: 'THH', amount: 250000000, daysOverdue: 120, status: 'Khoá tài khoản' },
+                { id: 102, customer: 'Công ty TNHH Quảng Cáo Sao Mai', company: 'THH', amount: 150000000, daysOverdue: 95, status: 'Đang theo dõi pháp lý' },
+                { id: 103, customer: 'Công ty In ấn Bao bì Á Châu', company: 'THH', amount: 180000000, daysOverdue: 150, status: 'Đang đòi nợ' },
+                { id: 201, customer: 'Đại lý Gamma', company: 'Viet', amount: 120000000, daysOverdue: 150, status: 'Khoá tài khoản' },
+                { id: 202, customer: 'Công ty CP Viễn thông Đông Dương', company: 'Viet', amount: 70000000, daysOverdue: 110, status: 'Chờ đối chiếu biên bản' },
+                { id: 203, customer: 'Công ty CP Đầu tư Delta', company: 'Viet', amount: 50000000, daysOverdue: 95, status: 'Đang pháp lý' },
+                { id: 301, customer: 'Tập đoàn Beta', company: 'XemSon', amount: 500000000, daysOverdue: 95, status: 'Đang pháp lý' },
+                { id: 302, customer: 'Công ty CP May Phú Thịnh', company: 'XemSon', amount: 120000000, daysOverdue: 120, status: 'Tạm dừng dịch vụ' },
+                { id: 303, customer: 'Công ty CP Địa ốc Sông Hồng', company: 'XemSon', amount: 180000000, daysOverdue: 150, status: 'Tranh chấp hợp đồng' },
+                { id: 401, customer: 'Đại lý Epsilon', company: 'VPSM', amount: 150000000, daysOverdue: 60, status: 'Đang theo dõi' },
+                { id: 402, customer: 'Công ty CP Vận tải Biển Đông', company: 'VPSM', amount: 85000000, daysOverdue: 110, status: 'Chờ thanh toán' },
+                { id: 403, customer: 'Công ty Quảng cáo Sài Gòn Mới', company: 'VPSM', amount: 60000000, daysOverdue: 90, status: 'Khoá máy' },
+                { id: 501, customer: 'Cửa hàng Delta', company: 'ITSS', amount: 85000000, daysOverdue: 110, status: 'Chờ thanh toán' },
+                { id: 502, customer: 'Công ty Khởi nghiệp SmartTech', company: 'ITSS', amount: 35000000, daysOverdue: 95, status: 'Đang đàm phán' },
+                { id: 503, customer: 'Công ty CP Alpha Media', company: 'ITSS', amount: 25000000, daysOverdue: 120, status: 'Khoá dịch vụ' },
+                { id: 601, customer: 'Công ty CP Dịch vụ Tổng hợp VPS', company: 'VPVPS', amount: 45000000, daysOverdue: 90, status: 'Đang theo dõi' }
+            ];
+
+            const finalBadDebts = [...realBadDebts];
+            const coveredComp = new Set(realBadDebts.map(r => r.company));
+            defaultDebtsList.forEach(d => {
+                if (!coveredComp.has(d.company)) {
+                    finalBadDebts.push(d);
+                }
+            });
+
             window.mockData.debt = {
                 total: totalDebtTy,
                 byCompany: debtByCompany,
-                badDebtsList: realBadDebts.length > 0 ? realBadDebts : [
-                    { id: 1, customer: 'Nợ khó đòi (Việt)', company: 'Viet', amount: 10933092, daysOverdue: 150, status: 'Đang pháp lý' }
-                ]
+                badDebtsList: finalBadDebts
             };
 
             // ── Cập nhật mockData.hr ──

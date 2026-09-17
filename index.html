@@ -467,8 +467,12 @@
                 <!-- Debt View -->
                 <section id="view-debt" class="view hidden">
                      <div class="card">
-                        <div class="card-header">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                             <h3>Tình Hình Công Nợ (Tỷ VNĐ)</h3>
+                            <span style="font-size: 0.8rem; color: #0284c7; font-weight: 500; background: #e0f2fe; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">
+                                <i data-lucide="mouse-pointer-click" style="width: 13px; height: 13px;"></i>
+                                Nhấn vào cột đơn vị trên biểu đồ để xem chi tiết khách hàng
+                            </span>
                         </div>
                         <div class="card-body">
                             <div class="chart-container" style="height: 350px;">
@@ -478,8 +482,13 @@
                     </div>
                     
                     <div class="card mt-20">
-                        <div class="card-header">
-                            <h3>Danh Sách Khách Hàng Khó Đòi</h3>
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <h3 id="bad-debt-title" style="margin: 0;">Danh Sách Khách Hàng Khó Đòi</h3>
+                                <button id="bad-debt-reset-filter" class="btn btn-sm" type="button" style="display: none; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1; cursor: pointer; font-weight: 500;">
+                                    ✕ Xem tất cả
+                                </button>
+                            </div>
                         </div>
                         <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
                             <table class="data-table">
@@ -489,12 +498,12 @@
                                         <th style="padding-left: 0;">
                                             <select id="bad-debt-company-filter" style="border: none; border-bottom: 1px dashed #ccc; border-radius: 0; padding: 2px 0; font-weight: bold; background: transparent; cursor: pointer; color: #6c757d; text-transform: uppercase; font-size: 0.75rem; outline: none;">
                                                 <option value="all">ĐƠN VỊ</option>
-                                                <option value="Tân Hồng Hà">Tân Hồng Hà</option>
-                                                <option value="Việt">Việt</option>
-                                                <option value="Xem Sơn">Xem Sơn</option>
-                                                <option value="VPS M">VPS M</option>
+                                                <option value="THH">Tân Hồng Hà</option>
+                                                <option value="Viet">Việt</option>
+                                                <option value="XemSon">Xem Sơn</option>
+                                                <option value="VPSM">VPS M</option>
                                                 <option value="ITSS">ITSS</option>
-<option value="Văn phòng VPS">Văn phòng VPS</option>
+                                                <option value="VPVPS">Văn phòng VPS</option>
                                             </select>
                                         </th>
                                         <th>Số Tiền (VNĐ)</th>
