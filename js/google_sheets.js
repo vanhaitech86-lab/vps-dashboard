@@ -108,74 +108,88 @@ function parseRawCSV(text) {
     return lines;
 }
 
+// Bộ nhớ cache tên tab đã quét thành công để tránh quét lặp lại
+const TAB_NAME_CACHE_KEY = 'vps_sheet_tab_cache_v2';
+function getCachedTabName(sheetId, sheetName) {
+    try {
+        const raw = localStorage.getItem(TAB_NAME_CACHE_KEY);
+        if (raw) {
+            const map = JSON.parse(raw);
+            return map[`${sheetId}_${sheetName}`] || null;
+        }
+    } catch(e) {}
+    return null;
+}
+function setCachedTabName(sheetId, sheetName, tabName) {
+    try {
+        const raw = localStorage.getItem(TAB_NAME_CACHE_KEY);
+        const map = raw ? JSON.parse(raw) : {};
+        map[`${sheetId}_${sheetName}`] = tabName;
+        localStorage.setItem(TAB_NAME_CACHE_KEY, JSON.stringify(map));
+    } catch(e) {}
+}
+
 async function fetchSheetCsv(sheetId, sheetName) {
     const t = Date.now();
+    const cachedName = getCachedTabName(sheetId, sheetName);
+
     const baseNames = [sheetName];
     if (sheetName.includes('Chi')) {
-        baseNames.push('Chi phí', 'Chi Phí', '5. Chi phí', '5. Chi Phí', 'Chi phi');
+        baseNames.push('Chi phí', 'Chi Phí', '5. Chi phí', '5. Chi Phí');
     } else if (sheetName.includes('Đào tạo') || sheetName.includes('Đào Tạo')) {
-        baseNames.push('Đào Tạo', 'Đào tạo', '10. Đào tạo', '10. Đào Tạo', 'Đào tạo 2026', 'Dao tao', 'DAO TAO');
+        baseNames.push('Đào Tạo', 'Đào tạo', '10. Đào tạo', '10. Đào Tạo');
     } else if (sheetName.includes('Dịch vụ') || sheetName.includes('Dịch Vụ')) {
-        baseNames.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ', '8. Dịch vụ', '8. Dịch Vụ', '8. Dịch vụ tận tâm', '8. Dịch Vụ Tận Tâm', 'DV tận tâm', 'Dich vu');
+        baseNames.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ', '8. Dịch vụ', '8. Dịch Vụ');
     } else if (sheetName.includes('Văn hóa') || sheetName.includes('Văn Hóa')) {
-        baseNames.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', 'Văn hóa doanh nghiệp', 'Văn hóa DN', 'Văn Hóa DN', '11. Văn hóa', '11. Văn hóa DN', '11. Văn hóa doanh nghiệp', 'Van hoa');
-    } else if (sheetName.includes('Thương hiệu') || sheetName.includes('Thương Hiệu') || sheetName.includes('Marketing') || sheetName.includes('marketing')) {
-        baseNames.push('Marketing', 'marketing', '12. Marketing', 'MARKETING', 'Thương Hiệu', 'Thương hiệu', '12. Thương hiệu', '12. Thương Hiệu', 'Thuong hieu', 'THƯƠNG HIỆU');
+        baseNames.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', '11. Văn hóa', '11. Văn hóa DN');
+    } else if (sheetName.includes('Thương hiệu') || sheetName.includes('Marketing')) {
+        baseNames.push('Marketing', '12. Marketing', 'Thương Hiệu', 'Thương hiệu', '12. Thương hiệu');
     } else if (sheetName.includes('Sản')) {
-        baseNames.push('Sản Phẩm', 'Sản phẩm', '3. Sản phẩm', '3. Sản Phẩm', 'San pham');
-    } else if (sheetName.includes('Công nợ') || sheetName.includes('Công Nợ')) {
-        baseNames.push('Công nợ', 'Công Nợ', '6. Công nợ', '6. Công Nợ', 'Cong no');
+        baseNames.push('Sản Phẩm', 'Sản phẩm', '3. Sản phẩm', '3. Sản Phẩm');
+    } else if (sheetName.includes('Công nợ')) {
+        baseNames.push('Công nợ', 'Công Nợ', '6. Công nợ', '6. Công Nợ');
     } else if (sheetName.includes('Khách')) {
-        baseNames.push('Khách hàng', 'Khách Hàng', '7. Khách hàng', '7. Khách Hàng', 'Khach hang');
+        baseNames.push('Khách hàng', 'Khách Hàng', '7. Khách hàng', '7. Khách Hàng');
     } else if (sheetName.includes('Tồn')) {
-        baseNames.push('Tồn kho', 'Tồn Kho', '4. Tồn kho', '4. Tồn Kho', 'Ton kho');
+        baseNames.push('Tồn kho', 'Tồn Kho', '4. Tồn kho', '4. Tồn Kho');
     } else if (sheetName.includes('Nhân')) {
-        baseNames.push('Nhân sự', 'Nhân Sự', '1. CCTC Nhân sự', 'CCTC Nhân sự', 'Nhan su');
+        baseNames.push('Nhân sự', 'Nhân Sự', '1. CCTC Nhân sự', 'CCTC Nhân sự');
     } else if (sheetName.includes('ISO')) {
-        baseNames.push('ISO', 'iso', '9. ISO', '9. iso');
-    } else if (sheetName.includes('Doanh thu') || sheetName.includes('Doanh Thu')) {
-        baseNames.push('Doanh thu', 'Doanh Thu', '2. Doanh thu', '2. Doanh Thu', 'Doanh số', 'Doanh Số');
-    } else if (sheetName.includes('Kinh doanh') || sheetName.includes('KQKD') || sheetName.includes('Kết quả') || sheetName.includes('P&L')) {
-        baseNames.push('Kết quả kinh doanh', 'KQKD', 'P&L', '13. Kết quả kinh doanh', '13. KQKD', 'Ket qua kinh doanh', 'KET QUA KINH DOANH');
+        baseNames.push('ISO', 'iso', '9. ISO');
+    } else if (sheetName.includes('Doanh thu')) {
+        baseNames.push('Doanh thu', 'Doanh Thu', '2. Doanh thu', '2. Doanh Thu');
+    } else if (sheetName.includes('Kinh doanh') || sheetName.includes('KQKD')) {
+        baseNames.push('Kết quả kinh doanh', 'KQKD', 'P&L', '13. Kết quả kinh doanh', '13. KQKD');
     }
 
-    const prefixes = [
-        '',
-        ' ',
-        '  ',
-        'Bản sao của ',
-        ' Bản sao của ',
-        'Bản sao của Bản sao của ',
-        ' Bản sao của Bản sao của ',
-        'Bản sao của Bản sao của Bản sao của ',
-        'Copy of ',
-        'Copy of Copy of '
-    ];
-
+    const prefixes = ['', 'Bản sao của ', 'Copy of '];
     let candidates = [];
-    for (const p of prefixes) {
-        for (const b of baseNames) {
-            candidates.push(p + b);
-            candidates.push(p + b + ' ');
-            candidates.push(p + b + '  ');
+    // Ưu tiên 1: Tên tab đã từng quét thành công trong bộ nhớ cache
+    if (cachedName) {
+        candidates.push(cachedName);
+    }
+    for (const b of baseNames) {
+        for (const p of prefixes) {
+            const full = p + b;
+            if (!candidates.includes(full)) candidates.push(full);
         }
     }
-    candidates = [...new Set(candidates)];
+
     let validText = '';
-
-
 
     for (const name of candidates) {
         const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&_t=${t}`;
         try {
-            const res = await fetch(url);
+            const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+            const timeoutId = controller ? setTimeout(() => controller.abort(), 3500) : null;
+            const res = await fetch(url, controller ? { signal: controller.signal } : {});
+            if (timeoutId) clearTimeout(timeoutId);
+
             if (!res.ok) continue;
             const text = await res.text();
             if (text.includes('google.visualization.Query.setResponse') && text.includes('error')) continue;
             
-            // Nếu tìm sheet không phải Doanh thu mà kết quả trả về bắt đầu bằng "BÁO CÁO DOANH THU & LỢI NHUẬN",
-            // nghĩa là Google Sheets không tìm thấy sheet này và tự động nhảy về sheet đầu tiên (Doanh thu).
-            // Ta bỏ qua để tìm các tên khác trong candidates (ví dụ "Bản sao của ...").
+            // Nếu tìm sheet không phải Doanh thu mà kết quả trả về nhảy về Doanh thu thì bỏ qua
             if (!sheetName.toLowerCase().includes('doanh thu')) {
                 const firstLine = (text.split('\n')[0] || '').toLowerCase();
                 if (firstLine.includes('báo cáo doanh thu') || firstLine.includes('doanh số kế hoạch')) {
@@ -183,6 +197,8 @@ async function fetchSheetCsv(sheetId, sheetName) {
                 }
             }
             validText = text;
+            // Lưu ngay vào cache tên tab chuẩn xác để lần sau chỉ tốn đúng 1 request!
+            setCachedTabName(sheetId, sheetName, name);
             break;
         } catch(e) {}
     }
@@ -518,11 +534,78 @@ function parseBrand(csv, compName) {
 }
 
 // ============================================================
-// MAIN SERVICE
+// MAIN SERVICE (TỰ ĐỘNG ĐỒNG BỘ NGẦM REALTIME & PERSISTENT CACHING)
 // ============================================================
 window.GoogleSheetsService = {
+    _isLoading: false,
+    _activePromise: null,
+    _lastSyncTime: 0,
 
-    async loadAllData() {
+    // Nạp tức thì (0ms) dữ liệu từ Cache trình duyệt khi khởi động hoặc đăng nhập lại
+    hydrateFromCache() {
+        try {
+            const raw = localStorage.getItem('vps_dashboard_cache_v2');
+            if (raw) {
+                const cached = JSON.parse(raw);
+                if (cached && cached.mockData) {
+                    if (!window.mockData) window.mockData = {};
+                    Object.assign(window.mockData, cached.mockData);
+                    this._lastSyncTime = cached.timestamp || Date.now();
+                    console.log('[GS] Hydrated mockData from persistent cache, time:', new Date(this._lastSyncTime).toLocaleTimeString());
+                    return true;
+                }
+            }
+        } catch(e) {
+            console.warn('[GS] Error hydrating cache:', e);
+        }
+        return false;
+    },
+
+    // Lưu trữ dữ liệu chuẩn hóa vào Cache
+    saveToCache() {
+        try {
+            if (!window.mockData) return;
+            const payload = {
+                timestamp: Date.now(),
+                mockData: {
+                    revenue: window.mockData.revenue,
+                    debt: window.mockData.debt,
+                    hr: window.mockData.hr,
+                    inventory: window.mockData.inventory,
+                    products_raw: window.mockData.products_raw,
+                    expense_raw: window.mockData.expense_raw,
+                    iso_raw: window.mockData.iso_raw,
+                    service_raw: window.mockData.service_raw,
+                    training_summary: window.mockData.training_summary,
+                    culture_data: window.mockData.culture_data,
+                    brand_data: window.mockData.brand_data,
+                    customers: window.mockData.customers
+                }
+            };
+            localStorage.setItem('vps_dashboard_cache_v2', JSON.stringify(payload));
+            this._lastSyncTime = payload.timestamp;
+        } catch(e) {
+            console.warn('[GS] Error saving cache:', e);
+        }
+    },
+
+    async loadAllData(isManual = false) {
+        // Concurrency Guard: nếu đang quét thì tái sử dụng promise, không bắn thêm 60 request trùng lặp
+        if (this._isLoading && this._activePromise) {
+            return this._activePromise;
+        }
+
+        this._isLoading = true;
+        this._activePromise = this._doLoadAllData(isManual);
+        try {
+            return await this._activePromise;
+        } finally {
+            this._isLoading = false;
+            this._activePromise = null;
+        }
+    },
+
+    async _doLoadAllData(isManual = false) {
         try {
             console.log('[GS] Bat dau tai du lieu tu 5 cong ty (12 sheets/file)...');
             const companyIds = Object.keys(COMPANY_SHEETS);
@@ -934,6 +1017,9 @@ window.GoogleSheetsService = {
                 });
             }
 
+            // Tự động lưu trữ vào Cache sau khi quét thành công
+            this.saveToCache();
+
             return window.mockData;
 
         } catch(e) {
@@ -942,3 +1028,8 @@ window.GoogleSheetsService = {
         }
     }
 };
+
+// Tự động nạp cache ngay lập tức khi nạp script
+if (typeof window !== 'undefined' && window.GoogleSheetsService) {
+    window.GoogleSheetsService.hydrateFromCache();
+}

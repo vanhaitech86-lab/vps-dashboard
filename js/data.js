@@ -990,29 +990,27 @@ window.mockData = mockData;
 window.DataService = {
     async getCustomersData(period = 'month', company = 'all') {
         const d = (window.mockData && window.mockData.customers) ? window.mockData.customers : mockData.customers;
-        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(d, period)), 100));
+        return Promise.resolve(applyPeriodMultiplier(d, period));
     },
     
     async getRevenueData(period = 'month', company = 'all') {
         const d = (window.mockData && window.mockData.revenue) ? window.mockData.revenue : mockData.revenue;
-        return new Promise(resolve => setTimeout(() => resolve(applyPeriodMultiplier(d, period)), 100));
+        return Promise.resolve(applyPeriodMultiplier(d, period));
     },
     
     async getDebtData(period = 'month', company = 'all') {
         const d = (window.mockData && window.mockData.debt) ? window.mockData.debt : mockData.debt;
-        // Công nợ là số dư thời điểm (không nhân hệ số chu kỳ)
-        return new Promise(resolve => setTimeout(() => resolve(d), 100));
+        return Promise.resolve(d);
     },
 
     async getInventoryData(period = 'month', company = 'all') {
         const d = (window.mockData && window.mockData.inventory) ? window.mockData.inventory : mockData.inventory;
-        // Tồn kho là giá trị tài sản thời điểm (không nhân hệ số chu kỳ)
-        return new Promise(resolve => setTimeout(() => resolve(d), 100));
+        return Promise.resolve(d);
     },
 
     async getHrData(period = 'month', company = 'all') {
         const d = (window.mockData && window.mockData.hr) ? window.mockData.hr : mockData.hr;
-        return new Promise(resolve => setTimeout(() => resolve(d), 100));
+        return Promise.resolve(d);
     }
 };
 

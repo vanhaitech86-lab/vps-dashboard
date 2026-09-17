@@ -21,15 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         bindEvents() {
-            // Login Form
-            document.getElementById('login-form').addEventListener('submit', async (e) => {
+            // Login Form (Đăng nhập tức thì 0ms, không chờ mạng)
+            document.getElementById('login-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const user = document.getElementById('username').value;
                 const pass = document.getElementById('password').value;
                 
                 try {
                     if (window.AuthService.login(user, pass)) {
-                        await this.showApp();
+                        this.showApp();
                     } else {
                         alert('Đăng nhập thất bại. Kiểm tra lại thông tin.');
                     }
@@ -93,30 +93,21 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('app-screen').classList.add('hidden');
         },
 
-        async showApp() {
+        showApp() {
+            // Chuyển màn hình tức thì (0ms) để người dùng không phải chờ đợi
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('app-screen').classList.remove('hidden');
-            
-            // Show loading state (safe - element may not exist)
-            const topBarRight = document.querySelector('.top-bar-right') || document.querySelector('.filter-bar') || document.querySelector('header');
-            if (topBarRight) {
-                topBarRight.insertAdjacentHTML('beforeend', '<div id="gs-loading" style="color:red; font-weight:bold; margin-left:15px;">⏳ Đang đồng bộ Google Sheets...</div>');
+
+            // Nạp dữ liệu tức thì từ Cache cục bộ nếu có
+            if (window.GoogleSheetsService && typeof window.GoogleSheetsService.hydrateFromCache === 'function') {
+                window.GoogleSheetsService.hydrateFromCache();
             }
-            
-            // KẾT NỐI LẠI GOOGLE SHEETS
-            if (window.GoogleSheetsService) {
-                try {
-                    await window.GoogleSheetsService.loadAllData();
-                } catch(e) {
-                    console.warn('Google Sheets sync failed, using offline data:', e);
-                }
-            }
-            
-            // Remove loading
-            const loadingEl = document.getElementById('gs-loading');
-            if(loadingEl) loadingEl.remove();
 
             const user = window.AuthService.getCurrentUser();
+            if (!user) {
+                this.showLogin();
+                return;
+            }
             
             // Update UI with user info
             document.getElementById('current-user-name').textContent = user.name;
@@ -176,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.showView('overview');
             window.FilterManager.triggerFilterChange();
             
-            // Đảm bảo data load dù event bị miss
+            // Đảm bảo data load ngay lập tức
             setTimeout(() => {
                 if(window.OverviewModule) {
                     window.OverviewModule.loadData(
@@ -184,13 +175,59 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.FilterManager.currentCompany || 'all'
                     );
                 }
-            }, 500);
+            }, 50);
 
-            // Thiết lập chu kỳ tự động đồng bộ mỗi 60 giây trong nền
+            // KÍCH HOẠT ĐỒNG BỘ NGẦM REALTIME (NON-BLOCKING)
+            this.triggerBackgroundRealtimeSync();
+
+            // Thiết lập chu kỳ tự động đồng bộ mỗi 60 giây trong nền (Realtime liên tục)
             if (!this._syncInterval) {
                 this._syncInterval = setInterval(() => {
                     this.syncData(false);
                 }, 60000);
+            }
+        },
+
+        // Đồng bộ ngầm không gián đoạn giao diện
+        triggerBackgroundRealtimeSync() {
+            const lastSync = window.GoogleSheetsService ? (window.GoogleSheetsService._lastSyncTime || 0) : 0;
+            const now = Date.now();
+            const isFresh = (now - lastSync) < 180000; // Dữ liệu dưới 3 phút được coi là tươi mới
+
+            this.updateRealtimeBadge(isFresh ? 'synced' : 'syncing');
+
+            if (!isFresh) {
+                setTimeout(() => {
+                    this.syncData(false);
+                }, 300);
+            }
+        },
+
+        // Cập nhật huy hiệu trạng thái Realtime trên thanh tiêu đề
+        updateRealtimeBadge(status, customTime) {
+            const badge = document.getElementById('realtime-badge');
+            const dot = document.getElementById('realtime-dot');
+            const text = document.getElementById('realtime-text');
+            if (!badge || !dot || !text) return;
+
+            const now = new Date();
+            const timeStr = customTime || `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            if (status === 'syncing') {
+                dot.style.background = '#38bdf8';
+                dot.style.boxShadow = '0 0 6px #38bdf8';
+                text.textContent = 'Đang đồng bộ ngầm...';
+                text.style.color = '#38bdf8';
+            } else if (status === 'synced') {
+                dot.style.background = '#10b981';
+                dot.style.boxShadow = '0 0 6px #10b981';
+                text.textContent = `Realtime • Cập nhật ${timeStr}`;
+                text.style.color = '#10b981';
+            } else if (status === 'error') {
+                dot.style.background = '#f59e0b';
+                dot.style.boxShadow = '0 0 6px #f59e0b';
+                text.textContent = `Offline • ${timeStr}`;
+                text.style.color = '#f59e0b';
             }
         },
 
@@ -199,11 +236,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const syncIcon = document.getElementById('sync-icon');
             const syncText = document.getElementById('sync-text');
             if (syncIcon) syncIcon.style.animation = 'spin 0.8s linear infinite';
-            if (syncText) syncText.textContent = 'Đang tải...';
+            if (syncText) syncText.textContent = isManual ? 'Đang tải...' : 'Đồng bộ';
+            this.updateRealtimeBadge('syncing');
 
             if (window.GoogleSheetsService) {
                 try {
-                    await window.GoogleSheetsService.loadAllData();
+                    await window.GoogleSheetsService.loadAllData(isManual);
                     if (window.FilterManager) {
                         window.FilterManager.triggerFilterChange();
                     }
@@ -211,16 +249,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
                     if (syncText) syncText.textContent = 'Đã cập nhật';
                     if (btnSync) btnSync.title = `Lần đồng bộ gần nhất: ${timeStr} (Nhấn để đồng bộ lại)`;
+                    this.updateRealtimeBadge('synced', `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`);
                 } catch(e) {
                     console.warn('Sync failed:', e);
                     if (syncText) syncText.textContent = 'Lỗi tải';
+                    this.updateRealtimeBadge('error');
                 }
             }
 
             setTimeout(() => {
                 if (syncIcon) syncIcon.style.animation = '';
                 if (syncText) syncText.textContent = 'Đồng bộ';
-            }, 1800);
+            }, 1200);
         },
 
         showView(viewId) {
