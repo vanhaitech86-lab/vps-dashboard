@@ -839,31 +839,43 @@
                             </div>
                         </div>
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                                 <h3>Phân Tích Tồn Kho</h3>
+                                <span class="badge" style="background: #e0f2fe; color: #0369a1; font-weight: 600; padding: 4px 10px; border-radius: 20px;">Thời gian thực</span>
                             </div>
                             <div class="card-body">
-                                <p style="margin-bottom: 10px;"><strong>Tổng Tồn Kho: </strong><span id="inventory-total-val" style="color: #d97706; font-size: 1.5rem; font-weight: bold;">0</span></p>
-                                <p>Hãng HP và Fujifilm chiếm tỷ trọng lớn nhất trong kho. Các mặt hàng linh kiện (Part) và mực in (Consumable) có vòng quay ổn định nhưng cần theo dõi sát sao nhóm Máy nguyên chiếc để tối ưu dòng tiền.</p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                    <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px; padding: 12px;">
+                                        <div style="font-size: 0.85rem; color: #92400e; font-weight: 600; text-transform: uppercase;">Tổng Giá Trị Tồn Kho</div>
+                                        <div id="inventory-total-val" style="color: #d97706; font-size: 1.5rem; font-weight: 800; margin-top: 4px;">0 Tỷ VND</div>
+                                    </div>
+                                    <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-radius: 8px; padding: 12px;">
+                                        <div style="font-size: 0.85rem; color: #166534; font-weight: 600; text-transform: uppercase;">Tổng Số Lượng Tồn Kho</div>
+                                        <div id="inventory-total-qty" style="color: #15803d; font-size: 1.5rem; font-weight: 800; margin-top: 4px;">0 SP/TB</div>
+                                    </div>
+                                </div>
+                                <p style="color: #475569; font-size: 0.9rem; line-height: 1.5;">Hãng <strong>HP</strong> và <strong>Fujifilm</strong> chiếm tỷ trọng lớn nhất trong kho. Nhóm vật tư tiêu hao (Consumable) và linh kiện (Part) có số lượng luân chuyển cao, trong khi nhóm Máy nguyên chiếc cần được giám sát chặt chẽ theo từng thương hiệu để giải phóng vốn lưu động và tối ưu dòng tiền.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="card mt-20">
                         <div class="card-header">
-                            <h3>Chi Tiết Tồn Kho (VNĐ)</h3>
+                            <h3>Chi Tiết Tồn Kho (Số Lượng & Giá Trị)</h3>
                         </div>
                         <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
                             <table class="data-table" id="inventoryTable" style="white-space: nowrap; font-size: 0.85rem;">
                                 <thead>
-                                    <tr>
-                                        <th>NHÓM VẬT TƯ</th>
+                                    <tr style="background: #a3e635; font-size: 0.95rem;">
+                                        <th style="width: 40px; text-align: center; background: #a3e635;">STT</th>
+                                        <th style="min-width: 130px; white-space: normal; background: #a3e635;">ĐƠN VỊ / PHÂN LOẠI</th>
                                         <th style="text-align: right;">HP</th>
                                         <th style="text-align: right;">Fujifilm</th>
-                                        <th style="text-align: right;">Olivetti</th>
-                                        <th style="text-align: right;">Bonsai</th>
+                                        <th style="text-align: right;">Olivetti / VCOPY</th>
+                                        <th style="text-align: right;">Bonsai / AIN</th>
                                         <th style="text-align: right;">Khác</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02); font-weight: bold;">Cộng</th>
+                                        <th style="text-align: right; background: #84cc16; color: #0f172a; font-weight: 800; min-width: 110px;">SỐ LƯỢNG TỒN</th>
+                                        <th style="text-align: right; background: rgba(0,0,0,0.05); min-width: 130px;">Cộng (VNĐ)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1291,7 +1303,7 @@
     <script src="js/fujifilm.js?v=1788780000"></script>
     <script src="js/products_other.js?v=1788780000"></script>
     <script src="js/revenue.js?v=1788780000"></script>
-    <script src="js/inventory.js?v=1788780000"></script>
+    <script src="js/inventory.js?v=1789617200"></script>
     <script src="js/debt.js?v=1788780000"></script>
     <script src="js/hr.js?v=1788780000"></script>
     <script src="js/admin.js?v=1788780000"></script>
