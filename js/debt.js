@@ -5,16 +5,25 @@
 window.DebtModule = {
     init() {
         document.addEventListener('vps_filter_changed', (e) => {
-            this.loadData(e.detail.period, e.detail.company);
+            const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+            const comp = canViewAll ? e.detail.company : (window.AuthService ? window.AuthService.getAllowedCompany() : e.detail.company);
+            this.loadData(e.detail.period, comp);
         });
         
         const localFilter = document.getElementById('bad-debt-company-filter');
         if (localFilter) {
-            localFilter.addEventListener('change', (e) => {
-                if (this.currentData) {
-                    this.renderTable(this.currentData.badDebtsList, e.target.value);
-                }
-            });
+            const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+            if (!canViewAll) {
+                const allowed = window.AuthService ? window.AuthService.getAllowedCompany() : 'Tân Hồng Hà';
+                localFilter.value = allowed;
+                localFilter.disabled = true;
+            } else {
+                localFilter.addEventListener('change', (e) => {
+                    if (this.currentData) {
+                        this.renderTable(this.currentData.badDebtsList, e.target.value);
+                    }
+                });
+            }
         }
     },
 
@@ -25,6 +34,10 @@ window.DebtModule = {
     },
 
     updateUI(data, company) {
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+        if (!canViewAll) {
+            company = window.AuthService ? window.AuthService.getAllowedCompany() : company;
+        }
         
         const companyNameMap = {
             'all': 'Tất cả',

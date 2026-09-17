@@ -210,6 +210,13 @@ window.KqkdModule = {
     // KHỞI TẠO MODULE
     // ============================================================
     init() {
+        // RBAC: Ensure unit director can only access their assigned company
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+        if (!canViewAll) {
+            const allowed = window.AuthService ? window.AuthService.getAllowedCompany() : 'Tân Hồng Hà';
+            this.selectedCompany = allowed !== 'all' ? allowed : 'Tân Hồng Hà';
+        }
+
         // Dọn dẹp cache localStorage nếu trước đó bị lưu nhầm sheetName hoặc số liệu Tháng 1 vào Tháng 7
         try {
             if (localStorage.getItem('vps_kqkd_sheet_name') === 'tháng 1') {
@@ -660,36 +667,77 @@ calculateNode(node, month) {
     },
 
     // ============================================================
-    // XỬ LÝ LỌC CÂY CHỈ TIÊU (THEO CÔNG TY VÀ TỪ KHÓA TÌM KIẾM)
+    // XỬ LÝ LỌC CÂY CHỈ TIÊU (THEO CÔNG TY VÀ TỪ KHÓA TÌM KIẾM - PHÂN QUYỀN RBAC)
     // ============================================================
+    isCompanyMatch(n, comp) {
+        if (!comp || comp === 'all') return true;
+        const c = comp.toLowerCase();
+        if (n.company && n.company.toLowerCase() === c) return true;
+        if (n.id && n.id.toLowerCase() === c) return true;
+        if ((c.includes('văn phòng') || c.includes('vps')) && (n.id === 'VPS_CORP' || n.company === 'CTY VPS')) return true;
+        if ((c.includes('hồng hà') || c.includes('thh')) && (n.id === 'THH' || n.company === 'Tân Hồng Hà')) return true;
+        if ((c.includes('việt') || c.includes('viet') || c.includes('vcopy')) && (n.id === 'VIET' || n.company === 'Việt')) return true;
+        if ((c.includes('xem') || c.includes('xesco')) && (n.id === 'XESCO' || n.company === 'Xem Sơn')) return true;
+        if (c.includes('itss') && (n.id === 'ITSS' || n.company === 'ITSS')) return true;
+        if ((c.includes('miền trung') || c.includes('vps m') || c.includes('mt')) && (n.id === 'MT' || n.company === 'VPS M')) return true;
+        return false;
+    },
+
     filterTree(nodes) {
-        const filterNode = (node) => {
-            const matchesCompany = (this.selectedCompany === 'all') ||
-                (node.company === this.selectedCompany) ||
-                (node.company === 'group') ||
-                (node.children && node.children.some(c => c.company === this.selectedCompany || (c.children && c.children.some(cc => cc.company === this.selectedCompany))));
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+        if (!canViewAll) {
+            const allowed = window.AuthService ? window.AuthService.getAllowedCompany() : 'Tân Hồng Hà';
+            this.selectedCompany = allowed !== 'all' ? allowed : 'Tân Hồng Hà';
+        }
 
-            if (!matchesCompany) return null;
+        // Nếu người dùng chọn xem 1 công ty cụ thể (hoặc bị ép bởi RBAC đơn vị)
+        // -> Trích xuất riêng nhánh cây của công ty đó, KHÔNG hiển thị nhóm Miền Bắc / Miền Trung để tránh lộ số liệu tổng
+        if (this.selectedCompany !== 'all') {
+            const findCompanyNode = (nodeList) => {
+                for (const n of nodeList) {
+                    if (this.isCompanyMatch(n, this.selectedCompany)) return n;
+                    if (n.children && n.children.length > 0) {
+                        const found = findCompanyNode(n.children);
+                        if (found) return found;
+                    }
+                }
+                return null;
+            };
 
-            if (!node.children || node.children.length === 0) {
+            const target = findCompanyNode(nodes);
+            if (!target) return [];
+
+            const filterBySearch = (node) => {
                 if (!this.searchTerm) return node;
                 const s = this.searchTerm.toLowerCase();
-                const match = node.name.toLowerCase().includes(s) || String(node.stt).toLowerCase().includes(s);
-                return match ? node : null;
-            }
+                const matchesSelf = node.name.toLowerCase().includes(s) || String(node.stt).toLowerCase().includes(s);
+                if (!node.children || node.children.length === 0) {
+                    return matchesSelf ? node : null;
+                }
+                const filteredChildren = node.children.map(filterBySearch).filter(Boolean);
+                if (filteredChildren.length > 0) {
+                    return { ...node, children: filteredChildren };
+                }
+                return matchesSelf ? { ...node, children: [] } : null;
+            };
 
+            const filtered = filterBySearch(target);
+            return filtered ? [filtered] : [];
+        }
+
+        // Chế độ xem toàn tập đoàn (dành cho Admin & CEO)
+        const filterNode = (node) => {
+            if (!this.searchTerm) return node;
+            const s = this.searchTerm.toLowerCase();
+            const matchesSelf = node.name.toLowerCase().includes(s) || String(node.stt).toLowerCase().includes(s);
+            if (!node.children || node.children.length === 0) {
+                return matchesSelf ? node : null;
+            }
             const filteredChildren = node.children.map(filterNode).filter(Boolean);
             if (filteredChildren.length > 0) {
                 return { ...node, children: filteredChildren };
             }
-
-            if (this.searchTerm) {
-                const s = this.searchTerm.toLowerCase();
-                if (node.name.toLowerCase().includes(s) || String(node.stt).toLowerCase().includes(s)) {
-                    return { ...node, children: [] };
-                }
-            }
-            return null;
+            return matchesSelf ? { ...node, children: [] } : null;
         };
 
         return nodes.map(filterNode).filter(Boolean);
@@ -697,15 +745,11 @@ calculateNode(node, month) {
 
     getCompanyTotal(roots, companyId) {
         for (const root of roots) {
+            if (this.isCompanyMatch(root, companyId)) return root;
             if (root.children) {
                 for (const comp of root.children) {
-                    if (comp.company === companyId || comp.id === companyId) {
-                        return comp;
-                    }
+                    if (this.isCompanyMatch(comp, companyId)) return comp;
                 }
-            }
-            if (root.company === companyId || root.id === companyId) {
-                return root;
             }
         }
         return roots[0];
@@ -717,6 +761,13 @@ calculateNode(node, month) {
     render() {
         const container = document.getElementById('view-kqkd');
         if (!container) return;
+
+        // Phân quyền dữ liệu (RBAC): Đơn vị thành viên chỉ được xem dữ liệu đơn vị mình
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+        if (!canViewAll) {
+            const allowed = window.AuthService ? window.AuthService.getAllowedCompany() : 'Tân Hồng Hà';
+            this.selectedCompany = allowed !== 'all' ? allowed : 'Tân Hồng Hà';
+        }
 
         // Xóa chart cũ
         Object.values(this.charts).forEach(c => { try { c.destroy(); } catch(e) {} });
@@ -772,14 +823,21 @@ calculateNode(node, month) {
         }
         html += '</select></div>';
 
-        // Company select
+        // Company select (RBAC lock for unit accounts)
         html += '<div style="display: flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 4px 8px; border-radius: 8px; border: 1px solid #cbd5e1;">';
         html += '<span style="font-size: 0.8rem; font-weight: 600; color: #475569;">Đơn vị:</span>';
-        html += '<select id="kqkd-company-select" style="background: transparent; border: none; font-weight: 700; font-size: 0.88rem; color: #0f172a; cursor: pointer; outline: none;">';
-        this.companies.forEach(c => {
-            html += '<option value="' + c.id + '" ' + (this.selectedCompany === c.id ? 'selected' : '') + '>' + c.name + '</option>';
-        });
-        html += '</select></div>';
+        if (!canViewAll) {
+            html += '<select id="kqkd-company-select" disabled style="background: transparent; border: none; font-weight: 700; font-size: 0.88rem; color: #1e40af; cursor: not-allowed; outline: none;">';
+            html += '<option value="' + this.selectedCompany + '" selected>🔒 ' + this.selectedCompany + '</option>';
+            html += '</select>';
+        } else {
+            html += '<select id="kqkd-company-select" style="background: transparent; border: none; font-weight: 700; font-size: 0.88rem; color: #0f172a; cursor: pointer; outline: none;">';
+            this.companies.forEach(c => {
+                html += '<option value="' + c.id + '" ' + (this.selectedCompany === c.id ? 'selected' : '') + '>' + c.name + '</option>';
+            });
+            html += '</select>';
+        }
+        html += '</div>';
 
         // View mode
         html += '<div style="display: flex; background: #e2e8f0; border-radius: 8px; padding: 3px; gap: 2px;">';
@@ -974,29 +1032,36 @@ calculateNode(node, month) {
         html += '<tbody>';
         html += this.renderTableRows(visibleRoots, 0);
 
-        // GRAND TOTAL ROW
+        // GRAND TOTAL ROW (RBAC: TỔNG TOÀN TẬP ĐOÀN cho Admin/CEO, TỔNG ĐƠN VỊ cho đơn vị)
+        const sumObj = (canViewAll && this.selectedCompany === 'all')
+            ? grandTotal 
+            : (this.getCompanyTotal(calculatedRoots, this.selectedCompany) || grandTotal);
+        const sumLabel = (canViewAll && this.selectedCompany === 'all')
+            ? 'TỔNG CỘNG TOÀN TẬP ĐOÀN' 
+            : ('TỔNG CỘNG ' + this.selectedCompany.toUpperCase());
+
         html += '<tr class="kqkd-row-grand" style="background: #0f172a; color: #ffffff; font-weight: 800; border-top: 3px solid #3b82f6;">';
         html += '<td style="padding: 12px 8px; text-align: center; border: 1px solid #334155; position: sticky; left: 0; background: #0f172a; z-index: 3;">★</td>';
-        html += '<td style="padding: 12px 14px; text-align: left; border: 1px solid #334155; position: sticky; left: 45px; background: #0f172a; z-index: 3; color: #fbbf24;">TỔNG CỘNG TOÀN TẬP ĐOÀN</td>';
-        html += '<td style="padding: 12px 10px; text-align: right; border: 1px solid #334155; color: #facc15;">' + (grandTotal.vonDT ? grandTotal.vonDT.toLocaleString('vi-VN') : '-') + '</td>';
+        html += '<td style="padding: 12px 14px; text-align: left; border: 1px solid #334155; position: sticky; left: 45px; background: #0f172a; z-index: 3; color: #fbbf24;">' + sumLabel + '</td>';
+        html += '<td style="padding: 12px 10px; text-align: right; border: 1px solid #334155; color: #facc15;">' + (sumObj.vonDT ? sumObj.vonDT.toLocaleString('vi-VN') : '-') + '</td>';
 
         if (this.viewMode !== 'cumulative') {
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #60a5fa;">' + this.formatVal(grandTotal.monthData.ds, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155;">' + Math.round(grandTotal.monthData.rateLg) + '%</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #34d399;">' + this.formatVal(grandTotal.monthData.lg, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #94a3b8;">' + this.formatVal(grandTotal.monthData.htLg, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #f87171;">' + this.formatVal(grandTotal.monthData.chiPhi, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #c084fc;">' + this.formatVal(grandTotal.monthData.tnKhac, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #4ade80; font-size: 0.95rem;">' + this.formatVal(grandTotal.monthData.lntt, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #60a5fa;">' + this.formatVal(sumObj.monthData.ds, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155;">' + Math.round(sumObj.monthData.rateLg) + '%</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #34d399;">' + this.formatVal(sumObj.monthData.lg, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #94a3b8;">' + this.formatVal(sumObj.monthData.htLg, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #f87171;">' + this.formatVal(sumObj.monthData.chiPhi, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #c084fc;">' + this.formatVal(sumObj.monthData.tnKhac, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #4ade80; font-size: 0.95rem;">' + this.formatVal(sumObj.monthData.lntt, 1) + '</td>';
         }
         if (this.viewMode !== 'month') {
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #60a5fa;">' + this.formatVal(grandTotal.cumData.ds, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155;">' + Math.round(grandTotal.cumData.rateLg) + '%</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #34d399;">' + this.formatVal(grandTotal.cumData.lg, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #94a3b8;">' + this.formatVal(grandTotal.cumData.htLg, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #f87171;">' + this.formatVal(grandTotal.cumData.chiPhi, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #c084fc;">' + this.formatVal(grandTotal.cumData.tnKhac, 1) + '</td>';
-            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #4ade80; font-size: 0.95rem;">' + this.formatVal(grandTotal.cumData.lntt, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #60a5fa;">' + this.formatVal(sumObj.cumData.ds, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155;">' + Math.round(sumObj.cumData.rateLg) + '%</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #34d399;">' + this.formatVal(sumObj.cumData.lg, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #94a3b8;">' + this.formatVal(sumObj.cumData.htLg, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #f87171;">' + this.formatVal(sumObj.cumData.chiPhi, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #c084fc;">' + this.formatVal(sumObj.cumData.tnKhac, 1) + '</td>';
+            html += '<td style="padding: 12px 8px; text-align: right; border: 1px solid #334155; color: #4ade80; font-size: 0.95rem;">' + this.formatVal(sumObj.cumData.lntt, 1) + '</td>';
         }
         html += '</tr>';
         html += '</tbody>';
@@ -1763,7 +1828,8 @@ calculateNode(node, month) {
 
         const ctxCompanies = document.getElementById('kqkd-chart-companies');
         if (ctxCompanies) {
-            const companyList = [
+            const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+            let companyList = [
                 { id: 'THH', name: 'Tân Hồng Hà' },
                 { id: 'VIET', name: 'Việt' },
                 { id: 'ITSS', name: 'ITSS' },
@@ -1771,6 +1837,13 @@ calculateNode(node, month) {
                 { id: 'XESCO', name: 'Xem Sơn' },
                 { id: 'MT', name: 'VPS M' }
             ];
+            if (!canViewAll) {
+                companyList = companyList.filter(c => 
+                    c.name.toLowerCase().includes(this.selectedCompany.toLowerCase()) || 
+                    this.selectedCompany.toLowerCase().includes(c.name.toLowerCase()) ||
+                    (this.selectedCompany === 'Văn phòng VPS' && c.id === 'VPS_CORP')
+                );
+            }
 
             const labels = [];
             const dataDs = [];
@@ -1825,8 +1898,11 @@ calculateNode(node, month) {
 
         const ctxPnl = document.getElementById('kqkd-chart-pnl');
         if (ctxPnl) {
-            const grandTotal = this.getGrandTotal(calculatedRoots);
-            const m = grandTotal.monthData;
+            const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+            const targetTotal = (canViewAll && this.selectedCompany === 'all')
+                ? this.getGrandTotal(calculatedRoots) 
+                : (this.getCompanyTotal(calculatedRoots, this.selectedCompany) || this.getGrandTotal(calculatedRoots));
+            const m = targetTotal.monthData;
             const giaVon = Math.max(0, m.ds - m.lg);
 
             this.charts.pnl = new Chart(ctxPnl, {

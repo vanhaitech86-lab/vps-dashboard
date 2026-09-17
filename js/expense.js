@@ -7,8 +7,14 @@ window.ExpenseModule = {
     currentCategoryFilter: null, // null means show all
 
     init() {
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+        if (!canViewAll) {
+            this.currentCompanyFilter = window.AuthService ? window.AuthService.getAllowedCompany() : 'Tân Hồng Hà';
+        }
+
         document.addEventListener('vps_filter_changed', (e) => {
-            this.currentCompanyFilter = e.detail.company;
+            const canView = window.AuthService ? window.AuthService.canViewAll() : false;
+            this.currentCompanyFilter = canView ? e.detail.company : (window.AuthService ? window.AuthService.getAllowedCompany() : e.detail.company);
             setTimeout(() => { this.renderUI(); }, 10);
         });
         
@@ -189,6 +195,11 @@ window.ExpenseModule = {
     renderUI() {
         const tbody = document.querySelector('#expenseTable tbody');
         if (!tbody) return;
+
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+        if (!canViewAll) {
+            this.currentCompanyFilter = window.AuthService ? window.AuthService.getAllowedCompany() : 'Tân Hồng Hà';
+        }
         
         let html = '';
         

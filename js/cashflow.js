@@ -346,8 +346,8 @@
                             <div style="display: flex; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; flex-wrap: wrap; align-items: center;">
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <label style="font-size: 0.82rem; font-weight: 600; color: #475569;">Đơn vị thành viên:</label>
-                                    <select id="cf-company-select" class="form-control" style="width: 260px; padding: 6px 12px; font-size: 0.85rem; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: 600; color: #1e293b;">
-                                        ${COMPANIES.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
+                                    <select id="cf-company-select" class="form-control" style="width: 260px; padding: 6px 12px; font-size: 0.85rem; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: 600; color: #1e293b;" ${!window.AuthService.canViewAll() ? 'disabled' : ''}>
+                                        ${(window.AuthService.canViewAll() ? COMPANIES : COMPANIES.filter(c => c.id === this.selectedCompany || c.name.includes(this.selectedCompany) || c.id === window.AuthService.getAllowedCompany())).map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
                                     </select>
                                 </div>
 
@@ -521,7 +521,12 @@
             const compSelect = document.getElementById('cf-company-select');
             if (compSelect) {
                 compSelect.addEventListener('change', (e) => {
-                    this.selectedCompany = e.target.value;
+                    if (!window.AuthService.canViewAll()) {
+                        this.selectedCompany = window.AuthService.getAllowedCompany();
+                        compSelect.value = this.selectedCompany;
+                    } else {
+                        this.selectedCompany = e.target.value;
+                    }
                     this.render();
                 });
             }
@@ -529,7 +534,11 @@
             // Sync with global company filter
             document.addEventListener('vps_filter_changed', (e) => {
                 if (e.detail && e.detail.company) {
-                    this.selectedCompany = e.detail.company;
+                    if (!window.AuthService.canViewAll()) {
+                        this.selectedCompany = window.AuthService.getAllowedCompany();
+                    } else {
+                        this.selectedCompany = e.detail.company;
+                    }
                     const sel = document.getElementById('cf-company-select');
                     if (sel) sel.value = this.selectedCompany;
                     const viewEl = document.getElementById('view-cashflow');

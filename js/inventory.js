@@ -15,7 +15,8 @@ window.InventoryModule = {
         }
         
         this.generateData();
-        this.renderUI('all');
+        const initComp = window.FilterManager ? window.FilterManager.currentCompany : (window.AuthService ? window.AuthService.getAllowedCompany() : 'all');
+        this.renderUI(initComp);
     },
 
     getTheadHtml() {
@@ -120,12 +121,20 @@ window.InventoryModule = {
 
     renderUI(companyFilter) {
         if(!this.invData) this.generateData();
+
+        // RBAC: Non-admin/non-CEO can ONLY view their assigned company
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : false;
+        if (!canViewAll) {
+            companyFilter = window.AuthService ? window.AuthService.getAllowedCompany() : companyFilter;
+        }
+
         let compKey = 'all';
-        if (companyFilter === 'Tân Hồng Hà' || (companyFilter.includes('T') && companyFilter.includes('H'))) compKey = 'THH';
-        else if (companyFilter === 'Xem Sơn' || companyFilter.includes('Xem')) compKey = 'XESCO';
-        else if (companyFilter === 'Việt' || companyFilter.includes('Vi')) compKey = 'VIỆT';
-        else if (companyFilter === 'VPS M' || companyFilter.includes('VPS M')) compKey = 'VPSM';
-        else if (companyFilter === 'ITSS' || companyFilter.includes('ITSS')) compKey = 'VPS'; 
+        if (companyFilter === 'Tân Hồng Hà' || (companyFilter && companyFilter.includes('T') && companyFilter.includes('H'))) compKey = 'THH';
+        else if (companyFilter === 'Xem Sơn' || (companyFilter && companyFilter.includes('Xem'))) compKey = 'XESCO';
+        else if (companyFilter === 'Việt' || (companyFilter && companyFilter.includes('Vi'))) compKey = 'VIỆT';
+        else if (companyFilter === 'VPS M' || (companyFilter && companyFilter.includes('VPS M'))) compKey = 'VPSM';
+        else if (companyFilter === 'ITSS' || (companyFilter && companyFilter.includes('ITSS'))) compKey = 'VPS';
+        else if (!canViewAll) compKey = 'THH';
         
         let totalBrandsVal = [0, 0, 0, 0, 0];
         let totalBrandsQty = [0, 0, 0, 0, 0];
@@ -141,7 +150,8 @@ window.InventoryModule = {
         if (!tbody) return;
         
         let html = '';
-        let isAll = compKey === 'all';
+        // Only Admin & CEO can view all companies + Master A
+        let isAll = canViewAll && (compKey === 'all');
         let activeBlocks = this.invData.filter(d => isAll || d.company === compKey);
         
         activeBlocks.forEach(block => {

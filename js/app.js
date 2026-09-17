@@ -122,6 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('current-user-name').textContent = user.name;
             document.getElementById('current-user-role').textContent = typeof user.role === 'object' ? user.role.name : String(user.role);
             
+            // Update Welcome Banner
+            const welcomeText = document.getElementById('welcome-text');
+            if (welcomeText) {
+                if (user.name === 'ADMIN') {
+                    welcomeText.textContent = 'ADMIN';
+                } else if (window.AuthService.canViewAll()) {
+                    welcomeText.textContent = 'CEO';
+                } else {
+                    welcomeText.textContent = (user.company || user.name).toUpperCase();
+                }
+            }
+
             // Init filters based on user role
             window.FilterManager.init();
             window.FilterManager.updateCompanyFilterVisibility(user);
@@ -129,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show Admin link only for ADMIN user
             const adminNav = document.getElementById('nav-admin');
             if (adminNav) {
-                if (user.name === 'ADMIN') {
+                if (user.name === 'ADMIN' || (user.id && user.id.toUpperCase() === 'ADMIN')) {
                     adminNav.classList.remove('hidden');
                 } else {
                     adminNav.classList.add('hidden');

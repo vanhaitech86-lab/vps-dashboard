@@ -22,7 +22,13 @@ window.FilterManager = {
         const companySelect = document.getElementById('company-filter');
         if (companySelect) {
             companySelect.addEventListener('change', (e) => {
-                this.currentCompany = e.target.value;
+                if (!window.AuthService.canViewAll()) {
+                    // Force strictly back to user's assigned company
+                    this.currentCompany = window.AuthService.getAllowedCompany();
+                    companySelect.value = this.currentCompany;
+                } else {
+                    this.currentCompany = e.target.value;
+                }
                 this.triggerFilterChange();
             });
         }
@@ -33,45 +39,79 @@ window.FilterManager = {
         const select = document.getElementById('company-filter');
         if (!container || !select) return;
 
-        // Force it to be visible ALWAYS for debugging
         container.classList.remove('hidden');
         container.style.display = 'block';
 
-        if (!user || !user.role) return;
+        if (!user) return;
 
-        // Ensure we check canViewAll correctly even if role is a string
-        let canViewAll = false;
-        if (typeof user.role === 'object') {
-            canViewAll = user.role.canViewAll;
-        } else if (typeof user.role === 'string') {
-            canViewAll = (user.role.toLowerCase() === 'ceo' || user.role.toLowerCase() === 'cso');
-        }
+        const canViewAll = window.AuthService.canViewAll();
+
+        // Remove old locked badge if exists
+        const oldBadge = document.getElementById('company-locked-badge');
+        if (oldBadge) oldBadge.remove();
 
         if (canViewAll) {
-            // Show all options
-            Array.from(select.options).forEach(opt => opt.disabled = false);
+            // Admin & CEO: full interactive dropdown with all companies
+            select.innerHTML = `
+                <option value="all">Tất cả công ty</option>
+                <option value="Tân Hồng Hà">Tân Hồng Hà</option>
+                <option value="Việt">Việt</option>
+                <option value="Xem Sơn">Xem Sơn</option>
+                <option value="VPS M">VPS M</option>
+                <option value="ITSS">ITSS</option>
+                <option value="Văn phòng VPS">Văn phòng VPS</option>
+            `;
+            select.disabled = false;
+            select.style.background = '#ffffff';
+            select.style.cursor = 'pointer';
             select.value = 'all';
             this.currentCompany = 'all';
         } else {
-            // For lower roles, force select their company and hide filter or disable others
-            Array.from(select.options).forEach(opt => {
-                if (opt.value !== user.company && opt.value !== 'all') {
-                    opt.disabled = true;
-                }
-            });
-            select.value = user.company;
-            this.currentCompany = user.company;
-            
-            let level = typeof user.role === 'object' ? user.role.level : 99;
-            if (level > 3) {
-                 container.classList.add('hidden');
-                 container.style.display = 'none';
-            }
+            // Member unit user: LOCK STRICTLY to user.company
+            const comp = user.company || 'Tân Hồng Hà';
+            select.innerHTML = `<option value="${comp}">${comp}</option>`;
+            select.value = comp;
+            select.disabled = true;
+            select.style.background = '#f1f5f9';
+            select.style.cursor = 'not-allowed';
+            select.style.color = '#1e3a8a';
+            select.style.fontWeight = '700';
+            this.currentCompany = comp;
+
+            // Visual security lock badge
+            const badge = document.createElement('div');
+            badge.id = 'company-locked-badge';
+            badge.style.display = 'inline-flex';
+            badge.style.alignItems = 'center';
+            badge.style.gap = '6px';
+            badge.style.marginLeft = '10px';
+            badge.style.padding = '4px 12px';
+            badge.style.borderRadius = '6px';
+            badge.style.background = '#e0f2fe';
+            badge.style.color = '#0369a1';
+            badge.style.fontSize = '0.8rem';
+            badge.style.fontWeight = '700';
+            badge.style.border = '1px solid #bae6fd';
+            badge.innerHTML = `🔒 Đơn vị: ${comp}`;
+            container.parentNode.insertBefore(badge, container.nextSibling);
         }
+
+        // Broadcast current filter state to all modules
+        this.triggerFilterChange();
+    },
+
+    setCompany(comp) {
+        if (!window.AuthService.canViewAll()) {
+            this.currentCompany = window.AuthService.getAllowedCompany();
+        } else {
+            this.currentCompany = comp;
+        }
+        const select = document.getElementById('company-filter');
+        if (select) select.value = this.currentCompany;
+        this.triggerFilterChange();
     },
 
     triggerFilterChange() {
-        // Dispatch custom event that dashboard modules will listen to
         const event = new CustomEvent('vps_filter_changed', { 
             detail: { period: this.currentPeriod, company: this.currentCompany }
         });
