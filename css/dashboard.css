@@ -41,17 +41,7 @@
 }
 
 .login-hint {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: var(--clr-background);
-    border-radius: var(--radius-md);
-    font-size: 0.875rem;
-    color: var(--clr-text-muted);
-}
-
-.login-hint ul {
-    margin-top: 0.5rem;
-    padding-left: 1.25rem;
+    display: none !important;
 }
 
 /* ==========================================================================
