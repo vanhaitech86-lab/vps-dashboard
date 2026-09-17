@@ -12,15 +12,15 @@ window.InventoryModule = {
         const thead = document.querySelector('#inventoryTable thead');
         if (thead) {
             thead.innerHTML = `
-                <tr style="background: #a3e635; font-size: 0.95rem;">
+                <tr style="background: #a3e635; font-size: 0.92rem;">
                     <th style="width: 40px; text-align: center; background: #a3e635;">STT</th>
-                    <th style="min-width: 130px; white-space: normal; background: #a3e635;">ĐƠN VỊ / PHÂN LOẠI</th>
+                    <th style="min-width: 140px; white-space: normal; background: #a3e635;">ĐƠN VỊ / PHÂN LOẠI</th>
+                    <th style="text-align: right; background: #84cc16; color: #0f172a; font-weight: 800; min-width: 125px;" title="Tổng số lượng tồn của các cột hãng cộng lại">SỐ LƯỢNG TỒN<br><span style="font-size: 0.72rem; font-weight: 600; color: #1e3a8a;">(Tổng các cột)</span></th>
                     <th style="text-align: right;">HP</th>
                     <th style="text-align: right;">Fujifilm</th>
                     <th style="text-align: right;">Olivetti / VCOPY</th>
                     <th style="text-align: right;">Bonsai / AIN</th>
                     <th style="text-align: right;">Khác</th>
-                    <th style="text-align: right; background: #84cc16; color: #0f172a; font-weight: 800; min-width: 110px;">SỐ LƯỢNG TỒN</th>
                     <th style="text-align: right; background: rgba(0,0,0,0.05); min-width: 130px;">Cộng (VNĐ)</th>
                 </tr>
             `;
@@ -131,13 +131,13 @@ window.InventoryModule = {
                 
                 rowsHtml += `<tr>
                     <td style="text-align: center; background: #fff;">${r.stt}</td>
-                    <td style="background: #fff; font-weight: 500;">${r.name}</td>
+                    <td style="background: #fff; font-weight: 600;">${r.name}</td>
+                    <td style="text-align: right; font-weight: 700; color: #0369a1; background: #f0fdf4;">${(r.qty != null) ? r.qty.toLocaleString('vi-VN') : '-'}</td>
                     <td style="text-align: right;">${r.vals[0] ? r.vals[0].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${r.vals[1] ? r.vals[1].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${r.vals[2] ? r.vals[2].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${r.vals[3] ? r.vals[3].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${r.vals[4] ? r.vals[4].toLocaleString('vi-VN') : ''}</td>
-                    <td style="text-align: right; font-weight: 700; color: #0284c7; background: #f0fdf4;">${(r.qty != null) ? r.qty.toLocaleString('vi-VN') : '-'}</td>
                     <td style="text-align: right; background: rgba(0,0,0,0.02); font-weight: bold;">${rowSum ? rowSum.toLocaleString('vi-VN') : ''}</td>
                 </tr>`;
             });
@@ -149,12 +149,12 @@ window.InventoryModule = {
                 <tr style="background: #a3e635; font-weight: bold;">
                     <td style="text-align: center; background: #a3e635;">${block.stt}</td>
                     <td style="background: #a3e635;">${block.company}</td>
+                    <td style="text-align: right; background: #84cc16; color: #0f172a; font-weight: 800;">SL TỒN</td>
                     <td style="text-align: right;">${block.headers[0]}</td>
                     <td style="text-align: right;">${block.headers[1]}</td>
                     <td style="text-align: right;">${block.headers[2]}</td>
                     <td style="text-align: right;">${block.headers[3]}</td>
                     <td style="text-align: right;">${block.headers[4]}</td>
-                    <td style="text-align: right; background: #84cc16; color: #0f172a; font-weight: 800;">SL TỒN</td>
                     <td style="text-align: right;">${block.headers[5]}</td>
                 </tr>
             `;
@@ -165,12 +165,12 @@ window.InventoryModule = {
                 <tr style="background: #bae6fd; font-weight: bold;">
                     <td style="background: #bae6fd;"></td>
                     <td style="background: #bae6fd;">Tổng cộng</td>
+                    <td style="text-align: right; font-weight: 800; color: #0369a1; background: #93c5fd;">${blockQty ? blockQty.toLocaleString('vi-VN') : '0'}</td>
                     <td style="text-align: right;">${blockSums[0] ? blockSums[0].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${blockSums[1] ? blockSums[1].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${blockSums[2] ? blockSums[2].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${blockSums[3] ? blockSums[3].toLocaleString('vi-VN') : ''}</td>
                     <td style="text-align: right;">${blockSums[4] ? blockSums[4].toLocaleString('vi-VN') : ''}</td>
-                    <td style="text-align: right; font-weight: 800; color: #0369a1; background: #93c5fd;">${blockQty ? blockQty.toLocaleString('vi-VN') : '0'}</td>
                     <td style="text-align: right; color: #b91c1c;">${blockSums[5] ? blockSums[5].toLocaleString('vi-VN') : ''}</td>
                 </tr>
             `;
@@ -181,12 +181,12 @@ window.InventoryModule = {
                 <tr style="background: #fde047; font-weight: bold; font-size: 1.05rem;">
                     <td style="text-align: center; background: #fde047;">A</td>
                     <td style="background: #fde047;">TỔNG TẬP ĐOÀN</td>
+                    <td style="text-align: right; background: #fef08a; color: #0369a1; font-weight: 800; font-size: 1.05rem;">${totalQty.toLocaleString('vi-VN')}</td>
                     <td style="text-align: right;">${totalBrands[0].toLocaleString('vi-VN')}</td>
                     <td style="text-align: right;">${totalBrands[1].toLocaleString('vi-VN')}</td>
                     <td style="text-align: right;">${totalBrands[2].toLocaleString('vi-VN')}</td>
                     <td style="text-align: right;">${totalBrands[3].toLocaleString('vi-VN')}</td>
                     <td style="text-align: right;">${totalBrands[4].toLocaleString('vi-VN')}</td>
-                    <td style="text-align: right; background: #fef08a; color: #0369a1; font-weight: 800;">${totalQty.toLocaleString('vi-VN')}</td>
                     <td style="text-align: right; color: #b91c1c;">${totalBrands[5].toLocaleString('vi-VN')}</td>
                 </tr>
             `;
