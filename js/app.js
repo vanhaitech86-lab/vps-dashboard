@@ -299,9 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (viewId === 'cashflow' && window.CashflowModule) {
                 window.CashflowModule.render();
             }
-            if (viewId === 'debt' && window.DebtModule) {
-                window.DebtModule.render();
-            }
             if (window.FilterManager) {
                 window.FilterManager.triggerFilterChange();
             }

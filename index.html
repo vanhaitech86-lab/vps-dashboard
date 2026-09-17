@@ -136,10 +136,6 @@
                         <i data-lucide="file-spreadsheet" style="width: 14px; height: 14px;"></i>
                         <span>Mẫu P&L (KQKD)</span>
                     </a>
-                    <a href="Mau_Bao_Cao_Cong_No_VPS.xlsx" download="Mau_Bao_Cao_Cong_No_VPS.xlsx" id="btn-download-debt-tpl" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #0c4a6e; color: #38bdf8; border: 1px solid #0284c7; border-radius: 6px; font-weight: 600; font-size: 0.8rem; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap;" title="Tải file Excel mẫu Báo Cáo Công Nợ (Tổng Hợp & Chi Tiết có sẵn công thức)">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        <span>Mẫu Công Nợ</span>
-                    </a>
                     <!-- Nút Đồng bộ Google Sheets Trực tiếp -->
                     <button id="btn-sync-sheets" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #0f172a; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; white-space: nowrap;" title="Nhấn để cập nhật ngay số liệu mới nhất từ 5 file Google Sheets">
                         <i data-lucide="refresh-cw" id="sync-icon" style="width: 14px; height: 14px;"></i>
@@ -470,264 +466,46 @@
 
                 <!-- Debt View -->
                 <section id="view-debt" class="view hidden">
-                    <!-- Debt Tabs Navigation -->
-                    <div class="debt-tabs-nav">
-                        <button class="debt-tab-btn tab-summary active" data-tab="summary">
-                            <i data-lucide="file-spreadsheet" style="width:16px;height:16px;"></i>
-                            <span>Báo Cáo Tổng Hợp (Mẫu 1)</span>
-                        </button>
-                        <button class="debt-tab-btn tab-detail" data-tab="detail">
-                            <i data-lucide="list" style="width:16px;height:16px;"></i>
-                            <span>Danh Sách Chi Tiết (Mẫu 2)</span>
-                        </button>
-                        <button class="debt-tab-btn tab-chart" data-tab="chart">
-                            <i data-lucide="bar-chart-3" style="width:16px;height:16px;"></i>
-                            <span>Biểu Đồ & Cơ Cấu Nợ</span>
-                        </button>
-                    </div>
-
-                    <!-- Debt Control Bar -->
-                    <div class="debt-control-bar">
-                        <div class="debt-filters-group">
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <label style="font-size:0.8rem; font-weight:600; color:#475569;">Đơn vị:</label>
-                                <select id="debt-unit-filter" class="debt-select-input">
-                                    <option value="all">Toàn Tập đoàn VPS</option>
-                                    <option value="THH">Tân Hồng Hà</option>
-                                    <option value="Viet">Việt</option>
-                                    <option value="XemSon">Xem Sơn</option>
-                                    <option value="VPSM">VPS M</option>
-                                    <option value="ITSS">ITSS</option>
-                                    <option value="VPVPS">Văn phòng VPS</option>
-                                </select>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <label style="font-size:0.8rem; font-weight:600; color:#475569;">Kỳ Báo Cáo:</label>
-                                <select id="debt-period-filter" class="debt-select-input">
-                                    <option value="9">Tháng 9/2026</option>
-                                    <option value="8">Tháng 8/2026</option>
-                                    <option value="7">Tháng 7/2026</option>
-                                    <option value="6">Tháng 6/2026</option>
-                                    <option value="5">Tháng 5/2026</option>
-                                    <option value="4">Tháng 4/2026</option>
-                                    <option value="3">Tháng 3/2026</option>
-                                    <option value="2">Tháng 2/2026</option>
-                                    <option value="1">Tháng 1/2026</option>
-                                    <option value="10">Tháng 10/2026</option>
-                                    <option value="11">Tháng 11/2026</option>
-                                    <option value="12">Tháng 12/2026</option>
-                                </select>
-                            </div>
-                            <div id="debt-search-box" style="display:none; align-items:center; gap:6px;">
-                                <input type="text" id="debt-search-customer" placeholder="Tìm tên/mã khách hàng..." class="debt-select-input" style="width: 200px;">
-                            </div>
+                     <div class="card">
+                        <div class="card-header">
+                            <h3>Tình Hình Công Nợ (Tỷ VNĐ)</h3>
                         </div>
-                        <div class="debt-actions-group">
-                            <a href="Mau_Bao_Cao_Cong_No_VPS.xlsx" download="Mau_Bao_Cao_Cong_No_VPS.xlsx" class="debt-btn-action debt-btn-download" title="Tải mẫu Excel 2 sheet có sẵn công thức tự động để gửi đơn vị nhập liệu">
-                                <i data-lucide="download" style="width:14px;height:14px;"></i>
-                                <span>Tải Mẫu Excel</span>
-                            </a>
-                            <button id="btn-debt-export" class="debt-btn-action debt-btn-export" title="Xuất dữ liệu công nợ đang xem ra file CSV/Excel">
-                                <i data-lucide="file-spreadsheet" style="width:14px;height:14px;"></i>
-                                <span>Xuất Dữ Liệu</span>
-                            </button>
-                            <button id="btn-debt-add-cust" class="debt-btn-action debt-btn-add" title="Thêm khách hàng mới vào danh sách chi tiết và tự động cập nhật báo cáo tổng hợp">
-                                <i data-lucide="plus-circle" style="width:14px;height:14px;"></i>
-                                <span>Thêm Khách Hàng</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Debt KPI Grid -->
-                    <div class="debt-kpi-grid">
-                        <div class="debt-kpi-card normal">
-                            <div class="kpi-title">Tổng Dư Nợ Kỳ Này</div>
-                            <div class="kpi-num" id="debt-kpi-total">0 ₫</div>
-                            <div class="kpi-desc" id="debt-kpi-total-sub">So với tháng trước</div>
-                        </div>
-                        <div class="debt-kpi-card rate">
-                            <div class="kpi-title">Nợ Trong Hạn / Bình Thường</div>
-                            <div class="kpi-num" id="debt-kpi-normal" style="color:#0284c7;">0 ₫</div>
-                            <div class="kpi-desc" id="debt-kpi-normal-rate">0% tổng dư nợ</div>
-                        </div>
-                        <div class="debt-kpi-card overdue">
-                            <div class="kpi-title">Nợ Quá Hạn</div>
-                            <div class="kpi-num" id="debt-kpi-overdue" style="color:#f59e0b;">0 ₫</div>
-                            <div class="kpi-desc" id="debt-kpi-overdue-rate">0% tổng dư nợ</div>
-                        </div>
-                        <div class="debt-kpi-card bad">
-                            <div class="kpi-title">Nợ Khó Đòi</div>
-                            <div class="kpi-num" id="debt-kpi-bad" style="color:#dc2626;">0 ₫</div>
-                            <div class="kpi-desc" id="debt-kpi-bad-count">0 khách hàng</div>
-                        </div>
-                    </div>
-
-                    <!-- Tab 1: Summary Table (Image 1) -->
-                    <div id="debt-view-summary" class="debt-view-content">
-                        <div class="card">
-                            <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                                <div>
-                                    <h3 id="summary-report-title" style="color:#002060; font-size:1.05rem; font-weight:700;">BÁO CÁO TỔNG HỢP CÔNG NỢ - TẬP ĐOÀN VPS</h3>
-                                    <p id="summary-report-sub" style="font-size:0.8rem; color:#64748b; margin-top:2px;">Tháng 9 năm 2026 • Đơn vị tính: Đồng • Công thức tự động</p>
-                                </div>
-                                <div style="font-size:0.75rem; color:#059669; font-weight:600; display:flex; align-items:center; gap:4px; background:#ecfdf5; padding:4px 8px; border-radius:4px; border:1px solid #a7f3d0;">
-                                    <i data-lucide="check-circle-2" style="width:14px;height:14px;"></i>
-                                    <span>Tự động tính theo logic công thức</span>
-                                </div>
-                            </div>
-                            <div class="debt-table-wrapper">
-                                <table class="excel-debt-table" id="table-debt-summary">
-                                    <thead class="summary-header">
-                                        <tr>
-                                            <th rowspan="2" style="width: 45px;">TT</th>
-                                            <th rowspan="2" style="width: 220px;">PHÒNG BAN</th>
-                                            <th rowspan="2" style="width: 130px;">DƯ NỢ THÁNG TRƯỚC</th>
-                                            <th rowspan="2" style="width: 130px;">DƯ NỢ THÁNG NÀY</th>
-                                            <th colspan="5" style="background:#bdd7ee; color:#002060;">THU TIỀN THÁNG</th>
-                                            <th rowspan="2" style="width: 200px;">TÊN KH NỢ KHÓ ĐÒI</th>
-                                        </tr>
-                                        <tr>
-                                            <th style="width: 120px;">KẾ HOẠCH THÁNG</th>
-                                            <th style="width: 105px;">KH TUẦN</th>
-                                            <th style="width: 105px;">THỰC HIỆN TUẦN</th>
-                                            <th style="width: 120px;">LŨY KẾ THU TIỀN</th>
-                                            <th style="width: 85px;">TỶ LỆ (%)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="debt-summary-tbody">
-                                        <!-- Populated by debt.js -->
-                                    </tbody>
-                                </table>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="debtChart"></canvas>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Tab 2: Detail Table (Image 2) -->
-                    <div id="debt-view-detail" class="debt-view-content" style="display: none;">
-                        <div class="card">
-                            <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                                <div>
-                                    <h3 id="detail-report-title" style="color:#15803d; font-size:1.05rem; font-weight:700;">DANH SÁCH CÔNG NỢ CHI TIẾT CỦA ĐƠN VỊ</h3>
-                                    <p id="detail-report-sub" style="font-size:0.8rem; color:#64748b; margin-top:2px;">Theo dõi chi tiết theo từng khách hàng • Công thức: Nợ cuối kỳ = Trong hạn + Quá hạn + Khó đòi</p>
-                                </div>
-                                <div style="display:flex; gap:8px;">
-                                    <button class="debt-btn-action debt-btn-add" onclick="window.DebtModule && window.DebtModule.openAddModal()" style="font-size:0.78rem; padding:5px 10px;">
-                                        <i data-lucide="user-plus" style="width:13px;height:13px;"></i> Thêm Khách Hàng
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="debt-table-wrapper">
-                                <table class="excel-debt-table" id="table-debt-detail">
-                                    <thead class="detail-header">
-                                        <tr>
-                                            <th style="width: 50px;">Stt</th>
-                                            <th style="width: 120px;">Mã khách</th>
-                                            <th style="min-width: 240px; text-align: left;">Tên khách</th>
-                                            <th style="width: 150px; background:#5a9336;">Nợ cuối kỳ</th>
-                                            <th style="width: 140px;">Trong hạn</th>
-                                            <th style="width: 140px;">Quá hạn</th>
-                                            <th style="width: 140px;">Khó đòi</th>
-                                            <th style="width: 90px;">Thao tác</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="debt-detail-tbody">
-                                        <!-- Populated by debt.js -->
-                                    </tbody>
-                                </table>
-                            </div>
+                    
+                    <div class="card mt-20">
+                        <div class="card-header">
+                            <h3>Danh Sách Khách Hàng Khó Đòi</h3>
                         </div>
-                    </div>
-
-                    <!-- Tab 3: Chart View -->
-                    <div id="debt-view-chart" class="debt-view-content" style="display: none;">
-                        <div class="grid-layout cols-2">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3>Cơ Cấu Công Nợ Theo Loại (Tỷ VNĐ)</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-container" style="height: 340px;">
-                                        <canvas id="debtChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3>Tỷ Trọng Nợ Theo Đơn Vị & Phòng Ban</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-container" style="height: 340px;">
-                                        <canvas id="debtDeptChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Customer Modal for Adding / Editing -->
-                    <div id="debt-cust-modal" class="debt-modal">
-                        <div class="debt-modal-content">
-                            <div class="debt-modal-header">
-                                <h3 id="debt-modal-title">Thêm Khách Hàng Nợ</h3>
-                                <button class="debt-modal-close" onclick="window.DebtModule && window.DebtModule.closeModal()">&times;</button>
-                            </div>
-                            <form id="debt-customer-form" onsubmit="event.preventDefault(); window.DebtModule && window.DebtModule.saveCustomer();">
-                                <div class="debt-modal-body">
-                                    <input type="hidden" id="debt-form-id">
-                                    <div class="debt-form-group">
-                                        <label for="debt-form-unit">Đơn Vị *</label>
-                                        <select id="debt-form-unit" class="debt-select-input" required>
-                                            <option value="THH">Tân Hồng Hà</option>
-                                            <option value="Viet">Việt</option>
-                                            <option value="XemSon">Xem Sơn</option>
-                                            <option value="VPSM">VPS M</option>
-                                            <option value="ITSS">ITSS</option>
-                                            <option value="VPVPS">Văn phòng VPS</option>
-                                        </select>
-                                    </div>
-                                    <div class="debt-form-group">
-                                        <label for="debt-form-dept">Phòng Ban Quản Lý *</label>
-                                        <select id="debt-form-dept" class="debt-select-input" required>
-                                            <option value="dept_kt">I. Phòng Kỹ thuật/ thuê máy</option>
-                                            <option value="dept_kd">II. Phòng KD bán máy</option>
-                                            <option value="dept_da">III. Dự Án</option>
-                                            <option value="dept_ttpp">IV. TTPP/ Bán buôn</option>
-                                        </select>
-                                    </div>
-                                    <div style="display:grid; grid-template-columns: 1fr 2fr; gap: 10px;">
-                                        <div class="debt-form-group">
-                                            <label for="debt-form-code">Mã Khách *</label>
-                                            <input type="text" id="debt-form-code" placeholder="VD: KH-001" required>
-                                        </div>
-                                        <div class="debt-form-group">
-                                            <label for="debt-form-name">Tên Khách Hàng *</label>
-                                            <input type="text" id="debt-form-name" placeholder="Tên đơn vị, cơ quan, cá nhân..." required>
-                                        </div>
-                                    </div>
-                                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-                                        <div class="debt-form-group">
-                                            <label for="debt-form-normal">Trong Hạn (₫)</label>
-                                            <input type="number" id="debt-form-normal" value="0" min="0" step="1000">
-                                        </div>
-                                        <div class="debt-form-group">
-                                            <label for="debt-form-overdue">Quá Hạn (₫)</label>
-                                            <input type="number" id="debt-form-overdue" value="0" min="0" step="1000">
-                                        </div>
-                                        <div class="debt-form-group">
-                                            <label for="debt-form-bad" style="color:#dc2626;">Khó Đòi (₫)</label>
-                                            <input type="number" id="debt-form-bad" value="0" min="0" step="1000">
-                                        </div>
-                                    </div>
-                                    <div class="debt-form-group">
-                                        <label for="debt-form-note">Ghi Chú / Tình Trạng Thu Hồi</label>
-                                        <input type="text" id="debt-form-note" placeholder="VD: Khoá máy, đang pháp lý, chờ ký nghiệm thu...">
-                                    </div>
-                                </div>
-                                <div class="debt-modal-footer">
-                                    <button type="button" class="debt-btn-action" style="background:#e2e8f0; color:#334155;" onclick="window.DebtModule && window.DebtModule.closeModal()">Hủy Bỏ</button>
-                                    <button type="submit" class="debt-btn-action debt-btn-add">Lưu Dữ Liệu</button>
-                                </div>
-                            </form>
+                        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Khách Hàng</th>
+                                        <th style="padding-left: 0;">
+                                            <select id="bad-debt-company-filter" style="border: none; border-bottom: 1px dashed #ccc; border-radius: 0; padding: 2px 0; font-weight: bold; background: transparent; cursor: pointer; color: #6c757d; text-transform: uppercase; font-size: 0.75rem; outline: none;">
+                                                <option value="all">ĐƠN VỊ</option>
+                                                <option value="Tân Hồng Hà">Tân Hồng Hà</option>
+                                                <option value="Việt">Việt</option>
+                                                <option value="Xem Sơn">Xem Sơn</option>
+                                                <option value="VPS M">VPS M</option>
+                                                <option value="ITSS">ITSS</option>
+<option value="Văn phòng VPS">Văn phòng VPS</option>
+                                            </select>
+                                        </th>
+                                        <th>Số Tiền (VNĐ)</th>
+                                        <th>Số Ngày Quá Hạn</th>
+                                        <th>Trạng Thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bad-debt-table-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </section>
