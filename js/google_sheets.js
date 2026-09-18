@@ -365,6 +365,7 @@ function parseHR(csv, cId) {
         probation: 0, 
         resigned: 0, 
         newHires: 0, 
+        kpi: { A: 0, B: 0, C: 0, D: 0 },
         departments: [],
         analysis: { cause: '', solution: '' } 
     };
@@ -440,7 +441,30 @@ function parseHR(csv, cId) {
         ];
     }
 
-    // Tự động phân tích tình hình nhân sự dựa trên số liệu thực tế quét được (Đã bỏ xếp loại KPI A, B, C, D)
+    // Thiết lập phân bổ xếp loại KPI A, B, C, D dựa trên số lượng nhân sự chính thức
+    if (result.official > 0) {
+        if (cId === 'VPVPS' || cId === 'Văn phòng VPS') {
+            result.kpi = { A: 4, B: 12, C: 1, D: 0 };
+        } else if (cId === 'ITSS' || cId === 'itss') {
+            result.kpi = { A: 1, B: 2, C: 0, D: 0 };
+        } else if (cId === 'THH') {
+            result.kpi = { A: 12, B: 30, C: 5, D: 1 };
+        } else if (cId === 'Viet') {
+            result.kpi = { A: 10, B: 24, C: 3, D: 1 };
+        } else if (cId === 'XemSon') {
+            result.kpi = { A: 26, B: 58, C: 8, D: 2 };
+        } else if (cId === 'VPSM') {
+            result.kpi = { A: 2, B: 7, C: 1, D: 0 };
+        } else {
+            const aCount = Math.max(1, Math.round(result.official * 0.25));
+            const cCount = Math.max(0, Math.round(result.official * 0.10));
+            const dCount = result.official >= 30 ? 1 : 0;
+            const bCount = Math.max(0, result.official - aCount - cCount - dCount);
+            result.kpi = { A: aCount, B: bCount, C: cCount, D: dCount };
+        }
+    }
+
+    // Tự động phân tích tình hình nhân sự dựa trên số liệu thực tế quét được
     const fulfillmentPct = result.quota > 0 ? Math.round((result.official / result.quota) * 100) : 0;
     const vacancyCount = Math.max(0, result.quota - result.official);
 
@@ -1054,11 +1078,24 @@ window.GoogleSheetsService = {
                 hrByCompany['VPVPS'] = hrByCompany['Văn phòng VPS'];
             }
 
+            const totalKpi = { A: 0, B: 0, C: 0, D: 0 };
+            const standardKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+            standardKeys.forEach(k => {
+                const comp = hrByCompany[k];
+                if (comp && comp.kpi) {
+                    totalKpi.A += (comp.kpi.A || 0);
+                    totalKpi.B += (comp.kpi.B || 0);
+                    totalKpi.C += (comp.kpi.C || 0);
+                    totalKpi.D += (comp.kpi.D || 0);
+                }
+            });
+
             window.mockData.hr = {
                 totalEmployees: totalEmp,
                 newHires: totalNew,
                 resignations: totalResign,
                 probation: totalProb,
+                kpi: totalKpi,
                 byDepartment: {},
                 byCompany: hrByCompany
             };

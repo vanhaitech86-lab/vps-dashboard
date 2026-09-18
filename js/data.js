@@ -926,6 +926,7 @@ const mockData = {
         byCompany: {
             'THH': { 
                 quota: 54, official: 48, probation: 2, resigned: 3,
+                kpi: { A: 12, B: 30, C: 5, D: 1 },
                 departments: [
                     { name: 'Kinh doanh', quota: 18, official: 15, probation: 0, resigned: 1, vacancy: 3 },
                     { name: 'Kỹ thuật', quota: 25, official: 23, probation: 0, resigned: 2, vacancy: 2 },
@@ -938,6 +939,7 @@ const mockData = {
             },
             'Viet': { 
                 quota: 43, official: 38, probation: 1, resigned: 0,
+                kpi: { A: 10, B: 24, C: 3, D: 1 },
                 departments: [
                     { name: 'Kinh doanh', quota: 17, official: 15, probation: 0, resigned: 0, vacancy: 2 },
                     { name: 'Kỹ thuật', quota: 18, official: 15, probation: 1, resigned: 0, vacancy: 2 },
@@ -951,6 +953,7 @@ const mockData = {
             },
             'XemSon': { 
                 quota: 98, official: 94, probation: 1, resigned: 1,
+                kpi: { A: 26, B: 58, C: 8, D: 2 },
                 departments: [
                     { name: 'Kinh doanh', quota: 33, official: 32, probation: 0, resigned: 0, vacancy: 1 },
                     { name: 'Kỹ thuật', quota: 46, official: 44, probation: 1, resigned: 1, vacancy: 2 },
@@ -965,6 +968,7 @@ const mockData = {
             },
             'VPSM': { 
                 quota: 15, official: 10, probation: 0, resigned: 0,
+                kpi: { A: 2, B: 7, C: 1, D: 0 },
                 departments: [
                     { name: 'Kinh doanh', quota: 6, official: 3, probation: 0, resigned: 0, vacancy: 3 },
                     { name: 'Kỹ thuật', quota: 8, official: 6, probation: 0, resigned: 0, vacancy: 2 },
@@ -977,6 +981,7 @@ const mockData = {
             },
             'ITSS': { 
                 quota: 8, official: 3, probation: 1, resigned: 0,
+                kpi: { A: 1, B: 2, C: 0, D: 0 },
                 departments: [
                     { name: 'Kỹ thuật / Lập trình', quota: 5, official: 2, probation: 1, resigned: 0, vacancy: 3 },
                     { name: 'Hỗ trợ CRM', quota: 3, official: 1, probation: 0, resigned: 0, vacancy: 2 }
@@ -988,6 +993,7 @@ const mockData = {
             },
             'VPVPS': { 
                 quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1,
+                kpi: { A: 4, B: 12, C: 1, D: 0 },
                 departments: [
                     { name: 'Kế hoạch - Cung ứng', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
                     { name: 'Kỹ thuật', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
@@ -1003,6 +1009,7 @@ const mockData = {
             },
             'Văn phòng VPS': { 
                 quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1,
+                kpi: { A: 4, B: 12, C: 1, D: 0 },
                 departments: [
                     { name: 'Kế hoạch - Cung ứng', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
                     { name: 'Kỹ thuật', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },

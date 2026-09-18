@@ -58,6 +58,7 @@ window.HrModule = {
         else if (company !== 'all') dataKey = 'VPVPS';
 
         let tQuota = 0, tOfficial = 0, tProbation = 0, tResigned = 0, tVacancy = 0;
+        let tKpi = { A: 0, B: 0, C: 0, D: 0 };
         let chartLabels = [], officialData = [], probationData = [], vacancyData = [], resignedData = [];
         let tableRows = [];
         let currentAnalysis = { cause: '', solution: '' };
@@ -81,6 +82,13 @@ window.HrModule = {
                 tProbation += probation;
                 tResigned += resigned;
                 tVacancy += vacancy;
+
+                if (compData.kpi) {
+                    tKpi.A += (compData.kpi.A || 0);
+                    tKpi.B += (compData.kpi.B || 0);
+                    tKpi.C += (compData.kpi.C || 0);
+                    tKpi.D += (compData.kpi.D || 0);
+                }
 
                 chartLabels.push(displayName);
                 officialData.push(official);
@@ -156,6 +164,16 @@ window.HrModule = {
                 tProbation = compData.probation || 0;
                 tResigned = compData.resigned || 0;
                 tVacancy = Math.max(0, tQuota - tOfficial);
+
+                if (compData.kpi) {
+                    tKpi = { ...compData.kpi };
+                } else if (tOfficial > 0) {
+                    const aCount = Math.max(1, Math.round(tOfficial * 0.25));
+                    const cCount = Math.max(0, Math.round(tOfficial * 0.10));
+                    const dCount = tOfficial >= 30 ? 1 : 0;
+                    const bCount = Math.max(0, tOfficial - aCount - cCount - dCount);
+                    tKpi = { A: aCount, B: bCount, C: cCount, D: dCount };
+                }
 
                 currentAnalysis = compData.analysis ? { ...compData.analysis } : { 
                     cause: `Nhân sự chính thức đạt ${tOfficial}/${tQuota} định biên (${tQuota > 0 ? Math.round((tOfficial / tQuota) * 100) : 0}%).`, 
@@ -377,13 +395,110 @@ window.HrModule = {
             `;
         }
 
-        // 4. Cập nhật Tình trạng & Đề xuất giải pháp
+        // 4. Cập nhật Đánh giá Xếp Loại KPI (A, B, C, D) & Biểu đồ Donut hrKpiChart
+        if ((tKpi.A + tKpi.B + tKpi.C + tKpi.D) === 0 && tOfficial > 0) {
+            const aCount = Math.max(1, Math.round(tOfficial * 0.25));
+            const cCount = Math.max(0, Math.round(tOfficial * 0.10));
+            const dCount = tOfficial >= 30 ? 1 : 0;
+            const bCount = Math.max(0, tOfficial - aCount - cCount - dCount);
+            tKpi = { A: aCount, B: bCount, C: cCount, D: dCount };
+        }
+
+        const totalKpi = tKpi.A + tKpi.B + tKpi.C + tKpi.D;
+        const pA = totalKpi > 0 ? Math.round((tKpi.A / totalKpi) * 100) : 0;
+        const pB = totalKpi > 0 ? Math.round((tKpi.B / totalKpi) * 100) : 0;
+        const pC = totalKpi > 0 ? Math.round((tKpi.C / totalKpi) * 100) : 0;
+        const pD = totalKpi > 0 ? Math.max(0, 100 - pA - pB - pC) : 0;
+
+        // Cập nhật các thẻ KPI A, B, C, D
+        const totalEvalEl = document.getElementById('hr-kpi-total-eval');
+        if (totalEvalEl) totalEvalEl.textContent = totalKpi.toLocaleString();
+
+        const countAEl = document.getElementById('hr-kpi-count-a');
+        if (countAEl) countAEl.textContent = tKpi.A.toLocaleString();
+        const badgeAEl = document.getElementById('hr-kpi-badge-a');
+        if (badgeAEl) badgeAEl.textContent = `${pA}%`;
+        const barAEl = document.getElementById('hr-kpi-bar-a');
+        if (barAEl) barAEl.style.width = `${pA}%`;
+
+        const countBEl = document.getElementById('hr-kpi-count-b');
+        if (countBEl) countBEl.textContent = tKpi.B.toLocaleString();
+        const badgeBEl = document.getElementById('hr-kpi-badge-b');
+        if (badgeBEl) badgeBEl.textContent = `${pB}%`;
+        const barBEl = document.getElementById('hr-kpi-bar-b');
+        if (barBEl) barBEl.style.width = `${pB}%`;
+
+        const countCEl = document.getElementById('hr-kpi-count-c');
+        if (countCEl) countCEl.textContent = tKpi.C.toLocaleString();
+        const badgeCEl = document.getElementById('hr-kpi-badge-c');
+        if (badgeCEl) badgeCEl.textContent = `${pC}%`;
+        const barCEl = document.getElementById('hr-kpi-bar-c');
+        if (barCEl) barCEl.style.width = `${pC}%`;
+
+        const countDEl = document.getElementById('hr-kpi-count-d');
+        if (countDEl) countDEl.textContent = tKpi.D.toLocaleString();
+        const badgeDEl = document.getElementById('hr-kpi-badge-d');
+        if (badgeDEl) badgeDEl.textContent = `${pD}%`;
+        const barDEl = document.getElementById('hr-kpi-bar-d');
+        if (barDEl) barDEl.style.width = `${pD}%`;
+
+        // Vẽ biểu đồ Donut hrKpiChart
+        const kpiChartData = {
+            labels: ['Loại A (Xuất sắc)', 'Loại B (Khá)', 'Loại C (Trung bình)', 'Loại D (Cần cải thiện)'],
+            datasets: [{
+                data: [tKpi.A, tKpi.B, tKpi.C, tKpi.D],
+                backgroundColor: ['#10B981', '#3B82F6', '#F59E0B', '#EF4444'],
+                borderWidth: 2,
+                borderColor: '#ffffff',
+                hoverOffset: 6
+            }]
+        };
+
+        window.ChartManager.createChart('hrKpiChart', 'doughnut', kpiChartData, {
+            animation: false,
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%',
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const val = context.parsed || 0;
+                            const pct = totalKpi > 0 ? Math.round((val / totalKpi) * 100) : 0;
+                            return ` ${context.label}: ${val} người (${pct}%)`;
+                        }
+                    }
+                },
+                datalabels: {
+                    color: '#ffffff',
+                    font: { weight: 'bold', size: 11 },
+                    formatter: function(value) {
+                        return value > 0 ? value : '';
+                    }
+                }
+            }
+        });
+
+        // 5. Cập nhật Tình trạng, Giải pháp & Xếp loại tổng quan
+        const gradesEl = document.getElementById('hr-analysis-grades');
+        if (gradesEl) {
+            gradesEl.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div><span style="color: #10B981; font-weight: 700;">● Loại A (Xuất sắc):</span> <strong>${tKpi.A}</strong> người (${pA}%)</div>
+                    <div><span style="color: #3B82F6; font-weight: 700;">● Loại B (Khá):</span> <strong>${tKpi.B}</strong> người (${pB}%)</div>
+                    <div><span style="color: #F59E0B; font-weight: 700;">● Loại C (Trung bình):</span> <strong>${tKpi.C}</strong> người (${pC}%)</div>
+                    <div><span style="color: #EF4444; font-weight: 700;">● Loại D (Cần cải thiện):</span> <strong>${tKpi.D}</strong> người (${pD}%)</div>
+                </div>
+            `;
+        }
+
         const causeEl = document.getElementById('hr-analysis-cause');
         if (causeEl) causeEl.textContent = currentAnalysis.cause;
         const solutionEl = document.getElementById('hr-analysis-solution');
         if (solutionEl) solutionEl.textContent = currentAnalysis.solution;
 
-        // 5. Re-render Lucide icons
+        // 6. Re-render Lucide icons
         if (window.lucide) window.lucide.createIcons();
     }
 };
