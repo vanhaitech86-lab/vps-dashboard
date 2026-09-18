@@ -938,7 +938,8 @@ const mockData = {
             'XemSon': { quota: 98, official: 95, probation: 1, resigned: 0, kpi: {A: 0, B: 85, C: 10, D: 0}, analysis: { cause: 'Nhân sự khá ổn định nhưng chưa có cá nhân xuất sắc.', solution: 'Tuyển thêm 2 nhân viên kinh doanh để hoàn thiện cơ cấu.' } },
             'VPSM': { quota: 15, official: 10, probation: 0, resigned: 0, kpi: {A: 0, B: 10, C: 0, D: 0}, analysis: { cause: 'Thiếu hụt đáng kể so với định biên (cần 5 nhân viên kinh doanh).', solution: 'Gấp rút đẩy mạnh hoạt động tuyển dụng nhân sự kinh doanh.' } },
             'ITSS': { quota: 8, official: 3, probation: 1, resigned: 0, kpi: {A: 3, B: 0, C: 0, D: 0}, analysis: { cause: 'Team ITSS quy mô nhỏ, chất lượng nhân sự xuất sắc nhưng thiếu số lượng.', solution: 'Tuyển dụng thêm 4 nhân sự lập trình/hỗ trợ CRM.' } },
-            'Văn phòng VPS': { quota: 19, official: 18, probation: 0, resigned: 1, kpi: {A: 0, B: 18, C: 0, D: 0}, analysis: { cause: 'Nhân sự đã gần đủ định biên. Vừa có 1 nhân sự nghỉ việc (Quang).', solution: 'Tuyển thêm vị trí thay thế, duy trì chính sách giữ chân nhân sự.' } }
+            'VPVPS': { quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1, kpi: {A: 2, B: 15, C: 0, D: 0}, analysis: { cause: 'Nhân sự Văn phòng VPS đạt 18/18 định biên (100%). Trong kỳ tuyển mới 1 nhân sự (1 đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.', solution: 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.' } },
+            'Văn phòng VPS': { quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1, kpi: {A: 2, B: 15, C: 0, D: 0}, analysis: { cause: 'Nhân sự Văn phòng VPS đạt 18/18 định biên (100%). Trong kỳ tuyển mới 1 nhân sự (1 đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.', solution: 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.' } }
         }
     }
 };

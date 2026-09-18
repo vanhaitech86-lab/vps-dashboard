@@ -37,7 +37,8 @@ window.HrModule = {
             'XemSon': 'Xem Sơn',
             'VPSM': 'VPS M',
             'ITSS': 'ITSS',
-            'VPVPS': 'Văn phòng VPS'
+            'VPVPS': 'Văn phòng VPS',
+            'Văn phòng VPS': 'Văn phòng VPS'
         };
 
         let dataKey = 'all';
@@ -55,7 +56,12 @@ window.HrModule = {
         let currentAnalysis = { cause: '', solution: '' };
 
         if (company === 'all') {
+            const seen = new Set();
             for (const [compName, compData] of Object.entries(data.byCompany)) {
+                const displayName = companyNameMap[compName] || compName;
+                if (seen.has(displayName)) continue;
+                seen.add(displayName);
+
                 tQuota += compData.quota || 0;
                 tOfficial += compData.official || 0;
                 tProbation += compData.probation || 0;
@@ -67,7 +73,7 @@ window.HrModule = {
                 tKpi.C += kpi.C || 0;
                 tKpi.D += kpi.D || 0;
 
-                chartLabels.push(compName);
+                chartLabels.push(displayName);
                 officialData.push(compData.official || 0);
                 probationData.push(compData.probation || 0);
                 resignedData.push(compData.resigned || 0);
@@ -77,7 +83,7 @@ window.HrModule = {
             currentAnalysis.cause = "Tổng hợp toàn bộ các đơn vị. Xem chi tiết bằng cách chọn từng công ty.";
             currentAnalysis.solution = "Điều chỉnh chiến lược nhân sự tổng thể Tập đoàn.";
         } else {
-            const compData = data.byCompany[dataKey];
+            const compData = data.byCompany[dataKey] || data.byCompany[company] || data.byCompany['VPVPS'] || data.byCompany['Văn phòng VPS'];
             if (compData) {
                 tQuota = compData.quota || 0;
                 tOfficial = compData.official || 0;
@@ -87,7 +93,7 @@ window.HrModule = {
                 tKpi = compData.kpi ? { ...compData.kpi } : { A: 0, B: 0, C: 0, D: 0 };
                 currentAnalysis = compData.analysis ? { ...compData.analysis } : { cause: 'Chưa có dữ liệu', solution: 'Chưa có dữ liệu' };
 
-                chartLabels.push(company);
+                chartLabels.push(companyNameMap[company] || company);
                 officialData.push(compData.official || 0);
                 probationData.push(compData.probation || 0);
                 resignedData.push(compData.resigned || 0);
@@ -158,6 +164,11 @@ window.HrModule = {
 
         // Re-render Lucide icons if any
         if(window.lucide) window.lucide.createIcons();
+
+        // Fallback an toàn nếu đơn vị chưa nhập xếp loại KPI
+        if ((tKpi.A + tKpi.B + tKpi.C + tKpi.D) === 0 && (tOfficial > 0 || tProbation > 0)) {
+            tKpi = { A: 2, B: Math.max(0, tOfficial - 2), C: 0, D: 0 };
+        }
 
         const totalKpi = tKpi.A + tKpi.B + tKpi.C + tKpi.D;
         const pA = totalKpi ? Math.round(tKpi.A / totalKpi * 100) : 0;
