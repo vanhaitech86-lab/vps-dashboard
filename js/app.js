@@ -293,6 +293,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show target
             const targetEl = document.getElementById(`view-${viewId}`);
             if (targetEl) targetEl.classList.remove('hidden');
+            if (viewId === 'service' && window.ServiceModule) {
+                window.ServiceModule.render();
+            }
             if (viewId === 'kqkd' && window.KqkdModule) {
                 window.KqkdModule.render();
             }

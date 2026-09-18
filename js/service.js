@@ -43,6 +43,7 @@ window.ServiceModule = {
                     'XemSon': 'Xem Sơn',
                     'VPSM': 'VPS M',
                     'ITSS': 'ITSS',
+                    'VPVPS': 'Văn phòng VPS',
                     'all': null
                 };
                 this.localCompanyFilter = mapCty[e.detail.company] !== undefined ? mapCty[e.detail.company] : null;
@@ -60,6 +61,13 @@ window.ServiceModule = {
     // ==========================================
     // SERVICE METHODS
     // ==========================================
+    parseDecimal(val) {
+        if (val === undefined || val === null || val === '' || val === '-') return 0;
+        if (typeof val === 'number') return val;
+        let s = val.toString().trim().replace(/,/g, '.');
+        return parseFloat(s) || 0;
+    },
+
     parseServiceData(selectedCty, selectedMonth) {
         let data = JSON.parse(JSON.stringify(this.serviceMockData));
         if (window.mockData && window.mockData.service_raw && window.mockData.service_raw.length > 1) {
@@ -70,12 +78,22 @@ window.ServiceModule = {
                 if (!row || (!row[1] && !row[2])) continue; 
                 let t = (row[15] !== undefined && row[15] !== '') ? row[15].toString().replace('Tháng', '').trim() : '8';
                 parsed.push({
-                    stt: row[0] || i, name: row[1] || '', code: row[2] || '', dept: row[3] || '',
+                    stt: row[0] || i,
+                    name: row[1] ? row[1].toString().trim() : '',
+                    code: row[2] ? row[2].toString().trim() : '',
+                    dept: row[3] ? row[3].toString().trim() : '',
                     cty: row[4] ? row[4].toString().trim() : '',
-                    tasks: parseFloat(row[5]) || 0, avgScore: parseFloat(row[6]) || 0, totalScore: parseFloat(row[7]) || 0,
-                    responseTime: parseFloat(row[8]) || 0, travelTo: parseFloat(row[9]) || 0, processingTime: parseFloat(row[10]) || 0,
-                    travelBack: parseFloat(row[11]) || 0, reportCreated: parseFloat(row[12]) || 0, reportReplaced: parseFloat(row[13]) || 0,
-                    materialRecovered: parseFloat(row[14]) || 0, month: t
+                    tasks: this.parseDecimal(row[5]),
+                    avgScore: this.parseDecimal(row[6]),
+                    totalScore: this.parseDecimal(row[7]),
+                    responseTime: this.parseDecimal(row[8]),
+                    travelTo: this.parseDecimal(row[9]),
+                    processingTime: this.parseDecimal(row[10]),
+                    travelBack: this.parseDecimal(row[11]),
+                    reportCreated: this.parseDecimal(row[12]),
+                    reportReplaced: this.parseDecimal(row[13]),
+                    materialRecovered: this.parseDecimal(row[14]),
+                    month: t
                 });
             }
             if(parsed.length > 0) data = parsed;
@@ -85,30 +103,35 @@ window.ServiceModule = {
 
     aggregateServiceData(data) {
         let map = {};
-        data.forEach(d => {
-            if (!map[d.code]) {
-                map[d.code] = { ...d, count: 1 };
+        data.forEach((d, idx) => {
+            const key = (d.code && d.code.trim())
+                ? (d.cty + '_' + d.code.trim())
+                : (d.name && d.name.trim()
+                    ? (d.cty + '_' + d.name.trim().toLowerCase())
+                    : ('row_' + idx));
+            if (!map[key]) {
+                map[key] = { ...d, count: 1 };
             } else {
-                map[d.code].tasks += d.tasks;
-                map[d.code].avgScore += d.avgScore;
-                map[d.code].totalScore += d.totalScore;
-                map[d.code].responseTime += d.responseTime;
-                map[d.code].travelTo += d.travelTo;
-                map[d.code].processingTime += d.processingTime;
-                map[d.code].travelBack += d.travelBack;
-                map[d.code].reportCreated += d.reportCreated;
-                map[d.code].reportReplaced += d.reportReplaced;
-                map[d.code].materialRecovered += d.materialRecovered;
-                map[d.code].count += 1;
+                map[key].tasks += d.tasks;
+                map[key].avgScore += d.avgScore;
+                map[key].totalScore += d.totalScore;
+                map[key].responseTime += d.responseTime;
+                map[key].travelTo += d.travelTo;
+                map[key].processingTime += d.processingTime;
+                map[key].travelBack += d.travelBack;
+                map[key].reportCreated += d.reportCreated;
+                map[key].reportReplaced += d.reportReplaced;
+                map[key].materialRecovered += d.materialRecovered;
+                map[key].count += 1;
             }
         });
         return Object.values(map).map(d => {
             if (d.count > 1) {
                 d.avgScore = parseFloat((d.avgScore / d.count).toFixed(2));
-                d.responseTime = parseFloat((d.responseTime / d.count).toFixed(3));
-                d.travelTo = parseFloat((d.travelTo / d.count).toFixed(3));
-                d.processingTime = parseFloat((d.processingTime / d.count).toFixed(3));
-                d.travelBack = parseFloat((d.travelBack / d.count).toFixed(3));
+                d.responseTime = parseFloat((d.responseTime / d.count).toFixed(2));
+                d.travelTo = parseFloat((d.travelTo / d.count).toFixed(2));
+                d.processingTime = parseFloat((d.processingTime / d.count).toFixed(2));
+                d.travelBack = parseFloat((d.travelBack / d.count).toFixed(2));
             }
             return d;
         });
@@ -161,18 +184,32 @@ window.ServiceModule = {
     // ==========================================
     filterData(data, selectedCty, selectedMonth) {
         if (selectedCty && selectedCty !== 'all') {
+            const sel = selectedCty.toLowerCase().trim();
             data = data.filter(d => {
-                let cUpper = (d.cty || '').toUpperCase();
-                if (selectedCty === 'thh' && cUpper.includes('HỒNG HÀ')) return true;
-                if (selectedCty === 'viet' && (cUpper.includes('VIỆT') || cUpper === 'VIET')) return true;
-                if (selectedCty === 'xesco' && (cUpper.includes('SƠN') || cUpper.includes('SON'))) return true;
-                if (selectedCty === 'vpsm' && (cUpper.includes('VPS M') || cUpper === 'VPSM')) return true;
-                if (selectedCty === 'itss' && cUpper.includes('ITSS')) return true;
-                return false;
+                const c = (d.cty || '').toLowerCase().trim();
+                if (sel.includes('hồng hà') || sel === 'thh') {
+                    return c.includes('hồng hà') || c === 'thh';
+                }
+                if (sel.includes('việt') || sel === 'viet') {
+                    return c.includes('việt') || c === 'viet';
+                }
+                if (sel.includes('sơn') || sel.includes('son') || sel.includes('xesco') || sel === 'xemson') {
+                    return c.includes('sơn') || c.includes('son') || c.includes('xesco') || c === 'xemson';
+                }
+                if (sel.includes('vps m') || sel === 'vpsm') {
+                    return c.includes('vps m') || c === 'vpsm';
+                }
+                if (sel.includes('itss')) {
+                    return c.includes('itss');
+                }
+                if (sel.includes('văn phòng') || sel === 'vpvps') {
+                    return c.includes('văn phòng') || c === 'vpvps';
+                }
+                return c.includes(sel) || sel.includes(c);
             });
         }
         if (selectedMonth && selectedMonth !== 'all') {
-            data = data.filter(d => d.month == selectedMonth);
+            data = data.filter(d => (d.month || '').toString() == selectedMonth.toString());
         }
         return data;
     },
@@ -190,6 +227,8 @@ window.ServiceModule = {
                         m = parseInt(dateStr.split('-')[1]).toString();
                     } else if (dateStr.includes('/')) {
                         m = parseInt(dateStr.split('/')[1]).toString();
+                    } else if (/^\d+$/.test(dateStr)) {
+                        m = parseInt(dateStr, 10).toString();
                     }
                     if(m) months.add(m);
                 }
@@ -508,7 +547,11 @@ if(window.FilterManager && window.FilterManager.currentCompany) {
 
         let tableData = this.aggregateServiceData(data);
         if (this.localCompanyFilter) {
-            tableData = tableData.filter(d => d.cty === this.localCompanyFilter);
+            const locNorm = this.localCompanyFilter.toLowerCase().trim();
+            tableData = tableData.filter(d => {
+                const cNorm = (d.cty || '').toLowerCase().trim();
+                return cNorm.includes(locNorm) || locNorm.includes(cNorm);
+            });
             if(title) title.innerHTML = `Chi tiết: <span style="color:#4f46e5; font-weight:bold;">${this.localCompanyFilter}</span> <button onclick="window.ServiceModule.clearFilter('service')" style="margin-left:10px; font-size:0.75rem; background:#fee2e2; color:#ef4444; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Hiển thị Tất cả</button>`;
         } else {
             if(title) title.innerHTML = `Chi tiết: Tất cả đơn vị`;
@@ -546,7 +589,11 @@ if(window.FilterManager && window.FilterManager.currentCompany) {
 
         let tableData = data;
         if (this.complaintCompanyFilter) {
-            tableData = data.filter(d => d.cty === this.complaintCompanyFilter);
+            const locNorm = this.complaintCompanyFilter.toLowerCase().trim();
+            tableData = data.filter(d => {
+                const cNorm = (d.cty || '').toLowerCase().trim();
+                return cNorm.includes(locNorm) || locNorm.includes(cNorm);
+            });
             if(title) title.innerHTML = `Chi tiết: <span style="color:#ef4444; font-weight:bold;">${this.complaintCompanyFilter}</span> <button onclick="window.ServiceModule.clearFilter('complaint')" style="margin-left:10px; font-size:0.75rem; background:#fee2e2; color:#ef4444; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Hiển thị Tất cả</button>`;
         } else {
             if(title) title.innerHTML = `Chi tiết: Tất cả đơn vị`;

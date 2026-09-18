@@ -17,6 +17,39 @@ const SHEET_NAMES = [
     'Đào tạo', 'Dịch vụ tận tâm', 'Văn hóa doanh nghiệp', 'Thương hiệu', 'Kết quả kinh doanh'
 ];
 
+const COMPANY_SHEET_GIDS = {
+    'THH': {
+        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
+        'Nhân sự': '1910149330', 'Sản Phẩm': '418592611', 'Chi Phí': '957596074', 'ISO': '409620359',
+        'Đào tạo': '1393168586', 'Dịch vụ tận tâm': '2102700098', 'Văn hóa doanh nghiệp': '1859602306', 'Thương hiệu': '534190568'
+    },
+    'Viet': {
+        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
+        'Nhân sự': '1910149330', 'Sản Phẩm': '290289304', 'Chi Phí': '176987120', 'ISO': '746260029',
+        'Đào tạo': '685984952', 'Dịch vụ tận tâm': '60502944', 'Văn hóa doanh nghiệp': '1512696972', 'Thương hiệu': '1597204331'
+    },
+    'XemSon': {
+        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
+        'Nhân sự': '1910149330', 'Sản Phẩm': '459916420', 'Chi Phí': '508949159', 'ISO': '261393228',
+        'Đào tạo': '120618463', 'Dịch vụ tận tâm': '6998158', 'Văn hóa doanh nghiệp': '1510545864', 'Thương hiệu': '1997579437'
+    },
+    'VPSM': {
+        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
+        'Nhân sự': '1910149330', 'Sản Phẩm': '1975051685', 'Chi Phí': '1905975927', 'ISO': '1104287242',
+        'Đào tạo': '808165345', 'Dịch vụ tận tâm': '1469666840', 'Văn hóa doanh nghiệp': '2066638119', 'Thương hiệu': '596828320'
+    },
+    'ITSS': {
+        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
+        'Nhân sự': '1910149330', 'Sản Phẩm': '188270032', 'Chi Phí': '1362412584', 'ISO': '2143258857',
+        'Đào tạo': '634871207', 'Dịch vụ tận tâm': '1857193906', 'Văn hóa doanh nghiệp': '2030051590', 'Thương hiệu': '1776368819'
+    },
+    'VPVPS': {
+        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
+        'Nhân sự': '1910149330', 'Sản Phẩm': '1556002857', 'ISO': '1981205001',
+        'Đào tạo': '783896699', 'Dịch vụ tận tâm': '1438256161', 'Văn hóa doanh nghiệp': '953716186', 'Thương hiệu': '1267026434'
+    }
+};
+
 const companyIdMap = {
     'Tân Hồng Hà': 'THH', 'Tan Hong Ha': 'THH', 'tân hồng hà': 'THH', 'THH': 'THH',
     'Việt': 'Viet', 'Viet': 'Viet', 'viet': 'Viet', 'VIỆT': 'Viet',
@@ -130,8 +163,38 @@ function setCachedTabName(sheetId, sheetName, tabName) {
     } catch(e) {}
 }
 
-async function fetchSheetCsv(sheetId, sheetName) {
+async function fetchSheetCsv(sheetId, sheetName, companyId = '') {
     const t = Date.now();
+
+    // Ưu tiên 0: Tải trực tiếp qua GID nếu công ty đã được ánh xạ (chính xác 100%, 1 request duy nhất)
+    const directGid = (companyId && COMPANY_SHEET_GIDS[companyId]) ? COMPANY_SHEET_GIDS[companyId][sheetName] : null;
+    if (directGid) {
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${directGid}&_t=${t}`;
+        try {
+            const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+            const timeoutId = controller ? setTimeout(() => controller.abort(), 4000) : null;
+            const res = await fetch(url, controller ? { signal: controller.signal } : {});
+            if (timeoutId) clearTimeout(timeoutId);
+            if (res.ok) {
+                const text = await res.text();
+                const isErr = text.includes('google.visualization.Query.setResponse') && text.includes('error');
+                if (!isErr) {
+                    const firstLine = (text.split('\n')[0] || '').toLowerCase();
+                    const isCloned = !sheetName.toLowerCase().includes('doanh thu') && 
+                                     (firstLine.includes('báo cáo doanh thu') || firstLine.includes('doanh số kế hoạch'));
+                    if (!isCloned) {
+                        if (window.Papa) {
+                            return await new Promise(resolve => {
+                                Papa.parse(text, { header: false, skipEmptyLines: true, complete: r => resolve(r.data) });
+                            });
+                        }
+                        return parseRawCSV(text);
+                    }
+                }
+            }
+        } catch(e) {}
+    }
+
     const cachedName = getCachedTabName(sheetId, sheetName);
 
     const baseNames = [sheetName];
@@ -140,7 +203,7 @@ async function fetchSheetCsv(sheetId, sheetName) {
     } else if (sheetName.includes('Đào tạo') || sheetName.includes('Đào Tạo')) {
         baseNames.push('Đào Tạo', 'Đào tạo', '10. Đào tạo', '10. Đào Tạo');
     } else if (sheetName.includes('Dịch vụ') || sheetName.includes('Dịch Vụ')) {
-        baseNames.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ', '8. Dịch vụ', '8. Dịch Vụ');
+        baseNames.push('Dịch Vụ Tận Tâm', 'Dịch vụ tận tâm', 'Dịch vụ', 'Dịch Vụ', '8. Dịch vụ', '8. Dịch Vụ', '8. Dịch vụ tận tâm');
     } else if (sheetName.includes('Văn hóa') || sheetName.includes('Văn Hóa')) {
         baseNames.push('Văn hóa', 'Văn Hóa', 'Văn Hóa Doanh Nghiệp', '11. Văn hóa', '11. Văn hóa DN');
     } else if (sheetName.includes('Thương hiệu') || sheetName.includes('Marketing')) {
@@ -163,7 +226,8 @@ async function fetchSheetCsv(sheetId, sheetName) {
         baseNames.push('Kết quả kinh doanh', 'KQKD', 'P&L', '13. Kết quả kinh doanh', '13. KQKD');
     }
 
-    const prefixes = ['', 'Bản sao của ', 'Copy of '];
+    const prefixes = ['', ' ', '  ', 'Bản sao của ', 'Bản sao của  ', 'Copy of '];
+    const suffixes = ['', ' '];
     let candidates = [];
     // Ưu tiên 1: Tên tab đã từng quét thành công trong bộ nhớ cache
     if (cachedName) {
@@ -171,8 +235,10 @@ async function fetchSheetCsv(sheetId, sheetName) {
     }
     for (const b of baseNames) {
         for (const p of prefixes) {
-            const full = p + b;
-            if (!candidates.includes(full)) candidates.push(full);
+            for (const s of suffixes) {
+                const full = p + b + s;
+                if (!candidates.includes(full)) candidates.push(full);
+            }
         }
     }
 
@@ -482,7 +548,7 @@ function parseService(csv, compName, rawService) {
         const row = csv[i];
         if (!row || !row[1]) continue;
         const copy = [...row];
-        if (!copy[4] || copy[4].trim() === '') copy[4] = compName;
+        copy[4] = compName;
         rawService.push(copy);
     }
 }
@@ -643,10 +709,10 @@ window.GoogleSheetsService = {
             console.log('[GS] Bat dau tai du lieu tu 5 cong ty (12 sheets/file)...');
             const companyIds = Object.keys(COMPANY_SHEETS);
 
-            // Tải song song tất cả 12 sheet từ 5 file = 60 requests
+            // Tải song song tất cả 12 sheet từ các đơn vị với ưu tiên GID trực tiếp
             const allFetches = companyIds.map(cId =>
                 Promise.all(SHEET_NAMES.map(sname =>
-                    fetchSheetCsv(COMPANY_SHEETS[cId].id, sname).catch(() => [])
+                    fetchSheetCsv(COMPANY_SHEETS[cId].id, sname, cId).catch(() => [])
                 ))
             );
             const allResults = await Promise.all(allFetches);
