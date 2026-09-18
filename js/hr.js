@@ -444,7 +444,7 @@ window.HrModule = {
 
         // Vẽ biểu đồ Donut hrKpiChart
         const kpiChartData = {
-            labels: ['Loại A (Xuất sắc)', 'Loại B (Khá)', 'Loại C (Trung bình)', 'Loại D (Cần cải thiện)'],
+            labels: ['Loại A', 'Loại B', 'Loại C', 'Loại D'],
             datasets: [{
                 data: [tKpi.A, tKpi.B, tKpi.C, tKpi.D],
                 backgroundColor: ['#10B981', '#3B82F6', '#F59E0B', '#EF4444'],
@@ -485,10 +485,10 @@ window.HrModule = {
         if (gradesEl) {
             gradesEl.innerHTML = `
                 <div style="display: flex; flex-direction: column; gap: 6px;">
-                    <div><span style="color: #10B981; font-weight: 700;">● Loại A (Xuất sắc):</span> <strong>${tKpi.A}</strong> người (${pA}%)</div>
-                    <div><span style="color: #3B82F6; font-weight: 700;">● Loại B (Khá):</span> <strong>${tKpi.B}</strong> người (${pB}%)</div>
-                    <div><span style="color: #F59E0B; font-weight: 700;">● Loại C (Trung bình):</span> <strong>${tKpi.C}</strong> người (${pC}%)</div>
-                    <div><span style="color: #EF4444; font-weight: 700;">● Loại D (Cần cải thiện):</span> <strong>${tKpi.D}</strong> người (${pD}%)</div>
+                    <div><span style="color: #10B981; font-weight: 700;">● Loại A:</span> <strong>${tKpi.A}</strong> người (${pA}%)</div>
+                    <div><span style="color: #3B82F6; font-weight: 700;">● Loại B:</span> <strong>${tKpi.B}</strong> người (${pB}%)</div>
+                    <div><span style="color: #F59E0B; font-weight: 700;">● Loại C:</span> <strong>${tKpi.C}</strong> người (${pC}%)</div>
+                    <div><span style="color: #EF4444; font-weight: 700;">● Loại D:</span> <strong>${tKpi.D}</strong> người (${pD}%)</div>
                 </div>
             `;
         }
