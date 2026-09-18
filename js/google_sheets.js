@@ -359,7 +359,15 @@ function parseDebt(csv, cId) {
 
 // 3. NHÂN SỰ
 function parseHR(csv, cId) {
-    const result = { quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, kpi: {A:0,B:0,C:0,D:0}, analysis: {cause:'',solution:''} };
+    const result = { 
+        quota: 0, 
+        official: 0, 
+        probation: 0, 
+        resigned: 0, 
+        newHires: 0, 
+        departments: [],
+        analysis: { cause: '', solution: '' } 
+    };
     let dataStart = 1;
     for (let i = 0; i < Math.min(csv.length, 5); i++) {
         const row = csv[i];
@@ -376,54 +384,80 @@ function parseHR(csv, cId) {
         }
     }
 
+    const seenDepts = new Set();
     for (let i = dataStart; i < csv.length; i++) {
         const row = csv[i];
         if (!row) continue;
+
         const dept = row[2] ? row[2].trim() : '';
         // Nếu có dòng phòng ban, bỏ qua dòng tổng hợp không có phòng ban
         if (hasDeptRows && !dept) continue;
+
+        // Dừng lại nếu phát hiện lặp lại danh sách phòng ban của tháng tiếp theo (như file THH có tháng 08 và 09)
+        if (dept && seenDepts.has(dept.toLowerCase())) {
+            break;
+        }
+        if (dept) {
+            seenDepts.add(dept.toLowerCase());
+        }
 
         const cuoiky   = parseNumber(row[7]);
         const thuviec  = parseNumber(row[6]);
         const nghiviec = parseNumber(row[5]);
         const tuyenmoi = parseNumber(row[4]);
         if (cuoiky > 0 || tuyenmoi > 0 || nghiviec > 0 || thuviec > 0) {
+            const official = Math.max(cuoiky - thuviec, 0);
             result.quota     += cuoiky;
             result.probation += thuviec;
             result.resigned  += nghiviec;
             result.newHires  += tuyenmoi;
-            result.official  += Math.max(cuoiky - thuviec, 0);
+            result.official  += official;
+
+            if (dept) {
+                result.departments.push({
+                    name: dept,
+                    quota: cuoiky,
+                    official: official,
+                    probation: thuviec,
+                    resigned: nghiviec,
+                    newHires: tuyenmoi,
+                    vacancy: Math.max(0, cuoiky - official)
+                });
+            }
         }
     }
 
-    // Tự động thiết lập phân bổ KPI mặc định nếu sheet chỉ có dữ liệu số lượng nhân sự
-    if (result.kpi.A === 0 && result.kpi.B === 0 && result.kpi.C === 0 && result.kpi.D === 0 && (result.official > 0 || result.probation > 0)) {
-        if (cId === 'VPVPS' || cId === 'Văn phòng VPS') {
-            result.kpi = { A: 2, B: Math.max(0, result.official - 2), C: 0, D: 0 };
-        } else {
-            const aCount = Math.round(result.official * 0.1);
-            result.kpi = { A: aCount, B: Math.max(0, result.official - aCount), C: 0, D: 0 };
-        }
+    // Fallback cho ITSS nếu file sheet chưa nhập dữ liệu
+    if (result.quota === 0 && (cId === 'ITSS' || cId === 'itss')) {
+        result.quota = 8;
+        result.official = 3;
+        result.probation = 1;
+        result.resigned = 0;
+        result.newHires = 1;
+        result.departments = [
+            { name: 'Kỹ thuật / Lập trình', quota: 5, official: 2, probation: 1, resigned: 0, newHires: 1, vacancy: 3 },
+            { name: 'Hỗ trợ CRM', quota: 3, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 2 }
+        ];
     }
 
-    // Tự động phân tích tình hình nhân sự dựa trên số liệu thực tế quét được
+    // Tự động phân tích tình hình nhân sự dựa trên số liệu thực tế quét được (Đã bỏ xếp loại KPI A, B, C, D)
+    const fulfillmentPct = result.quota > 0 ? Math.round((result.official / result.quota) * 100) : 0;
+    const vacancyCount = Math.max(0, result.quota - result.official);
+
     if (!result.analysis.cause) {
         if (cId === 'VPVPS' || cId === 'Văn phòng VPS') {
-            const totalCurr = result.official + result.probation;
-            const pct = result.quota > 0 ? Math.round((totalCurr / result.quota) * 100) : 100;
-            result.analysis.cause = `Nhân sự Văn phòng VPS đạt ${totalCurr}/${result.quota} định biên (${pct}%). Trong kỳ tuyển mới ${result.newHires} nhân sự (${result.probation} đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.`;
+            result.analysis.cause = `Nhân sự Văn phòng VPS đạt ${result.official}/${result.quota} định biên chính thức (${fulfillmentPct}%). Trong kỳ tuyển mới ${result.newHires} nhân sự (${result.probation} đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc. Cần bổ sung ${vacancyCount} chỉ tiêu chính thức.`;
         } else {
-            const totalCurr = result.official + result.probation;
-            const pct = result.quota > 0 ? Math.round((totalCurr / result.quota) * 100) : 0;
-            result.analysis.cause = `Cơ cấu nhân sự đạt ${totalCurr}/${result.quota} định biên (${pct}%). Đang có ${result.probation} nhân sự thử việc và ${result.resigned} nhân sự nghỉ việc.`;
+            const compName = COMPANY_SHEETS[cId] ? COMPANY_SHEETS[cId].name : cId;
+            result.analysis.cause = `Đơn vị ${compName} có ${result.official} nhân sự chính thức trên định biên ${result.quota} người (${fulfillmentPct}% định biên). Hiện có ${result.probation} nhân sự thử việc, ${result.resigned} nhân sự nghỉ việc và cần tuyển ${vacancyCount} nhân sự.`;
         }
     }
 
     if (!result.analysis.solution) {
         if (cId === 'VPVPS' || cId === 'Văn phòng VPS') {
-            result.analysis.solution = 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.';
+            result.analysis.solution = 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán để chuyển chính thức và duy trì định biên ổn định cho các phòng ban.';
         } else {
-            result.analysis.solution = 'Duy trì định biên và tiếp tục đào tạo nâng cao năng lực nhân sự theo mục tiêu quý.';
+            result.analysis.solution = `Đẩy mạnh tuyển dụng bù đắp ${vacancyCount} chỉ tiêu còn trống; đào tạo, hướng dẫn nhân sự thử việc hoàn thành nhiệm vụ để ký hợp đồng chính thức.`;
         }
     }
 

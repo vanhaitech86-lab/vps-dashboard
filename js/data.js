@@ -923,23 +923,99 @@ const mockData = {
         }
     },
     hr: {
-        plan2026: {
-                'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
-        'THH': { ds: 300000, actual: 68204, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
-        'Viet': { ds: 106000, actual: 40891, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
-        'XemSon': { ds: 168000, actual: 69426, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
-        'VPSM': { ds: 45000, actual: 11251, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
-        'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
-        'Văn phòng VPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
-    },
-    byCompany: {
-            'THH': { quota: 54, official: 48, probation: 2, resigned: 3, kpi: {A: 2, B: 43, C: 3, D: 0}, analysis: { cause: 'Cần bổ sung nhân sự kinh doanh và hoàn thành định biên. Trong kỳ có 3 nhân sự nghỉ việc (Linh, Lan Anh, Nguyệt).', solution: 'Tuyển thêm nhân viên kinh doanh theo định mức để bù đắp quân số.' } },
-            'Viet': { quota: 43, official: 38, probation: 1, resigned: 0, kpi: {A: 14, B: 19, C: 1, D: 4}, analysis: { cause: 'Chất lượng nhân sự có phân bổ rộng, một số yếu kém cần cải thiện.', solution: 'Tuyển bổ sung 3 nhân sự, đào tạo lại nhóm nhân sự loại D.' } },
-            'XemSon': { quota: 98, official: 95, probation: 1, resigned: 0, kpi: {A: 0, B: 85, C: 10, D: 0}, analysis: { cause: 'Nhân sự khá ổn định nhưng chưa có cá nhân xuất sắc.', solution: 'Tuyển thêm 2 nhân viên kinh doanh để hoàn thiện cơ cấu.' } },
-            'VPSM': { quota: 15, official: 10, probation: 0, resigned: 0, kpi: {A: 0, B: 10, C: 0, D: 0}, analysis: { cause: 'Thiếu hụt đáng kể so với định biên (cần 5 nhân viên kinh doanh).', solution: 'Gấp rút đẩy mạnh hoạt động tuyển dụng nhân sự kinh doanh.' } },
-            'ITSS': { quota: 8, official: 3, probation: 1, resigned: 0, kpi: {A: 3, B: 0, C: 0, D: 0}, analysis: { cause: 'Team ITSS quy mô nhỏ, chất lượng nhân sự xuất sắc nhưng thiếu số lượng.', solution: 'Tuyển dụng thêm 4 nhân sự lập trình/hỗ trợ CRM.' } },
-            'VPVPS': { quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1, kpi: {A: 2, B: 15, C: 0, D: 0}, analysis: { cause: 'Nhân sự Văn phòng VPS đạt 18/18 định biên (100%). Trong kỳ tuyển mới 1 nhân sự (1 đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.', solution: 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.' } },
-            'Văn phòng VPS': { quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1, kpi: {A: 2, B: 15, C: 0, D: 0}, analysis: { cause: 'Nhân sự Văn phòng VPS đạt 18/18 định biên (100%). Trong kỳ tuyển mới 1 nhân sự (1 đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.', solution: 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.' } }
+        byCompany: {
+            'THH': { 
+                quota: 54, official: 48, probation: 2, resigned: 3,
+                departments: [
+                    { name: 'Kinh doanh', quota: 18, official: 15, probation: 0, resigned: 1, vacancy: 3 },
+                    { name: 'Kỹ thuật', quota: 25, official: 23, probation: 0, resigned: 2, vacancy: 2 },
+                    { name: 'Kế toán', quota: 11, official: 10, probation: 2, resigned: 0, vacancy: 1 }
+                ],
+                analysis: { 
+                    cause: 'Nhân sự chính thức đạt 48/54 định biên (88.9%). Khối kinh doanh còn thiếu 3 nhân sự, trong kỳ có 3 nhân sự nghỉ việc.', 
+                    solution: 'Đẩy mạnh tuyển dụng nhân viên kinh doanh theo định mức để bù đắp quân số thiếu hụt.' 
+                } 
+            },
+            'Viet': { 
+                quota: 43, official: 38, probation: 1, resigned: 0,
+                departments: [
+                    { name: 'Kinh doanh', quota: 17, official: 15, probation: 0, resigned: 0, vacancy: 2 },
+                    { name: 'Kỹ thuật', quota: 18, official: 15, probation: 1, resigned: 0, vacancy: 2 },
+                    { name: 'Kế toán', quota: 5, official: 5, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Kho/Giao vận', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 }
+                ],
+                analysis: { 
+                    cause: 'Nhân sự chính thức đạt 38/43 định biên (88.4%). Khối kỹ thuật có 1 nhân sự đang thử việc.', 
+                    solution: 'Tuyển bổ sung 5 nhân sự còn thiếu so với định biên, kèm cặp nhân sự thử việc chuyển chính thức.' 
+                } 
+            },
+            'XemSon': { 
+                quota: 98, official: 94, probation: 1, resigned: 1,
+                departments: [
+                    { name: 'Kinh doanh', quota: 33, official: 32, probation: 0, resigned: 0, vacancy: 1 },
+                    { name: 'Kỹ thuật', quota: 46, official: 44, probation: 1, resigned: 1, vacancy: 2 },
+                    { name: 'Kế toán', quota: 5, official: 5, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Hành chính', quota: 8, official: 8, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Kho/Giao vận', quota: 6, official: 5, probation: 0, resigned: 0, vacancy: 1 }
+                ],
+                analysis: { 
+                    cause: 'Nhân sự chính thức đạt 94/98 định biên (95.9%). Cơ cấu nhân sự cơ bản ổn định.', 
+                    solution: 'Tuyển thêm 4 nhân sự để hoàn thiện đầy đủ 100% định biên các bộ phận.' 
+                } 
+            },
+            'VPSM': { 
+                quota: 15, official: 10, probation: 0, resigned: 0,
+                departments: [
+                    { name: 'Kinh doanh', quota: 6, official: 3, probation: 0, resigned: 0, vacancy: 3 },
+                    { name: 'Kỹ thuật', quota: 8, official: 6, probation: 0, resigned: 0, vacancy: 2 },
+                    { name: 'Kế toán', quota: 1, official: 1, probation: 0, resigned: 0, vacancy: 0 }
+                ],
+                analysis: { 
+                    cause: 'Nhân sự chính thức đạt 10/15 định biên (66.7%). Thiếu hụt 5 chỉ tiêu so với định biên.', 
+                    solution: 'Gấp rút đẩy mạnh hoạt động tuyển dụng nhân sự kinh doanh và kỹ thuật.' 
+                } 
+            },
+            'ITSS': { 
+                quota: 8, official: 3, probation: 1, resigned: 0,
+                departments: [
+                    { name: 'Kỹ thuật / Lập trình', quota: 5, official: 2, probation: 1, resigned: 0, vacancy: 3 },
+                    { name: 'Hỗ trợ CRM', quota: 3, official: 1, probation: 0, resigned: 0, vacancy: 2 }
+                ],
+                analysis: { 
+                    cause: 'Quy mô team ITSS hiện có 3 chính thức và 1 thử việc trên định biên 8 người (37.5%).', 
+                    solution: 'Tuyển dụng thêm các lập trình viên và nhân sự hỗ trợ hệ thống CRM.' 
+                } 
+            },
+            'VPVPS': { 
+                quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1,
+                departments: [
+                    { name: 'Kế hoạch - Cung ứng', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Kỹ thuật', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Kế toán', quota: 2, official: 1, probation: 1, resigned: 0, vacancy: 1 },
+                    { name: 'Hành chính', quota: 5, official: 5, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Nhân sự', quota: 2, official: 2, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Marketing', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 }
+                ],
+                analysis: { 
+                    cause: 'Nhân sự Văn phòng VPS đạt 17/18 định biên chính thức (94.4%). Trong kỳ tuyển mới 1 nhân sự (1 đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.', 
+                    solution: 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.' 
+                } 
+            },
+            'Văn phòng VPS': { 
+                quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1,
+                departments: [
+                    { name: 'Kế hoạch - Cung ứng', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Kỹ thuật', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Kế toán', quota: 2, official: 1, probation: 1, resigned: 0, vacancy: 1 },
+                    { name: 'Hành chính', quota: 5, official: 5, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Nhân sự', quota: 2, official: 2, probation: 0, resigned: 0, vacancy: 0 },
+                    { name: 'Marketing', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 }
+                ],
+                analysis: { 
+                    cause: 'Nhân sự Văn phòng VPS đạt 17/18 định biên chính thức (94.4%). Trong kỳ tuyển mới 1 nhân sự (1 đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.', 
+                    solution: 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.' 
+                } 
+            }
         }
     }
 };
