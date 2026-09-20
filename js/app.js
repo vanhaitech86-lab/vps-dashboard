@@ -269,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'overview': 'DASHBOARD',
                 'hr': '1. CCTC Nhân Sự',
                 'revenue': '2. Doanh Số Lãi Gộp',
+                'project-revenue': '2.1. Doanh Số Dự Án',
                 'product': '3. Sản Phẩm',
                 'inventory': '4. Tồn Kho',
                 'expense': '5. Chi Phí',
@@ -293,6 +294,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show target
             const targetEl = document.getElementById(`view-${viewId}`);
             if (targetEl) targetEl.classList.remove('hidden');
+            if (viewId === 'project-revenue' && window.ProjectRevenueModule) {
+                window.ProjectRevenueModule.render();
+            }
             if (viewId === 'service' && window.ServiceModule) {
                 window.ServiceModule.render();
             }

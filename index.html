@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="css/customers.css?v=1788767139">
     <link rel="stylesheet" href="css/revenue.css?v=1788767139">
     <link rel="stylesheet" href="css/debt.css?v=1788767139">
+    <link rel="stylesheet" href="css/project_revenue.css?v=1789730000">
 <style>.chart-container { position: relative; width: 100%; }    html, body { height: 100%; width: 100%; }
 
         #page-title { white-space: nowrap !important; font-size: 1.1rem !important; }
@@ -87,6 +88,7 @@
                 <a href="#overview" class="nav-item active" data-target="overview" style="border-left: 4px solid #3498db;"><i data-lucide="layout-dashboard"></i> DASHBOARD</a>
                 <a href="#hr" class="nav-item" data-target="hr" style="border-left: 4px solid #e74c3c;"><i data-lucide="users"></i> 1. CCTC Nhân Sự</a>
                 <a href="#revenue" class="nav-item" data-target="revenue" style="border-left: 4px solid #2ecc71;"><i data-lucide="bar-chart-2"></i> 2. Doanh Số Lãi Gộp</a>
+                <a href="#project-revenue" class="nav-item nav-sub-item" data-target="project-revenue"><i data-lucide="briefcase"></i> 2.1. Doanh Số Dự Án</a>
                 <a href="#product" class="nav-item" data-target="product" style="border-left: 4px solid #9b59b6;"><i data-lucide="package"></i> 3. Sản Phẩm</a>
                 <a href="#inventory" class="nav-item" data-target="inventory" style="border-left: 4px solid #f1c40f;"><i data-lucide="archive"></i> 4. Tồn Kho</a>
                 <a href="#expenses" class="nav-item" data-target="expenses" style="border-left: 4px solid #e67e22;"><i data-lucide="pie-chart"></i> 5. Chi Phí</a>
@@ -586,6 +588,18 @@
 
                 <!-- Revenue View -->
                 <section id="view-revenue" class="view hidden">
+                    <!-- Revenue Dual Navigation Bar -->
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                        <button type="button" class="btn" style="background: #2ecc71; color: #fff; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; border: none; cursor: default;">
+                            <i data-lucide="bar-chart-2" style="width: 16px; height: 16px;"></i>
+                            2. Doanh Số Lãi Gộp (Hiện Tại)
+                        </button>
+                        <a href="#project-revenue" onclick="event.preventDefault(); document.querySelector('[data-target=\'project-revenue\']').click();" class="btn" style="background: #ffffff; color: #10b981; border: 1px solid #10b981; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; text-decoration: none; cursor: pointer; transition: all 0.2s;">
+                            <i data-lucide="briefcase" style="width: 16px; height: 16px;"></i>
+                            2.1. Doanh Số Dự Án ↗
+                        </a>
+                    </div>
+
                     <div class="card">
                         <div class="card-header">
                             <h3>Doanh Số Các Công Ty (Tỷ VNĐ)</h3>
@@ -638,6 +652,269 @@
                                     <!-- Populated by JS -->
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Project Revenue View (2.1) -->
+                <section id="view-project-revenue" class="view hidden">
+                    <!-- Project Top Banner & Navigation -->
+                    <div class="project-nav-banner">
+                        <div class="title-group">
+                            <h2>
+                                <i data-lucide="folder-kanban" style="width: 22px; height: 22px;"></i>
+                                2.1. BÁO CÁO DOANH SỐ DỰ ÁN - TẬP ĐOÀN VPS
+                            </h2>
+                            <p>Theo dõi tổng hợp & chi tiết các gói thầu dự án, tiến độ doanh thu theo từng công ty thành viên</p>
+                        </div>
+                        <div class="banner-actions">
+                            <button type="button" id="btn-proj-add" class="btn-proj btn-proj-primary" title="Tạo dự án mới">
+                                <i data-lucide="plus-circle" style="width: 15px; height: 15px;"></i>
+                                <span>Thêm Dự Án Mới</span>
+                            </button>
+                            <button type="button" id="btn-proj-export" class="btn-proj btn-proj-secondary" title="Xuất dữ liệu dự án ra CSV/Excel">
+                                <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                                <span>Xuất Dữ Liệu</span>
+                            </button>
+                            <button type="button" id="btn-proj-template" class="btn-proj btn-proj-secondary" title="Tải file mẫu nhập liệu dự án">
+                                <i data-lucide="file-spreadsheet" style="width: 15px; height: 15px;"></i>
+                                <span>Mẫu Excel</span>
+                            </button>
+                            <a href="#revenue" onclick="event.preventDefault(); document.querySelector('[data-target=\'revenue\']').click();" class="btn-proj btn-proj-secondary" style="border-color: rgba(255,255,255,0.4);" title="Quay lại Doanh số lãi gộp">
+                                <i data-lucide="arrow-left" style="width: 15px; height: 15px;"></i>
+                                <span>Về Doanh Số Tổng</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Filter Bar -->
+                    <div class="project-filter-bar">
+                        <div class="project-filters-left">
+                            <div class="project-filter-item">
+                                <label for="proj-filter-company"><i data-lucide="building-2" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> Đơn vị:</label>
+                                <select id="proj-filter-company" class="project-select">
+                                    <option value="all">Toàn Tập đoàn VPS</option>
+                                    <option value="Tân Hồng Hà">Tân Hồng Hà</option>
+                                    <option value="Việt">Việt</option>
+                                    <option value="Xem Sơn">Xem Sơn</option>
+                                    <option value="VPS M">VPS M</option>
+                                    <option value="ITSS">ITSS</option>
+                                    <option value="Văn phòng VPS">Văn phòng VPS</option>
+                                </select>
+                            </div>
+                            <div class="project-filter-item">
+                                <label for="proj-filter-status"><i data-lucide="activity" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> Trạng thái:</label>
+                                <select id="proj-filter-status" class="project-select">
+                                    <option value="all">Tất cả trạng thái</option>
+                                    <option value="in-progress">Đang triển khai</option>
+                                    <option value="completed">Hoàn thành</option>
+                                    <option value="pending-accept">Chờ nghiệm thu</option>
+                                    <option value="bidding">Đang đấu thầu</option>
+                                </select>
+                            </div>
+                            <div class="project-filter-item">
+                                <label for="proj-filter-type"><i data-lucide="layers" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> Lĩnh vực:</label>
+                                <select id="proj-filter-type" class="project-select">
+                                    <option value="all">Tất cả lĩnh vực</option>
+                                    <option value="Gói thầu Thiết bị">Gói thầu Thiết bị</option>
+                                    <option value="Thiết bị Công nghiệp">Thiết bị Công nghiệp</option>
+                                    <option value="Dịch vụ Thuê máy lớn">Dịch vụ Thuê máy lớn</option>
+                                    <option value="Số hóa & CNTT">Số hóa & CNTT</option>
+                                    <option value="Giải pháp & Phần mềm">Giải pháp & Phần mềm</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="project-filters-right">
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <input type="text" id="proj-search-input" class="project-search-input" placeholder="Tìm mã, tên dự án, KH...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 KPI Cards -->
+                    <div class="project-kpi-grid">
+                        <div class="project-kpi-card">
+                            <div class="project-kpi-header">
+                                <span class="project-kpi-title">Doanh Số Thực Hiện</span>
+                                <div class="project-kpi-icon icon-bg-green"><i data-lucide="dollar-sign"></i></div>
+                            </div>
+                            <div class="project-kpi-value" id="proj-kpi-actual">0 Tỷ ₫</div>
+                            <div class="project-kpi-subtext" id="proj-kpi-actual-sub">Đang tải số liệu...</div>
+                        </div>
+                        <div class="project-kpi-card card-blue">
+                            <div class="project-kpi-header">
+                                <span class="project-kpi-title">Tổng Giá Trị Hợp Đồng</span>
+                                <div class="project-kpi-icon icon-bg-blue"><i data-lucide="file-check"></i></div>
+                            </div>
+                            <div class="project-kpi-value" id="proj-kpi-contract">0 Tỷ ₫</div>
+                            <div class="project-kpi-subtext" id="proj-kpi-contract-sub">Đang tải số liệu...</div>
+                        </div>
+                        <div class="project-kpi-card card-purple">
+                            <div class="project-kpi-header">
+                                <span class="project-kpi-title">Số Lượng Dự Án</span>
+                                <div class="project-kpi-icon icon-bg-purple"><i data-lucide="briefcase"></i></div>
+                            </div>
+                            <div class="project-kpi-value" id="proj-kpi-count">0 Dự án</div>
+                            <div class="project-kpi-subtext" id="proj-kpi-count-sub">Đang tải số liệu...</div>
+                        </div>
+                        <div class="project-kpi-card card-amber">
+                            <div class="project-kpi-header">
+                                <span class="project-kpi-title">Lãi Gộp Ước Tính</span>
+                                <div class="project-kpi-icon icon-bg-amber"><i data-lucide="trending-up"></i></div>
+                            </div>
+                            <div class="project-kpi-value" id="proj-kpi-profit">0 Tỷ ₫</div>
+                            <div class="project-kpi-subtext" id="proj-kpi-profit-sub">Đang tải số liệu...</div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid: 2 charts -->
+                    <div class="project-charts-grid">
+                        <div class="project-chart-card">
+                            <h3><i data-lucide="bar-chart-3" style="color: #10b981; width: 18px; height: 18px;"></i> Doanh Số Dự Án Theo Đơn Vị (Kế Hoạch vs Thực Hiện)</h3>
+                            <div class="project-chart-container">
+                                <canvas id="projectRevenueBarChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="project-chart-card">
+                            <h3><i data-lucide="pie-chart" style="color: #3b82f6; width: 18px; height: 18px;"></i> Cơ Cấu Doanh Số Theo Lĩnh Vực</h3>
+                            <div class="project-chart-container">
+                                <canvas id="projectTypePieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trend Chart -->
+                    <div class="card mb-20" style="background:#ffffff; border-radius:10px; padding:18px 20px; border:1px solid #e2e8f0; margin-bottom:20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                        <div class="card-header" style="margin-bottom: 12px; padding: 0; border: none;">
+                            <h3 style="font-size: 0.95rem; font-weight: 700; margin: 0; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                                <i data-lucide="line-chart" style="color: #2563eb; width: 18px; height: 18px;"></i>
+                                Tiến Độ Thực Hiện Doanh Số Dự Án Năm 2026 Theo Quý
+                            </h3>
+                        </div>
+                        <div style="height: 260px; position: relative;">
+                            <canvas id="projectTrendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Project Table -->
+                    <div class="project-table-card">
+                        <div class="project-table-header">
+                            <h3>
+                                <i data-lucide="list-filter" style="color: #10b981; width: 18px; height: 18px;"></i>
+                                Danh Sách Dự Án Chi Tiết
+                                <span id="project-table-count" style="font-size: 0.8rem; font-weight: 500; color: #64748b;">(0 dự án)</span>
+                            </h3>
+                            <div style="font-size: 0.8rem; color: #64748b;">
+                                Đơn vị tính: <strong>VNĐ</strong>
+                            </div>
+                        </div>
+                        <div class="project-table-wrapper">
+                            <table class="project-data-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 45px; text-align: center;">STT</th>
+                                        <th style="width: 120px;">Mã DA</th>
+                                        <th>Tên Dự Án & Khách Hàng</th>
+                                        <th style="width: 110px;">Đơn Vị</th>
+                                        <th style="width: 140px; text-align: right;">Giá Trị HĐ</th>
+                                        <th style="width: 140px; text-align: right;">Doanh Số Đã Thu</th>
+                                        <th style="width: 150px;">Tiến Độ</th>
+                                        <th style="width: 140px; text-align: right;">Lãi Gộp Dự Kiến</th>
+                                        <th style="width: 120px;">Trạng Thái</th>
+                                        <th style="width: 80px; text-align: center;">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="project-table-tbody">
+                                    <!-- Populated by project_revenue.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Project Modal (Add/Edit) -->
+                    <div id="project-modal" class="project-modal-overlay" style="display: none;">
+                        <div class="project-modal-dialog">
+                            <div class="project-modal-header">
+                                <h3 id="modal-project-title">
+                                    <i data-lucide="plus-circle" style="color: #10b981; width: 20px; height: 20px;"></i>
+                                    Thêm Mới Dự Án
+                                </h3>
+                                <button type="button" id="btn-modal-close" class="project-modal-close">&times;</button>
+                            </div>
+                            <form id="project-modal-form">
+                                <div class="project-modal-body">
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-id">Mã Dự Án (*)</label>
+                                        <input type="text" id="modal-proj-id" placeholder="VD: DA-2026-THH05" required>
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-company">Đơn Vị Phụ Trách (*)</label>
+                                        <select id="modal-proj-company" required>
+                                            <option value="Tân Hồng Hà">Tân Hồng Hà</option>
+                                            <option value="Việt">Việt</option>
+                                            <option value="Xem Sơn">Xem Sơn</option>
+                                            <option value="VPS M">VPS M</option>
+                                            <option value="ITSS">ITSS</option>
+                                            <option value="Văn phòng VPS">Văn phòng VPS</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group-modal form-field-full">
+                                        <label for="modal-proj-name">Tên Dự Án / Gói Thầu (*)</label>
+                                        <input type="text" id="modal-proj-name" placeholder="VD: Cung cấp thiết bị in ấn & giải pháp..." required>
+                                    </div>
+                                    <div class="form-group-modal form-field-full">
+                                        <label for="modal-proj-customer">Khách Hàng / Chủ Đầu Tư (*)</label>
+                                        <input type="text" id="modal-proj-customer" placeholder="VD: Cục Thuế, Sở GD&ĐT, Agribank..." required>
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-type">Lĩnh Vực / Loại Hình</label>
+                                        <select id="modal-proj-type">
+                                            <option value="Gói thầu Thiết bị">Gói thầu Thiết bị</option>
+                                            <option value="Thiết bị Công nghiệp">Thiết bị Công nghiệp</option>
+                                            <option value="Dịch vụ Thuê máy lớn">Dịch vụ Thuê máy lớn</option>
+                                            <option value="Số hóa & CNTT">Số hóa & CNTT</option>
+                                            <option value="Giải pháp & Phần mềm">Giải pháp & Phần mềm</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-status">Trạng Thái Dự Án</label>
+                                        <select id="modal-proj-status">
+                                            <option value="in-progress">Đang triển khai</option>
+                                            <option value="completed">Hoàn thành</option>
+                                            <option value="pending-accept">Chờ nghiệm thu</option>
+                                            <option value="bidding">Đang đấu thầu</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-contract">Giá Trị Hợp Đồng (VNĐ)</label>
+                                        <input type="number" id="modal-proj-contract" placeholder="VD: 2500000000" min="0">
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-plan">Kế Hoạch Doanh Số (VNĐ)</label>
+                                        <input type="number" id="modal-proj-plan" placeholder="VD: 2200000000" min="0">
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-actual">Doanh Số Đã Thu / Thực Hiện (VNĐ)</label>
+                                        <input type="number" id="modal-proj-actual" placeholder="VD: 1800000000" min="0">
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-profit">Lãi Gộp Dự Kiến (VNĐ)</label>
+                                        <input type="number" id="modal-proj-profit" placeholder="VD: 540000000" min="0">
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-rate">Biên Lãi Gộp (%)</label>
+                                        <input type="number" id="modal-proj-rate" placeholder="VD: 30" min="0" max="100" step="0.1">
+                                    </div>
+                                    <div class="form-group-modal">
+                                        <label for="modal-proj-progress">Tiến Độ Hoàn Thành (%)</label>
+                                        <input type="number" id="modal-proj-progress" placeholder="VD: 75" min="0" max="100">
+                                    </div>
+                                </div>
+                                <div class="project-modal-footer">
+                                    <button type="button" id="btn-modal-cancel" class="btn" style="background:#e2e8f0; color:#334155; border:1px solid #cbd5e1; font-size:0.85rem; padding:7px 16px; border-radius:6px; font-weight:600; cursor:pointer;">Hủy</button>
+                                    <button type="submit" class="btn-proj btn-proj-primary" style="font-size:0.85rem; padding:7px 18px;">Lưu Dự Án</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </section>
@@ -1784,6 +2061,7 @@
     <script src="js/fujifilm.js?v=1788780000"></script>
     <script src="js/products_other.js?v=1788780000"></script>
     <script src="js/revenue.js?v=1788780000"></script>
+    <script src="js/project_revenue.js?v=1789730000"></script>
     <script src="js/inventory.js?v=1789620000"></script>
     <script src="js/debt.js?v=1788780000"></script>
     <script src="js/hr.js?v=1789700000"></script>
