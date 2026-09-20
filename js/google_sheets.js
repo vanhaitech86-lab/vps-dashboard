@@ -65,7 +65,11 @@ const customerCatMap = {
     'Dịch vụ - Photo': 'dv_photo', 'Dich vu - Photo': 'dv_photo', 'dịch vụ - photo': 'dv_photo',
     'Dịch vụ - Máy in': 'dv_may_in', 'Dich vu - May in': 'dv_may_in', 'dịch vụ - máy in': 'dv_may_in',
     'Dịch vụ khác': 'dv_khac', 'Dich vu khac': 'dv_khac', 'dịch vụ khác': 'dv_khac',
-    'Phân phối (Đại lý)': 'phan_phoi', 'Phan phoi (Dai ly)': 'phan_phoi', 'phân phối (đại lý)': 'phan_phoi'
+    'Phân phối (Đại lý)': 'phan_phoi', 'Phan phoi (Dai ly)': 'phan_phoi', 'phân phối (đại lý)': 'phan_phoi',
+    // 3 nhóm phân loại khách hàng theo thời gian phát sinh doanh số
+    'Khách hàng phát sinh doanh số dưới 3 tháng': 'kh_duoi_3_thang', 'khách hàng phát sinh doanh số dưới 3 tháng': 'kh_duoi_3_thang', 'Phát sinh doanh số dưới 3 tháng': 'kh_duoi_3_thang', 'Dưới 3 tháng': 'kh_duoi_3_thang', 'dưới 3 tháng': 'kh_duoi_3_thang', '< 3 tháng': 'kh_duoi_3_thang', '< 3 thang': 'kh_duoi_3_thang', 'duoi 3 thang': 'kh_duoi_3_thang',
+    'Khách hàng phát sinh doanh số từ 3 - 6 tháng': 'kh_3_den_6_thang', 'khách hàng phát sinh doanh số từ 3 - 6 tháng': 'kh_3_den_6_thang', 'Phát sinh doanh số từ 3 - 6 tháng': 'kh_3_den_6_thang', 'Từ 3 - 6 tháng': 'kh_3_den_6_thang', 'từ 3 - 6 tháng': 'kh_3_den_6_thang', '3 - 6 tháng': 'kh_3_den_6_thang', '3 - 6 thang': 'kh_3_den_6_thang', '3-6 tháng': 'kh_3_den_6_thang', 'tu 3 - 6 thang': 'kh_3_den_6_thang',
+    'Khách hàng phát sinh doanh số trên 6 tháng': 'kh_tren_6_thang', 'khách hàng phát sinh doanh số trên 6 tháng': 'kh_tren_6_thang', 'Phát sinh doanh số trên 6 tháng': 'kh_tren_6_thang', 'Trên 6 tháng': 'kh_tren_6_thang', 'trên 6 tháng': 'kh_tren_6_thang', '> 6 tháng': 'kh_tren_6_thang', '> 6 thang': 'kh_tren_6_thang', 'tren 6 thang': 'kh_tren_6_thang'
 };
 
 // ============================================================
@@ -503,8 +507,9 @@ function parseCustomers(csv, cId) {
         if (!row) continue;
         const mMatch = row[0] ? row[0].toString().match(/(\d{2}\/\d{4})/) : null;
         if (mMatch) thang = mMatch[1];
-        const catRaw = row[2] ? row[2].toString().trim() : '';
-        const catId = customerCatMap[catRaw] || customerCatMap[catRaw.toLowerCase()];
+        const catRaw2 = row[2] ? row[2].toString().trim() : '';
+        const catRaw1 = row[1] ? row[1].toString().trim() : '';
+        const catId = customerCatMap[catRaw2] || customerCatMap[catRaw2.toLowerCase()] || customerCatMap[catRaw1] || customerCatMap[catRaw1.toLowerCase()];
         if (!catId) continue;
         const dau_may  = parseNumber(row[3]), dau_kh  = parseNumber(row[4]);
         const tang_may = parseNumber(row[5]), tang_kh = parseNumber(row[6]);
@@ -1129,8 +1134,10 @@ window.GoogleSheetsService = {
                 window.mockData.brand_data = brandData;
             }
 
-            // ── Customers Builder (đảm bảo không bao giờ undefined 6 categories) ──
+            // ── Customers Builder (đảm bảo đầy đủ 6 categories dịch vụ và 3 categories phát sinh doanh số) ──
             const standardCats = ['thue_may', 'mc', 'dv_photo', 'dv_may_in', 'dv_khac', 'phan_phoi'];
+            const recencyCats = ['kh_duoi_3_thang', 'kh_3_den_6_thang', 'kh_tren_6_thang'];
+            const allCustomerCats = [...standardCats, ...recencyCats];
 
             window.GoogleSheetsService.buildCustomerDataForMonth = function(month) {
                 const targetData = customersByMonth[month] || {};
@@ -1142,24 +1149,25 @@ window.GoogleSheetsService = {
                     byCompany: {}
                 };
 
-                // Khởi tạo đầy đủ 6 danh mục cho từng công ty
+                // Khởi tạo đầy đủ danh mục cho từng công ty
                 Object.keys(COMPANY_SHEETS).forEach(cId => {
                     res.matrix[cId] = {};
                     const compCats = targetData[cId] || {};
-                    standardCats.forEach(catId => {
-                        res.matrix[cId][catId] = compCats[catId] || {
+                    allCustomerCats.forEach(catId => {
+                        const fallback = window.mockData?.customers?.matrix?.[cId]?.[catId] || {
                             dau: { may: 0, kh: 0 },
                             ke_hoach: { may: 0, kh: 0 },
                             tang: { may: 0, kh: 0 },
                             giam: { may: 0, kh: 0 },
                             cuoi: { may: 0, kh: 0 }
                         };
+                        res.matrix[cId][catId] = compCats[catId] || fallback;
                     });
                 });
 
                 // Tổng hợp 'all'
                 res.matrix['all'] = {};
-                standardCats.forEach(catId => {
+                allCustomerCats.forEach(catId => {
                     res.matrix['all'][catId] = {
                         dau: { may: 0, kh: 0 },
                         ke_hoach: { may: 0, kh: 0 },
@@ -1170,14 +1178,18 @@ window.GoogleSheetsService = {
                     Object.keys(COMPANY_SHEETS).forEach(cId => {
                         const r = res.matrix[cId][catId];
                         const a = res.matrix['all'][catId];
-                        a.dau.may  += r.dau.may;
-                        a.dau.kh   += r.dau.kh;
-                        a.tang.may += r.tang.may;
-                        a.tang.kh  += r.tang.kh;
-                        a.giam.may += r.giam.may;
-                        a.giam.kh  += r.giam.kh;
-                        a.cuoi.may += r.cuoi.may;
-                        a.cuoi.kh  += r.cuoi.kh;
+                        if (r && a) {
+                            a.dau.may  += r.dau.may || 0;
+                            a.dau.kh   += r.dau.kh || 0;
+                            a.ke_hoach.may += r.ke_hoach?.may || 0;
+                            a.ke_hoach.kh  += r.ke_hoach?.kh || 0;
+                            a.tang.may += r.tang.may || 0;
+                            a.tang.kh  += r.tang.kh || 0;
+                            a.giam.may += r.giam.may || 0;
+                            a.giam.kh  += r.giam.kh || 0;
+                            a.cuoi.may += r.cuoi.may || 0;
+                            a.cuoi.kh  += r.cuoi.kh || 0;
+                        }
                     });
                 });
 

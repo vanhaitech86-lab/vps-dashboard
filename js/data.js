@@ -118,6 +118,27 @@ const mockData = {
                                         "may": 0,
                                         "kh": 2853
                               }
+                    },
+                    "kh_duoi_3_thang": {
+                              "dau": { "may": 5720, "kh": 3790 },
+                              "ke_hoach": { "may": 40, "kh": 65 },
+                              "tang": { "may": 38, "kh": 60 },
+                              "giam": { "may": 18, "kh": 5 },
+                              "cuoi": { "may": 5740, "kh": 3845 }
+                    },
+                    "kh_3_den_6_thang": {
+                              "dau": { "may": 1250, "kh": 820 },
+                              "ke_hoach": { "may": 10, "kh": 15 },
+                              "tang": { "may": 8, "kh": 14 },
+                              "giam": { "may": 7, "kh": 1 },
+                              "cuoi": { "may": 1251, "kh": 833 }
+                    },
+                    "kh_tren_6_thang": {
+                              "dau": { "may": 620, "kh": 367 },
+                              "ke_hoach": { "may": 5, "kh": 10 },
+                              "tang": { "may": 5, "kh": 8 },
+                              "giam": { "may": 6, "kh": 1 },
+                              "cuoi": { "may": 619, "kh": 374 }
                     }
           },
           "THH": {
@@ -228,6 +249,27 @@ const mockData = {
                                         "may": 0,
                                         "kh": 360
                               }
+                    },
+                    "kh_duoi_3_thang": {
+                              "dau": { "may": 2600, "kh": 960 },
+                              "ke_hoach": { "may": 20, "kh": 10 },
+                              "tang": { "may": 22, "kh": 8 },
+                              "giam": { "may": 8, "kh": 1 },
+                              "cuoi": { "may": 2614, "kh": 967 }
+                    },
+                    "kh_3_den_6_thang": {
+                              "dau": { "may": 580, "kh": 215 },
+                              "ke_hoach": { "may": 5, "kh": 5 },
+                              "tang": { "may": 4, "kh": 1 },
+                              "giam": { "may": 2, "kh": 1 },
+                              "cuoi": { "may": 582, "kh": 215 }
+                    },
+                    "kh_tren_6_thang": {
+                              "dau": { "may": 290, "kh": 110 },
+                              "ke_hoach": { "may": 2, "kh": 2 },
+                              "tang": { "may": 1, "kh": 0 },
+                              "giam": { "may": 1, "kh": 0 },
+                              "cuoi": { "may": 290, "kh": 110 }
                     }
           },
           "Viet": {
@@ -338,6 +380,27 @@ const mockData = {
                                         "may": 0,
                                         "kh": 1961
                               }
+                    },
+                    "kh_duoi_3_thang": {
+                              "dau": { "may": 610, "kh": 1680 },
+                              "ke_hoach": { "may": 10, "kh": 20 },
+                              "tang": { "may": 8, "kh": 10 },
+                              "giam": { "may": 15, "kh": 2 },
+                              "cuoi": { "may": 603, "kh": 1688 }
+                    },
+                    "kh_3_den_6_thang": {
+                              "dau": { "may": 130, "kh": 360 },
+                              "ke_hoach": { "may": 2, "kh": 5 },
+                              "tang": { "may": 2, "kh": 3 },
+                              "giam": { "may": 2, "kh": 1 },
+                              "cuoi": { "may": 130, "kh": 362 }
+                    },
+                    "kh_tren_6_thang": {
+                              "dau": { "may": 65, "kh": 155 },
+                              "ke_hoach": { "may": 1, "kh": 2 },
+                              "tang": { "may": 1, "kh": 1 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 66, "kh": 156 }
                     }
           },
           "XemSon": {
@@ -448,6 +511,27 @@ const mockData = {
                                         "may": 0,
                                         "kh": 464
                               }
+                    },
+                    "kh_duoi_3_thang": {
+                              "dau": { "may": 2000, "kh": 915 },
+                              "ke_hoach": { "may": 8, "kh": 25 },
+                              "tang": { "may": 8, "kh": 31 },
+                              "giam": { "may": 2, "kh": 1 },
+                              "cuoi": { "may": 2006, "kh": 945 }
+                    },
+                    "kh_3_den_6_thang": {
+                              "dau": { "may": 440, "kh": 195 },
+                              "ke_hoach": { "may": 2, "kh": 5 },
+                              "tang": { "may": 2, "kh": 3 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 442, "kh": 198 }
+                    },
+                    "kh_tren_6_thang": {
+                              "dau": { "may": 213, "kh": 79 },
+                              "ke_hoach": { "may": 1, "kh": 2 },
+                              "tang": { "may": 1, "kh": 1 },
+                              "giam": { "may": 1, "kh": 1 },
+                              "cuoi": { "may": 213, "kh": 79 }
                     }
           },
           "VPSM": {
@@ -558,6 +642,27 @@ const mockData = {
                                         "may": 0,
                                         "kh": 68
                               }
+                    },
+                    "kh_duoi_3_thang": {
+                              "dau": { "may": 510, "kh": 235 },
+                              "ke_hoach": { "may": 2, "kh": 10 },
+                              "tang": { "may": 0, "kh": 21 },
+                              "giam": { "may": 1, "kh": 1 },
+                              "cuoi": { "may": 509, "kh": 255 }
+                    },
+                    "kh_3_den_6_thang": {
+                              "dau": { "may": 110, "kh": 50 },
+                              "ke_hoach": { "may": 1, "kh": 2 },
+                              "tang": { "may": 0, "kh": 2 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 110, "kh": 52 }
+                    },
+                    "kh_tren_6_thang": {
+                              "dau": { "may": 61, "kh": 28 },
+                              "ke_hoach": { "may": 0, "kh": 1 },
+                              "tang": { "may": 2, "kh": 1 },
+                              "giam": { "may": 2, "kh": 1 },
+                              "cuoi": { "may": 61, "kh": 28 }
                     }
           },
           "ITSS": {
@@ -668,6 +773,27 @@ const mockData = {
                                         "may": 0,
                                         "kh": 0
                               }
+                    },
+                    "kh_duoi_3_thang": {
+                              "dau": { "may": 0, "kh": 0 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 0, "kh": 0 }
+                    },
+                    "kh_3_den_6_thang": {
+                              "dau": { "may": 0, "kh": 0 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 0, "kh": 0 }
+                    },
+                    "kh_tren_6_thang": {
+                              "dau": { "may": 0, "kh": 0 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 0, "kh": 0 }
                     }
           },
           "VPVPS": {
@@ -778,6 +904,27 @@ const mockData = {
                                         "may": 0,
                                         "kh": 0
                               }
+                    },
+                    "kh_duoi_3_thang": {
+                              "dau": { "may": 0, "kh": 0 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 0, "kh": 0 }
+                    },
+                    "kh_3_den_6_thang": {
+                              "dau": { "may": 0, "kh": 0 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 0, "kh": 0 }
+                    },
+                    "kh_tren_6_thang": {
+                              "dau": { "may": 0, "kh": 0 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 0, "kh": 0 }
                     }
           }
 },
