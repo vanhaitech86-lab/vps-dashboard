@@ -1565,79 +1565,191 @@
 
                 
 
+                <!-- Inventory View (4. Tồn Kho - Cập Nhật Toàn Diện Theo Yêu Cầu) -->
                 <section id="view-inventory" class="view hidden">
-                    <div class="grid-layout cols-2">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Cơ Cấu Tồn Kho Theo Hãng</h3>
+                    <!-- Weekly Update Banner & Controls -->
+                    <div class="inv-weekly-banner">
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <div style="width: 40px; height: 40px; border-radius: 8px; background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); display: flex; align-items: center; justify-content: center; color: #fbbf24;">
+                                <i data-lucide="archive" style="width: 22px; height: 22px;"></i>
                             </div>
-                            <div class="card-body">
-                                <div class="chart-container" style="height: 350px;">
-                                    <canvas id="inventoryChart"></canvas>
+                            <div>
+                                <h2 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #ffffff;">4. BÁO CÁO CHỈ TIÊU TỒN KHO - TẬP ĐOÀN VPS</h2>
+                                <p style="margin: 3px 0 0 0; font-size: 0.8rem; color: #cbd5e1;">Chu kỳ cập nhật: <strong>Hàng tuần</strong> • Kế hoạch vs Thực hiện • Tách Tồn kho HĐKD & Dự án • Hàng chậm luân chuyển (Máy & Vật tư)</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+                                <label for="inv-week-select" style="font-size: 0.8rem; font-weight: 600; color: #fef08a; white-space: nowrap;">
+                                    <i data-lucide="calendar" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle;"></i> Kỳ Báo Cáo:
+                                </label>
+                                <select id="inv-week-select" style="background: transparent; color: #ffffff; border: none; font-weight: 700; font-size: 0.82rem; outline: none; cursor: pointer;">
+                                    <option value="3" style="color: #0f172a;" selected>Tuần 3 (15/09 - 21/09/2026) - Mới nhất</option>
+                                    <option value="2" style="color: #0f172a;">Tuần 2 (08/09 - 14/09/2026)</option>
+                                    <option value="1" style="color: #0f172a;">Tuần 1 (01/09 - 07/09/2026)</option>
+                                    <option value="4" style="color: #0f172a;">Tuần 4 (22/09 - 30/09/2026) - Dự kiến</option>
+                                </select>
+                            </div>
+                            <button type="button" id="btn-inv-export" class="btn" style="background: #f59e0b; color: #0f172a; font-weight: 700; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer;" title="Xuất báo cáo tồn kho ra file Excel/CSV">
+                                <i data-lucide="file-spreadsheet" style="width: 15px; height: 15px;"></i>
+                                <span>Xuất Excel</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4 Advanced KPI Cards -->
+                    <div class="inv-kpi-grid">
+                        <!-- KPI 1: Kế Hoạch vs Thực Hiện Tồn Kho -->
+                        <div class="inv-kpi-card card-green">
+                            <div class="inv-kpi-header">
+                                <span class="inv-kpi-title">Kế Hoạch - Thực Hiện</span>
+                                <div class="inv-kpi-icon" style="background: #dcfce7; color: #16a34a;"><i data-lucide="target"></i></div>
+                            </div>
+                            <div class="inv-kpi-val" id="inv-kpi-actual">0 Tỷ ₫</div>
+                            <div class="inv-kpi-sub" id="inv-kpi-actual-sub">Đang tính toán...</div>
+                        </div>
+
+                        <!-- KPI 2: Tách Tồn Kho: HĐKD vs Dự Án -->
+                        <div class="inv-kpi-card card-blue">
+                            <div class="inv-kpi-header">
+                                <span class="inv-kpi-title">Tồn Kho: HĐKD vs Dự Án</span>
+                                <div class="inv-kpi-icon" style="background: #dbeafe; color: #2563eb;"><i data-lucide="layers"></i></div>
+                            </div>
+                            <div class="inv-kpi-val" id="inv-kpi-purpose-val">0 Tỷ ₫</div>
+                            <div class="inv-kpi-sub" id="inv-kpi-purpose-sub">Đang tính toán...</div>
+                        </div>
+
+                        <!-- KPI 3: Hàng Chậm Luân Chuyển: Máy & Vật Tư -->
+                        <div class="inv-kpi-card card-rose">
+                            <div class="inv-kpi-header">
+                                <span class="inv-kpi-title">Hàng Chậm Luân Chuyển</span>
+                                <div class="inv-kpi-icon" style="background: #fee2e2; color: #dc2626;"><i data-lucide="alert-octagon"></i></div>
+                            </div>
+                            <div class="inv-kpi-val" id="inv-kpi-slow-val">0 Tỷ ₫</div>
+                            <div class="inv-kpi-sub" id="inv-kpi-slow-sub">Đang tính toán...</div>
+                        </div>
+
+                        <!-- KPI 4: Tỷ Lệ Tồn Kho / Doanh Số (TB Các Tháng) -->
+                        <div class="inv-kpi-card card-purple">
+                            <div class="inv-kpi-header">
+                                <span class="inv-kpi-title">Tỷ Lệ Tồn Kho / Doanh Số (TB)</span>
+                                <div class="inv-kpi-icon" style="background: #f3e8ff; color: #7c3aed;"><i data-lucide="calculator"></i></div>
+                            </div>
+                            <div class="inv-kpi-val" id="inv-kpi-ratio-val">0%</div>
+                            <div class="inv-kpi-sub" id="inv-kpi-ratio-sub">Đang tính toán...</div>
+                        </div>
+                    </div>
+
+                    <!-- 3 Analytical Charts Grid -->
+                    <div class="inv-charts-3col">
+                        <!-- Chart 1: Kế Hoạch vs Thực Hiện Tồn Kho -->
+                        <div class="card" style="margin-bottom: 0;">
+                            <div class="card-header" style="padding: 14px 18px; border-bottom: 1px solid #e2e8f0;">
+                                <h3 style="font-size: 0.9rem; font-weight: 700; margin: 0; color: #0f172a; display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="bar-chart-2" style="width: 16px; height: 16px; color: #2563eb;"></i> Kế Hoạch vs Thực Hiện
+                                </h3>
+                            </div>
+                            <div class="card-body" style="padding: 14px 18px;">
+                                <div style="height: 280px; position: relative;">
+                                    <canvas id="invPlanActualChart"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                                <h3>Phân Tích Tồn Kho</h3>
-                                <span class="badge" style="background: #e0f2fe; color: #0369a1; font-weight: 600; padding: 4px 10px; border-radius: 20px;">Thời gian thực</span>
+
+                        <!-- Chart 2: Tồn Kho HĐKD Thường vs Dự Án -->
+                        <div class="card" style="margin-bottom: 0;">
+                            <div class="card-header" style="padding: 14px 18px; border-bottom: 1px solid #e2e8f0;">
+                                <h3 style="font-size: 0.9rem; font-weight: 700; margin: 0; color: #0f172a; display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="layers" style="width: 16px; height: 16px; color: #10b981;"></i> Cơ Cấu: HĐKD vs Dự Án
+                                </h3>
                             </div>
-                            <div class="card-body">
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                                    <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px; padding: 12px;">
-                                        <div style="font-size: 0.85rem; color: #92400e; font-weight: 600; text-transform: uppercase;">Tổng Giá Trị Tồn Kho</div>
-                                        <div id="inventory-total-val" style="color: #d97706; font-size: 1.5rem; font-weight: 800; margin-top: 4px;">0 Tỷ VND</div>
-                                    </div>
-                                    <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-radius: 8px; padding: 12px;">
-                                        <div style="font-size: 0.85rem; color: #166534; font-weight: 600; text-transform: uppercase;">Tổng Số Lượng Tồn Kho</div>
-                                        <div id="inventory-total-qty" style="color: #15803d; font-size: 1.5rem; font-weight: 800; margin-top: 4px;">0 SP/TB</div>
-                                    </div>
+                            <div class="card-body" style="padding: 14px 18px;">
+                                <div style="height: 280px; position: relative;">
+                                    <canvas id="invPurposeChart"></canvas>
                                 </div>
-                                <p style="color: #475569; font-size: 0.9rem; line-height: 1.5;">Hãng <strong>HP</strong> và <strong>Fujifilm</strong> chiếm tỷ trọng lớn nhất trong kho. Nhóm vật tư tiêu hao (Consumable) và linh kiện (Part) có số lượng luân chuyển cao, trong khi nhóm Máy nguyên chiếc cần được giám sát chặt chẽ theo từng thương hiệu để giải phóng vốn lưu động và tối ưu dòng tiền.</p>
+                            </div>
+                        </div>
+
+                        <!-- Chart 3: Hàng Chậm Luân Chuyển: Máy vs Vật Tư -->
+                        <div class="card" style="margin-bottom: 0;">
+                            <div class="card-header" style="padding: 14px 18px; border-bottom: 1px solid #e2e8f0;">
+                                <h3 style="font-size: 0.9rem; font-weight: 700; margin: 0; color: #0f172a; display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="pie-chart" style="width: 16px; height: 16px; color: #f59e0b;"></i> Hàng Chậm: Máy vs Vật Tư
+                                </h3>
+                            </div>
+                            <div class="card-body" style="padding: 14px 18px;">
+                                <div style="height: 280px; position: relative;">
+                                    <canvas id="invSlowMovingChart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Bảng 1: BÁO CÁO TỔNG HỢP CHỈ TIÊU TỒN KHO & TỶ LỆ TỒN KHO/DOANH SỐ CÁC ĐƠN VỊ -->
+                    <div class="card mt-20" style="background:#ffffff; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; padding:14px 20px; border-bottom:1px solid #e2e8f0;">
+                            <div>
+                                <h3 style="margin:0; font-size:0.98rem; font-weight:700; color:#0f172a; display:flex; align-items:center; gap:8px;">
+                                    <i data-lucide="table" style="width:18px;height:18px;color:#10b981;"></i>
+                                    BẢNG TỔNG HỢP CHỈ TIÊU TỒN KHO & TỶ LỆ TỒN KHO / DOANH SỐ
+                                </h3>
+                                <p style="margin:3px 0 0 0; font-size:0.78rem; color:#64748b;">Kế hoạch vs Thực hiện • Tách Tồn kho HĐKD & Dự án • Hàng chậm (Máy & Vật tư) • Tỷ lệ Tồn/DS tính theo hệ số TB các tháng</p>
+                            </div>
+                            <div style="font-size:0.78rem; color:#475569; background:#f8fafc; padding:4px 10px; border-radius:4px; border:1px solid #cbd5e1;">
+                                Đơn vị tính: <strong>Tỷ VNĐ</strong>
+                            </div>
+                        </div>
+                        <div class="table-responsive" style="width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;">
+                            <table class="data-table" style="font-size:0.82rem; white-space:nowrap; width:100%;">
+                                <thead>
+                                    <tr style="background:#f1f5f9; color:#0f172a; font-weight:700; text-align:center;">
+                                        <th rowspan="2" style="width:40px; vertical-align:middle;">STT</th>
+                                        <th rowspan="2" style="min-width:140px; vertical-align:middle; text-align:left;">ĐƠN VỊ</th>
+                                        <th colspan="3" style="background:#e0f2fe; color:#0369a1; border-bottom:1px solid #cbd5e1;">KẾ HOẠCH - THỰC HIỆN</th>
+                                        <th colspan="2" style="background:#dcfce7; color:#15803d; border-bottom:1px solid #cbd5e1;">PHÂN BỔ TỒN KHO</th>
+                                        <th colspan="2" style="background:#fee2e2; color:#b91c1c; border-bottom:1px solid #cbd5e1;">HÀNG CHẬM LUÂN CHUYỂN</th>
+                                        <th colspan="3" style="background:#fef3c7; color:#b45309; border-bottom:1px solid #cbd5e1;">HỆ SỐ TRUNG BÌNH CÁC THÁNG</th>
+                                        <th rowspan="2" style="width:120px; vertical-align:middle;">CẬP NHẬT TUẦN</th>
+                                    </tr>
+                                    <tr style="background:#f8fafc; font-size:0.78rem; text-align:right;">
+                                        <!-- KH - TH -->
+                                        <th style="background:#f0f9ff; color:#0369a1;">Định Mức KH</th>
+                                        <th style="background:#f0f9ff; color:#0369a1;">Thực Tế</th>
+                                        <th style="background:#f0f9ff; color:#0369a1; text-align:center;">% Đạt</th>
+                                        <!-- Phân bổ -->
+                                        <th style="background:#f0fdf4; color:#15803d;">HĐKD Thường</th>
+                                        <th style="background:#f0fdf4; color:#15803d;">Dự Án</th>
+                                        <!-- Chậm luân chuyển -->
+                                        <th style="background:#fff1f2; color:#b91c1c;">Máy (SL)</th>
+                                        <th style="background:#fff1f2; color:#b91c1c;">Vật Tư (SL)</th>
+                                        <!-- TB các tháng -->
+                                        <th style="background:#fffbeb; color:#b45309;">DS TB/Tháng</th>
+                                        <th style="background:#fffbeb; color:#b45309;">Tồn TB/Tháng</th>
+                                        <th style="background:#fffbeb; color:#b45309; text-align:center;">Tỷ Lệ Tồn/DS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inv-summary-table-tbody">
+                                    <!-- Populated by inventory.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Bảng 2: CHI TIẾT TỒN KHO THEO HÃNG & PHÂN LOẠI (BẢNG GỐC) -->
                     <div class="card mt-20">
-                        <div class="card-header">
-                            <h3>Chi Tiết Tồn Kho (Số Lượng & Giá Trị)</h3>
+                        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <h3 style="margin:0; font-size:0.95rem; font-weight:700;">Chi Tiết Tồn Kho Theo Thương Hiệu & Phân Loại</h3>
+                                <p style="margin:3px 0 0 0; font-size:0.76rem; color:#64748b;">Số lượng và giá trị (VNĐ) theo từng dòng máy, consumable, part cho HP, Fujifilm, Olivetti, Bonsai...</p>
+                            </div>
                         </div>
                         <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
                             <table class="data-table" id="inventoryTable" style="white-space: nowrap; font-size: 0.82rem;">
                                 <thead>
-                                    <tr style="background: #84cc16; color: #0f172a; font-size: 0.9rem; text-align: center;">
-                                        <th rowspan="2" style="width: 40px; vertical-align: middle; background: #84cc16; border-right: 1px solid #65a30d;">STT</th>
-                                        <th rowspan="2" style="min-width: 140px; vertical-align: middle; background: #84cc16; border-right: 1px solid #65a30d;">ĐƠN VỊ / PHÂN LOẠI</th>
-                                        <th colspan="2" style="background: #a3e635; border-right: 1px solid #65a30d; font-weight: 800;">HP</th>
-                                        <th colspan="2" style="background: #84cc16; border-right: 1px solid #65a30d; font-weight: 800;">FUJIFILM</th>
-                                        <th colspan="2" style="background: #a3e635; border-right: 1px solid #65a30d; font-weight: 800;">OLIVETTI / VCOPY</th>
-                                        <th colspan="2" style="background: #84cc16; border-right: 1px solid #65a30d; font-weight: 800;">BONSAI / AIN</th>
-                                        <th colspan="2" style="background: #a3e635; border-right: 1px solid #65a30d; font-weight: 800;">KHÁC</th>
-                                        <th colspan="2" style="background: #fde047; color: #713f12; font-weight: 800; border-left: 2px solid #ca8a04;">TỔNG CỘNG</th>
-                                    </tr>
-                                    <tr style="background: #bef264; font-size: 0.8rem; text-align: right;">
-                                        <!-- HP -->
-                                        <th style="background: #ecfccb; color: #0369a1; font-weight: 700; width: 60px; text-align: right; border-right: 1px solid #d9f99d;">SL</th>
-                                        <th style="background: #f7fee7; color: #334155; font-weight: 700; min-width: 105px; text-align: right; border-right: 1px solid #65a30d;">Giá trị</th>
-                                        <!-- Fujifilm -->
-                                        <th style="background: #ecfccb; color: #0369a1; font-weight: 700; width: 60px; text-align: right; border-right: 1px solid #d9f99d;">SL</th>
-                                        <th style="background: #f7fee7; color: #334155; font-weight: 700; min-width: 105px; text-align: right; border-right: 1px solid #65a30d;">Giá trị</th>
-                                        <!-- Olivetti / VCOPY -->
-                                        <th style="background: #ecfccb; color: #0369a1; font-weight: 700; width: 60px; text-align: right; border-right: 1px solid #d9f99d;">SL</th>
-                                        <th style="background: #f7fee7; color: #334155; font-weight: 700; min-width: 95px; text-align: right; border-right: 1px solid #65a30d;">Giá trị</th>
-                                        <!-- Bonsai / AIN -->
-                                        <th style="background: #ecfccb; color: #0369a1; font-weight: 700; width: 60px; text-align: right; border-right: 1px solid #d9f99d;">SL</th>
-                                        <th style="background: #f7fee7; color: #334155; font-weight: 700; min-width: 95px; text-align: right; border-right: 1px solid #65a30d;">Giá trị</th>
-                                        <!-- Khác -->
-                                        <th style="background: #ecfccb; color: #0369a1; font-weight: 700; width: 60px; text-align: right; border-right: 1px solid #d9f99d;">SL</th>
-                                        <th style="background: #f7fee7; color: #334155; font-weight: 700; min-width: 95px; text-align: right; border-right: 1px solid #65a30d;">Giá trị</th>
-                                        <!-- Tổng cộng -->
-                                        <th style="background: #fef08a; color: #0369a1; font-weight: 800; min-width: 85px; text-align: right; border-left: 2px solid #ca8a04; border-right: 1px solid #fde047;">TỔNG SL</th>
-                                        <th style="background: #fef9c3; color: #b91c1c; font-weight: 800; min-width: 125px; text-align: right;">CỘNG (VNĐ)</th>
-                                    </tr>
+                                    <!-- Populated by inventory.js -->
                                 </thead>
                                 <tbody>
-                                    <!-- Populated by JS -->
+                                    <!-- Populated by inventory.js -->
                                 </tbody>
                             </table>
                         </div>

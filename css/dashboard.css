@@ -415,3 +415,131 @@
 .topbar {
     margin-bottom: 0 !important;
 }
+
+/* ===================================================
+   Inventory Advanced KPI & Weekly Styles (Chỉ Tiêu Tồn Kho)
+   =================================================== */
+.inv-weekly-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-left: 5px solid #f59e0b;
+    color: #ffffff;
+    padding: 14px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.inv-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+    .inv-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .inv-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.inv-kpi-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-top: 4px solid #f59e0b;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.inv-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.inv-kpi-card.card-green { border-top-color: #10b981; }
+.inv-kpi-card.card-blue { border-top-color: #2563eb; }
+.inv-kpi-card.card-purple { border-top-color: #8b5cf6; }
+.inv-kpi-card.card-rose { border-top-color: #e11d48; }
+
+.inv-kpi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.inv-kpi-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.inv-kpi-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.inv-kpi-val {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    margin-bottom: 6px;
+}
+
+.inv-kpi-sub {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.inv-split-bar {
+    display: flex;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #e2e8f0;
+    margin: 6px 0;
+}
+
+.inv-split-segment {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.inv-charts-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+    .inv-charts-3col {
+        grid-template-columns: 1fr;
+    }
+}
+

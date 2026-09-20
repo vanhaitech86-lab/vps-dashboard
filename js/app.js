@@ -303,6 +303,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (viewId === 'kqkd' && window.KqkdModule) {
                 window.KqkdModule.render();
             }
+            if (viewId === 'inventory' && window.InventoryModule) {
+                const comp = window.FilterManager ? window.FilterManager.currentCompany : 'all';
+                window.InventoryModule.renderUI(comp, window.InventoryModule.currentWeek);
+            }
             if (viewId === 'cashflow' && window.CashflowModule) {
                 window.CashflowModule.render();
             }
