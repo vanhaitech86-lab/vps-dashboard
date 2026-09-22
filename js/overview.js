@@ -1,290 +1,511 @@
 /**
- * Overview Module
+ * Overview Module — Scorecard Dashboard
+ * Displays comprehensive KPIs and unit measurement matrix
  */
 
 window.OverviewModule = {
+    charts: {},
+
     init() {
         document.addEventListener('vps_filter_changed', (e) => {
-            if (document.getElementById('view-overview').classList.contains('hidden') === false) {
-                this.loadData(e.detail.period, e.detail.company);
+            if (!document.getElementById('view-overview').classList.contains('hidden')) {
+                this.loadData();
             }
         });
 
-        // Add listener for when view becomes active
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                if(item.dataset.target === 'overview') {
-                    const currentCompany = window.FilterManager.currentCompany;
-                    const currentPeriod = window.FilterManager.currentPeriod;
-                    this.loadData(currentPeriod, currentCompany);
+            item.addEventListener('click', () => {
+                if (item.dataset.target === 'overview') {
+                    this.loadData();
                 }
             });
         });
+
+        // Initial load
+        setTimeout(() => this.loadData(), 300);
     },
 
-    async loadData(period, company) {
-        // Fetch all 3 datasets
-        const [customers, revenue, debt] = await Promise.all([
-            window.DataService.getCustomersData(period, company),
-            window.DataService.getRevenueData(period, company),
-            window.DataService.getDebtData(period, company)
-        ]);
-
-        this.updateUI(customers, revenue, debt, company);
+    async loadData() {
+        const d = window.mockData;
+        if (!d) return;
+        this.updateKPIs(d);
+        this.buildMatrix(d);
+        this.renderCharts(d);
+        this.renderYoYChart(d);
     },
 
-    updateUI(customers, revenue, debt, company) {
-        
-        const companyNameMap = {
-            'all': 'Tất cả',
-            'THH': 'Tân Hồng Hà',
-            'Viet': 'Việt',
-            'XemSon': 'Xem Sơn',
-            'VPSM': 'VPS M',
-            'ITSS': 'ITSS',
-            'VPVPS': 'Văn phòng VPS'
-        };
+    // ======= 1. Update 6 KPI Summary Cards =======
+    updateKPIs(d) {
+        const hr = d.hr.byCompany;
+        const rev = d.revenue.plan2026;
+        const debt = d.debt;
+        const inv = d.inventory;
+        const iso = window.IsoModule ? window.IsoModule.summaryData : [];
 
-        let dataKey = 'all';
-        if (company === 'Tân Hồng Hà' || (company.includes('T') && company.includes('H'))) dataKey = 'THH';
-        else if (company === 'Việt' || company.includes('Vi')) dataKey = 'Viet';
-        else if (company === 'Xem Sơn' || company.includes('Xem')) dataKey = 'XemSon';
-        else if (company === 'VPS M' || company.includes('VPS M')) dataKey = 'VPSM';
-        else if (company === 'ITSS' || company.includes('ITSS')) dataKey = 'ITSS'; 
-        else if (company !== 'all') dataKey = 'VPVPS';
-
-        // --- 1. Customers ---
-        let custLabels = ['Dịch vụ', 'Thuê máy', 'Phân phối'], custData = [];
-        let tCust=0, tNew=0, tDec=0, tLost=0;
-        let tService = 0, tRental = 0, tDistribution = 0;
-        
-        if (company === 'all') {
-            tCust = customers.total;
-            tNew = customers.trend.new;
-            tDec = customers.trend.decreased;
-            tLost = customers.trend.lost;
-            for (const [compName, compData] of Object.entries(customers.byCompany)) {
-                tService += compData.service;
-                tRental += compData.rental;
-                tDistribution += compData.distribution;
-            }
-            custData = [tService, tRental, tDistribution];
-        } else {
-            const compData = customers.byCompany[dataKey];
-            if(compData) {
-                tCust = compData.service + compData.rental + compData.distribution;
-                tNew = compData.new;
-                tDec = compData.decreased;
-                tLost = compData.lost;
-                custData = [compData.service, compData.rental, compData.distribution];
-            }
+        // --- HR ---
+        let totalQuota = 0, totalOfficial = 0;
+        for (const key of Object.keys(hr)) {
+            if (key === 'Văn phòng VPS') continue; // avoid duplicate with VPVPS
+            totalQuota += hr[key].quota;
+            totalOfficial += hr[key].official;
         }
-        
-        document.getElementById('ov-cust-total').textContent = tCust.toLocaleString();
-        document.getElementById('overview-customers-val').textContent = tCust.toLocaleString();
-        document.getElementById('ov-cust-new').textContent = "+" + tNew.toLocaleString();
-        document.getElementById('ov-cust-decreased').textContent = tDec.toLocaleString();
-        document.getElementById('ov-cust-lost').textContent = tLost.toLocaleString();
+        const hrPct = totalQuota > 0 ? ((totalOfficial / totalQuota) * 100).toFixed(1) : 0;
+        this.setEl('sc-hr-value', `${totalOfficial} / ${totalQuota}`);
+        this.setEl('sc-hr-sub', `Lấp đầy: ${hrPct}%`);
+        this.setBadge('sc-hr-badge', hrPct, '%');
+        this.setBar('sc-hr-bar', hrPct, '#e74c3c');
 
-        window.ChartManager.createChart('overviewCustomersChart', 'doughnut', {
-            labels: custLabels,
-            datasets: [{
-                data: custData,
-                backgroundColor: ['#1B2A4A', '#2E86AB', '#FFC107']
-            }]
-        }, {
-            plugins: {
-                datalabels: {
-                    color: '#ffffff',
-                    font: { weight: 'bold', size: 14 },
-                    formatter: function(value, context) {
-                        return context.chart.data.labels[context.dataIndex] + '\n' + value.toLocaleString();
-                    },
-                    textAlign: 'center',
-                    textStrokeColor: 'rgba(0,0,0,0.5)',
-                    textStrokeWidth: 2
-                }
+        // --- Revenue ---
+        const allRev = rev['all'];
+        const revActual = (allRev.actual / 1000).toFixed(1);
+        const revPlan = (allRev.ds / 1000).toFixed(1);
+        const revPct = allRev.ds > 0 ? ((allRev.actual / allRev.ds) * 100).toFixed(1) : 0;
+        this.setEl('sc-rev-value', `${this.fmtNum(allRev.actual)} Tr`);
+        this.setEl('sc-rev-sub', `KH: ${this.fmtNum(allRev.ds)} Tr | Đạt ${revPct}%`);
+        this.setBadge('sc-rev-badge', revPct, '%');
+        this.setBar('sc-rev-bar', Math.min(revPct, 100), '#10b981');
+
+        // --- Profit ---
+        const profitVal = allRev.ttlg;
+        const profitPct = allRev.lg_pct;
+        this.setEl('sc-profit-value', `${this.fmtNum(profitVal)} Tr`);
+        this.setEl('sc-profit-sub', `Tỷ lệ LG: ${profitPct}%`);
+        this.setBadge('sc-profit-badge', profitPct > 15 ? 85 : profitPct > 10 ? 60 : 30, '%');
+        this.setBar('sc-profit-bar', Math.min(profitPct * 4, 100), '#8b5cf6');
+
+        // --- Inventory ---
+        const invTotal = (inv.total || 69183.27).toFixed(1);
+        this.setEl('sc-inv-value', `${this.fmtBillion(inv.total || 69183.27)} Tỷ`);
+        this.setEl('sc-inv-sub', `Tổng giá trị tồn kho`);
+        const invBadgeEl = document.getElementById('sc-inv-badge');
+        if (invBadgeEl) { invBadgeEl.textContent = `${this.fmtBillion(inv.total || 69183.27)} Tỷ`; invBadgeEl.className = 'sc-kpi-badge badge-yellow'; }
+
+        // --- Debt ---
+        let debtTotal = 0, debtOverdue = 0, debtBad = 0;
+        for (const [, v] of Object.entries(debt.byCompany)) {
+            debtTotal += v.current + v.overdue + v.bad;
+            debtOverdue += v.overdue;
+            debtBad += v.bad;
+        }
+        this.setEl('sc-debt-value', `${debtTotal.toFixed(1)} Tỷ`);
+        this.setEl('sc-debt-sub', `Quá hạn: ${debtOverdue.toFixed(1)} | Khó đòi: ${debtBad.toFixed(1)}`);
+        const debtBadgeEl = document.getElementById('sc-debt-badge');
+        if (debtBadgeEl) { debtBadgeEl.textContent = `${debtBad.toFixed(1)} Tỷ khó đòi`; debtBadgeEl.className = `sc-kpi-badge ${debtBad > 3 ? 'badge-red' : debtBad > 1 ? 'badge-yellow' : 'badge-green'}`; }
+
+        // --- ISO ---
+        let totalQT = 0, totalQD = 0;
+        iso.forEach(c => { totalQT += c.qt; totalQD += c.qd; });
+        this.setEl('sc-iso-value', `${totalQT + totalQD} Văn bản`);
+        this.setEl('sc-iso-sub', `QT: ${totalQT} | QĐ: ${totalQD}`);
+        const isoBadgeEl = document.getElementById('sc-iso-badge');
+        if (isoBadgeEl) { isoBadgeEl.textContent = `${totalQT + totalQD} VB`; }
+    },
+
+    // ======= 2. Build Scorecard Matrix =======
+    buildMatrix(d) {
+        const body = document.getElementById('sc-matrix-body');
+        if (!body) return;
+
+        const hr = d.hr.byCompany;
+        const rev = d.revenue.plan2026;
+        const debt = d.debt.byCompany;
+        const inv = d.inventory.byCompany;
+        const cust = d.customers.byCompany;
+        const iso = window.IsoModule ? window.IsoModule.summaryData : [];
+
+        // Company keys mapping
+        const keys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+        const hrKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+        const revKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'Văn phòng VPS'];
+        const debtKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'Văn phòng VPS'];
+        const invKeys = ['THH', 'Viet', 'XemSon', 'VPSM', null, null];
+        const custKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'Văn phòng VPS'];
+        const isoNames = ['TÂN HỒNG HÀ', 'VIỆT', 'VPS', 'VPSM', 'ITSS', 'XESCO'];
+
+        // Helper: get value or dash
+        const v = (val) => val !== undefined && val !== null ? val : '—';
+        const fN = (n) => n !== undefined && n !== null && !isNaN(n) ? n.toLocaleString('vi-VN') : '—';
+
+        // Build rows
+        const rows = [];
+
+        // Category: NHÂN SỰ
+        rows.push({ category: '👥 NHÂN SỰ' });
+
+        // Row: NS CT / Định biên
+        const hrRow1 = { label: 'NS Chính thức / Định biên', values: [], total: '' };
+        let sumQ = 0, sumO = 0;
+        hrKeys.forEach(k => {
+            const c = hr[k] || hr['Văn phòng VPS'];
+            if (c) { hrRow1.values.push(`${c.official}/${c.quota}`); sumQ += c.quota; sumO += c.official; }
+            else hrRow1.values.push('—');
+        });
+        hrRow1.total = `${sumO}/${sumQ}`;
+        rows.push(hrRow1);
+
+        // Row: % Lấp đầy (with color)
+        const hrRow2 = { label: '% Lấp đầy NS', values: [], total: '', colorType: 'pct' };
+        hrKeys.forEach(k => {
+            const c = hr[k] || hr['Văn phòng VPS'];
+            if (c && c.quota > 0) { hrRow2.values.push(((c.official / c.quota) * 100).toFixed(1)); }
+            else hrRow2.values.push('—');
+        });
+        hrRow2.total = sumQ > 0 ? ((sumO / sumQ) * 100).toFixed(1) : '—';
+        rows.push(hrRow2);
+
+        // Category: DOANH SỐ
+        rows.push({ category: '💰 DOANH SỐ - LÃI GỘP' });
+
+        // Row: DS Kế hoạch
+        const revRow1 = { label: 'Doanh Số KH (Tr đ)', values: [], total: '' };
+        let sumDS = 0;
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { revRow1.values.push(fN(c.ds)); sumDS += c.ds; }
+            else revRow1.values.push('—');
+        });
+        revRow1.total = fN(sumDS);
+        rows.push(revRow1);
+
+        // Row: DS Thực tế
+        const revRow2 = { label: 'Doanh Số TT (Tr đ)', values: [], total: '' };
+        let sumActual = 0;
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { revRow2.values.push(fN(c.actual)); sumActual += c.actual; }
+            else revRow2.values.push('—');
+        });
+        revRow2.total = fN(sumActual);
+        rows.push(revRow2);
+
+        // Row: % Đạt KH (with color)
+        const revRow3 = { label: '% Đạt Kế Hoạch', values: [], total: '', colorType: 'pct' };
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c && c.ds > 0) { revRow3.values.push(((c.actual / c.ds) * 100).toFixed(1)); }
+            else revRow3.values.push('—');
+        });
+        revRow3.total = sumDS > 0 ? ((sumActual / sumDS) * 100).toFixed(1) : '—';
+        rows.push(revRow3);
+
+        // Row: Lãi Gộp
+        const lgRow = { label: 'Lãi Gộp (Tr đ)', values: [], total: '' };
+        let sumLG = 0;
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { lgRow.values.push(fN(c.ttlg)); sumLG += c.ttlg; }
+            else lgRow.values.push('—');
+        });
+        lgRow.total = fN(sumLG);
+        rows.push(lgRow);
+
+        // Row: % Lãi Gộp
+        const lgPctRow = { label: '% Lãi Gộp', values: [], total: '', colorType: 'lg' };
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { lgPctRow.values.push(c.lg_pct); }
+            else lgPctRow.values.push('—');
+        });
+        lgPctRow.total = rev['all'] ? rev['all'].lg_pct : '—';
+        rows.push(lgPctRow);
+
+        // Row: Chi phí
+        const cpRow = { label: 'Chi Phí (Tr đ)', values: [], total: '' };
+        let sumCP = 0;
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { cpRow.values.push(fN(c.cp)); sumCP += c.cp; }
+            else cpRow.values.push('—');
+        });
+        cpRow.total = fN(sumCP);
+        rows.push(cpRow);
+
+        // Row: Lợi nhuận TT
+        const lnRow = { label: 'Lợi Nhuận TT (Tr đ)', values: [], total: '' };
+        let sumLN = 0;
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { lnRow.values.push(fN(c.lntt)); sumLN += c.lntt; }
+            else lnRow.values.push('—');
+        });
+        lnRow.total = fN(sumLN);
+        rows.push(lnRow);
+
+        // Category: TỒN KHO & CÔNG NỢ
+        rows.push({ category: '📦 TỒN KHO & CÔNG NỢ' });
+
+        // Row: Tồn kho
+        const invRow = { label: 'Tồn Kho (Tỷ đ)', values: [], total: '' };
+        let sumInv = 0;
+        invKeys.forEach(k => {
+            if (k && inv[k]) {
+                const val = inv[k].categories.Tong.Cong / 1e9;
+                invRow.values.push(val.toFixed(1));
+                sumInv += val;
+            } else {
+                invRow.values.push('—');
             }
         });
+        invRow.total = sumInv > 0 ? sumInv.toFixed(1) : (d.inventory.total / 1e3).toFixed(1);
+        rows.push(invRow);
 
-        // --- 2. Revenue ---
-        let revLabels = [], revActualData = [], revPlanData = [];
-        if (company === 'all') {
-            for (const [compName, compData] of Object.entries(revenue.byCompany)) {
-                revLabels.push(companyNameMap[compName] || compName);
-                revActualData.push(compData.actual);
-                revPlanData.push(compData.plan);
-            }
-        } else {
-            if(revenue.byCompany[dataKey]) {
-                revLabels = [company];
-                revActualData = [revenue.byCompany[dataKey].actual];
-                revPlanData = [revenue.byCompany[dataKey].plan];
-            }
-        }
+        // Row: Công nợ Quá hạn
+        const debtRow1 = { label: 'CN Quá hạn (Tỷ đ)', values: [], total: '', colorType: 'debt' };
+        let sumOverdue = 0;
+        debtKeys.forEach(k => {
+            const c = debt[k];
+            if (c) { debtRow1.values.push(c.overdue.toFixed(1)); sumOverdue += c.overdue; }
+            else debtRow1.values.push('—');
+        });
+        debtRow1.total = sumOverdue.toFixed(1);
+        rows.push(debtRow1);
 
-        let totalActualRev = 0;
-        let totalPlanRev = 0;
-        if (company === 'all') {
-            for (let a of revActualData) totalActualRev += a;
-            for (let p of revPlanData) totalPlanRev += p;
-        } else {
-            totalActualRev = revActualData[0] || 0;
-            totalPlanRev = revPlanData[0] || 0;
+        // Row: Công nợ Khó đòi
+        const debtRow2 = { label: 'CN Khó đòi (Tỷ đ)', values: [], total: '', colorType: 'debt' };
+        let sumBad = 0;
+        debtKeys.forEach(k => {
+            const c = debt[k];
+            if (c) { debtRow2.values.push(c.bad.toFixed(1)); sumBad += c.bad; }
+            else debtRow2.values.push('—');
+        });
+        debtRow2.total = sumBad.toFixed(1);
+        rows.push(debtRow2);
+
+        // Category: KHÁCH HÀNG & ISO
+        rows.push({ category: '📋 KHÁCH HÀNG & ISO' });
+
+        // Row: KH Hiện có
+        const custRow = { label: 'Khách Hàng Hiện Có', values: [], total: '' };
+        let sumCust = 0;
+        custKeys.forEach(k => {
+            const c = cust[k];
+            if (c) {
+                const total = c.service + c.rental + c.distribution;
+                custRow.values.push(fN(total));
+                sumCust += total;
+            } else custRow.values.push('—');
+        });
+        custRow.total = fN(sumCust);
+        rows.push(custRow);
+
+        // Row: ISO
+        const isoRow = { label: 'ISO (QT / QĐ)', values: [], total: '' };
+        let sumIsoQT = 0, sumIsoQD = 0;
+        isoNames.forEach(name => {
+            const c = iso.find(x => x.name === name);
+            if (c) { isoRow.values.push(`${c.qt}/${c.qd}`); sumIsoQT += c.qt; sumIsoQD += c.qd; }
+            else isoRow.values.push('—');
+        });
+        isoRow.total = `${sumIsoQT}/${sumIsoQD}`;
+        rows.push(isoRow);
+
+        // Render HTML
+        let html = '';
+        rows.forEach(row => {
+            if (row.category) {
+                html += `<tr class="sc-row-category"><td colspan="8">${row.category}</td></tr>`;
+                return;
+            }
+            html += '<tr>';
+            html += `<td>${row.label}</td>`;
+            row.values.forEach(val => {
+                const cls = this.getCellClass(val, row.colorType);
+                const displayVal = row.colorType === 'pct' || row.colorType === 'lg' ? (val !== '—' ? val + '%' : '—') : val;
+                html += `<td class="${cls}">${displayVal}</td>`;
+            });
+            const totalCls = this.getCellClass(row.total, row.colorType);
+            const totalDisplay = (row.colorType === 'pct' || row.colorType === 'lg') && row.total !== '—' ? row.total + '%' : row.total;
+            html += `<td class="${totalCls}" style="font-weight:800;">${totalDisplay}</td>`;
+            html += '</tr>';
+        });
+
+        body.innerHTML = html;
+    },
+
+    getCellClass(val, type) {
+        if (!type || val === '—' || val === undefined) return '';
+        const n = parseFloat(val);
+        if (isNaN(n)) return '';
+
+        if (type === 'pct') {
+            if (n >= 80) return 'sc-cell-green';
+            if (n >= 50) return 'sc-cell-yellow';
+            return 'sc-cell-red';
         }
-        
-        let valEl = document.getElementById('overview-revenue-val');
-        if (valEl) {
-            if (totalActualRev >= 1e9) {
-                valEl.textContent = (totalActualRev / 1e9).toFixed(1) + ' Tỷ đ';
-            } else if (totalActualRev >= 1000) {
-                valEl.textContent = (totalActualRev / 1000).toFixed(1) + ' Tỷ đ';
+        if (type === 'lg') {
+            if (n >= 20) return 'sc-cell-green';
+            if (n >= 15) return 'sc-cell-yellow';
+            return 'sc-cell-red';
+        }
+        if (type === 'debt') {
+            if (n <= 0.5) return 'sc-cell-green';
+            if (n <= 2) return 'sc-cell-yellow';
+            return 'sc-cell-red';
+        }
+        return '';
+    },
+
+    // ======= 3. Render 3 Comparison Charts =======
+    renderCharts(d) {
+        const hr = d.hr.byCompany;
+        const rev = d.revenue.plan2026;
+        const labels = ['THH', 'Việt', 'Xem Sơn', 'VPSM', 'ITSS', 'VP VPS'];
+        const hrKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+        const revKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'Văn phòng VPS'];
+
+        // Chart 1: HR — Stacked bar (Chính thức vs Thiếu hụt)
+        const hrOfficial = [], hrVacancy = [];
+        hrKeys.forEach(k => {
+            const c = hr[k] || hr['Văn phòng VPS'];
+            if (c) {
+                hrOfficial.push(c.official);
+                hrVacancy.push(Math.max(0, c.quota - c.official));
             } else {
-                valEl.textContent = totalActualRev.toFixed(1) + ' Tỷ đ';
+                hrOfficial.push(0); hrVacancy.push(0);
             }
-        }
-        
-        window.ChartManager.createChart('overviewRevenueChart', 'bar', {
-            labels: revLabels,
+        });
+        this.createChart('scChartHR', 'bar', {
+            labels,
             datasets: [
-                {
-                    type: 'bar',
-                    label: 'Kế hoạch',
-                    data: revPlanData,
-                    backgroundColor: '#2E86AB', // Blue
-                    borderRadius: 4
-                },
-                {
-                    type: 'bar',
-                    label: 'Thực tế',
-                    data: revActualData,
-                    backgroundColor: '#DC3545', // Red
-                    borderRadius: 4
-                }
+                { label: 'Chính thức', data: hrOfficial, backgroundColor: '#2E86AB', borderRadius: 4 },
+                { label: 'Thiếu hụt', data: hrVacancy, backgroundColor: '#fca5a5', borderRadius: 4 }
             ]
         }, {
+            responsive: true, maintainAspectRatio: false,
+            scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Người' } } },
             plugins: {
+                legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+                datalabels: { display: false }
+            }
+        });
+
+        // Chart 2: Revenue — Grouped bar (KH vs TT)
+        const revPlan = [], revActual = [];
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { revPlan.push(c.ds); revActual.push(c.actual); }
+            else { revPlan.push(0); revActual.push(0); }
+        });
+        this.createChart('scChartRevenue', 'bar', {
+            labels,
+            datasets: [
+                { label: 'Kế Hoạch', data: revPlan, backgroundColor: '#94a3b8', borderRadius: 4 },
+                { label: 'Thực Tế', data: revActual, backgroundColor: '#10b981', borderRadius: 4 }
+            ]
+        }, {
+            responsive: true, maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true, grace: '15%', title: { display: true, text: 'Tr đ' } } },
+            plugins: {
+                legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
                 datalabels: {
-                    anchor: 'end',
-                    align: 'top',
-                    color: '#444444',
-                    font: { size: 10, weight: 'bold' },
-                    formatter: function(value) {
-                        return value + ' Tỷ';
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grace: '25%' // Add padding for larger top labels
+                    anchor: 'end', align: 'top', color: '#1e293b', font: { size: 9, weight: 'bold' },
+                    formatter: (val) => val > 0 ? (val / 1000).toFixed(0) + 'T' : ''
                 }
             }
         });
 
-        // Biểu đồ So sánh Doanh số Cùng kỳ (YoY)
-        let currentYearData = [];
-        let previousYearData = [];
-        
+        // Chart 3: Profit — Horizontal bar (Lãi Gộp vs Chi Phí)
+        const profitLG = [], profitCP = [];
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { profitLG.push(c.ttlg); profitCP.push(c.cp); }
+            else { profitLG.push(0); profitCP.push(0); }
+        });
+        this.createChart('scChartProfit', 'bar', {
+            labels,
+            datasets: [
+                { label: 'Lãi Gộp', data: profitLG, backgroundColor: '#8b5cf6', borderRadius: 4 },
+                { label: 'Chi Phí', data: profitCP, backgroundColor: '#f97316', borderRadius: 4 }
+            ]
+        }, {
+            indexAxis: 'y',
+            responsive: true, maintainAspectRatio: false,
+            scales: { x: { beginAtZero: true, title: { display: true, text: 'Tr đ' } } },
+            plugins: {
+                legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+                datalabels: {
+                    anchor: 'end', align: 'end', color: '#1e293b', font: { size: 9, weight: 'bold' },
+                    formatter: (val) => val > 0 ? (val / 1000).toFixed(0) + 'T' : ''
+                }
+            }
+        });
+    },
+
+    // ======= 4. Render YoY Chart (kept from original) =======
+    renderYoYChart(d) {
+        const revenue = d.revenue;
+        let currentYearData = [], previousYearData = [];
         if (revenue.monthlyComparison) {
             currentYearData = revenue.monthlyComparison.currentYear;
             previousYearData = revenue.monthlyComparison.previousYear;
         }
 
-        window.ChartManager.createChart('revenueComparisonChart', 'bar', {
+        this.createChart('revenueComparisonChart', 'bar', {
             labels: ['Th 1', 'Th 2', 'Th 3', 'Th 4', 'Th 5', 'Th 6', 'Th 7', 'Th 8', 'Th 9', 'Th 10', 'Th 11', 'Th 12'],
             datasets: [
-                {
-                    label: 'Năm Nay (2026)',
-                    data: currentYearData,
-                    backgroundColor: '#007BFF',
-                    borderRadius: 4
-                },
-                {
-                    label: 'Năm Ngoái (2025)',
-                    data: previousYearData,
-                    backgroundColor: '#6C757D',
-                    borderRadius: 4
-                }
+                { label: 'Năm Nay (2026)', data: currentYearData, backgroundColor: '#007BFF', borderRadius: 4 },
+                { label: 'Năm Ngoái (2025)', data: previousYearData, backgroundColor: '#6C757D', borderRadius: 4 }
             ]
         }, {
-            responsive: true,
-            maintainAspectRatio: false,
+            responsive: true, maintainAspectRatio: false,
             scales: {
-                y: { 
-                    beginAtZero: true, 
-                    title: { display: true, text: 'Tỷ VNĐ' },
-                    grace: '15%' // Add padding for top labels
-                }
+                y: { beginAtZero: true, title: { display: true, text: 'Tỷ VNĐ' }, grace: '15%' }
             },
             plugins: {
                 legend: { position: 'top' },
                 tooltip: { mode: 'index', intersect: false },
                 datalabels: {
-                    color: '#000000', // Đặt màu chữ thành màu đen rõ ràng
-                    font: { weight: 'bold', size: 11 },
-                    anchor: 'end',
-                    align: 'top', // Đưa lên trên cột để dễ đọc
-                    formatter: function(value) {
-                        if (value === 0) return '';
-                        return value;
-                    }
+                    color: '#000000', font: { weight: 'bold', size: 11 },
+                    anchor: 'end', align: 'top',
+                    formatter: (value) => value === 0 ? '' : value
                 }
             }
         });
+    },
 
-        // --- 3. Debt ---
-        let debtLabels = ['Trong hạn', 'Quá hạn', 'Khó đòi'], debtData = [];
-        let dTotal=0, dCurrent=0, dOverdue=0, dBad=0;
-        
-        if (company === 'all') {
-            dTotal = debt.total;
-            for (const [compName, compData] of Object.entries(debt.byCompany)) {
-                dCurrent += compData.current;
-                dOverdue += compData.overdue;
-                dBad += compData.bad;
-            }
-            debtData = [dCurrent, dOverdue, dBad];
-            document.getElementById('overview-debt-val').textContent = dTotal.toFixed(1) + ' Tỷ ₫';
-        } else {
-            if(debt.byCompany[dataKey]) {
-                const cData = debt.byCompany[dataKey];
-                debtData = [cData.current, cData.overdue, cData.bad];
-                dTotal = cData.current + cData.overdue + cData.bad;
-                dCurrent = cData.current;
-                dOverdue = cData.overdue;
-                dBad = cData.bad;
-                document.getElementById('overview-debt-val').textContent = dTotal.toFixed(1) + ' Tỷ ₫';
-            }
+    // ======= Helpers =======
+    createChart(canvasId, type, data, options) {
+        // Destroy existing chart if any
+        if (this.charts[canvasId]) {
+            this.charts[canvasId].destroy();
         }
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        this.charts[canvasId] = new Chart(canvas, { type, data, options, plugins: [ChartDataLabels] });
+    },
 
-        document.getElementById('ov-debt-total').textContent = dTotal.toFixed(1);
-        document.getElementById('ov-debt-current').textContent = dCurrent.toFixed(1);
-        document.getElementById('ov-debt-overdue').textContent = dOverdue.toFixed(1);
-        document.getElementById('ov-debt-bad').textContent = dBad.toFixed(1);
+    setEl(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    },
 
-        window.ChartManager.createChart('overviewDebtChart', 'doughnut', {
-            labels: debtLabels,
-            datasets: [{
-                data: debtData,
-                backgroundColor: ['#17a2b8', '#ffc107', '#fd7e14']
-            }]
-        }, {
-            plugins: {
-                datalabels: {
-                    color: '#ffffff',
-                    font: { weight: 'bold', size: 14 },
-                    formatter: function(value, context) {
-                        if (value === 0) return '';
-                        return value.toFixed(1) + 'T';
-                    },
-                    textStrokeColor: 'rgba(0,0,0,0.5)',
-                    textStrokeWidth: 2
-                }
-            }
-        });
+    setBadge(id, pct, suffix) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const n = parseFloat(pct);
+        el.textContent = n.toFixed(1) + (suffix || '');
+        if (n >= 80) el.className = 'sc-kpi-badge badge-green';
+        else if (n >= 50) el.className = 'sc-kpi-badge badge-yellow';
+        else el.className = 'sc-kpi-badge badge-red';
+    },
+
+    setBar(id, pct, color) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.width = Math.min(pct, 100) + '%';
+            el.style.background = color;
+        }
+    },
+
+    fmtNum(n) {
+        if (n === undefined || n === null) return '—';
+        return n.toLocaleString('vi-VN');
+    },
+
+    fmtBillion(n) {
+        // n is in Tr (millions) or just a number
+        // inventory.total = 69183.27 (Ty VND) — already in Ty
+        return n >= 1000 ? (n / 1000).toFixed(1) : n.toFixed(1);
     }
 };
-
-

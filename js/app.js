@@ -310,6 +310,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (viewId === 'cashflow' && window.CashflowModule) {
                 window.CashflowModule.render();
             }
+            if (viewId === 'iso' && window.IsoModule) {
+                window.IsoModule.renderAll();
+            }
             if (window.FilterManager) {
                 window.FilterManager.triggerFilterChange();
             }

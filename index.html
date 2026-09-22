@@ -178,90 +178,143 @@
                     <div class="welcome-banner">
                         <div class="welcome-box">
                             <h2 id="welcome-text">CEO</h2>
-                            <p>Dashboard</p>
+                            <p>Bảng Điều Hành Tổng Quan — Đo Lường Hiệu Suất Các Đơn Vị</p>
                         </div>
                     </div>
                     
-                    <!-- KPI Cards for 3 specific indicators -->
-                    <div class="kpi-grid">
-                        <div class="kpi-card clickable-card" data-target="customers" style="cursor: pointer;" title="Nhấn để xem chi tiết Khách hàng">
-                            <div class="kpi-icon bg-primary-light"><i data-lucide="users"></i></div>
-                            <div class="kpi-details">
-                                <p class="kpi-label">7. Khách Hàng Hiện Có</p>
-                                <h3 class="kpi-value" id="overview-customers-val">12,450</h3>
-                                <p class="kpi-trend positive"><i data-lucide="trending-up"></i> +5.2% vs kỳ trước</p>
+                    <!-- 6 KPI Summary Cards -->
+                    <div class="sc-kpi-grid">
+                        <!-- 1. Nhân sự -->
+                        <div class="sc-kpi-card kpi-hr clickable-card" data-target="hr" title="Nhấn xem chi tiết Nhân sự">
+                            <div class="sc-kpi-top">
+                                <div class="sc-kpi-icon icon-hr"><i data-lucide="users"></i></div>
+                                <span class="sc-kpi-badge badge-green" id="sc-hr-badge">—</span>
+                            </div>
+                            <p class="sc-kpi-label">1. Nhân Sự</p>
+                            <p class="sc-kpi-value" id="sc-hr-value">— / —</p>
+                            <p class="sc-kpi-sub" id="sc-hr-sub">% lấp đầy định biên</p>
+                            <div class="sc-kpi-progress"><div class="sc-kpi-progress-bar" id="sc-hr-bar" style="width:0%; background:#e74c3c;"></div></div>
+                        </div>
+                        <!-- 2. Doanh số -->
+                        <div class="sc-kpi-card kpi-revenue clickable-card" data-target="revenue" title="Nhấn xem chi tiết Doanh số">
+                            <div class="sc-kpi-top">
+                                <div class="sc-kpi-icon icon-revenue"><i data-lucide="trending-up"></i></div>
+                                <span class="sc-kpi-badge badge-green" id="sc-rev-badge">—</span>
+                            </div>
+                            <p class="sc-kpi-label">2. Doanh Số</p>
+                            <p class="sc-kpi-value" id="sc-rev-value">— Tỷ</p>
+                            <p class="sc-kpi-sub" id="sc-rev-sub">KH: — Tỷ</p>
+                            <div class="sc-kpi-progress"><div class="sc-kpi-progress-bar" id="sc-rev-bar" style="width:0%; background:#10b981;"></div></div>
+                        </div>
+                        <!-- 3. Lãi gộp -->
+                        <div class="sc-kpi-card kpi-profit clickable-card" data-target="revenue" title="Nhấn xem Lãi gộp chi tiết">
+                            <div class="sc-kpi-top">
+                                <div class="sc-kpi-icon icon-profit"><i data-lucide="bar-chart-2"></i></div>
+                                <span class="sc-kpi-badge badge-green" id="sc-profit-badge">—</span>
+                            </div>
+                            <p class="sc-kpi-label">3. Lãi Gộp</p>
+                            <p class="sc-kpi-value" id="sc-profit-value">— Tỷ</p>
+                            <p class="sc-kpi-sub" id="sc-profit-sub">Tỷ lệ LG: —%</p>
+                            <div class="sc-kpi-progress"><div class="sc-kpi-progress-bar" id="sc-profit-bar" style="width:0%; background:#8b5cf6;"></div></div>
+                        </div>
+                        <!-- 4. Tồn kho -->
+                        <div class="sc-kpi-card kpi-inventory clickable-card" data-target="inventory" title="Nhấn xem Tồn kho">
+                            <div class="sc-kpi-top">
+                                <div class="sc-kpi-icon icon-inventory"><i data-lucide="archive"></i></div>
+                                <span class="sc-kpi-badge badge-yellow" id="sc-inv-badge">—</span>
+                            </div>
+                            <p class="sc-kpi-label">4. Tồn Kho</p>
+                            <p class="sc-kpi-value" id="sc-inv-value">— Tỷ</p>
+                            <p class="sc-kpi-sub" id="sc-inv-sub">Tổng giá trị tồn kho</p>
+                        </div>
+                        <!-- 5. Công nợ -->
+                        <div class="sc-kpi-card kpi-debt clickable-card" data-target="debt" title="Nhấn xem Công nợ">
+                            <div class="sc-kpi-top">
+                                <div class="sc-kpi-icon icon-debt"><i data-lucide="alert-triangle"></i></div>
+                                <span class="sc-kpi-badge badge-red" id="sc-debt-badge">—</span>
+                            </div>
+                            <p class="sc-kpi-label">5. Công Nợ</p>
+                            <p class="sc-kpi-value" id="sc-debt-value">— Tỷ</p>
+                            <p class="sc-kpi-sub" id="sc-debt-sub">Quá hạn: — | Khó đòi: —</p>
+                        </div>
+                        <!-- 6. ISO -->
+                        <div class="sc-kpi-card kpi-iso clickable-card" data-target="iso" title="Nhấn xem ISO">
+                            <div class="sc-kpi-top">
+                                <div class="sc-kpi-icon icon-iso"><i data-lucide="check-circle"></i></div>
+                                <span class="sc-kpi-badge badge-green" id="sc-iso-badge">—</span>
+                            </div>
+                            <p class="sc-kpi-label">9. ISO</p>
+                            <p class="sc-kpi-value" id="sc-iso-value">—</p>
+                            <p class="sc-kpi-sub" id="sc-iso-sub">QT: — | QĐ: —</p>
+                        </div>
+                    </div>
+
+                    <!-- Scorecard Matrix Table -->
+                    <div class="sc-matrix-wrap">
+                        <div class="sc-matrix-header">
+                            <h3><i data-lucide="grid-3x3"></i> Bảng Đo Lường Hiệu Suất Các Đơn Vị</h3>
+                            <div class="sc-matrix-legend">
+                                <span><span class="sc-legend-dot green"></span>Tốt (≥80%)</span>
+                                <span><span class="sc-legend-dot yellow"></span>TB (50–79%)</span>
+                                <span><span class="sc-legend-dot red"></span>Cần CẢI THIỆN (<50%)</span>
                             </div>
                         </div>
-                        <div class="kpi-card clickable-card" data-target="revenue" style="cursor: pointer;" title="Nhấn để xem chi tiết Doanh số">
-                            <div class="kpi-icon bg-success-light"><i data-lucide="dollar-sign"></i></div>
-                            <div class="kpi-details">
-                                <p class="kpi-label">2. Doanh Số Lãi Gộp</p>
-                                <h3 class="kpi-value" id="overview-revenue-val">450.5 Tỷ ₫</h3>
-                                <p class="kpi-trend positive"><i data-lucide="trending-up"></i> +12% vs KH</p>
+                        <div class="sc-matrix-table-wrap">
+                            <table class="sc-matrix-table" id="sc-matrix-table">
+                                <thead>
+                                    <tr>
+                                        <th>Chỉ Tiêu</th>
+                                        <th>Tân Hồng Hà</th>
+                                        <th>Việt</th>
+                                        <th>Xem Sơn</th>
+                                        <th>VPSM</th>
+                                        <th>ITSS</th>
+                                        <th>VP VPS</th>
+                                        <th>TỔNG</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sc-matrix-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 3 Comparison Charts -->
+                    <div class="sc-charts-grid">
+                        <div class="sc-chart-card">
+                            <div class="card-header">
+                                <h3><i data-lucide="users" style="width:16px;height:16px;margin-right:6px;color:#e74c3c;"></i> Nhân Sự theo Đơn Vị</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 260px;">
+                                    <canvas id="scChartHR"></canvas>
+                                </div>
                             </div>
                         </div>
-                        <div class="kpi-card clickable-card" data-target="debt" style="cursor: pointer;" title="Nhấn để xem chi tiết Công nợ">
-                            <div class="kpi-icon bg-danger-light"><i data-lucide="alert-triangle"></i></div>
-                            <div class="kpi-details">
-                                <p class="kpi-label">6. Tổng Công Nợ</p>
-                                <h3 class="kpi-value" id="overview-debt-val">45.2 Tỷ ₫</h3>
-                                <p class="kpi-trend negative"><i data-lucide="trending-up"></i> +2.1% vs kỳ trước</p>
+                        <div class="sc-chart-card">
+                            <div class="card-header">
+                                <h3><i data-lucide="bar-chart-2" style="width:16px;height:16px;margin-right:6px;color:#10b981;"></i> Doanh Số KH vs Thực Tế</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 260px;">
+                                    <canvas id="scChartRevenue"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sc-chart-card">
+                            <div class="card-header">
+                                <h3><i data-lucide="pie-chart" style="width:16px;height:16px;margin-right:6px;color:#8b5cf6;"></i> Lãi Gộp & Chi Phí</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 260px;">
+                                    <canvas id="scChartProfit"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Charts for 3 specific indicators -->
-                    <div class="grid-layout cols-3 mt-20">
-                        <!-- Customers Card -->
-                        <div class="card clickable-card" data-target="customers" style="cursor: pointer;">
-                            <div class="card-header">
-                                <h3>Cơ cấu Khách hàng</h3>
-                                <span class="text-muted" style="font-size:0.75rem;">Xem chi tiết ↗</span>
-                            </div>
-                            <div class="card-body">
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 0.8rem; text-align: center;">
-                                    <div style="background: #f8fafc; padding: 5px; border-radius: 4px;">Hiện có: <b id="ov-cust-total" style="color:var(--clr-primary)">0</b></div>
-                                    <div style="background: #d4edda; padding: 5px; border-radius: 4px;">Tăng: <b id="ov-cust-new" class="positive">0</b></div>
-                                    <div style="background: #fff3cd; padding: 5px; border-radius: 4px;">Giảm: <b id="ov-cust-decreased" class="negative">0</b></div>
-                                    <div style="background: #f8d7da; padding: 5px; border-radius: 4px;">Mất: <b id="ov-cust-lost" class="negative">0</b></div>
-                                </div>
-                                <div class="chart-container" style="height: 180px;">
-                                    <canvas id="overviewCustomersChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Revenue Card -->
-                        <div class="card clickable-card" data-target="revenue" style="cursor: pointer;">
-                            <div class="card-header">
-                                <h3>Biến động Doanh số</h3>
-                                <span class="text-muted" style="font-size:0.75rem;">Xem chi tiết ↗</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container" style="height: 235px;">
-                                    <canvas id="overviewRevenueChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Debt Card -->
-                        <div class="card clickable-card" data-target="debt" style="cursor: pointer;">
-                            <div class="card-header">
-                                <h3>Tình hình Công nợ</h3>
-                                <span class="text-muted" style="font-size:0.75rem;">Xem chi tiết ↗</span>
-                            </div>
-                            <div class="card-body">
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 0.8rem; text-align: center;">
-                                    <div style="background: #e2e8f0; padding: 5px; border-radius: 4px;">Tổng: <b id="ov-debt-total" style="color:var(--clr-primary)">0</b></div>
-                                    <div style="background: #d1ecf1; padding: 5px; border-radius: 4px;">Trong hạn: <b id="ov-debt-current" style="color:#17a2b8">0</b></div>
-                                    <div style="background: #fff3cd; padding: 5px; border-radius: 4px;">Quá hạn: <b id="ov-debt-overdue" class="status-warning">0</b></div>
-                                    <div style="background: #f8d7da; padding: 5px; border-radius: 4px;">Khó đòi: <b id="ov-debt-bad" class="status-overdue">0</b></div>
-                                </div>
-                                <div class="chart-container" style="height: 180px;">
-                                    <canvas id="overviewDebtChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!-- YoY Comparison Chart (kept) -->
                     <div class="card mt-20">
                         <div class="card-header">
                             <h3>So Sánh Doanh Số Cùng Kỳ (Năm Nay vs Năm Ngoái)</h3>
@@ -1874,70 +1927,200 @@
                 </section>
 
                                 <section id="view-iso" class="view hidden">
-                    <!-- SUMMARY SECTION -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Tổng Hợp Quy Trình, Quy Định</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-container" style="height: 400px;">
-                                <canvas id="isoSummaryChart"></canvas>
+                    <div class="iso-dashboard-container">
+                        <!-- HEADER & SMART CONTROL CENTER -->
+                        <div class="iso-header-card">
+                            <div class="iso-header-main">
+                                <div class="iso-title-group">
+                                    <h2>
+                                        <i data-lucide="file-check-2" style="color: #2563eb; width: 26px; height: 26px;"></i>
+                                        HỆ THỐNG QUẢN TRỊ CHẤT LƯỢNG ISO
+                                        <span class="iso-title-badge">CHUẨN HÓA DOANH NGHIỆP</span>
+                                    </h2>
+                                    <p class="iso-subtitle">Theo dõi, đo lường và đánh giá việc ban hành Quy trình (QT) & Quy định (QĐ) theo từng phòng ban và đơn vị thành viên VPS Group.</p>
+                                </div>
+                                <div class="iso-pill-tabs" id="iso-company-pills">
+                                    <button class="iso-pill-tab active" data-company="ALL" onclick="window.IsoModule.setCompanyFilter('ALL')">🏢 TOÀN TẬP ĐOÀN</button>
+                                    <button class="iso-pill-tab" data-company="VPS" onclick="window.IsoModule.setCompanyFilter('VPS')">VPS Trụ Sở</button>
+                                    <button class="iso-pill-tab" data-company="TÂN HỒNG HÀ" onclick="window.IsoModule.setCompanyFilter('TÂN HỒNG HÀ')">Tân Hồng Hà</button>
+                                    <button class="iso-pill-tab" data-company="VIỆT" onclick="window.IsoModule.setCompanyFilter('VIỆT')">Việt</button>
+                                    <button class="iso-pill-tab" data-company="ITSS" onclick="window.IsoModule.setCompanyFilter('ITSS')">ITSS</button>
+                                    <button class="iso-pill-tab" data-company="VPSM" onclick="window.IsoModule.setCompanyFilter('VPSM')">VPSM</button>
+                                    <button class="iso-pill-tab" data-company="XESCO" onclick="window.IsoModule.setCompanyFilter('XESCO')">Xesco</button>
+                                </div>
+                            </div>
+
+                            <!-- CONTROLS: FILTER BY CLUSTER, SEARCH, EXPORT -->
+                            <div class="iso-control-bar">
+                                <div class="iso-control-left">
+                                    <div class="iso-search-box">
+                                        <i data-lucide="search" class="search-icon" style="width: 16px; height: 16px;"></i>
+                                        <input type="text" id="iso-search-input" placeholder="Tìm kiếm văn bản, phòng ban (vd: kho, thu tiền, crm)..." oninput="window.IsoModule.handleSearch(this.value)">
+                                    </div>
+                                    <select id="iso-cluster-filter" class="iso-select-filter" onchange="window.IsoModule.handleClusterFilter(this.value)">
+                                        <option value="ALL">Tất cả khối chức năng</option>
+                                        <option value="KD">Khối Kinh Doanh & Khách Hàng</option>
+                                        <option value="KT">Khối Kỹ Thuật & Công Nghệ</option>
+                                        <option value="TC">Khối Tài Chính - Kế Toán</option>
+                                        <option value="VH">Khối Vận Hành - Kho Vận</option>
+                                        <option value="NS">Khối Quản Trị - Nhân Sự - Hành Chính</option>
+                                    </select>
+                                    <select id="iso-type-filter" class="iso-select-filter" onchange="window.IsoModule.handleTypeFilter(this.value)">
+                                        <option value="ALL">Tất cả loại văn bản</option>
+                                        <option value="QT">Chỉ xem Quy Trình (QT)</option>
+                                        <option value="QD">Chỉ xem Quy Định (QĐ)</option>
+                                    </select>
+                                </div>
+                                <div class="iso-control-right">
+                                    <button class="iso-action-btn" onclick="window.IsoModule.toggleDocDetails()">
+                                        <i data-lucide="list-collapse" style="width: 15px; height: 15px;"></i>
+                                        <span id="iso-btn-toggle-text">Thu gọn danh sách</span>
+                                    </button>
+                                    <button class="iso-action-btn" onclick="window.IsoModule.exportCSV()">
+                                        <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                                        Xuất Excel (CSV)
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card mt-20">
-                        <div class="card-header">
-                            <h3>Bảng Tổng Hợp ISO</h3>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>CÔNG TY</th>
-                                        <th style="text-align: center;">QUY TRÌNH</th>
-                                        <th style="text-align: center;">QUY ĐỊNH</th>
-                                        <th style="text-align: center;">TỔNG</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="iso-summary-tbody">
-                                    <!-- Rendered by JS -->
-                                </tbody>
-                                <tfoot>
-                                    <tr style="font-weight: bold; background: #f8f9fa;">
-                                        <td colspan="2" style="text-align: right;">TỔNG:</td>
-                                        <td style="text-align: center;">124</td>
-                                        <td style="text-align: center;">144</td>
-                                        <td style="text-align: center; color: var(--clr-primary);">268</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
 
-                    <!-- DETAIL SECTION -->
-                    <div class="card mt-20 hidden" id="iso-detail-card">
-                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3 id="iso-detail-title" style="color: var(--clr-primary);">Chi Tiết Quy Trình, Quy Định - CÔNG TY</h3>
-                            <button class="btn-filter" onclick="document.getElementById('iso-detail-card').classList.add('hidden')" style="padding: 5px 10px; cursor: pointer; border: 1px solid #ddd; border-radius: 4px; background: #f8f9fa;">Đóng chi tiết</button>
+                        <!-- 5 EXECUTIVE KPI CARDS -->
+                        <div class="iso-kpi-grid">
+                            <!-- Card 1: Total Documents -->
+                            <div class="iso-kpi-card kpi-total">
+                                <div class="iso-kpi-header">
+                                    <span class="iso-kpi-title">Tổng Văn Bản ISO</span>
+                                    <div class="iso-kpi-icon-wrap"><i data-lucide="files" style="width: 18px; height: 18px;"></i></div>
+                                </div>
+                                <div class="iso-kpi-value" id="iso-kpi-total">99</div>
+                                <div class="iso-kpi-footer">
+                                    <span id="iso-kpi-total-sub">10 phòng ban cốt lõi</span>
+                                    <span class="iso-kpi-tag blue">100% Ban hành</span>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Quy Trình -->
+                            <div class="iso-kpi-card kpi-qt">
+                                <div class="iso-kpi-header">
+                                    <span class="iso-kpi-title">Quy Trình Tác Nghiệp (QT)</span>
+                                    <div class="iso-kpi-icon-wrap"><i data-lucide="git-branch" style="width: 18px; height: 18px;"></i></div>
+                                </div>
+                                <div class="iso-kpi-value" id="iso-kpi-qt" style="color: #2563eb;">51</div>
+                                <div class="iso-kpi-footer">
+                                    <span id="iso-kpi-qt-sub">51.5% Cơ cấu ISO</span>
+                                    <span class="iso-kpi-tag blue">Chuẩn hóa thao tác</span>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Quy Định -->
+                            <div class="iso-kpi-card kpi-qd">
+                                <div class="iso-kpi-header">
+                                    <span class="iso-kpi-title">Quy Định & Chính Sách (QĐ)</span>
+                                    <div class="iso-kpi-icon-wrap"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
+                                </div>
+                                <div class="iso-kpi-value" id="iso-kpi-qd" style="color: #059669;">48</div>
+                                <div class="iso-kpi-footer">
+                                    <span id="iso-kpi-qd-sub">48.5% Cơ cấu ISO</span>
+                                    <span class="iso-kpi-tag green">Tuân thủ chính sách</span>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: QT/QD Balance Ratio -->
+                            <div class="iso-kpi-card kpi-ratio">
+                                <div class="iso-kpi-header">
+                                    <span class="iso-kpi-title">Tỷ Lệ Cân Bằng (QT / QĐ)</span>
+                                    <div class="iso-kpi-icon-wrap"><i data-lucide="scale" style="width: 18px; height: 18px;"></i></div>
+                                </div>
+                                <div class="iso-kpi-value" id="iso-kpi-ratio" style="color: #d97706;">1.06 : 1</div>
+                                <div class="iso-kpi-footer">
+                                    <span>Tỷ số hướng dẫn / tuân thủ</span>
+                                    <span class="iso-kpi-tag amber">Cân bằng chuẩn</span>
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Leading Department -->
+                            <div class="iso-kpi-card kpi-lead">
+                                <div class="iso-kpi-header">
+                                    <span class="iso-kpi-title">Đơn Vị Dẫn Đầu Chuẩn Hóa</span>
+                                    <div class="iso-kpi-icon-wrap"><i data-lucide="award" style="width: 18px; height: 18px;"></i></div>
+                                </div>
+                                <div class="iso-kpi-value" id="iso-kpi-lead" style="font-size: 1.22rem; color: #7c3aed; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Kế toán (19 VB)</div>
+                                <div class="iso-kpi-footer">
+                                    <span id="iso-kpi-lead-sub">Kế hoạch (16 VB)</span>
+                                    <span class="iso-kpi-tag purple">Kiểm soát trọng điểm</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 4%;">STT</th>
-                                        <th style="width: 14%;">PHÒNG BAN</th>
-                                        <th style="width: 6%; text-align: center;">SL QT</th>
-                                        <th style="width: 32%;">TÊN QUY TRÌNH</th>
-                                        <th style="width: 6%; text-align: center;">SL QĐ</th>
-                                        <th style="width: 34%;">TÊN QUY ĐỊNH</th>
-                                        <th style="width: 4%; text-align: center;">TỔNG</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="iso-detail-tbody">
-                                    <!-- Rendered by JS -->
-                                </tbody>
-                            </table>
+
+                        <!-- 2-COLUMN ANALYTICAL CHARTS -->
+                        <div class="iso-charts-row">
+                            <!-- Chart 1: Bar Chart of Departments -->
+                            <div class="iso-chart-card">
+                                <div class="iso-chart-header">
+                                    <h3>
+                                        <i data-lucide="bar-chart-3" style="width: 18px; height: 18px; color: #2563eb;"></i>
+                                        <span id="iso-chart-bar-title">Cơ Cấu Quy Trình & Quy Định Theo Phòng Ban</span>
+                                    </h3>
+                                    <div class="iso-table-badges-legend">
+                                        <div class="iso-legend-pill qt"><span class="dot"></span> Quy trình (QT)</div>
+                                        <div class="iso-legend-pill qd"><span class="dot"></span> Quy định (QĐ)</div>
+                                    </div>
+                                </div>
+                                <div class="iso-chart-body">
+                                    <canvas id="isoDeptBarChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Chart 2: Doughnut Chart of Clusters -->
+                            <div class="iso-chart-card">
+                                <div class="iso-chart-header">
+                                    <h3>
+                                        <i data-lucide="pie-chart" style="width: 18px; height: 18px; color: #059669;"></i>
+                                        Phân Bổ Theo Khối Chức Năng
+                                    </h3>
+                                </div>
+                                <div class="iso-chart-body">
+                                    <canvas id="isoClusterPieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MASTER SCIENTIFIC MATRIX TABLE -->
+                        <div class="iso-table-card">
+                            <div class="iso-table-topbar">
+                                <h3 id="iso-table-title">
+                                    <i data-lucide="table" style="width: 18px; height: 18px; color: #0f172a;"></i>
+                                    Bảng Ma Trận Chuẩn Hóa Văn Bản ISO Chi Tiết
+                                </h3>
+                                <div class="iso-table-badges-legend">
+                                    <div class="iso-legend-pill qt"><span class="dot"></span> <strong>QT</strong>: Quy Trình</div>
+                                    <div class="iso-legend-pill qd"><span class="dot"></span> <strong>QĐ</strong>: Quy Định</div>
+                                    <div style="font-size: 0.72rem; color: #64748b;" id="iso-table-row-count">Hiển thị 10/10 phòng ban</div>
+                                </div>
+                            </div>
+
+                            <div class="iso-table-scroll">
+                                <table class="iso-master-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 44px; text-align: center;">STT</th>
+                                            <th style="min-width: 180px; width: 17%;">PHÒNG BAN / BỘ PHẬN</th>
+                                            <th style="width: 65px; text-align: center;">SL QT</th>
+                                            <th style="min-width: 280px; width: 32%;">DANH SÁCH QUY TRÌNH (QT)</th>
+                                            <th style="width: 65px; text-align: center;">SL QĐ</th>
+                                            <th style="min-width: 300px; width: 33%;">DANH SÁCH QUY ĐỊNH (QĐ)</th>
+                                            <th style="width: 70px; text-align: center;">TỔNG</th>
+                                            <th style="min-width: 100px; width: 10%;">MỨC ĐỘ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="iso-master-tbody">
+                                        <!-- Rendered by JS -->
+                                    </tbody>
+                                    <tfoot id="iso-master-tfoot">
+                                        <!-- Rendered by JS -->
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </section>
