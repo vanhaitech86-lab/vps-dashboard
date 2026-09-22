@@ -1393,19 +1393,101 @@
     font-weight: 900 !important;
     letter-spacing: -0.2px !important;
 }
+
+/* Base Data Table Reset for Expenses */
 #view-expenses .data-table {
-    border-collapse: collapse !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
     width: 100% !important;
 }
-#view-expenses .data-table th {
-    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+
+/* Monthly Table Headers - 100% Solid Emerald Theme */
+#expenseTable thead tr:first-child th {
+    background: #065f46 !important;
+    background-color: #065f46 !important;
+    color: #ffffff !important;
     font-weight: 900 !important;
-    letter-spacing: 0.2px;
+    font-size: 0.88rem !important;
+    border: 1px solid #064e3b !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    padding: 12px 8px !important;
+    letter-spacing: 0.2px !important;
 }
-#view-expenses .data-table td {
+#expenseTable thead tr:first-child th:nth-child(3),
+#expenseTable thead tr:first-child th:nth-child(4) {
+    text-align: right !important;
+}
+#expenseTable thead tr:first-child th[colspan] {
+    background: #047857 !important;
+    background-color: #047857 !important;
+}
+#expenseTable thead tr:nth-child(2) th {
+    background: #059669 !important;
+    background-color: #059669 !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 0.82rem !important;
+    border: 1px solid #064e3b !important;
+    vertical-align: middle !important;
+    text-align: right !important;
+    padding: 10px 6px !important;
+    letter-spacing: 0.1px !important;
+}
+
+/* Yearly Table Headers - 100% Solid Blue/Navy Theme */
+#expenseYearlyTable thead tr:first-child th {
+    background: #1e40af !important;
+    background-color: #1e40af !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    font-size: 0.88rem !important;
+    border: 1px solid #1e3a8a !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    padding: 12px 8px !important;
+    letter-spacing: 0.2px !important;
+}
+#expenseYearlyTable thead tr:first-child th[colspan] {
+    background: #2563eb !important;
+    background-color: #2563eb !important;
+}
+#expenseYearlyTable thead tr:first-child th[rowspan="2"]:last-child {
+    background: #172554 !important;
+    background-color: #172554 !important;
+    color: #fde047 !important;
+    text-align: right !important;
+    font-size: 0.92rem !important;
+}
+#expenseYearlyTable thead tr:nth-child(2) th {
+    background: #1d4ed8 !important;
+    background-color: #1d4ed8 !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 0.82rem !important;
+    border: 1px solid #1e3a8a !important;
+    vertical-align: middle !important;
+    text-align: right !important;
+    padding: 10px 6px !important;
+    letter-spacing: 0.1px !important;
+}
+
+/* Sticky Headers & Columns Stacking Context */
+#expenseTable thead th[style*="sticky"],
+#expenseYearlyTable thead th[style*="sticky"] {
+    z-index: 10 !important;
+}
+#expenseTable tbody td[style*="sticky"],
+#expenseYearlyTable tbody td[style*="sticky"] {
+    z-index: 5 !important;
+}
+
+/* Table Body Cells - High Contrast, Clear Borders, Tabular Numbers */
+#view-expenses .data-table tbody td {
     border: 1px solid #cbd5e1 !important;
-    font-weight: 700 !important;
-    color: #0f172a !important;
+    font-variant-numeric: tabular-nums;
+    vertical-align: middle !important;
+    line-height: 1.4 !important;
 }
 #view-expenses .data-table tr:hover td {
     filter: brightness(0.96);

@@ -746,12 +746,12 @@ window.ExpenseModule = {
         if (!tbody) return;
 
         let html = '';
-        const stickyL0 = 'position:sticky;left:0;z-index:2;';
-        const stickyL1 = 'position:sticky;left:45px;z-index:2;';
+        const stickyL0 = 'position:sticky;left:0;z-index:5;';
+        const stickyL1 = 'position:sticky;left:45px;z-index:5;';
 
         const makeRow = (stt, name, plan, actual, depts, style, isPct = false) => {
             let ratio = '';
-            let ratioColor = '#64748b';
+            let ratioColor = '#334155';
             if (isPct) {
                 ratio = '';
             } else if (plan > 0) {
@@ -759,14 +759,20 @@ window.ExpenseModule = {
                 ratioColor = this._pctColor(actual, plan);
             }
 
+            const bgMatch = style ? style.match(/background\s*:\s*([^;]+)/i) : null;
+            const rowBg = bgMatch ? bgMatch[1].trim() : '#ffffff';
+            const isChild = (stt === '');
+            const namePadding = isChild ? 'padding:8px 12px 8px 26px;' : 'padding:8px 12px;';
+            const namePrefix = isChild ? '<span style="color:#64748b;margin-right:6px;font-weight:900;">•</span>' : '';
+
             const deptsHtml = this.DEPARTMENTS.map(d => {
                 const v = depts ? (depts[d] || 0) : 0;
-                return `<td style="text-align:right;padding:8px 8px;border:1px solid #cbd5e1;${v > 0 ? 'color:#0f172a;font-weight:800;font-size:0.88rem;' : 'color:#64748b;font-weight:600;'}">${this._fmtTable(v, isPct)}</td>`;
+                return `<td style="text-align:right;padding:8px 8px;border:1px solid #cbd5e1;${v > 0 ? 'color:#0f172a;font-weight:800;font-size:0.88rem;' : 'color:#334155;font-weight:700;'}">${this._fmtTable(v, isPct)}</td>`;
             }).join('');
 
             return `<tr style="${style}">
-                <td style="text-align:center;padding:8px;border:1px solid #cbd5e1;${stickyL0}background:inherit;font-weight:900;">${stt}</td>
-                <td style="padding:8px 12px;border:1px solid #cbd5e1;${stickyL1}background:inherit;white-space:normal;min-width:280px;font-weight:800;font-size:0.9rem;">${name}</td>
+                <td style="text-align:center;padding:8px;border:1px solid #cbd5e1;${stickyL0}background:${rowBg};font-weight:900;">${stt}</td>
+                <td style="${namePadding}border:1px solid #cbd5e1;${stickyL1}background:${rowBg};white-space:normal;min-width:280px;font-weight:800;font-size:0.9rem;">${namePrefix}${name}</td>
                 <td style="text-align:right;padding:8px 8px;border:1px solid #cbd5e1;font-weight:800;color:#0f172a;font-size:0.88rem;">${this._fmtTable(plan, isPct)}</td>
                 <td style="text-align:right;padding:8px 8px;border:1px solid #cbd5e1;font-weight:900;color:#0f172a;font-size:0.88rem;">${this._fmtTable(actual, isPct)}</td>
                 <td style="text-align:center;padding:8px 8px;border:1px solid #cbd5e1;color:${ratioColor};font-weight:900;font-size:0.88rem;">${ratio}</td>
@@ -1015,17 +1021,24 @@ window.ExpenseModule = {
         if (!tbody) return;
 
         let html = '';
-        const stickyL0 = 'position:sticky;left:0;z-index:2;';
-        const stickyL1 = 'position:sticky;left:45px;z-index:2;';
+        const stickyL0 = 'position:sticky;left:0;z-index:5;';
+        const stickyL1 = 'position:sticky;left:45px;z-index:5;';
 
         const makeYearRow = (stt, name, monthVals, style, isPct = false) => {
             const total = isPct ? (monthVals.length > 0 ? (monthVals.reduce((a,b)=>a+b,0)/monthVals.length) : 0) : monthVals.reduce((a, b) => a + b, 0);
+
+            const bgMatch = style ? style.match(/background\s*:\s*([^;]+)/i) : null;
+            const rowBg = bgMatch ? bgMatch[1].trim() : '#ffffff';
+            const isChild = (stt === '');
+            const namePadding = isChild ? 'padding:8px 12px 8px 26px;' : 'padding:8px 12px;';
+            const namePrefix = isChild ? '<span style="color:#64748b;margin-right:6px;font-weight:900;">•</span>' : '';
+
             const mCells = monthVals.map(v =>
-                `<td style="text-align:right;padding:8px 6px;border:1px solid #cbd5e1;${v > 0 ? 'color:#0f172a;font-weight:800;font-size:0.88rem;' : 'color:#64748b;font-weight:600;'}">${this._fmtTable(v, isPct)}</td>`
+                `<td style="text-align:right;padding:8px 6px;border:1px solid #cbd5e1;${v > 0 ? 'color:#0f172a;font-weight:800;font-size:0.88rem;' : 'color:#334155;font-weight:700;'}">${this._fmtTable(v, isPct)}</td>`
             ).join('');
             return `<tr style="${style}">
-                <td style="text-align:center;padding:8px;border:1px solid #cbd5e1;${stickyL0}background:inherit;font-weight:900;">${stt}</td>
-                <td style="padding:8px 12px;border:1px solid #cbd5e1;${stickyL1}background:inherit;white-space:normal;min-width:280px;font-weight:800;font-size:0.9rem;">${name}</td>
+                <td style="text-align:center;padding:8px;border:1px solid #cbd5e1;${stickyL0}background:${rowBg};font-weight:900;">${stt}</td>
+                <td style="${namePadding}border:1px solid #cbd5e1;${stickyL1}background:${rowBg};white-space:normal;min-width:280px;font-weight:800;font-size:0.9rem;">${namePrefix}${name}</td>
                 ${mCells}
                 <td style="text-align:right;padding:8px 10px;border:1px solid #ca8a04;font-weight:900;color:#713f12;background:#fef08a;font-size:0.9rem;">${this._fmtTable(total, isPct)}</td>
             </tr>`;
