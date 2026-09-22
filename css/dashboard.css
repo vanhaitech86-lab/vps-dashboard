@@ -1371,4 +1371,45 @@
     .iso-kpi-grid { grid-template-columns: 1fr; }
 }
 
+/* ==========================================================================
+   Expense Dashboard (Chỉ Tiêu Chi Phí) - High Contrast, Sharp & Bold Styles
+   ========================================================================== */
+#view-expenses {
+    color: #0f172a;
+}
+#view-expenses .card {
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+}
+#view-expenses .card-header {
+    background: #f8fafc !important;
+    border-bottom: 2px solid #cbd5e1 !important;
+    padding: 14px 20px !important;
+}
+#view-expenses .card-header h3 {
+    color: #0f172a !important;
+    font-size: 1.05rem !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.2px !important;
+}
+#view-expenses .data-table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+}
+#view-expenses .data-table th {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.2px;
+}
+#view-expenses .data-table td {
+    border: 1px solid #cbd5e1 !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+}
+#view-expenses .data-table tr:hover td {
+    filter: brightness(0.96);
+}
+
+
 

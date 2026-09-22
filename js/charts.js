@@ -13,10 +13,11 @@ window.ChartManager = {
 
         // Set global Chart.js defaults
         Chart.defaults.font.family = "'Inter', sans-serif";
-        Chart.defaults.color = '#6C757D';
-        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(27, 42, 74, 0.9)';
+        Chart.defaults.font.weight = '600';
+        Chart.defaults.color = '#0f172a';
+        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15, 23, 42, 0.95)';
         Chart.defaults.plugins.tooltip.padding = 10;
-        Chart.defaults.plugins.tooltip.cornerRadius = 4;
+        Chart.defaults.plugins.tooltip.cornerRadius = 6;
     },
 
     createChart(canvasId, type, data, options = {}) {

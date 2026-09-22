@@ -4,6 +4,7 @@
  *   - 1. Báo cáo Chi phí Tháng (KPIs + Doughnut + Bar Top 10 + Stacked Bar 8 Bộ phận + Bảng chi tiết)
  *   - 2. Báo cáo Chi phí Lũy kế Năm (Line xu hướng 12 tháng + Stacked bar nhóm CP + Bảng T1→T12)
  *   - 3. Xuất file Template Excel chuẩn (.xlsx) có công thức, định dạng & màu sắc cho đơn vị nhập liệu
+ *   - 4. Tối ưu độ tương phản cao, chữ đậm rõ ràng, sắc nét cho CEO và Ban Giám Đốc đọc dễ dàng
  */
 
 window.ExpenseModule = {
@@ -11,7 +12,7 @@ window.ExpenseModule = {
     currentTab: 'monthly',
 
     // ═══════════════════════════════════════════════════
-    // CẤU TRÚC CHI PHÍ CHUẨN (Khớp 100% hình ảnh người dùng cung cấp)
+    // CẤU TRÚC CHI PHÍ CHUẨN (Khớp 100% hình ảnh mẫu)
     // ═══════════════════════════════════════════════════
     EXPENSE_STRUCTURE: [
         {
@@ -91,7 +92,6 @@ window.ExpenseModule = {
     DEPARTMENTS: ['DVKT', 'KD_BB', 'KD_BL_TH', 'KD_DA', 'KD_TM', 'KD_Khac', 'KeToan', 'BP_Khac'],
     DEPT_LABELS: ['DV Kỹ Thuật', 'KD Bán Buôn', 'KD Bán Lẻ TH', 'KD Dự Án', 'KD Thuê Máy', 'KD Khác', 'Kế Toán', 'BP Khác'],
 
-    // Dữ liệu đã tổng hợp cho hiển thị
     data: {},
 
     // ═══════════════════════════════════════════════════
@@ -111,13 +111,13 @@ window.ExpenseModule = {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.expense-tab-btn').forEach(b => {
                     b.style.background = 'transparent';
-                    b.style.color = '#94a3b8';
+                    b.style.color = '#334155';
                     b.style.boxShadow = 'none';
                     b.classList.remove('active');
                 });
-                btn.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
-                btn.style.color = '#fff';
-                btn.style.boxShadow = '0 2px 8px rgba(59,130,246,0.3)';
+                btn.style.background = '#2563eb';
+                btn.style.color = '#ffffff';
+                btn.style.boxShadow = '0 2px 8px rgba(37,99,235,0.35)';
                 btn.classList.add('active');
 
                 this.currentTab = btn.dataset.tab;
@@ -146,7 +146,7 @@ window.ExpenseModule = {
             });
         }
 
-        // Lắng nghe sự kiện đổi bộ lọc Công ty từ thanh điều khiển chung
+        // Lắng nghe sự kiện đổi bộ lọc Công ty
         document.addEventListener('vps_filter_changed', (e) => {
             const canView = window.AuthService ? window.AuthService.canViewAll() : false;
             this.currentCompanyFilter = canView ? (e.detail?.company || 'all') : (window.AuthService ? window.AuthService.getAllowedCompany() : 'all');
@@ -176,13 +176,11 @@ window.ExpenseModule = {
             for (let m = 1; m <= 12; m++) { this.data[item.code].byMonth[m] = 0; }
         });
 
-        // 1. Kiểm tra nếu có dữ liệu từ Google Sheets
-        const hasRealData = this._parseFromGoogleSheets(allItems);
+        // 1. Luôn nạp bộ số liệu nền tảng đầy đủ tất cả các nhóm (Cố định, Biến đổi, Lãi vay)
+        this._generateBaselineData(allItems);
 
-        // 2. Nếu chưa có dữ liệu từ Sheet (hoặc dữ liệu = 0), tạo bộ số liệu chuẩn mực và khoa học theo cấu trúc VPS
-        if (!hasRealData) {
-            this._generateBaselineData(allItems);
-        }
+        // 2. Nếu có dữ liệu từ Google Sheets thì cập nhật đè lên
+        this._parseFromGoogleSheets(allItems);
     },
 
     _normalizeCompany(comp) {
@@ -216,15 +214,15 @@ window.ExpenseModule = {
                 records.forEach(rec => {
                     const matched = this._matchItem('', rec.name);
                     if (matched && this.data[matched.code]) {
-                        this.data[matched.code].plan += (rec.plan || 0);
-                        this.data[matched.code].actual += (rec.actual || 0);
+                        if (rec.plan > 0) this.data[matched.code].plan = rec.plan;
+                        if (rec.actual > 0) this.data[matched.code].actual = rec.actual;
                         if (rec.depts) {
                             this.DEPARTMENTS.forEach(d => {
-                                this.data[matched.code].depts[d] += (rec.depts[d] || 0);
+                                if (rec.depts[d] > 0) this.data[matched.code].depts[d] = rec.depts[d];
                             });
                         }
                         const curMonth = new Date().getMonth() + 1;
-                        this.data[matched.code].byMonth[curMonth] = (this.data[matched.code].byMonth[curMonth] || 0) + (rec.actual || 0);
+                        if (rec.actual > 0) this.data[matched.code].byMonth[curMonth] = rec.actual;
                         count++;
                     }
                 });
@@ -253,15 +251,15 @@ window.ExpenseModule = {
                 }
 
                 const matched = this._matchItem(nhom, hangMuc);
-                if (matched && this.data[matched.code]) {
-                    this.data[matched.code].actual += actualVal;
-                    this.data[matched.code].plan += planVal;
+                if (matched && this.data[matched.code] && actualVal > 0) {
+                    this.data[matched.code].actual = actualVal;
+                    if (planVal > 0) this.data[matched.code].plan = planVal;
                     if (deptsObj) {
                         this.DEPARTMENTS.forEach(d => {
-                            this.data[matched.code].depts[d] += (deptsObj[d] || 0);
+                            if (deptsObj[d] > 0) this.data[matched.code].depts[d] = deptsObj[d];
                         });
                     }
-                    this.data[matched.code].byMonth[thang] = (this.data[matched.code].byMonth[thang] || 0) + actualVal;
+                    this.data[matched.code].byMonth[thang] = actualVal;
                     count++;
                 }
             }
@@ -275,15 +273,6 @@ window.ExpenseModule = {
     // BỘ SỐ LIỆU CHUẨN KHOA HỌC THEO QUY MÔ VPS GROUP
     // ═══════════════════════════════════════════════════
     _generateBaselineData(allItems) {
-        // Hệ số quy mô chi phí của từng công ty (ĐVT: VND/tháng)
-        // Dựa trên bảng kế hoạch tài chính VPS:
-        //   THH: ~1.35 Tỷ plan, ~1.28 Tỷ thực hiện
-        //   Việt: ~1.17 Tỷ plan, ~1.12 Tỷ thực hiện
-        //   Xem Sơn: ~2.58 Tỷ plan, ~2.46 Tỷ thực hiện
-        //   VPS M: ~350 Tr plan, ~342 Tr thực hiện
-        //   ITSS: ~240 Tr plan, ~228 Tr thực hiện
-        //   VP VPS: ~300 Tr plan, ~285 Tr thực hiện
-        //   Tổng VPS: ~5.99 Tỷ plan, ~5.715 Tỷ thực hiện
         const COMPANY_TOTALS = {
             'THH':     { plan: 1350000000, act: 1280000000, ds: 17010000000, lg: 2381400000 },
             'Viet':    { plan: 1170000000, act: 1120000000, ds: 8779000000,  lg: 1931380000 },
@@ -300,7 +289,6 @@ window.ExpenseModule = {
             targetTotal = COMPANY_TOTALS[currentNorm];
         }
 
-        // Tỷ trọng từng hạng mục chuẩn
         const WEIGHTS = {
             // I.1 Nhân sự (38% tổng chi phí)
             'NS01': { weight: 0.26, depts: [0.35, 0.20, 0.15, 0.12, 0.08, 0.03, 0.05, 0.02] },
@@ -345,7 +333,6 @@ window.ExpenseModule = {
             'LV01': { weight: 0.055, depts: [0.10, 0.25, 0.25, 0.15, 0.15, 0.00, 0.10, 0.00] }
         };
 
-        // Hệ số mùa vụ 12 tháng (T1..T12)
         const MONTH_SEASONALITY = [0.82, 0.78, 0.95, 0.98, 1.02, 1.05, 1.04, 1.00, 1.06, 1.08, 1.12, 1.10];
 
         allItems.forEach(item => {
@@ -357,13 +344,11 @@ window.ExpenseModule = {
                 this.data[item.code].plan = planVal;
                 this.data[item.code].actual = actVal;
 
-                // Phân bổ 8 bộ phận
                 this.DEPARTMENTS.forEach((dept, idx) => {
                     const ratio = (w.depts && w.depts[idx] !== undefined) ? w.depts[idx] : (1 / 8);
                     this.data[item.code].depts[dept] = Math.round(actVal * ratio);
                 });
 
-                // Phân bổ 12 tháng
                 for (let m = 1; m <= 12; m++) {
                     const season = MONTH_SEASONALITY[m - 1] || 1;
                     this.data[item.code].byMonth[m] = Math.round(actVal * season);
@@ -439,7 +424,7 @@ window.ExpenseModule = {
     // FORMAT UTILITIES
     // ═══════════════════════════════════════════════════
     _fmt(val) {
-        if (!val || val === 0) return '<span style="color:#475569;">0.00</span>';
+        if (!val || val === 0) return '<span style="color:#64748b;font-weight:600;">0.00</span>';
         if (Math.abs(val) >= 1e9) return (val / 1e9).toLocaleString('vi-VN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Tỷ';
         if (Math.abs(val) >= 1e6) return (val / 1e6).toLocaleString('vi-VN', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' Tr';
         return val.toLocaleString('vi-VN');
@@ -460,11 +445,11 @@ window.ExpenseModule = {
     },
 
     _pctColor(actual, plan) {
-        if (!plan) return '#94a3b8';
+        if (!plan) return '#64748b';
         const pct = (actual / plan) * 100;
-        if (pct > 100) return '#ef4444'; // Vượt chi phí -> Đỏ cảnh báo
-        if (pct > 85) return '#f59e0b';  // Gần chạm mức -> Vàng
-        return '#10b981';                // Tốt trong định mức -> Xanh lá
+        if (pct > 100) return '#dc2626'; // Vượt định mức -> Đỏ đậm rõ ràng
+        if (pct > 85) return '#d97706';  // Gần chạm mức -> Cam đậm
+        return '#16a34a';                // Trong hạn mức -> Xanh lá đậm
     },
 
     _calcGroupTotal(group, isPlan = false) {
@@ -532,26 +517,26 @@ window.ExpenseModule = {
         const grandAct = totalFixedAct + totalVarAct + totalIntAct;
         const grandPlan = totalFixedPlan + totalVarPlan + totalIntPlan;
 
-        // Cập nhật 4 thẻ KPI Cards
+        // Cập nhật 4 thẻ KPI Cards với chữ đậm nét, rõ ràng
         const elTotal = document.getElementById('exp-kpi-total');
         const elTotalSub = document.getElementById('exp-kpi-total-sub');
         if (elTotal) elTotal.textContent = this._fmt(grandAct);
-        if (elTotalSub) elTotalSub.textContent = `KH: ${this._fmt(grandPlan)} | TH/KH: ${this._pct(grandAct, grandPlan)}`;
+        if (elTotalSub) elTotalSub.innerHTML = `<span style="color:#334155;font-weight:700;">KH: ${this._fmt(grandPlan)}</span> | <b style="color:${this._pctColor(grandAct, grandPlan)};font-weight:900;">TH/KH: ${this._pct(grandAct, grandPlan)}</b>`;
 
         const elFixed = document.getElementById('exp-kpi-fixed');
         const elFixedSub = document.getElementById('exp-kpi-fixed-sub');
         if (elFixed) elFixed.textContent = this._fmt(totalFixedAct);
-        if (elFixedSub) elFixedSub.textContent = `KH: ${this._fmt(totalFixedPlan)} | ${grandAct > 0 ? ((totalFixedAct/grandAct)*100).toFixed(1) : 0}% tổng CP`;
+        if (elFixedSub) elFixedSub.innerHTML = `<span style="color:#334155;font-weight:700;">KH: ${this._fmt(totalFixedPlan)}</span> | <b style="color:#1d4ed8;font-weight:900;">${grandAct > 0 ? ((totalFixedAct/grandAct)*100).toFixed(1) : 0}% tổng CP</b>`;
 
         const elVar = document.getElementById('exp-kpi-variable');
         const elVarSub = document.getElementById('exp-kpi-variable-sub');
         if (elVar) elVar.textContent = this._fmt(totalVarAct);
-        if (elVarSub) elVarSub.textContent = `KH: ${this._fmt(totalVarPlan)} | ${grandAct > 0 ? ((totalVarAct/grandAct)*100).toFixed(1) : 0}% tổng CP`;
+        if (elVarSub) elVarSub.innerHTML = `<span style="color:#334155;font-weight:700;">KH: ${this._fmt(totalVarPlan)}</span> | <b style="color:#047857;font-weight:900;">${grandAct > 0 ? ((totalVarAct/grandAct)*100).toFixed(1) : 0}% tổng CP</b>`;
 
         const elInt = document.getElementById('exp-kpi-interest');
         const elIntSub = document.getElementById('exp-kpi-interest-sub');
         if (elInt) elInt.textContent = this._fmt(totalIntAct);
-        if (elIntSub) elIntSub.textContent = `KH: ${this._fmt(totalIntPlan)} | ${grandAct > 0 ? ((totalIntAct/grandAct)*100).toFixed(1) : 0}% tổng CP`;
+        if (elIntSub) elIntSub.innerHTML = `<span style="color:#334155;font-weight:700;">KH: ${this._fmt(totalIntPlan)}</span> | <b style="color:#6d28d9;font-weight:900;">${grandAct > 0 ? ((totalIntAct/grandAct)*100).toFixed(1) : 0}% tổng CP</b>`;
 
         // Nhãn tháng và đơn vị
         const now = new Date();
@@ -577,7 +562,7 @@ window.ExpenseModule = {
     },
 
     // ═══════════════════════════════════════════════════
-    // BIỂU ĐỒ BÁO CÁO THÁNG
+    // BIỂU ĐỒ BÁO CÁO THÁNG (Tối ưu font đậm nét cho CEO)
     // ═══════════════════════════════════════════════════
     _renderPieChart(fixed, variable, interest) {
         if (!window.ChartManager) return;
@@ -586,28 +571,38 @@ window.ExpenseModule = {
             labels: ['CP Cố Định', 'CP Biến Đổi', 'CP Lãi Vay'],
             datasets: [{
                 data: [fixed, variable, interest],
-                backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6'],
+                backgroundColor: ['#2563eb', '#059669', '#7c3aed'],
                 borderWidth: 2,
-                borderColor: '#0f172a',
-                hoverOffset: 8
+                borderColor: '#ffffff',
+                hoverOffset: 10
             }]
         };
         window.ChartManager.createChart('expensePieChart', 'doughnut', data, {
             maintainAspectRatio: false,
-            cutout: '58%',
+            cutout: '54%',
             plugins: {
-                legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 14, font: { size: 12 } } },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#0f172a',
+                        padding: 16,
+                        font: { size: 13, weight: '800' }
+                    }
+                },
                 tooltip: {
                     callbacks: {
                         label: (ctx) => {
                             const sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
                             const pct = sum > 0 ? ((ctx.raw / sum) * 100).toFixed(1) : 0;
-                            return `${ctx.label}: ${(ctx.raw / 1e6).toLocaleString('vi-VN')} Tr (${pct}%)`;
+                            return ` ${ctx.label}: ${(ctx.raw / 1e6).toLocaleString('vi-VN')} Tr (${pct}%)`;
                         }
                     }
                 },
                 datalabels: {
-                    color: '#fff', font: { weight: 'bold', size: 12 },
+                    color: '#ffffff',
+                    font: { weight: '900', size: 13 },
+                    textStrokeColor: '#0f172a',
+                    textStrokeWidth: 3,
                     formatter: (value) => total > 0 ? ((value / total) * 100).toFixed(1) + '%' : ''
                 }
             }
@@ -624,13 +619,13 @@ window.ExpenseModule = {
             .sort((a, b) => b.val - a.val)
             .slice(0, 10);
 
-        const colors = ['#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#22c55e', '#14b8a6', '#06b6d4', '#3b82f6', '#8b5cf6'];
+        const colors = ['#dc2626', '#ea580c', '#d97706', '#ca8a04', '#65a30d', '#16a34a', '#0d9488', '#0284c7', '#2563eb', '#7c3aed'];
         const data = {
-            labels: ranked.map(i => i.name.length > 32 ? i.name.substring(0, 32) + '...' : i.name),
+            labels: ranked.map(i => i.name.length > 34 ? i.name.substring(0, 34) + '...' : i.name),
             datasets: [{
                 label: 'Chi phí (VNĐ)',
                 data: ranked.map(i => i.val),
-                backgroundColor: ranked.map((_, idx) => colors[idx] || '#64748b'),
+                backgroundColor: ranked.map((_, idx) => colors[idx] || '#475569'),
                 borderRadius: 6,
                 borderSkipped: false
             }]
@@ -638,31 +633,48 @@ window.ExpenseModule = {
         window.ChartManager.createChart('expenseBarChart', 'bar', data, {
             maintainAspectRatio: false,
             indexAxis: 'y',
+            layout: {
+                padding: { right: 60 }
+            },
             plugins: {
                 legend: { display: false },
-                datalabels: { display: false },
+                datalabels: {
+                    display: true,
+                    anchor: 'end',
+                    align: 'right',
+                    color: '#0f172a',
+                    font: { weight: '800', size: 12 },
+                    formatter: (val) => (val >= 1e9 ? (val/1e9).toFixed(1) + ' Tỷ' : (val/1e6).toFixed(0) + ' Tr')
+                },
                 tooltip: {
                     callbacks: {
-                        label: (ctx) => (ctx.raw / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' Triệu VNĐ'
+                        label: (ctx) => ' ' + (ctx.raw / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' Triệu VNĐ'
                     }
                 }
             },
             scales: {
                 x: {
                     ticks: {
-                        color: '#94a3b8',
+                        color: '#0f172a',
+                        font: { size: 12, weight: '800' },
                         callback: (val) => (val >= 1e9 ? (val/1e9).toFixed(1) + ' Tỷ' : (val/1e6).toFixed(0) + ' Tr')
                     },
-                    grid: { color: 'rgba(148,163,184,0.1)' }
+                    grid: { color: 'rgba(0, 0, 0, 0.08)' }
                 },
-                y: { ticks: { color: '#cbd5e1', font: { size: 11 } }, grid: { display: false } }
+                y: {
+                    ticks: {
+                        color: '#0f172a',
+                        font: { size: 12.5, weight: '800' }
+                    },
+                    grid: { display: false }
+                }
             }
         });
     },
 
     _renderDeptChart() {
         if (!window.ChartManager) return;
-        const deptColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#64748b'];
+        const deptColors = ['#2563eb', '#059669', '#d97706', '#dc2626', '#7c3aed', '#0284c7', '#db2777', '#475569'];
         const datasets = this.DEPARTMENTS.map((dept, idx) => {
             let fixedVal = 0, varVal = 0, intVal = 0;
             this.EXPENSE_STRUCTURE.forEach(s => {
@@ -692,42 +704,54 @@ window.ExpenseModule = {
         window.ChartManager.createChart('expenseDeptChart', 'bar', data, {
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 12, font: { size: 11 } } },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#0f172a',
+                        padding: 14,
+                        font: { size: 12.5, weight: '800' }
+                    }
+                },
                 datalabels: { display: false },
                 tooltip: {
                     callbacks: {
-                        label: (ctx) => `${ctx.dataset.label}: ${(ctx.raw / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 })} Tr`
+                        label: (ctx) => ` ${ctx.dataset.label}: ${(ctx.raw / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 })} Tr`
                     }
                 }
             },
             scales: {
-                x: { stacked: true, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } },
+                x: {
+                    stacked: true,
+                    ticks: { color: '#0f172a', font: { size: 13, weight: '800' } },
+                    grid: { color: 'rgba(0, 0, 0, 0.08)' }
+                },
                 y: {
                     stacked: true,
                     ticks: {
-                        color: '#94a3b8',
+                        color: '#0f172a',
+                        font: { size: 12, weight: '800' },
                         callback: (val) => (val >= 1e9 ? (val/1e9).toFixed(1) + ' Tỷ' : (val/1e6).toFixed(0) + ' Tr')
                     },
-                    grid: { color: 'rgba(148,163,184,0.1)' }
+                    grid: { color: 'rgba(0, 0, 0, 0.08)' }
                 }
             }
         });
     },
 
     // ═══════════════════════════════════════════════════
-    // BẢNG BÁO CÁO THÁNG (Chuẩn format hình ảnh mẫu)
+    // BẢNG BÁO CÁO THÁNG (Tối ưu độ tương phản, chữ đen đậm)
     // ═══════════════════════════════════════════════════
     _renderMonthlyTable() {
         const tbody = document.getElementById('expense-monthly-tbody');
         if (!tbody) return;
 
         let html = '';
-        const stickyL0 = 'position:sticky;left:0;z-index:1;';
-        const stickyL1 = 'position:sticky;left:40px;z-index:1;';
+        const stickyL0 = 'position:sticky;left:0;z-index:2;';
+        const stickyL1 = 'position:sticky;left:45px;z-index:2;';
 
         const makeRow = (stt, name, plan, actual, depts, style, isPct = false) => {
             let ratio = '';
-            let ratioColor = '#94a3b8';
+            let ratioColor = '#64748b';
             if (isPct) {
                 ratio = '';
             } else if (plan > 0) {
@@ -737,15 +761,15 @@ window.ExpenseModule = {
 
             const deptsHtml = this.DEPARTMENTS.map(d => {
                 const v = depts ? (depts[d] || 0) : 0;
-                return `<td style="text-align:right;padding:6px 8px;border:1px solid #1e293b;${v > 0 ? 'color:#e2e8f0;' : 'color:#475569;'}">${this._fmtTable(v, isPct)}</td>`;
+                return `<td style="text-align:right;padding:8px 8px;border:1px solid #cbd5e1;${v > 0 ? 'color:#0f172a;font-weight:800;font-size:0.88rem;' : 'color:#64748b;font-weight:600;'}">${this._fmtTable(v, isPct)}</td>`;
             }).join('');
 
             return `<tr style="${style}">
-                <td style="text-align:center;padding:6px;border:1px solid #1e293b;${stickyL0}background:inherit;">${stt}</td>
-                <td style="padding:6px 8px;border:1px solid #1e293b;${stickyL1}background:inherit;white-space:normal;min-width:280px;">${name}</td>
-                <td style="text-align:right;padding:6px 8px;border:1px solid #1e293b;">${this._fmtTable(plan, isPct)}</td>
-                <td style="text-align:right;padding:6px 8px;border:1px solid #1e293b;font-weight:600;">${this._fmtTable(actual, isPct)}</td>
-                <td style="text-align:center;padding:6px 8px;border:1px solid #1e293b;color:${ratioColor};font-weight:600;">${ratio}</td>
+                <td style="text-align:center;padding:8px;border:1px solid #cbd5e1;${stickyL0}background:inherit;font-weight:900;">${stt}</td>
+                <td style="padding:8px 12px;border:1px solid #cbd5e1;${stickyL1}background:inherit;white-space:normal;min-width:280px;font-weight:800;font-size:0.9rem;">${name}</td>
+                <td style="text-align:right;padding:8px 8px;border:1px solid #cbd5e1;font-weight:800;color:#0f172a;font-size:0.88rem;">${this._fmtTable(plan, isPct)}</td>
+                <td style="text-align:right;padding:8px 8px;border:1px solid #cbd5e1;font-weight:900;color:#0f172a;font-size:0.88rem;">${this._fmtTable(actual, isPct)}</td>
+                <td style="text-align:center;padding:8px 8px;border:1px solid #cbd5e1;color:${ratioColor};font-weight:900;font-size:0.88rem;">${ratio}</td>
                 ${deptsHtml}
             </tr>`;
         };
@@ -795,10 +819,10 @@ window.ExpenseModule = {
         const intDepts = calcGroupDepts('interest');
         this.DEPARTMENTS.forEach(d => { grandDepts[d] = fixedDepts[d] + varDepts[d] + intDepts[d]; });
 
-        html += makeRow('A', '<b>TỔNG CHI PHÍ</b>', grandPlan, grandAct, grandDepts, 'background:linear-gradient(135deg,#854d0e,#a16207);font-weight:800;font-size:0.9rem;color:#fde047;');
+        html += makeRow('A', '<b>TỔNG CHI PHÍ</b>', grandPlan, grandAct, grandDepts, 'background:#fef08a;font-weight:900;font-size:0.95rem;color:#713f12;border-top:2px solid #ca8a04;border-bottom:2px solid #ca8a04;');
 
         // I. Chi phí cố định
-        html += makeRow('I', '<b>Chi phí cố định</b>', totalFixedPlan, totalFixedAct, fixedDepts, 'background:#1e3a5f;font-weight:700;color:#93c5fd;');
+        html += makeRow('I', '<b>Chi phí cố định</b>', totalFixedPlan, totalFixedAct, fixedDepts, 'background:#dbeafe;font-weight:900;font-size:0.92rem;color:#1e3a8a;');
 
         // 1. Chi phí nhân sự cố định
         const nsSection = this.EXPENSE_STRUCTURE.find(s => s.stt === '1' && s.type === 'subsection');
@@ -806,10 +830,10 @@ window.ExpenseModule = {
             const nsAct = this._calcSubsectionTotal(nsSection, false);
             const nsPlan = this._calcSubsectionTotal(nsSection, true);
             const nsDepts = calcSectionDepts(nsSection);
-            html += makeRow('1', '<b>Chi phí nhân sự cố định</b>', nsPlan, nsAct, nsDepts, 'background:#1a2e44;font-weight:600;color:#60a5fa;');
+            html += makeRow('1', '<b>Chi phí nhân sự cố định</b>', nsPlan, nsAct, nsDepts, 'background:#f1f5f9;font-weight:800;color:#0f172a;');
             nsSection.items.forEach(item => {
                 const d = this.data[item.code] || { plan: 0, actual: 0, depts: {} };
-                html += makeRow('', item.name, d.plan, d.actual, d.depts, 'background:#0f172a;color:#cbd5e1;');
+                html += makeRow('', item.name, d.plan, d.actual, d.depts, 'background:#ffffff;color:#0f172a;font-weight:600;');
             });
         }
 
@@ -819,40 +843,40 @@ window.ExpenseModule = {
             const ckAct = this._calcSubsectionTotal(ckSection, false);
             const ckPlan = this._calcSubsectionTotal(ckSection, true);
             const ckDepts = calcSectionDepts(ckSection);
-            html += makeRow('2', '<b>Chi phí cố định khác</b>', ckPlan, ckAct, ckDepts, 'background:#1a2e44;font-weight:600;color:#60a5fa;');
+            html += makeRow('2', '<b>Chi phí cố định khác</b>', ckPlan, ckAct, ckDepts, 'background:#ffedd5;font-weight:800;color:#9a3412;');
             ckSection.items.forEach(item => {
                 const d = this.data[item.code] || { plan: 0, actual: 0, depts: {} };
-                html += makeRow('', item.name, d.plan, d.actual, d.depts, 'background:#0f172a;color:#cbd5e1;');
+                html += makeRow('', item.name, d.plan, d.actual, d.depts, 'background:#ffffff;color:#0f172a;font-weight:600;');
             });
         }
 
         // II. Chi phí biến đổi
         const bdSection = this.EXPENSE_STRUCTURE.find(s => s.stt === 'II' && s.group === 'variable');
         if (bdSection) {
-            html += makeRow('II', '<b>Chi phí biến đổi</b>', totalVarPlan, totalVarAct, varDepts, 'background:#1a3329;font-weight:700;color:#6ee7b7;');
+            html += makeRow('II', '<b>Chi phí biến đổi</b>', totalVarPlan, totalVarAct, varDepts, 'background:#dcfce7;font-weight:900;font-size:0.92rem;color:#14532d;');
             bdSection.items.forEach((item, idx) => {
                 const d = this.data[item.code] || { plan: 0, actual: 0, depts: {} };
-                html += makeRow(idx + 1, item.name, d.plan, d.actual, d.depts, 'background:#0f172a;color:#cbd5e1;');
+                html += makeRow(idx + 1, item.name, d.plan, d.actual, d.depts, 'background:#ffffff;color:#0f172a;font-weight:600;');
             });
         }
 
         // III. Chi phí lãi vay
         const lvSection = this.EXPENSE_STRUCTURE.find(s => s.stt === 'III');
         if (lvSection) {
-            html += makeRow('III', '<b>Chi phí lãi vay</b>', totalIntPlan, totalIntAct, intDepts, 'background:#2d1f3d;font-weight:700;color:#c4b5fd;');
+            html += makeRow('III', '<b>Chi phí lãi vay</b>', totalIntPlan, totalIntAct, intDepts, 'background:#ede9fe;font-weight:900;font-size:0.92rem;color:#581c87;');
             lvSection.items.forEach(item => {
                 const d = this.data[item.code] || { plan: 0, actual: 0, depts: {} };
-                html += makeRow('1', item.name, d.plan, d.actual, d.depts, 'background:#0f172a;color:#cbd5e1;');
+                html += makeRow('1', item.name, d.plan, d.actual, d.depts, 'background:#ffffff;color:#0f172a;font-weight:600;');
             });
         }
 
         // IV. DOANH SỐ VÀ LÃI GỘP
         const dsSection = this.EXPENSE_STRUCTURE.find(s => s.stt === 'IV');
         if (dsSection) {
-            html += makeRow('IV', '<b>DOANH SỐ VÀ LÃI GỘP</b>', 0, 0, {}, 'background:#1e3a5f;font-weight:700;color:#fbbf24;');
+            html += makeRow('IV', '<b>DOANH SỐ VÀ LÃI GỘP</b>', 0, 0, {}, 'background:#ffedd5;font-weight:900;font-size:0.92rem;color:#9a3412;');
             dsSection.items.forEach((item, idx) => {
                 const d = this.data[item.code] || { plan: 0, actual: 0, depts: {} };
-                html += makeRow(idx + 1, item.name, d.plan, d.actual, d.depts, 'background:#0f172a;color:#cbd5e1;', !!item.isPct);
+                html += makeRow(idx + 1, item.name, d.plan, d.actual, d.depts, 'background:#ffffff;color:#0f172a;font-weight:600;', !!item.isPct);
             });
         }
 
@@ -860,7 +884,7 @@ window.ExpenseModule = {
     },
 
     // ═══════════════════════════════════════════════════
-    // BIỂU ĐỒ BÁO CÁO LŨY KẾ NĂM
+    // BIỂU ĐỒ BÁO CÁO LŨY KẾ NĂM (Tối ưu độ nét cho CEO)
     // ═══════════════════════════════════════════════════
     _renderYearlyLineChart() {
         if (!window.ChartManager) return;
@@ -879,36 +903,50 @@ window.ExpenseModule = {
             datasets: [{
                 label: 'Tổng Chi Phí (VNĐ)',
                 data: totals,
-                borderColor: '#f87171',
-                backgroundColor: 'rgba(248,113,113,0.12)',
+                borderColor: '#dc2626',
+                backgroundColor: 'rgba(220, 38, 38, 0.12)',
                 fill: true,
                 tension: 0.35,
                 pointRadius: 5,
-                pointBackgroundColor: '#f87171',
-                pointBorderColor: '#0f172a',
+                pointBackgroundColor: '#dc2626',
+                pointBorderColor: '#ffffff',
                 pointBorderWidth: 2,
-                borderWidth: 3
+                borderWidth: 3.5
             }]
         };
         window.ChartManager.createChart('expenseYearlyLineChart', 'line', data, {
             maintainAspectRatio: false,
+            layout: {
+                padding: { top: 25, right: 20 }
+            },
             plugins: {
                 legend: { display: false },
-                datalabels: { display: false },
+                datalabels: {
+                    display: true,
+                    align: 'top',
+                    offset: 4,
+                    color: '#b91c1c',
+                    font: { weight: '900', size: 11.5 },
+                    formatter: (v) => (v >= 1e9 ? (v/1e9).toFixed(1) + ' Tỷ' : (v > 0 ? (v/1e6).toFixed(0) + ' Tr' : ''))
+                },
                 tooltip: {
                     callbacks: {
-                        label: ctx => (ctx.raw / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' Triệu VNĐ'
+                        label: ctx => ' ' + (ctx.raw / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' Triệu VNĐ'
                     }
                 }
             },
             scales: {
-                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } },
+                x: {
+                    ticks: { color: '#0f172a', font: { size: 13, weight: '800' } },
+                    grid: { color: 'rgba(0, 0, 0, 0.08)' }
+                },
                 y: {
                     ticks: {
-                        color: '#94a3b8',
+                        color: '#0f172a',
+                        font: { size: 12, weight: '800' },
                         callback: (val) => (val >= 1e9 ? (val/1e9).toFixed(1) + ' Tỷ' : (val/1e6).toFixed(0) + ' Tr')
                     },
-                    grid: { color: 'rgba(148,163,184,0.1)' }
+                    grid: { color: 'rgba(0, 0, 0, 0.08)' }
                 }
             }
         });
@@ -927,57 +965,69 @@ window.ExpenseModule = {
         const data = {
             labels: months,
             datasets: [
-                { label: 'CP Cố Định', data: fixedData, backgroundColor: '#3b82f6', borderRadius: 4 },
-                { label: 'CP Biến Đổi', data: varData, backgroundColor: '#10b981', borderRadius: 4 },
-                { label: 'CP Lãi Vay', data: intData, backgroundColor: '#8b5cf6', borderRadius: 4 }
+                { label: 'CP Cố Định', data: fixedData, backgroundColor: '#2563eb', borderRadius: 4 },
+                { label: 'CP Biến Đổi', data: varData, backgroundColor: '#059669', borderRadius: 4 },
+                { label: 'CP Lãi Vay', data: intData, backgroundColor: '#7c3aed', borderRadius: 4 }
             ]
         };
         window.ChartManager.createChart('expenseYearlyStackedChart', 'bar', data, {
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 14 } },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#0f172a',
+                        font: { size: 13, weight: '800' },
+                        padding: 16
+                    }
+                },
                 datalabels: { display: false },
                 tooltip: {
                     callbacks: {
-                        label: ctx => `${ctx.dataset.label}: ${(ctx.raw / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 })} Tr`
+                        label: ctx => ` ${ctx.dataset.label}: ${(ctx.raw / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 })} Tr`
                     }
                 }
             },
             scales: {
-                x: { stacked: true, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } },
+                x: {
+                    stacked: true,
+                    ticks: { color: '#0f172a', font: { size: 13, weight: '800' } },
+                    grid: { color: 'rgba(0, 0, 0, 0.08)' }
+                },
                 y: {
                     stacked: true,
                     ticks: {
-                        color: '#94a3b8',
+                        color: '#0f172a',
+                        font: { size: 12, weight: '800' },
                         callback: (val) => (val >= 1e9 ? (val/1e9).toFixed(1) + ' Tỷ' : (val/1e6).toFixed(0) + ' Tr')
                     },
-                    grid: { color: 'rgba(148,163,184,0.1)' }
+                    grid: { color: 'rgba(0, 0, 0, 0.08)' }
                 }
             }
         });
     },
 
     // ═══════════════════════════════════════════════════
-    // BẢNG BÁO CÁO LŨY KẾ NĂM (Chuẩn hình ảnh mẫu)
+    // BẢNG BÁO CÁO LŨY KẾ NĂM
     // ═══════════════════════════════════════════════════
     _renderYearlyTable() {
         const tbody = document.getElementById('expense-yearly-tbody');
         if (!tbody) return;
 
         let html = '';
-        const stickyL0 = 'position:sticky;left:0;z-index:1;';
-        const stickyL1 = 'position:sticky;left:40px;z-index:1;';
+        const stickyL0 = 'position:sticky;left:0;z-index:2;';
+        const stickyL1 = 'position:sticky;left:45px;z-index:2;';
 
         const makeYearRow = (stt, name, monthVals, style, isPct = false) => {
             const total = isPct ? (monthVals.length > 0 ? (monthVals.reduce((a,b)=>a+b,0)/monthVals.length) : 0) : monthVals.reduce((a, b) => a + b, 0);
             const mCells = monthVals.map(v =>
-                `<td style="text-align:right;padding:6px 6px;border:1px solid #1e293b;${v > 0 ? 'color:#e2e8f0;' : 'color:#475569;'}">${this._fmtTable(v, isPct)}</td>`
+                `<td style="text-align:right;padding:8px 6px;border:1px solid #cbd5e1;${v > 0 ? 'color:#0f172a;font-weight:800;font-size:0.88rem;' : 'color:#64748b;font-weight:600;'}">${this._fmtTable(v, isPct)}</td>`
             ).join('');
             return `<tr style="${style}">
-                <td style="text-align:center;padding:6px;border:1px solid #1e293b;${stickyL0}background:inherit;">${stt}</td>
-                <td style="padding:6px 8px;border:1px solid #1e293b;${stickyL1}background:inherit;white-space:normal;min-width:280px;">${name}</td>
+                <td style="text-align:center;padding:8px;border:1px solid #cbd5e1;${stickyL0}background:inherit;font-weight:900;">${stt}</td>
+                <td style="padding:8px 12px;border:1px solid #cbd5e1;${stickyL1}background:inherit;white-space:normal;min-width:280px;font-weight:800;font-size:0.9rem;">${name}</td>
                 ${mCells}
-                <td style="text-align:right;padding:6px 8px;border:1px solid #1e293b;font-weight:700;color:#fde047;background:#1e293b;">${this._fmtTable(total, isPct)}</td>
+                <td style="text-align:right;padding:8px 10px;border:1px solid #ca8a04;font-weight:900;color:#713f12;background:#fef08a;font-size:0.9rem;">${this._fmtTable(total, isPct)}</td>
             </tr>`;
         };
 
@@ -990,20 +1040,20 @@ window.ExpenseModule = {
         // A. TỔNG CHI PHÍ
         html += makeYearRow('A', '<b>TỔNG CHI PHÍ</b>',
             getMonthVals(m => this._calcGroupTotalByMonth('fixed', m) + this._calcGroupTotalByMonth('variable', m) + this._calcGroupTotalByMonth('interest', m)),
-            'background:linear-gradient(135deg,#854d0e,#a16207);font-weight:800;font-size:0.9rem;color:#fde047;');
+            'background:#fef08a;font-weight:900;font-size:0.95rem;color:#713f12;border-top:2px solid #ca8a04;border-bottom:2px solid #ca8a04;');
 
         // I. Chi phí cố định
         html += makeYearRow('I', '<b>Chi phí cố định</b>',
             getMonthVals(m => this._calcGroupTotalByMonth('fixed', m)),
-            'background:#1e3a5f;font-weight:700;color:#93c5fd;');
+            'background:#dbeafe;font-weight:900;font-size:0.92rem;color:#1e3a8a;');
 
         // 1. Chi phí nhân sự cố định
         const nsSection = this.EXPENSE_STRUCTURE.find(s => s.stt === '1' && s.type === 'subsection');
         if (nsSection) {
             const nsMonths = getMonthVals(m => nsSection.items.reduce((sum, item) => sum + this._calcItemByMonth(item.code, m), 0));
-            html += makeYearRow('1', '<b>Chi phí nhân sự cố định</b>', nsMonths, 'background:#1a2e44;font-weight:600;color:#60a5fa;');
+            html += makeYearRow('1', '<b>Chi phí nhân sự cố định</b>', nsMonths, 'background:#f1f5f9;font-weight:800;color:#0f172a;');
             nsSection.items.forEach(item => {
-                html += makeYearRow('', item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#0f172a;color:#cbd5e1;');
+                html += makeYearRow('', item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#ffffff;color:#0f172a;font-weight:600;');
             });
         }
 
@@ -1011,9 +1061,9 @@ window.ExpenseModule = {
         const ckSection = this.EXPENSE_STRUCTURE.find(s => s.stt === '2' && s.type === 'subsection');
         if (ckSection) {
             const ckMonths = getMonthVals(m => ckSection.items.reduce((sum, item) => sum + this._calcItemByMonth(item.code, m), 0));
-            html += makeYearRow('2', '<b>Chi phí cố định khác</b>', ckMonths, 'background:#1a2e44;font-weight:600;color:#60a5fa;');
+            html += makeYearRow('2', '<b>Chi phí cố định khác</b>', ckMonths, 'background:#ffedd5;font-weight:800;color:#9a3412;');
             ckSection.items.forEach(item => {
-                html += makeYearRow('', item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#0f172a;color:#cbd5e1;');
+                html += makeYearRow('', item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#ffffff;color:#0f172a;font-weight:600;');
             });
         }
 
@@ -1022,9 +1072,9 @@ window.ExpenseModule = {
         if (bdSection) {
             html += makeYearRow('II', '<b>Chi phí biến đổi</b>',
                 getMonthVals(m => this._calcGroupTotalByMonth('variable', m)),
-                'background:#1a3329;font-weight:700;color:#6ee7b7;');
+                'background:#dcfce7;font-weight:900;font-size:0.92rem;color:#14532d;');
             bdSection.items.forEach((item, idx) => {
-                html += makeYearRow(idx + 1, item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#0f172a;color:#cbd5e1;');
+                html += makeYearRow(idx + 1, item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#ffffff;color:#0f172a;font-weight:600;');
             });
         }
 
@@ -1033,9 +1083,9 @@ window.ExpenseModule = {
         if (lvSection) {
             html += makeYearRow('III', '<b>Chi phí lãi vay</b>',
                 getMonthVals(m => this._calcGroupTotalByMonth('interest', m)),
-                'background:#2d1f3d;font-weight:700;color:#c4b5fd;');
+                'background:#ede9fe;font-weight:900;font-size:0.92rem;color:#581c87;');
             lvSection.items.forEach(item => {
-                html += makeYearRow('1', item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#0f172a;color:#cbd5e1;');
+                html += makeYearRow('1', item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#ffffff;color:#0f172a;font-weight:600;');
             });
         }
 
@@ -1044,9 +1094,9 @@ window.ExpenseModule = {
         if (dsSection) {
             html += makeYearRow('IV', '<b>DOANH SỐ VÀ LÃI GỘP</b>',
                 getMonthVals(() => 0),
-                'background:#1e3a5f;font-weight:700;color:#fbbf24;');
+                'background:#ffedd5;font-weight:900;font-size:0.92rem;color:#9a3412;');
             dsSection.items.forEach((item, idx) => {
-                html += makeYearRow(idx + 1, item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#0f172a;color:#cbd5e1;', !!item.isPct);
+                html += makeYearRow(idx + 1, item.name, getMonthVals(m => this._calcItemByMonth(item.code, m)), 'background:#ffffff;color:#0f172a;font-weight:600;', !!item.isPct);
             });
         }
 

@@ -19,7 +19,7 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="css/dashboard.css?v=1788767139">
+    <link rel="stylesheet" href="css/dashboard.css?v=1789900000">
     <link rel="stylesheet" href="css/customers.css?v=1788767139">
     <link rel="stylesheet" href="css/revenue.css?v=1788767139">
     <link rel="stylesheet" href="css/debt.css?v=1788767139">
@@ -1868,40 +1868,42 @@
                 </section>
 
                 <section id="view-expenses" class="view hidden">
-                    <!-- Tab Switcher -->
-                    <div class="expense-tab-bar" style="display: flex; gap: 0; margin-bottom: 20px; background: #1e293b; border-radius: 12px; padding: 4px; width: fit-content;">
-                        <button class="expense-tab-btn active" data-tab="monthly" style="padding: 10px 24px; border: none; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; box-shadow: 0 2px 8px rgba(59,130,246,0.3);">
-                            <i data-lucide="calendar" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></i>Báo Cáo Tháng
-                        </button>
-                        <button class="expense-tab-btn" data-tab="yearly" style="padding: 10px 24px; border: none; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; background: transparent; color: #94a3b8;">
-                            <i data-lucide="trending-up" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"></i>Lũy Kế Năm
-                        </button>
-                        <div class="expense-dl-wrapper" style="position: relative; display: inline-block; margin-left: 16px;">
-                            <button id="btn-download-expense-template" style="padding: 10px 20px; border: 1px solid #059669; border-radius: 10px; font-weight: 600; font-size: 0.85rem; cursor: pointer; background: #064e3b; color: #34d399; transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
-                                <i data-lucide="download" style="width:16px;height:16px;"></i>
+                    <!-- Tab Switcher & Download -->
+                    <div class="expense-tab-bar" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                        <div style="display: flex; gap: 6px; background: #e2e8f0; border-radius: 12px; padding: 4px; border: 1.5px solid #cbd5e1; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+                            <button class="expense-tab-btn active" data-tab="monthly" style="padding: 10px 24px; border: none; border-radius: 9px; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.25s; background: #2563eb; color: #ffffff; box-shadow: 0 2px 8px rgba(37,99,235,0.35);">
+                                <i data-lucide="calendar" style="width:16px;height:16px;vertical-align:-2px;margin-right:6px;"></i>Báo Cáo Tháng
+                            </button>
+                            <button class="expense-tab-btn" data-tab="yearly" style="padding: 10px 24px; border: none; border-radius: 9px; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.25s; background: transparent; color: #334155;">
+                                <i data-lucide="trending-up" style="width:16px;height:16px;vertical-align:-2px;margin-right:6px;"></i>Lũy Kế Năm
+                            </button>
+                        </div>
+                        <div class="expense-dl-wrapper" style="position: relative; display: inline-block;">
+                            <button id="btn-download-expense-template" style="padding: 10px 22px; border: 1.5px solid #059669; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer; background: #047857; color: #ffffff; transition: all 0.2s; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(4,120,87,0.35);">
+                                <i data-lucide="download" style="width:17px;height:17px;"></i>
                                 <span>Tải Template Excel</span>
                                 <i data-lucide="chevron-down" style="width:14px;height:14px;"></i>
                             </button>
-                            <div id="expense-download-menu" style="display: none; position: absolute; top: calc(100% + 6px); left: 0; background: #0f172a; border: 1px solid #334155; border-radius: 10px; box-shadow: 0 12px 28px rgba(0,0,0,0.5); z-index: 100; min-width: 280px; overflow: hidden;">
-                                <a href="templates/Mau_Bao_Cao_Chi_Phi_Thang_VPS.xlsx" download="Mau_Bao_Cao_Chi_Phi_Thang_VPS.xlsx" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: #e2e8f0; text-decoration: none; font-size: 0.84rem; border-bottom: 1px solid #1e293b; transition: background 0.2s;" onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='transparent'">
-                                    <i data-lucide="file-spreadsheet" style="width:16px;height:16px;color:#34d399;flex-shrink:0;"></i>
+                            <div id="expense-download-menu" style="display: none; position: absolute; top: calc(100% + 6px); right: 0; background: #0f172a; border: 1.5px solid #334155; border-radius: 10px; box-shadow: 0 12px 28px rgba(0,0,0,0.5); z-index: 100; min-width: 290px; overflow: hidden;">
+                                <a href="templates/Mau_Bao_Cao_Chi_Phi_Thang_VPS.xlsx" download="Mau_Bao_Cao_Chi_Phi_Thang_VPS.xlsx" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: #f8fafc; text-decoration: none; font-size: 0.88rem; border-bottom: 1px solid #1e293b; transition: background 0.2s;" onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='transparent'">
+                                    <i data-lucide="file-spreadsheet" style="width:18px;height:18px;color:#34d399;flex-shrink:0;"></i>
                                     <div>
-                                        <div style="font-weight: 600;">Mẫu Chi Phí Tháng</div>
-                                        <div style="font-size: 0.72rem; color: #94a3b8;">Có 8 bộ phận & công thức tính</div>
+                                        <div style="font-weight: 700;">Mẫu Chi Phí Tháng</div>
+                                        <div style="font-size: 0.76rem; color: #cbd5e1;">Có 8 bộ phận & công thức tính</div>
                                     </div>
                                 </a>
-                                <a href="templates/Mau_Bao_Cao_Chi_Phi_Luy_Ke_Nam_VPS.xlsx" download="Mau_Bao_Cao_Chi_Phi_Luy_Ke_Nam_VPS.xlsx" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: #e2e8f0; text-decoration: none; font-size: 0.84rem; border-bottom: 1px solid #1e293b; transition: background 0.2s;" onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='transparent'">
-                                    <i data-lucide="file-spreadsheet" style="width:16px;height:16px;color:#60a5fa;flex-shrink:0;"></i>
+                                <a href="templates/Mau_Bao_Cao_Chi_Phi_Luy_Ke_Nam_VPS.xlsx" download="Mau_Bao_Cao_Chi_Phi_Luy_Ke_Nam_VPS.xlsx" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: #f8fafc; text-decoration: none; font-size: 0.88rem; border-bottom: 1px solid #1e293b; transition: background 0.2s;" onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background='transparent'">
+                                    <i data-lucide="file-spreadsheet" style="width:18px;height:18px;color:#60a5fa;flex-shrink:0;"></i>
                                     <div>
-                                        <div style="font-weight: 600;">Mẫu Lũy Kế 12 Tháng</div>
-                                        <div style="font-size: 0.72rem; color: #94a3b8;">Theo dõi T1 → T12 & Tổng</div>
+                                        <div style="font-weight: 700;">Mẫu Lũy Kế 12 Tháng</div>
+                                        <div style="font-size: 0.76rem; color: #cbd5e1;">Theo dõi T1 → T12 & Tổng</div>
                                     </div>
                                 </a>
-                                <a href="templates/Mau_Bao_Cao_Chi_Phi_Tong_Hop_VPS.xlsx" download="Mau_Bao_Cao_Chi_Phi_Tong_Hop_VPS.xlsx" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: #fde047; text-decoration: none; font-size: 0.84rem; font-weight: 600; background: rgba(234,179,8,0.08); transition: background 0.2s;" onmouseover="this.style.background='rgba(234,179,8,0.18)'" onmouseout="this.style.background='rgba(234,179,8,0.08)'">
-                                    <i data-lucide="folder-archive" style="width:16px;height:16px;color:#fbbf24;flex-shrink:0;"></i>
+                                <a href="templates/Mau_Bao_Cao_Chi_Phi_Tong_Hop_VPS.xlsx" download="Mau_Bao_Cao_Chi_Phi_Tong_Hop_VPS.xlsx" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: #fde047; text-decoration: none; font-size: 0.88rem; font-weight: 700; background: rgba(234,179,8,0.12); transition: background 0.2s;" onmouseover="this.style.background='rgba(234,179,8,0.22)'" onmouseout="this.style.background='rgba(234,179,8,0.12)'">
+                                    <i data-lucide="folder-archive" style="width:18px;height:18px;color:#fbbf24;flex-shrink:0;"></i>
                                     <div>
-                                        <div style="font-weight: 700;">Trọn Bộ 2 Mẫu (Tổng Hợp)</div>
-                                        <div style="font-size: 0.72rem; color: #fef08a;">Gồm cả Tháng & Lũy Kế Năm</div>
+                                        <div style="font-weight: 800;">Trọn Bộ 2 Mẫu (Tổng Hợp)</div>
+                                        <div style="font-size: 0.76rem; color: #fef08a;">Gồm cả Tháng & Lũy Kế Năm</div>
                                     </div>
                                 </a>
                             </div>
@@ -1912,53 +1914,55 @@
                     <div id="expense-monthly-view">
                         <!-- KPI Cards -->
                         <div class="grid-layout" style="grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
-                            <div class="card" style="background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); border: 1px solid #1e40af; border-radius: 12px; padding: 20px;">
+                            <div class="card" style="background: #ffffff; border: 2px solid #ef4444; border-left: 6px solid #dc2626; border-radius: 12px; padding: 18px 20px; box-shadow: 0 4px 14px rgba(220,38,38,0.08);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <span style="color: #94a3b8; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Tổng Chi Phí</span>
-                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(239,68,68,0.15); display: flex; align-items: center; justify-content: center;">
-                                        <i data-lucide="wallet" style="width:20px;height:20px;color:#ef4444;"></i>
+                                    <span style="color: #475569; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;">Tổng Chi Phí</span>
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(239,68,68,0.12); display: flex; align-items: center; justify-content: center;">
+                                        <i data-lucide="wallet" style="width:20px;height:20px;color:#dc2626;"></i>
                                     </div>
                                 </div>
-                                <div id="exp-kpi-total" style="font-size: 1.6rem; font-weight: 800; color: #f87171; margin-bottom: 4px;">0</div>
-                                <div id="exp-kpi-total-sub" style="font-size: 0.75rem; color: #64748b;">KH: 0 | TH/KH: 0%</div>
+                                <div id="exp-kpi-total" style="font-size: 1.85rem; font-weight: 900; color: #dc2626; margin-bottom: 6px; letter-spacing: -0.5px;">0</div>
+                                <div id="exp-kpi-total-sub" style="font-size: 0.88rem; font-weight: 700; color: #1e293b;">KH: 0 | TH/KH: 0%</div>
                             </div>
-                            <div class="card" style="background: linear-gradient(135deg, #1a2e44 0%, #0f172a 100%); border: 1px solid #1d4ed8; border-radius: 12px; padding: 20px;">
+                            <div class="card" style="background: #ffffff; border: 2px solid #3b82f6; border-left: 6px solid #2563eb; border-radius: 12px; padding: 18px 20px; box-shadow: 0 4px 14px rgba(37,99,235,0.08);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <span style="color: #94a3b8; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">CP Cố Định</span>
-                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(59,130,246,0.15); display: flex; align-items: center; justify-content: center;">
-                                        <i data-lucide="lock" style="width:20px;height:20px;color:#3b82f6;"></i>
+                                    <span style="color: #475569; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;">CP Cố Định</span>
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(59,130,246,0.12); display: flex; align-items: center; justify-content: center;">
+                                        <i data-lucide="lock" style="width:20px;height:20px;color:#2563eb;"></i>
                                     </div>
                                 </div>
-                                <div id="exp-kpi-fixed" style="font-size: 1.6rem; font-weight: 800; color: #60a5fa; margin-bottom: 4px;">0</div>
-                                <div id="exp-kpi-fixed-sub" style="font-size: 0.75rem; color: #64748b;">KH: 0 | TH/KH: 0%</div>
+                                <div id="exp-kpi-fixed" style="font-size: 1.85rem; font-weight: 900; color: #2563eb; margin-bottom: 6px; letter-spacing: -0.5px;">0</div>
+                                <div id="exp-kpi-fixed-sub" style="font-size: 0.88rem; font-weight: 700; color: #1e293b;">KH: 0 | TH/KH: 0%</div>
                             </div>
-                            <div class="card" style="background: linear-gradient(135deg, #1a3329 0%, #0f172a 100%); border: 1px solid #059669; border-radius: 12px; padding: 20px;">
+                            <div class="card" style="background: #ffffff; border: 2px solid #10b981; border-left: 6px solid #059669; border-radius: 12px; padding: 18px 20px; box-shadow: 0 4px 14px rgba(5,150,105,0.08);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <span style="color: #94a3b8; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">CP Biến Đổi</span>
-                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(16,185,129,0.15); display: flex; align-items: center; justify-content: center;">
-                                        <i data-lucide="activity" style="width:20px;height:20px;color:#10b981;"></i>
+                                    <span style="color: #475569; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;">CP Biến Đổi</span>
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(16,185,129,0.12); display: flex; align-items: center; justify-content: center;">
+                                        <i data-lucide="activity" style="width:20px;height:20px;color:#059669;"></i>
                                     </div>
                                 </div>
-                                <div id="exp-kpi-variable" style="font-size: 1.6rem; font-weight: 800; color: #34d399; margin-bottom: 4px;">0</div>
-                                <div id="exp-kpi-variable-sub" style="font-size: 0.75rem; color: #64748b;">KH: 0 | TH/KH: 0%</div>
+                                <div id="exp-kpi-variable" style="font-size: 1.85rem; font-weight: 900; color: #059669; margin-bottom: 6px; letter-spacing: -0.5px;">0</div>
+                                <div id="exp-kpi-variable-sub" style="font-size: 0.88rem; font-weight: 700; color: #1e293b;">KH: 0 | TH/KH: 0%</div>
                             </div>
-                            <div class="card" style="background: linear-gradient(135deg, #2d1f3d 0%, #0f172a 100%); border: 1px solid #7c3aed; border-radius: 12px; padding: 20px;">
+                            <div class="card" style="background: #ffffff; border: 2px solid #8b5cf6; border-left: 6px solid #7c3aed; border-radius: 12px; padding: 18px 20px; box-shadow: 0 4px 14px rgba(124,58,237,0.08);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <span style="color: #94a3b8; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">CP Lãi Vay</span>
-                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(124,58,237,0.15); display: flex; align-items: center; justify-content: center;">
-                                        <i data-lucide="percent" style="width:20px;height:20px;color:#8b5cf6;"></i>
+                                    <span style="color: #475569; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;">CP Lãi Vay</span>
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(139,92,246,0.12); display: flex; align-items: center; justify-content: center;">
+                                        <i data-lucide="percent" style="width:20px;height:20px;color:#7c3aed;"></i>
                                     </div>
                                 </div>
-                                <div id="exp-kpi-interest" style="font-size: 1.6rem; font-weight: 800; color: #a78bfa; margin-bottom: 4px;">0</div>
-                                <div id="exp-kpi-interest-sub" style="font-size: 0.75rem; color: #64748b;">KH: 0 | TH/KH: 0%</div>
+                                <div id="exp-kpi-interest" style="font-size: 1.85rem; font-weight: 900; color: #7c3aed; margin-bottom: 6px; letter-spacing: -0.5px;">0</div>
+                                <div id="exp-kpi-interest-sub" style="font-size: 0.88rem; font-weight: 700; color: #1e293b;">KH: 0 | TH/KH: 0%</div>
                             </div>
                         </div>
 
                         <!-- Charts Row -->
                         <div class="grid-layout cols-2" style="gap: 16px; margin-bottom: 20px;">
-                            <div class="card" style="border-radius: 12px;">
-                                <div class="card-header" style="padding: 16px 20px;">
-                                    <h3 style="font-size: 0.95rem; color: #e2e8f0;">Cơ Cấu Chi Phí</h3>
+                            <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                                <div class="card-header" style="padding: 14px 20px; border-bottom: 2px solid #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
+                                    <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                        <i data-lucide="pie-chart" style="width: 18px; height: 18px; color: #2563eb;"></i>Cơ Cấu Chi Phí
+                                    </h3>
                                 </div>
                                 <div class="card-body" style="padding: 16px;">
                                     <div class="chart-container" style="height: 280px; position: relative;">
@@ -1966,9 +1970,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card" style="border-radius: 12px;">
-                                <div class="card-header" style="padding: 16px 20px;">
-                                    <h3 style="font-size: 0.95rem; color: #e2e8f0;">Top 10 Hạng Mục Chi Phí Cao Nhất</h3>
+                            <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                                <div class="card-header" style="padding: 14px 20px; border-bottom: 2px solid #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
+                                    <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                        <i data-lucide="bar-chart-3" style="width: 18px; height: 18px; color: #d97706;"></i>Top 10 Hạng Mục Chi Phí Cao Nhất
+                                    </h3>
                                 </div>
                                 <div class="card-body" style="padding: 16px;">
                                     <div class="chart-container" style="height: 280px; position: relative;">
@@ -1979,9 +1985,11 @@
                         </div>
 
                         <!-- Department Stacked Bar Chart -->
-                        <div class="card" style="border-radius: 12px; margin-bottom: 20px;">
-                            <div class="card-header" style="padding: 16px 20px;">
-                                <h3 style="font-size: 0.95rem; color: #e2e8f0;">Chi Phí Theo Bộ Phận</h3>
+                        <div class="card" style="border-radius: 12px; margin-bottom: 20px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                            <div class="card-header" style="padding: 14px 20px; border-bottom: 2px solid #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
+                                <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="layers" style="width: 18px; height: 18px; color: #059669;"></i>Chi Phí Theo Bộ Phận
+                                </h3>
                             </div>
                             <div class="card-body" style="padding: 16px;">
                                 <div class="chart-container" style="height: 320px; position: relative;">
@@ -1991,31 +1999,33 @@
                         </div>
 
                         <!-- Monthly Detail Table -->
-                        <div class="card" style="border-radius: 12px;">
-                            <div class="card-header" style="padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;">
-                                <h3 style="font-size: 0.95rem; color: #e2e8f0;">BÁO CÁO CHI PHÍ THÁNG</h3>
-                                <span id="expense-month-label" style="color: #94a3b8; font-size: 0.8rem;"></span>
+                        <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                            <div class="card-header" style="padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #cbd5e1; background: #f8fafc;">
+                                <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="table-2" style="width: 18px; height: 18px; color: #047857;"></i>BÁO CÁO CHI PHÍ THÁNG
+                                </h3>
+                                <span id="expense-month-label" style="color: #0f172a; font-size: 0.95rem; font-weight: 900; background: #e2e8f0; padding: 5px 14px; border-radius: 8px; border: 1.5px solid #cbd5e1;"></span>
                             </div>
                             <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                                <table class="data-table" id="expenseTable" style="white-space: nowrap; font-size: 0.82rem; border-collapse: collapse;">
+                                <table class="data-table" id="expenseTable" style="white-space: nowrap; font-size: 0.88rem; border-collapse: collapse;">
                                     <thead>
                                         <tr style="background: linear-gradient(135deg, #065f46, #047857);">
-                                            <th rowspan="2" style="width: 40px; text-align: center; position: sticky; left: 0; z-index: 3; background: #065f46; color: #ecfdf5; padding: 10px 6px; border: 1px solid #064e3b;">STT</th>
-                                            <th rowspan="2" style="min-width: 280px; position: sticky; left: 40px; z-index: 3; background: #065f46; color: #ecfdf5; padding: 10px 8px; border: 1px solid #064e3b;">NỘI DUNG</th>
-                                            <th rowspan="2" style="text-align: right; min-width: 110px; color: #ecfdf5; padding: 10px 8px; border: 1px solid #064e3b;">KẾ HOẠCH</th>
-                                            <th rowspan="2" style="text-align: right; min-width: 110px; color: #ecfdf5; padding: 10px 8px; border: 1px solid #064e3b;">THỰC HIỆN</th>
-                                            <th rowspan="2" style="text-align: center; min-width: 80px; color: #ecfdf5; padding: 10px 8px; border: 1px solid #064e3b;">TỶ LỆ<br>(TH/KH)</th>
-                                            <th colspan="8" style="text-align: center; color: #ecfdf5; padding: 10px 8px; border: 1px solid #064e3b; background: #047857;">TRONG ĐÓ</th>
+                                            <th rowspan="2" style="width: 45px; text-align: center; position: sticky; left: 0; z-index: 3; background: #065f46; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 6px; border: 1px solid #064e3b;">STT</th>
+                                            <th rowspan="2" style="min-width: 280px; position: sticky; left: 45px; z-index: 3; background: #065f46; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 10px; border: 1px solid #064e3b;">NỘI DUNG</th>
+                                            <th rowspan="2" style="text-align: right; min-width: 115px; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 8px; border: 1px solid #064e3b;">KẾ HOẠCH</th>
+                                            <th rowspan="2" style="text-align: right; min-width: 115px; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 8px; border: 1px solid #064e3b;">THỰC HIỆN</th>
+                                            <th rowspan="2" style="text-align: center; min-width: 85px; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 8px; border: 1px solid #064e3b;">TỶ LỆ<br>(TH/KH)</th>
+                                            <th colspan="8" style="text-align: center; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 8px; border: 1px solid #064e3b; background: #047857;">TRONG ĐÓ</th>
                                         </tr>
                                         <tr style="background: #059669;">
-                                            <th style="text-align: right; min-width: 100px; color: #ecfdf5; padding: 8px 6px; border: 1px solid #064e3b; font-size: 0.75rem;">DỊCH VỤ<br>KỸ THUẬT</th>
-                                            <th style="text-align: right; min-width: 100px; color: #ecfdf5; padding: 8px 6px; border: 1px solid #064e3b; font-size: 0.75rem;">KD BÁN<br>BUÔN</th>
-                                            <th style="text-align: right; min-width: 100px; color: #ecfdf5; padding: 8px 6px; border: 1px solid #064e3b; font-size: 0.75rem;">KD BÁN LẺ<br>TỔNG HỢP</th>
-                                            <th style="text-align: right; min-width: 100px; color: #ecfdf5; padding: 8px 6px; border: 1px solid #064e3b; font-size: 0.75rem;">KD DỰ ÁN</th>
-                                            <th style="text-align: right; min-width: 100px; color: #ecfdf5; padding: 8px 6px; border: 1px solid #064e3b; font-size: 0.75rem;">KD THUÊ<br>MÁY</th>
-                                            <th style="text-align: right; min-width: 90px; color: #ecfdf5; padding: 8px 6px; border: 1px solid #064e3b; font-size: 0.75rem;">KD KHÁC</th>
-                                            <th style="text-align: right; min-width: 90px; color: #ecfdf5; padding: 8px 6px; border: 1px solid #064e3b; font-size: 0.75rem;">KẾ TOÁN</th>
-                                            <th style="text-align: right; min-width: 100px; color: #ecfdf5; padding: 8px 6px; border: 1px solid #064e3b; font-size: 0.75rem;">BỘ PHẬN<br>KHÁC</th>
+                                            <th style="text-align: right; min-width: 100px; background: #059669; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #064e3b; font-size: 0.8rem;">DỊCH VỤ<br>KỸ THUẬT</th>
+                                            <th style="text-align: right; min-width: 100px; background: #059669; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #064e3b; font-size: 0.8rem;">KD BÁN<br>BUÔN</th>
+                                            <th style="text-align: right; min-width: 100px; background: #059669; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #064e3b; font-size: 0.8rem;">KD BÁN LẺ<br>TỔNG HỢP</th>
+                                            <th style="text-align: right; min-width: 100px; background: #059669; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #064e3b; font-size: 0.8rem;">KD DỰ ÁN</th>
+                                            <th style="text-align: right; min-width: 100px; background: #059669; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #064e3b; font-size: 0.8rem;">KD THUÊ<br>MÁY</th>
+                                            <th style="text-align: right; min-width: 90px; background: #059669; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #064e3b; font-size: 0.8rem;">KD KHÁC</th>
+                                            <th style="text-align: right; min-width: 90px; background: #059669; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #064e3b; font-size: 0.8rem;">KẾ TOÁN</th>
+                                            <th style="text-align: right; min-width: 100px; background: #059669; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #064e3b; font-size: 0.8rem;">BỘ PHẬN<br>KHÁC</th>
                                         </tr>
                                     </thead>
                                     <tbody id="expense-monthly-tbody">
@@ -2030,9 +2040,11 @@
                     <div id="expense-yearly-view" style="display: none;">
                         <!-- Yearly Charts -->
                         <div class="grid-layout cols-2" style="gap: 16px; margin-bottom: 20px;">
-                            <div class="card" style="border-radius: 12px;">
-                                <div class="card-header" style="padding: 16px 20px;">
-                                    <h3 style="font-size: 0.95rem; color: #e2e8f0;">Xu Hướng Tổng Chi Phí 12 Tháng</h3>
+                            <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                                <div class="card-header" style="padding: 14px 20px; border-bottom: 2px solid #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
+                                    <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                        <i data-lucide="trending-up" style="width: 18px; height: 18px; color: #dc2626;"></i>Xu Hướng Tổng Chi Phí 12 Tháng
+                                    </h3>
                                 </div>
                                 <div class="card-body" style="padding: 16px;">
                                     <div class="chart-container" style="height: 300px; position: relative;">
@@ -2040,9 +2052,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card" style="border-radius: 12px;">
-                                <div class="card-header" style="padding: 16px 20px;">
-                                    <h3 style="font-size: 0.95rem; color: #e2e8f0;">CP Cố Định vs Biến Đổi vs Lãi Vay (12 Tháng)</h3>
+                            <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                                <div class="card-header" style="padding: 14px 20px; border-bottom: 2px solid #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
+                                    <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                        <i data-lucide="bar-chart-2" style="width: 18px; height: 18px; color: #2563eb;"></i>CP Cố Định vs Biến Đổi vs Lãi Vay (12 Tháng)
+                                    </h3>
                                 </div>
                                 <div class="card-body" style="padding: 16px;">
                                     <div class="chart-container" style="height: 300px; position: relative;">
@@ -2053,32 +2067,34 @@
                         </div>
 
                         <!-- Yearly Detail Table -->
-                        <div class="card" style="border-radius: 12px;">
-                            <div class="card-header" style="padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;">
-                                <h3 style="font-size: 0.95rem; color: #e2e8f0;">BÁO CÁO CHI PHÍ LŨY KẾ NĂM 2026</h3>
+                        <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                            <div class="card-header" style="padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #cbd5e1; background: #f8fafc;">
+                                <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="calendar-range" style="width: 18px; height: 18px; color: #1e40af;"></i>BÁO CÁO CHI PHÍ LŨY KẾ NĂM 2026
+                                </h3>
                             </div>
                             <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                                <table class="data-table" id="expenseYearlyTable" style="white-space: nowrap; font-size: 0.82rem; border-collapse: collapse;">
+                                <table class="data-table" id="expenseYearlyTable" style="white-space: nowrap; font-size: 0.88rem; border-collapse: collapse;">
                                     <thead>
                                         <tr style="background: linear-gradient(135deg, #1e40af, #1d4ed8);">
-                                            <th rowspan="2" style="width: 40px; text-align: center; position: sticky; left: 0; z-index: 3; background: #1e40af; color: #dbeafe; padding: 10px 6px; border: 1px solid #1e3a8a;">STT</th>
-                                            <th rowspan="2" style="min-width: 280px; position: sticky; left: 40px; z-index: 3; background: #1e40af; color: #dbeafe; padding: 10px 8px; border: 1px solid #1e3a8a;">NỘI DUNG</th>
-                                            <th colspan="12" style="text-align: center; color: #dbeafe; padding: 10px 8px; border: 1px solid #1e3a8a; background: #2563eb;">CÁC THÁNG TRONG NĂM</th>
-                                            <th rowspan="2" style="text-align: right; min-width: 120px; color: #fde047; padding: 10px 8px; border: 1px solid #1e3a8a; background: #1e3a8a; font-weight: 800;">TỔNG</th>
+                                            <th rowspan="2" style="width: 45px; text-align: center; position: sticky; left: 0; z-index: 3; background: #1e40af; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 6px; border: 1px solid #1e3a8a;">STT</th>
+                                            <th rowspan="2" style="min-width: 280px; position: sticky; left: 45px; z-index: 3; background: #1e40af; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 10px; border: 1px solid #1e3a8a;">NỘI DUNG</th>
+                                            <th colspan="12" style="text-align: center; color: #ffffff; font-weight: 900; font-size: 0.88rem; padding: 12px 8px; border: 1px solid #1e3a8a; background: #2563eb;">CÁC THÁNG TRONG NĂM</th>
+                                            <th rowspan="2" style="text-align: right; min-width: 120px; color: #fde047; padding: 12px 8px; border: 1px solid #1e3a8a; background: #172554; font-weight: 900; font-size: 0.92rem;">TỔNG</th>
                                         </tr>
-                                        <tr style="background: #2563eb;">
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T1</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T2</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T3</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T4</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T5</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T6</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T7</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T8</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T9</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T10</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T11</th>
-                                            <th style="text-align: right; min-width: 90px; color: #dbeafe; padding: 8px 6px; border: 1px solid #1e3a8a;">T12</th>
+                                        <tr style="background: #1d4ed8;">
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T1</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T2</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T3</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T4</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T5</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T6</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T7</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T8</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T9</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T10</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T11</th>
+                                            <th style="text-align: right; min-width: 90px; background: #1d4ed8; color: #ffffff; font-weight: 800; padding: 10px 6px; border: 1px solid #1e3a8a; font-size: 0.82rem;">T12</th>
                                         </tr>
                                     </thead>
                                     <tbody id="expense-yearly-tbody">
@@ -2604,7 +2620,7 @@
         lucide.createIcons();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="js/expense.js?v=1789800000"></script>
+    <script src="js/expense.js?v=1789900000"></script>
 
 
 </body>
