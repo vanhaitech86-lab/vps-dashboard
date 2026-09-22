@@ -1,18 +1,359 @@
-/* Customers Dashboard Specific Styles */
+/* ==========================================================================
+   Customers Dashboard & Project Customers Specific Styles
+   ========================================================================== */
+
 #view-customers .kpi-card {
     border-left: 4px solid var(--clr-primary);
 }
-
 #view-customers .kpi-card:nth-child(2) {
     border-left-color: var(--clr-secondary);
 }
-
 #view-customers .kpi-card:nth-child(3) {
     border-left-color: var(--clr-warning);
 }
-
 .kpi-subtext {
     font-size: 0.875rem;
     color: var(--clr-text-muted);
     margin-top: 0.5rem;
+}
+
+/* Tab Switcher in 7. Khách Hàng */
+.cust-nav-tabs {
+    display: flex;
+    gap: 8px;
+    background: #e2e8f0;
+    padding: 5px;
+    border-radius: 12px;
+    border: 1.5px solid #cbd5e1;
+    margin-bottom: 22px;
+    width: fit-content;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.cust-tab-btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 9px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    background: transparent;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+.cust-tab-btn:hover {
+    color: #1e293b;
+    background: rgba(255, 255, 255, 0.6);
+}
+.cust-tab-btn.active {
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
+}
+
+/* Project Customers Filter Bar */
+.proj-cust-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1.5px solid #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    margin-bottom: 20px;
+}
+.proj-cust-filter-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.proj-cust-select {
+    padding: 9px 14px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0f172a;
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.proj-cust-select:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+.proj-cust-search-input {
+    padding: 9px 14px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #0f172a;
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    min-width: 220px;
+    outline: none;
+    transition: all 0.2s;
+}
+.proj-cust-search-input:focus {
+    border-color: #0284c7;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+/* Action Buttons */
+.proj-cust-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.proj-cust-btn-primary {
+    background: #0284c7;
+    color: #ffffff;
+}
+.proj-cust-btn-primary:hover {
+    background: #0369a1;
+    transform: translateY(-1px);
+}
+.proj-cust-btn-success {
+    background: #059669;
+    color: #ffffff;
+}
+.proj-cust-btn-success:hover {
+    background: #047857;
+    transform: translateY(-1px);
+}
+.proj-cust-btn-secondary {
+    background: #334155;
+    color: #ffffff;
+}
+.proj-cust-btn-secondary:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+}
+
+/* KPI Cards in Project Customers */
+.proj-cust-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+@media (max-width: 1024px) {
+    .proj-cust-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .proj-cust-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.proj-cust-kpi-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1.5px solid #cbd5e1;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+.proj-cust-kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 6px;
+}
+.proj-cust-kpi-card.kpi-blue::before { background: #0284c7; }
+.proj-cust-kpi-card.kpi-emerald::before { background: #059669; }
+.proj-cust-kpi-card.kpi-amber::before { background: #d97706; }
+.proj-cust-kpi-card.kpi-purple::before { background: #7c3aed; }
+
+.proj-cust-kpi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+.proj-cust-kpi-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.proj-cust-kpi-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.proj-cust-kpi-value {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 4px 0 6px 0;
+    letter-spacing: -0.5px;
+}
+.proj-cust-kpi-sub {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #334155;
+}
+
+/* Project Customers Data Table */
+#projCustTable {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    font-size: 0.88rem;
+}
+#projCustTable thead tr.header-main th {
+    background: #1e3a8a !important;
+    background-color: #1e3a8a !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    font-size: 0.86rem !important;
+    padding: 12px 8px !important;
+    border: 1px solid #172554 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+#projCustTable thead tr.header-sub th {
+    background: #2563eb !important;
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 0.8rem !important;
+    padding: 10px 8px !important;
+    border: 1px solid #1e3a8a !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    white-space: nowrap;
+}
+#projCustTable thead th[style*="sticky"] {
+    z-index: 10 !important;
+}
+#projCustTable tbody td[style*="sticky"] {
+    z-index: 5 !important;
+}
+#projCustTable tbody td {
+    border: 1px solid #cbd5e1 !important;
+    font-variant-numeric: tabular-nums;
+    vertical-align: middle !important;
+    line-height: 1.4 !important;
+}
+
+/* Modal Data Entry */
+.proj-cust-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+.proj-cust-modal-content {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1.5px solid #cbd5e1;
+    display: flex;
+    flex-direction: column;
+}
+.proj-cust-modal-header {
+    padding: 16px 20px;
+    border-bottom: 2px solid #e2e8f0;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.proj-cust-modal-header h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.proj-cust-modal-body {
+    padding: 20px;
+}
+.proj-cust-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+@media (max-width: 600px) {
+    .proj-cust-form-row {
+        grid-template-columns: 1fr;
+    }
+}
+.proj-cust-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.proj-cust-form-group label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.proj-cust-form-group input,
+.proj-cust-form-group select {
+    padding: 9px 12px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #0f172a;
+    font-weight: 700;
+    outline: none;
+    transition: all 0.2s;
+}
+.proj-cust-form-group input:focus,
+.proj-cust-form-group select:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+.proj-cust-modal-footer {
+    padding: 14px 20px;
+    border-top: 1.5px solid #e2e8f0;
+    background: #f8fafc;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }

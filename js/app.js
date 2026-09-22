@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.ChartManager) window.ChartManager.init();
             if(window.OverviewModule) window.OverviewModule.init();
             if(window.CustomersModule) window.CustomersModule.init();
+            if(window.ProjectCustomersModule) window.ProjectCustomersModule.init();
             if(window.ProductsModule) window.ProductsModule.init();
             if(window.FujifilmModule) window.FujifilmModule.init();
             if(window.ProductsOtherModule) window.ProductsOtherModule.init();
@@ -275,6 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'expense': '5. Chi Phí',
                 'debt': '6. Công Nợ',
                 'customers': '7. Khách Hàng',
+                'project-customers': '7.1. Báo Cáo Khách Hàng Dự Án',
                 'service': '8. Dịch Vụ Tận Tâm',
                 'iso': '9. ISO',
                 'training': '10. Đào Tạo',
@@ -292,6 +294,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             // Show target
+            if (viewId === 'project-customers') {
+                const targetCust = document.getElementById('view-customers');
+                if (targetCust) targetCust.classList.remove('hidden');
+                if (typeof window.switchCustomerTab === 'function') {
+                    window.switchCustomerTab('projects');
+                }
+                if (window.FilterManager) {
+                    window.FilterManager.triggerFilterChange();
+                }
+                return;
+            }
+            if (viewId === 'customers') {
+                if (typeof window.switchCustomerTab === 'function') {
+                    window.switchCustomerTab('structure');
+                }
+            }
             const targetEl = document.getElementById(`view-${viewId}`);
             if (targetEl) targetEl.classList.remove('hidden');
             if (viewId === 'project-revenue' && window.ProjectRevenueModule) {

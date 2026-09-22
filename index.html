@@ -20,7 +20,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="css/dashboard.css?v=1789920000">
-    <link rel="stylesheet" href="css/customers.css?v=1788767139">
+    <link rel="stylesheet" href="css/customers.css?v=1789930000">
     <link rel="stylesheet" href="css/revenue.css?v=1788767139">
     <link rel="stylesheet" href="css/debt.css?v=1788767139">
     <link rel="stylesheet" href="css/project_revenue.css?v=1789730000">
@@ -94,6 +94,7 @@
                 <a href="#expenses" class="nav-item" data-target="expenses" style="border-left: 4px solid #e67e22;"><i data-lucide="pie-chart"></i> 5. Chi Phí</a>
                 <a href="#debt" class="nav-item" data-target="debt" style="border-left: 4px solid #1abc9c;"><i data-lucide="file-text"></i> 6. Công Nợ</a>
                 <a href="#customers" class="nav-item" data-target="customers" style="border-left: 4px solid #34495e;"><i data-lucide="user-check"></i> 7. Khách Hàng</a>
+                <a href="#project-customers" class="nav-item nav-sub-item" data-target="project-customers"><i data-lucide="building-2"></i> 7.1. KH Dự Án</a>
                 <a href="#service" class="nav-item" data-target="service" style="border-left: 4px solid #16a085;"><i data-lucide="headphones"></i> 8. Dịch Vụ</a>
                 <a href="#iso" class="nav-item" data-target="iso" style="border-left: 4px solid #27ae60;"><i data-lucide="check-circle"></i> 9. ISO</a>
                 <a href="#training" class="nav-item" data-target="training" style="border-left: 4px solid #2980b9;"><i data-lucide="book-open"></i> 10. Đào Tạo</a>
@@ -579,120 +580,430 @@
                 </section>
                 <!-- Customers View -->
                 <section id="view-customers" class="view hidden">
-                    <!-- Customer Recency KPI Cards -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
-                        <!-- Under 3 months -->
-                        <div class="card" style="border-left: 5px solid #10b981; background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); padding: 16px; position: relative;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                <div>
-                                    <div style="font-size: 0.8rem; font-weight: 700; color: #15803d; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS &lt; 3 tháng</div>
-                                    <div style="font-size: 1.6rem; font-weight: 800; color: #166534; margin: 4px 0;"><span id="cust-recency-under3m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
-                                    <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-under3m-may" style="color: #0369a1;">0</strong> máy</div>
-                                </div>
-                                <span id="cust-recency-under3m-badge" style="background: #dcfce7; color: #15803d; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #bbf7d0; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i> Tích cực
-                                </span>
-                            </div>
-                            <div style="margin-top: 10px; font-size: 0.78rem; color: #16a34a; font-weight: 600;">
-                                Chiếm <span id="cust-recency-under3m-pct">0%</span> tổng KH phát sinh doanh số
-                            </div>
-                        </div>
-
-                        <!-- 3 to 6 months -->
-                        <div class="card" style="border-left: 5px solid #f59e0b; background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%); padding: 16px; position: relative;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                <div>
-                                    <div style="font-size: 0.8rem; font-weight: 700; color: #b45309; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS từ 3 - 6 tháng</div>
-                                    <div style="font-size: 1.6rem; font-weight: 800; color: #92400e; margin: 4px 0;"><span id="cust-recency-3to6m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
-                                    <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-3to6m-may" style="color: #0369a1;">0</strong> máy</div>
-                                </div>
-                                <span id="cust-recency-3to6m-badge" style="background: #fef3c7; color: #b45309; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i data-lucide="clock" style="width: 14px; height: 14px;"></i> Cần chăm sóc
-                                </span>
-                            </div>
-                            <div style="margin-top: 10px; font-size: 0.78rem; color: #d97706; font-weight: 600;">
-                                Chiếm <span id="cust-recency-3to6m-pct">0%</span> tổng KH phát sinh doanh số
-                            </div>
-                        </div>
-
-                        <!-- Over 6 months -->
-                        <div class="card" style="border-left: 5px solid #ef4444; background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%); padding: 16px; position: relative;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                <div>
-                                    <div style="font-size: 0.8rem; font-weight: 700; color: #b91c1c; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS trên 6 tháng</div>
-                                    <div style="font-size: 1.6rem; font-weight: 800; color: #991b1b; margin: 4px 0;"><span id="cust-recency-over6m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
-                                    <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-over6m-may" style="color: #0369a1;">0</strong> máy</div>
-                                </div>
-                                <span id="cust-recency-over6m-badge" style="background: #fee2e2; color: #b91c1c; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #fecaca; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i> Nguy cơ rời bỏ
-                                </span>
-                            </div>
-                            <div style="margin-top: 10px; font-size: 0.78rem; color: #dc2626; font-weight: 600;">
-                                Chiếm <span id="cust-recency-over6m-pct">0%</span> tổng KH phát sinh doanh số
-                            </div>
-                        </div>
+                    <!-- Customer Tab Switcher -->
+                    <div class="cust-nav-tabs">
+                        <button class="cust-tab-btn active" id="btn-cust-tab-structure" onclick="window.switchCustomerTab('structure')">
+                            <i data-lucide="pie-chart" style="width: 17px; height: 17px;"></i>
+                            Cơ Cấu Khách Hàng (Tổng Thể)
+                        </button>
+                        <button class="cust-tab-btn" id="btn-cust-tab-projects" onclick="window.switchCustomerTab('projects')">
+                            <i data-lucide="building-2" style="width: 17px; height: 17px;"></i>
+                            Báo Cáo Khách Hàng Dự Án
+                            <span style="background: #ef4444; color: #ffffff; font-size: 0.68rem; font-weight: 900; padding: 2px 7px; border-radius: 9999px; text-transform: uppercase;">Mới</span>
+                        </button>
                     </div>
 
-                    <div class="grid-layout cols-2">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Cơ Cấu Khách Hàng Theo Mảng Dịch Vụ</h3>
+                    <!-- TAB 1: CƠ CẤU KHÁCH HÀNG (EXISTING) -->
+                    <div id="cust-tab-structure">
+                        <!-- Customer Recency KPI Cards -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                            <!-- Under 3 months -->
+                            <div class="card" style="border-left: 5px solid #10b981; background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); padding: 16px; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div>
+                                        <div style="font-size: 0.8rem; font-weight: 700; color: #15803d; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS &lt; 3 tháng</div>
+                                        <div style="font-size: 1.6rem; font-weight: 800; color: #166534; margin: 4px 0;"><span id="cust-recency-under3m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
+                                        <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-under3m-may" style="color: #0369a1;">0</strong> máy</div>
+                                    </div>
+                                    <span id="cust-recency-under3m-badge" style="background: #dcfce7; color: #15803d; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #bbf7d0; display: inline-flex; align-items: center; gap: 4px;">
+                                        <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i> Tích cực
+                                    </span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.78rem; color: #16a34a; font-weight: 600;">
+                                    Chiếm <span id="cust-recency-under3m-pct">0%</span> tổng KH phát sinh doanh số
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <div class="chart-container" style="height: 330px;">
-                                    <canvas id="customersChart"></canvas>
+
+                            <!-- 3 to 6 months -->
+                            <div class="card" style="border-left: 5px solid #f59e0b; background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%); padding: 16px; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div>
+                                        <div style="font-size: 0.8rem; font-weight: 700; color: #b45309; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS từ 3 - 6 tháng</div>
+                                        <div style="font-size: 1.6rem; font-weight: 800; color: #92400e; margin: 4px 0;"><span id="cust-recency-3to6m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
+                                        <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-3to6m-may" style="color: #0369a1;">0</strong> máy</div>
+                                    </div>
+                                    <span id="cust-recency-3to6m-badge" style="background: #fef3c7; color: #b45309; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
+                                        <i data-lucide="clock" style="width: 14px; height: 14px;"></i> Cần chăm sóc
+                                    </span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.78rem; color: #d97706; font-weight: 600;">
+                                    Chiếm <span id="cust-recency-3to6m-pct">0%</span> tổng KH phát sinh doanh số
+                                </div>
+                            </div>
+
+                            <!-- Over 6 months -->
+                            <div class="card" style="border-left: 5px solid #ef4444; background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%); padding: 16px; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div>
+                                        <div style="font-size: 0.8rem; font-weight: 700; color: #b91c1c; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS trên 6 tháng</div>
+                                        <div style="font-size: 1.6rem; font-weight: 800; color: #991b1b; margin: 4px 0;"><span id="cust-recency-over6m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
+                                        <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-over6m-may" style="color: #0369a1;">0</strong> máy</div>
+                                    </div>
+                                    <span id="cust-recency-over6m-badge" style="background: #fee2e2; color: #b91c1c; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #fecaca; display: inline-flex; align-items: center; gap: 4px;">
+                                        <i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i> Nguy cơ rời bỏ
+                                    </span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.78rem; color: #dc2626; font-weight: 600;">
+                                    Chiếm <span id="cust-recency-over6m-pct">0%</span> tổng KH phát sinh doanh số
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
+
+                        <div class="grid-layout cols-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Cơ Cấu Khách Hàng Theo Mảng Dịch Vụ</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container" style="height: 330px;">
+                                        <canvas id="customersChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <h3>Thời Gian Phát Sinh Doanh Số &amp; Tổng Quản Lý</h3>
+                                    <div style="font-size: 0.82rem; color: #64748b;">
+                                        Tổng Máy: <strong id="cust-total-may" style="color: #0369a1; font-size: 1rem;">0</strong> | 
+                                        Tổng KH: <strong id="cust-total-kh" style="color: #b91c1c; font-size: 1rem;">0</strong>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container" style="height: 330px;">
+                                        <canvas id="customersRecencyChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-20">
                             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                                <h3>Thời Gian Phát Sinh Doanh Số &amp; Tổng Quản Lý</h3>
-                                <div style="font-size: 0.82rem; color: #64748b;">
-                                    Tổng Máy: <strong id="cust-total-may" style="color: #0369a1; font-size: 1rem;">0</strong> | 
-                                    Tổng KH: <strong id="cust-total-kh" style="color: #b91c1c; font-size: 1rem;">0</strong>
-                                </div>
+                                <h3>Báo Cáo Chi Tiết Cơ Cấu Khách Hàng</h3>
+                                <select id="customers-month-filter" style="padding: 4px 8px; font-weight: bold; border-radius: 4px; border: 1px solid #cbd5e1;"></select>
                             </div>
-                            <div class="card-body">
-                                <div class="chart-container" style="height: 330px;">
-                                    <canvas id="customersRecencyChart"></canvas>
-                                </div>
+                            <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                                <table class="data-table" id="customersTable" style="text-align: right;">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" style="text-align: left; vertical-align: middle;">NỘI DUNG</th>
+                                            <th colspan="2" style="text-align: center; background: #f8fafc;">SỐ ĐẦU THÁNG</th>
+                                            <th id="plan-header-title" colspan="2" style="text-align: center; background: #e0f2fe; color: #0369a1;">KẾ HOẠCH TÌM KIẾM KHÁCH HÀNG THÊM</th>
+                                            <th colspan="2" style="text-align: center; background: #f0fdf4;">SL TĂNG</th>
+                                            <th colspan="2" style="text-align: center; background: #fef2f2;">SL GIẢM</th>
+                                            <th colspan="2" style="text-align: center; background: #f8fafc; font-weight: bold;">SỐ CUỐI THÁNG</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="background: #f8fafc;">MÁY</th>
+                                            <th style="background: #f8fafc;">KH</th>
+                                            <th style="background: #e0f2fe; color: #0369a1;">MÁY</th>
+                                            <th style="background: #e0f2fe; color: #0369a1;">KH</th>
+                                            <th style="background: #f0fdf4;">MÁY</th>
+                                            <th style="background: #f0fdf4;">KH</th>
+                                            <th style="background: #fef2f2;">MÁY</th>
+                                            <th style="background: #fef2f2;">KH</th>
+                                            <th style="background: #f8fafc;">MÁY</th>
+                                            <th style="background: #f8fafc;">KH</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card mt-20">
-                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3>Báo Cáo Chi Tiết Cơ Cấu Khách Hàng</h3>
-                            <select id="customers-month-filter" style="padding: 4px 8px; font-weight: bold; border-radius: 4px; border: 1px solid #cbd5e1;"></select>
+                    <!-- TAB 2: BÁO CÁO KHÁCH HÀNG DỰ ÁN (MỚI) -->
+                    <div id="cust-tab-projects" style="display: none;">
+                        <!-- Controls Bar -->
+                        <div class="proj-cust-controls">
+                            <div class="proj-cust-filter-group">
+                                <!-- Month Droplist -->
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-weight: 800; font-size: 0.82rem; color: #475569; text-transform: uppercase;"><i data-lucide="calendar" style="width: 14px; height: 14px; vertical-align: -2px;"></i> Kỳ Báo Cáo:</span>
+                                    <select id="proj-cust-month-filter" class="proj-cust-select" style="min-width: 160px; font-weight: 900; color: #0284c7;">
+                                        <option value="1">Tháng 1 / 2026</option>
+                                        <option value="2">Tháng 2 / 2026</option>
+                                        <option value="3" selected>Tháng 3 / 2026</option>
+                                        <option value="4">Tháng 4 / 2026</option>
+                                        <option value="5">Tháng 5 / 2026</option>
+                                        <option value="6">Tháng 6 / 2026</option>
+                                        <option value="7">Tháng 7 / 2026</option>
+                                        <option value="8">Tháng 8 / 2026</option>
+                                        <option value="9">Tháng 9 / 2026</option>
+                                        <option value="10">Tháng 10 / 2026</option>
+                                        <option value="11">Tháng 11 / 2026</option>
+                                        <option value="12">Tháng 12 / 2026</option>
+                                        <option value="all">Cả năm (Lũy kế 12T)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Company Filter -->
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-weight: 800; font-size: 0.82rem; color: #475569; text-transform: uppercase;"><i data-lucide="building" style="width: 14px; height: 14px; vertical-align: -2px;"></i> Đơn Vị:</span>
+                                    <select id="proj-cust-company-filter" class="proj-cust-select">
+                                        <option value="all">Tất cả đơn vị</option>
+                                        <option value="Tân Hồng Hà">Tân Hồng Hà</option>
+                                        <option value="Xem Sơn">Xem Sơn (XESCO)</option>
+                                        <option value="VPS M">VPS M</option>
+                                        <option value="Việt">Việt</option>
+                                        <option value="ITSS">ITSS</option>
+                                        <option value="Văn phòng VPS">Văn phòng VPS</option>
+                                    </select>
+                                </div>
+
+                                <!-- Project Filter -->
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="font-weight: 800; font-size: 0.82rem; color: #475569; text-transform: uppercase;"><i data-lucide="layers" style="width: 14px; height: 14px; vertical-align: -2px;"></i> Dự Án:</span>
+                                    <select id="proj-cust-project-filter" class="proj-cust-select">
+                                        <option value="all">Tất cả dự án</option>
+                                        <option value="AGRIBANK">AGRIBANK</option>
+                                        <option value="MOBIPHONE">MOBIPHONE</option>
+                                        <option value="VIETCOMBANK">VIETCOMBANK</option>
+                                        <option value="BỘ CÔNG AN">BỘ CÔNG AN</option>
+                                        <option value="BIDV">BIDV</option>
+                                        <option value="VIETINBANK">VIETINBANK</option>
+                                    </select>
+                                </div>
+
+                                <!-- Quick Search Input -->
+                                <input type="text" id="proj-cust-search" class="proj-cust-search-input" placeholder="🔍 Tìm dự án, chi nhánh, liên hệ, địa chỉ...">
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                <button id="btn-add-proj-cust" class="proj-cust-btn proj-cust-btn-primary">
+                                    <i data-lucide="plus-circle" style="width: 16px; height: 16px;"></i>
+                                    <span>Điền Số Liệu Tháng</span>
+                                </button>
+                                <button id="btn-download-proj-cust-template" class="proj-cust-btn proj-cust-btn-secondary">
+                                    <i data-lucide="file-spreadsheet" style="width: 16px; height: 16px;"></i>
+                                    <span>Tải Mẫu Excel</span>
+                                </button>
+                                <button id="btn-export-proj-cust-excel" class="proj-cust-btn proj-cust-btn-success">
+                                    <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+                                    <span>Xuất Báo Cáo</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                            <table class="data-table" id="customersTable" style="text-align: right;">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="text-align: left; vertical-align: middle;">NỘI DUNG</th>
-                                        <th colspan="2" style="text-align: center; background: #f8fafc;">SỐ ĐẦU THÁNG</th>
-                                        <th id="plan-header-title" colspan="2" style="text-align: center; background: #e0f2fe; color: #0369a1;">KẾ HOẠCH TÌM KIẾM KHÁCH HÀNG THÊM</th>
-                                        <th colspan="2" style="text-align: center; background: #f0fdf4;">SL TĂNG</th>
-                                        <th colspan="2" style="text-align: center; background: #fef2f2;">SL GIẢM</th>
-                                        <th colspan="2" style="text-align: center; background: #f8fafc; font-weight: bold;">SỐ CUỐI THÁNG</th>
-                                    </tr>
-                                    <tr>
-                                        <th style="background: #f8fafc;">MÁY</th>
-                                        <th style="background: #f8fafc;">KH</th>
-                                        <th style="background: #e0f2fe; color: #0369a1;">MÁY</th>
-                                        <th style="background: #e0f2fe; color: #0369a1;">KH</th>
-                                        <th style="background: #f0fdf4;">MÁY</th>
-                                        <th style="background: #f0fdf4;">KH</th>
-                                        <th style="background: #fef2f2;">MÁY</th>
-                                        <th style="background: #fef2f2;">KH</th>
-                                        <th style="background: #f8fafc;">MÁY</th>
-                                        <th style="background: #f8fafc;">KH</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
+
+                        <!-- 4 KPI Cards -->
+                        <div class="proj-cust-kpi-grid">
+                            <div class="proj-cust-kpi-card kpi-blue">
+                                <div class="proj-cust-kpi-header">
+                                    <span class="proj-cust-kpi-title">Lũy Kế Doanh Số</span>
+                                    <div class="proj-cust-kpi-icon" style="background: rgba(2, 132, 199, 0.12); color: #0284c7;">
+                                        <i data-lucide="dollar-sign" style="width: 20px; height: 20px;"></i>
+                                    </div>
+                                </div>
+                                <div id="pcust-kpi-cum-rev" class="proj-cust-kpi-value" style="color: #0284c7;">0 VNĐ</div>
+                                <div id="pcust-kpi-cum-sub" class="proj-cust-kpi-sub">Doanh số tháng: 0 VNĐ</div>
+                            </div>
+                            <div class="proj-cust-kpi-card kpi-emerald">
+                                <div class="proj-cust-kpi-header">
+                                    <span class="proj-cust-kpi-title">Tổng Máy Hoạt Động</span>
+                                    <div class="proj-cust-kpi-icon" style="background: rgba(5, 150, 105, 0.12); color: #059669;">
+                                        <i data-lucide="printer" style="width: 20px; height: 20px;"></i>
+                                    </div>
+                                </div>
+                                <div id="pcust-kpi-total-mach" class="proj-cust-kpi-value" style="color: #059669;">0 máy</div>
+                                <div id="pcust-kpi-mach-sub" class="proj-cust-kpi-sub">E826z: 0 | E731z: 0</div>
+                            </div>
+                            <div class="proj-cust-kpi-card kpi-amber">
+                                <div class="proj-cust-kpi-header">
+                                    <span class="proj-cust-kpi-title">Trống &amp; Mực Đã Bán</span>
+                                    <div class="proj-cust-kpi-icon" style="background: rgba(217, 119, 6, 0.12); color: #d97706;">
+                                        <i data-lucide="package-check" style="width: 20px; height: 20px;"></i>
+                                    </div>
+                                </div>
+                                <div id="pcust-kpi-drum" class="proj-cust-kpi-value" style="color: #d97706;">0 hộp/cụm</div>
+                                <div id="pcust-kpi-drum-sub" class="proj-cust-kpi-sub">Vật tư, linh kiện khác: 0 món</div>
+                            </div>
+                            <div class="proj-cust-kpi-card kpi-purple">
+                                <div class="proj-cust-kpi-header">
+                                    <span class="proj-cust-kpi-title">Điểm Lắp Đặt / Chi Nhánh</span>
+                                    <div class="proj-cust-kpi-icon" style="background: rgba(124, 58, 237, 0.12); color: #7c3aed;">
+                                        <i data-lucide="map-pin" style="width: 20px; height: 20px;"></i>
+                                    </div>
+                                </div>
+                                <div id="pcust-kpi-points" class="proj-cust-kpi-value" style="color: #7c3aed;">0 Chi nhánh</div>
+                                <div id="pcust-kpi-points-sub" class="proj-cust-kpi-sub">Thuộc các dự án toàn quốc</div>
+                            </div>
+                        </div>
+
+                        <!-- 2 Charts Grid -->
+                        <div class="grid-layout cols-2" style="gap: 16px; margin-bottom: 20px;">
+                            <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                                <div class="card-header" style="padding: 14px 20px; border-bottom: 2px solid #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
+                                    <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                        <i data-lucide="bar-chart-3" style="width: 18px; height: 18px; color: #0284c7;"></i>Doanh Số Lũy Kế Theo Dự Án
+                                    </h3>
+                                </div>
+                                <div class="card-body" style="padding: 16px;">
+                                    <div class="chart-container" style="height: 300px; position: relative;">
+                                        <canvas id="projCustBarChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                                <div class="card-header" style="padding: 14px 20px; border-bottom: 2px solid #cbd5e1; background: #f8fafc; display: flex; align-items: center; justify-content: space-between;">
+                                    <h3 style="font-size: 1.05rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                        <i data-lucide="trending-up" style="width: 18px; height: 18px; color: #2563eb;"></i>Tiến Độ Cộng Dồn Doanh Số 12 Tháng
+                                    </h3>
+                                </div>
+                                <div class="card-body" style="padding: 16px;">
+                                    <div class="chart-container" style="height: 300px; position: relative;">
+                                        <canvas id="projCustTrendChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Table Card -->
+                        <div class="card" style="border-radius: 12px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.06); background: #ffffff;">
+                            <div class="card-header" style="padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #cbd5e1; background: #f8fafc; flex-wrap: wrap; gap: 8px;">
+                                <h3 style="font-size: 1.08rem; font-weight: 900; color: #0f172a !important; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="table" style="width: 20px; height: 20px; color: #1e3a8a;"></i>
+                                    BÁO CÁO KHÁCH HÀNG DOANH SỐ DỰ ÁN — <span id="proj-cust-title-month" style="color: #0284c7;">THÁNG 3 NĂM 2026</span>
+                                </h3>
+                                <span style="font-size: 0.85rem; font-weight: 800; color: #64748b;">(Số liệu doanh số tự động cộng dồn lũy kế qua các tháng)</span>
+                            </div>
+                            <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                                <table class="data-table" id="projCustTable" style="white-space: nowrap;">
+                                    <thead>
+                                        <tr class="header-main">
+                                            <th rowspan="2" style="width: 45px; text-align: center; position: sticky; left: 0; z-index: 10;">STT</th>
+                                            <th rowspan="2" style="min-width: 150px; position: sticky; left: 45px; z-index: 10;">TÊN DỰ ÁN</th>
+                                            <th rowspan="2" style="min-width: 140px;">ĐƠN VỊ QUẢN LÝ</th>
+                                            <th rowspan="2" style="min-width: 190px;">TÊN ĐƠN VỊ/CHI NHÁNH</th>
+                                            <th colspan="2" style="text-align: center;">MODEL MÁY</th>
+                                            <th rowspan="2" style="min-width: 200px;">TÊN - SĐT LIÊN HỆ</th>
+                                            <th rowspan="2" style="min-width: 260px;">ĐỊA CHỈ</th>
+                                            <th rowspan="2" style="min-width: 160px;">ĐẠI LÝ LẮP ĐẶT</th>
+                                            <th rowspan="2" style="min-width: 120px; text-align: right;">SỐ LƯỢNG TRỐNG, MỰC ĐÃ BÁN</th>
+                                            <th rowspan="2" style="min-width: 120px; text-align: right;">VẬT TƯ/LINH KIỆN KHÁC</th>
+                                            <th rowspan="2" style="min-width: 140px; text-align: right;">DOANH SỐ THÁNG (VNĐ)</th>
+                                            <th rowspan="2" style="min-width: 160px; text-align: right; background: #ca8a04 !important; color: #ffffff !important;">LŨY KẾ DOANH SỐ (VNĐ)</th>
+                                            <th rowspan="2" style="width: 80px; text-align: center;">THAO TÁC</th>
+                                        </tr>
+                                        <tr class="header-sub">
+                                            <th style="min-width: 140px; text-align: center;">HP LaserJet Managed Flow MFP E826z</th>
+                                            <th style="min-width: 140px; text-align: center;">HP LaserJet Managed Flow MFP E731z</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="proj-cust-tbody">
+                                        <!-- Populated by project_customers.js -->
+                                    </tbody>
+                                    <tfoot id="proj-cust-tfoot">
+                                        <!-- Grand Totals -->
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Data Entry / Update Modal -->
+                        <div id="proj-cust-modal" class="proj-cust-modal-backdrop">
+                            <div class="proj-cust-modal-content">
+                                <div class="proj-cust-modal-header">
+                                    <h3 id="proj-cust-modal-title"><i data-lucide="file-edit" style="width: 20px; height: 20px; color: #0284c7;"></i> Điền Báo Cáo Khách Hàng Dự Án</h3>
+                                    <button type="button" onclick="window.ProjectCustomersModule.closeModal()" style="background: none; border: none; font-size: 1.4rem; color: #64748b; cursor: pointer;">&times;</button>
+                                </div>
+                                <form id="proj-cust-form">
+                                    <input type="hidden" id="pcust-form-id">
+                                    <div class="proj-cust-modal-body">
+                                        <div class="proj-cust-form-row">
+                                            <div class="proj-cust-form-group">
+                                                <label>Kỳ Báo Cáo (Tháng) (*)</label>
+                                                <select id="pcust-form-month" required>
+                                                    <option value="1">Tháng 1 / 2026</option>
+                                                    <option value="2">Tháng 2 / 2026</option>
+                                                    <option value="3">Tháng 3 / 2026</option>
+                                                    <option value="4">Tháng 4 / 2026</option>
+                                                    <option value="5">Tháng 5 / 2026</option>
+                                                    <option value="6">Tháng 6 / 2026</option>
+                                                    <option value="7">Tháng 7 / 2026</option>
+                                                    <option value="8">Tháng 8 / 2026</option>
+                                                    <option value="9">Tháng 9 / 2026</option>
+                                                    <option value="10">Tháng 10 / 2026</option>
+                                                    <option value="11">Tháng 11 / 2026</option>
+                                                    <option value="12">Tháng 12 / 2026</option>
+                                                </select>
+                                            </div>
+                                            <div class="proj-cust-form-group">
+                                                <label>Đơn Vị Quản Lý (*)</label>
+                                                <select id="pcust-form-unit" required>
+                                                    <option value="Tân Hồng Hà">Tân Hồng Hà</option>
+                                                    <option value="Xem Sơn">Xem Sơn (XESCO)</option>
+                                                    <option value="VPS M">VPS M</option>
+                                                    <option value="Việt">Việt</option>
+                                                    <option value="ITSS">ITSS</option>
+                                                    <option value="Văn phòng VPS">Văn phòng VPS</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="proj-cust-form-row">
+                                            <div class="proj-cust-form-group">
+                                                <label>Tên Dự Án (*)</label>
+                                                <input type="text" id="pcust-form-project" placeholder="VD: AGRIBANK, MOBIPHONE, VIETCOMBANK..." required>
+                                            </div>
+                                            <div class="proj-cust-form-group">
+                                                <label>Tên Đơn Vị / Chi Nhánh (*)</label>
+                                                <input type="text" id="pcust-form-branch" placeholder="VD: Lai Châu, H. Mường Tè, Cao Bằng..." required>
+                                            </div>
+                                        </div>
+
+                                        <div class="proj-cust-form-row">
+                                            <div class="proj-cust-form-group">
+                                                <label>SL Máy HP E826z</label>
+                                                <input type="number" id="pcust-form-e826z" min="0" value="0">
+                                            </div>
+                                            <div class="proj-cust-form-group">
+                                                <label>SL Máy HP E731z</label>
+                                                <input type="number" id="pcust-form-e731z" min="0" value="0">
+                                            </div>
+                                        </div>
+
+                                        <div class="proj-cust-form-row">
+                                            <div class="proj-cust-form-group">
+                                                <label>Tên &amp; SĐT Người Liên Hệ</label>
+                                                <input type="text" id="pcust-form-contact" placeholder="VD: C Hoàn-KTNQ - 0945138228">
+                                            </div>
+                                            <div class="proj-cust-form-group">
+                                                <label>Đại Lý Lắp Đặt</label>
+                                                <input type="text" id="pcust-form-dealer" placeholder="VD: Công ty Tiến Lộc, Thái Thực...">
+                                            </div>
+                                        </div>
+
+                                        <div class="proj-cust-form-group" style="margin-bottom: 14px;">
+                                            <label>Địa Chỉ Lắp Đặt</label>
+                                            <input type="text" id="pcust-form-address" placeholder="VD: Thị trấn Phong Thổ, huyện Phong Thổ, tỉnh Lai Châu">
+                                        </div>
+
+                                        <div class="proj-cust-form-row">
+                                            <div class="proj-cust-form-group">
+                                                <label>Số Lượng Trống, Mực Đã Bán (Tháng)</label>
+                                                <input type="number" id="pcust-form-drum" min="0" value="0">
+                                            </div>
+                                            <div class="proj-cust-form-group">
+                                                <label>Vật Tư / Linh Kiện Khác (Tháng)</label>
+                                                <input type="number" id="pcust-form-spare" min="0" value="0">
+                                            </div>
+                                        </div>
+
+                                        <div class="proj-cust-form-group">
+                                            <label>Doanh Số Phát Sinh Tháng (VNĐ) (*)</label>
+                                            <input type="number" id="pcust-form-rev" min="0" step="1000" placeholder="VD: 65000000" required>
+                                            <small style="color: #64748b; font-size: 0.78rem; margin-top: 3px;">Hệ thống sẽ tự động cộng dồn doanh số tháng này vào Lũy kế các tháng tiếp theo.</small>
+                                        </div>
+                                    </div>
+                                    <div class="proj-cust-modal-footer">
+                                        <button type="button" class="proj-cust-btn proj-cust-btn-secondary" onclick="window.ProjectCustomersModule.closeModal()">Hủy Bỏ</button>
+                                        <button type="submit" class="proj-cust-btn proj-cust-btn-primary">Lưu Báo Cáo</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -2621,6 +2932,35 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="js/expense.js?v=1789920000"></script>
+    <script src="js/project_customers.js?v=1789930000"></script>
+    <script>
+        window.switchCustomerTab = function(tab) {
+            const btnStruct = document.getElementById('btn-cust-tab-structure');
+            const btnProj = document.getElementById('btn-cust-tab-projects');
+            const secStruct = document.getElementById('cust-tab-structure');
+            const secProj = document.getElementById('cust-tab-projects');
+
+            if (tab === 'projects') {
+                if (btnStruct) btnStruct.classList.remove('active');
+                if (btnProj) btnProj.classList.add('active');
+                if (secStruct) secStruct.style.display = 'none';
+                if (secProj) secProj.style.display = 'block';
+                if (window.ProjectCustomersModule) window.ProjectCustomersModule.render();
+            } else {
+                if (btnStruct) btnStruct.classList.add('active');
+                if (btnProj) btnProj.classList.remove('active');
+                if (secStruct) secStruct.style.display = 'block';
+                if (secProj) secProj.style.display = 'none';
+                if (window.CustomersModule) {
+                    window.CustomersModule.loadData(
+                        window.FilterManager ? window.FilterManager.currentPeriod : 'month',
+                        window.FilterManager ? window.FilterManager.currentCompany : 'all'
+                    );
+                }
+            }
+            if (window.lucide) window.lucide.createIcons();
+        };
+    </script>
 
 
 </body>
