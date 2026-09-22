@@ -695,6 +695,58 @@ function parseBrand(csv, compName) {
     return Object.keys(result).length > 0 ? result : null;
 }
 
+function parseExpense(csv, compName, rawExpenses, expenseStructured) {
+    if (!csv || csv.length < 2) return;
+
+    let headerIdx = -1;
+    for (let r = 0; r < Math.min(5, csv.length); r++) {
+        const rowStr = (csv[r] || []).join(' ').toLowerCase();
+        if (rowStr.includes('nội dung') || rowStr.includes('kế hoạch') || rowStr.includes('thực hiện')) {
+            headerIdx = r;
+            break;
+        }
+    }
+
+    if (headerIdx !== -1) {
+        const headerRow = csv[headerIdx].map(c => (c || '').toString().toLowerCase());
+        const planIdx = headerRow.findIndex(c => c.includes('kế hoạch'));
+        const actIdx = headerRow.findIndex(c => c.includes('thực hiện'));
+
+        if (planIdx !== -1 && actIdx !== -1) {
+            if (!expenseStructured[compName]) expenseStructured[compName] = [];
+            for (let r = headerIdx + 1; r < csv.length; r++) {
+                const row = csv[r];
+                if (!row || !row[1] || row[1].trim() === '') continue;
+                const stt = (row[0] || '').toString().trim();
+                const name = (row[1] || '').toString().trim();
+                const plan = parseNumber(row[planIdx]);
+                const actual = parseNumber(row[actIdx]);
+                const depts = {
+                    DVKT: parseNumber(row[5]),
+                    KD_BB: parseNumber(row[6]),
+                    KD_BL_TH: parseNumber(row[7]),
+                    KD_DA: parseNumber(row[8]),
+                    KD_TM: parseNumber(row[9]),
+                    KD_Khac: parseNumber(row[10]),
+                    KeToan: parseNumber(row[11]),
+                    BP_Khac: parseNumber(row[12])
+                };
+                expenseStructured[compName].push({ stt, name, plan, actual, depts });
+                rawExpenses.push([compName, '8', stt, name, actual.toString(), plan.toString(), JSON.stringify(depts)]);
+            }
+            return;
+        }
+    }
+
+    for (let r = 1; r < csv.length; r++) {
+        const row = csv[r];
+        if (row && row.some(x => x !== '')) {
+            const ctyName = row[0] || compName;
+            rawExpenses.push([ctyName, row[1] || '8', row[2] || '', row[3] || '', row[4] || '0']);
+        }
+    }
+}
+
 // ============================================================
 // MAIN SERVICE (TỰ ĐỘNG ĐỒNG BỘ NGẦM REALTIME & PERSISTENT CACHING)
 // ============================================================
@@ -736,6 +788,7 @@ window.GoogleSheetsService = {
                     inventory: window.mockData.inventory,
                     products_raw: window.mockData.products_raw,
                     expense_raw: window.mockData.expense_raw,
+                    expense_structured: window.mockData.expense_structured,
                     iso_raw: window.mockData.iso_raw,
                     service_raw: window.mockData.service_raw,
                     training_summary: window.mockData.training_summary,
@@ -788,6 +841,7 @@ window.GoogleSheetsService = {
             const inventoryByCompany = {};
             const rawProducts        = [['CÔNG TY', 'THÁNG', 'HÃNG', 'NHÓM', 'DOANH THU']];
             const rawExpenses        = [['CÔNG TY', 'THÁNG', 'NHÓM', 'HẠNG MỤC', 'GIÁ TRỊ']];
+            const expenseStructured  = {};
             const rawISO             = [['CÔNG TY', 'PHÒNG BAN', 'TÊN QUY TRÌNH / QUY ĐỊNH', 'PHÂN LOẠI']];
             const rawService         = [['STT', 'Họ và tên', 'Mã NV', 'Bộ phận', 'Công ty', 'Số lượt việc', 'Điểm TB', 'Tổng điểm', 'TG phản hồi (h)', 'TG đến (h)', 'TG xử lý (h)', 'TG về (h)', 'Biên bản lập', 'Biên bản thay thế', 'Thu hồi vật tư', 'Tháng']];
             const trainingSummary    = [];
@@ -879,16 +933,8 @@ window.GoogleSheetsService = {
                     }
                 }
 
-                // 7. CHI PHÍ (ghép vào rawExpenses 2D)
-                if (cpCsv && cpCsv.length > 1) {
-                    for (let r = 1; r < cpCsv.length; r++) {
-                        const row = cpCsv[r];
-                        if (row && row.some(x => x !== '')) {
-                            const ctyName = row[0] || compName;
-                            rawExpenses.push([ctyName, row[1] || '8', row[2] || '', row[3] || '', row[4] || '0']);
-                        }
-                    }
-                }
+                // 7. CHI PHÍ (ghép vào rawExpenses 2D và expenseStructured)
+                parseExpense(cpCsv, compName, rawExpenses, expenseStructured);
 
                 // 8. ISO (ghép vào rawISO 2D)
                 if (isoCsv && isoCsv.length > 1) {
@@ -1118,6 +1164,7 @@ window.GoogleSheetsService = {
             // ── Cập nhật raw data cho Sản Phẩm, Chi Phí, ISO ──
             window.mockData.products_raw = rawProducts;
             window.mockData.expense_raw  = rawExpenses;
+            window.mockData.expense_structured = expenseStructured;
             window.mockData.iso_raw      = rawISO;
 
             // ── Cập nhật dữ liệu cho Dịch Vụ, Đào Tạo, Văn Hóa, Thương Hiệu ──
