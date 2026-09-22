@@ -328,6 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (viewId === 'cashflow' && window.CashflowModule) {
                 window.CashflowModule.render();
             }
+            if (viewId === 'training' && window.TrainingModule) {
+                window.TrainingModule.render();
+            }
             if (viewId === 'iso' && window.IsoModule) {
                 window.IsoModule.renderAll();
             }

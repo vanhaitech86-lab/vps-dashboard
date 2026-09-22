@@ -1,0 +1,655 @@
+/* ==========================================================================
+   VPS GROUP - TRAINING DASHBOARD STYLES (CHỈ TIÊU ĐÀO TẠO)
+   High contrast, bold typography, modern glass/flat cards, responsive tables
+   ========================================================================== */
+
+/* Tab Switcher for Training */
+.training-nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    margin-bottom: 20px;
+}
+
+.training-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.training-tab-btn:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.training-tab-btn.active {
+    background: #1e40af;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.25);
+    border-color: #1e40af;
+}
+
+.training-tab-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+/* Sub-filter Bar */
+.training-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.training-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.training-filter-group label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.training-select {
+    padding: 8px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: #f8fafc;
+    cursor: pointer;
+    min-width: 160px;
+    transition: all 0.2s ease;
+}
+
+.training-select:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Time View Toggle (Month / Week) */
+.time-view-toggle {
+    display: inline-flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.time-view-btn {
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #64748b;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.time-view-btn.active {
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+/* KPI Summary Cards Grid */
+.training-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.training-kpi-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.training-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.training-kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+
+.training-kpi-card.blue::before { background: #2563eb; }
+.training-kpi-card.green::before { background: #16a34a; }
+.training-kpi-card.purple::before { background: #9333ea; }
+.training-kpi-card.amber::before { background: #d97706; }
+
+.training-kpi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.training-kpi-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.training-kpi-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.training-kpi-icon.blue { background: #eff6ff; color: #2563eb; }
+.training-kpi-icon.green { background: #f0fdf4; color: #16a34a; }
+.training-kpi-icon.purple { background: #faf5ff; color: #9333ea; }
+.training-kpi-icon.amber { background: #fffbeb; color: #d97706; }
+
+.training-kpi-value {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+
+.training-kpi-sub {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+}
+
+/* Training Matrix Table Styling (Image 1 replica) */
+.training-matrix-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    overflow-x: auto;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    margin-bottom: 24px;
+}
+
+.training-matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    color: #0f172a;
+}
+
+.training-matrix-table th,
+.training-matrix-table td {
+    border: 1px solid #cbd5e1;
+    padding: 8px 10px;
+    vertical-align: middle;
+}
+
+.training-matrix-table thead th {
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 0.2px;
+}
+
+.training-matrix-table th.th-main-title {
+    background: #0284c7;
+    color: #ffffff;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+.training-matrix-table th.th-cat-title {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.88rem;
+}
+
+.training-matrix-table th.th-sub-title {
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 0.8rem;
+}
+
+.training-matrix-table tr.header-group-row {
+    background: #f8fafc;
+    font-weight: 900;
+    color: #1e293b;
+}
+
+.training-matrix-table tr.header-group-row td {
+    font-size: 0.9rem;
+    background: #f1f5f9;
+    border-top: 2px solid #94a3b8;
+    border-bottom: 1.5px solid #cbd5e1;
+}
+
+.training-matrix-table td.dept-name {
+    font-weight: 700;
+    color: #1e293b;
+    padding-left: 18px;
+}
+
+.training-matrix-table td.matrix-check {
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: #047857;
+    background: #f0fdf4;
+}
+
+.training-matrix-table td.matrix-empty {
+    text-align: center;
+    color: #cbd5e1;
+    background: #ffffff;
+}
+
+.training-matrix-table td.row-total {
+    text-align: center;
+    font-weight: 900;
+    font-size: 0.95rem;
+    color: #1d4ed8;
+    background: #eff6ff;
+}
+
+.training-matrix-table tr.total-summary-row td {
+    background: #e2e8f0;
+    font-weight: 900;
+    font-size: 0.92rem;
+    border-top: 2px solid #64748b;
+    color: #0f172a;
+}
+
+/* Execution Table Styling (Image 2 replica) */
+.training-exec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    color: #0f172a;
+}
+
+.training-exec-table th,
+.training-exec-table td {
+    border: 1px solid #cbd5e1;
+    padding: 8px 8px;
+    vertical-align: middle;
+}
+
+.training-exec-table thead th {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.training-exec-table tr.section-title-row td {
+    background: #e2e8f0;
+    font-weight: 900;
+    font-size: 0.88rem;
+    color: #0f172a;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.training-exec-table td.credit-name {
+    font-weight: 700;
+    color: #1e293b;
+    padding-left: 20px;
+}
+
+.training-exec-table td.num-cell {
+    text-align: center;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.training-exec-table td.rate-cell {
+    text-align: center;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.rate-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 900;
+}
+
+.rate-badge.green { background: #dcfce7; color: #15803d; }
+.rate-badge.blue { background: #dbeafe; color: #1d4ed8; }
+.rate-badge.yellow { background: #fef9c3; color: #a16207; }
+.rate-badge.red { background: #fee2e2; color: #b91c1c; }
+
+/* Student Evaluation Roster */
+.student-eval-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.student-eval-table th,
+.student-eval-table td {
+    border: 1px solid #cbd5e1;
+    padding: 8px 10px;
+    vertical-align: middle;
+}
+
+.student-eval-table thead th {
+    background: #e2e8f0;
+    color: #0f172a;
+    font-weight: 800;
+    text-align: center;
+}
+
+.score-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 900;
+    font-size: 0.88rem;
+}
+
+.score-badge.tot { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.score-badge.kha { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
+.score-badge.tb { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
+.score-badge.kem { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+
+/* Quality Evaluation Criteria Box (Image 2 Bottom Section) */
+.eval-criteria-card {
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.eval-criteria-title {
+    background: #fed7aa;
+    color: #9a3412;
+    padding: 12px 18px;
+    font-weight: 900;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1.5px solid #fdba74;
+}
+
+.eval-criteria-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    border-collapse: collapse;
+}
+
+.eval-criteria-col {
+    padding: 16px 14px;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.eval-criteria-col:last-child {
+    border-right: none;
+}
+
+.eval-criteria-col.desc-col {
+    text-align: left;
+    background: #fff7ed;
+    color: #431407;
+    font-weight: 800;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    padding-left: 20px;
+}
+
+.eval-criteria-col.tot {
+    background: #f0fdf4;
+    border-top: 3px solid #16a34a;
+}
+
+.eval-criteria-col.kha {
+    background: #eff6ff;
+    border-top: 3px solid #2563eb;
+}
+
+.eval-criteria-col.tb {
+    background: #fffbeb;
+    border-top: 3px solid #d97706;
+}
+
+.eval-criteria-col.kem {
+    background: #fef2f2;
+    border-top: 3px solid #dc2626;
+}
+
+.eval-level-name {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 4px;
+}
+
+.eval-criteria-col.tot .eval-level-name { color: #16a34a; }
+.eval-criteria-col.kha .eval-level-name { color: #2563eb; }
+.eval-criteria-col.tb .eval-level-name { color: #d97706; }
+.eval-criteria-col.kem .eval-level-name { color: #dc2626; }
+
+.eval-score-range {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #475569;
+}
+
+/* File Upload & Audit Box */
+.audit-upload-container {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+.audit-upload-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.audit-upload-header h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.audit-upload-box {
+    border: 2px dashed #94a3b8;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 16px;
+}
+
+.audit-upload-box:hover,
+.audit-upload-box.dragover {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.audit-upload-box i {
+    width: 42px;
+    height: 42px;
+    color: #3b82f6;
+    margin-bottom: 8px;
+}
+
+.audit-upload-box h5 {
+    margin: 0 0 6px 0;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.audit-upload-box p {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.audit-file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.audit-file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
+.audit-file-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.audit-file-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* Action Buttons */
+.btn-training {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-training-primary {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.btn-training-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-training-success {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+.btn-training-success:hover {
+    background: #15803d;
+}
+
+.btn-training-outline {
+    background: #ffffff;
+    color: #334155;
+    border: 1.5px solid #cbd5e1;
+}
+
+.btn-training-outline:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+/* Responsive adjust */
+@media (max-width: 900px) {
+    .eval-criteria-grid {
+        grid-template-columns: 1fr;
+    }
+    .eval-criteria-col {
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+    }
+}
