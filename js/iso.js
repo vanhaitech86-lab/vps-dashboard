@@ -516,7 +516,7 @@ window.IsoModule = {
                     }
                 ]
             },
-            plugins: [ChartDataLabels],
+            plugins: (typeof ChartDataLabels !== 'undefined' ? [ChartDataLabels] : (typeof window !== 'undefined' && window.ChartDataLabels ? [window.ChartDataLabels] : [])),
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -613,7 +613,7 @@ window.IsoModule = {
                     hoverOffset: 6
                 }]
             },
-            plugins: [ChartDataLabels],
+            plugins: (typeof ChartDataLabels !== 'undefined' ? [ChartDataLabels] : (typeof window !== 'undefined' && window.ChartDataLabels ? [window.ChartDataLabels] : [])),
             options: {
                 responsive: true,
                 maintainAspectRatio: false,

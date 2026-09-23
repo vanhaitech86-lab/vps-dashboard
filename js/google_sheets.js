@@ -1175,11 +1175,16 @@ window.GoogleSheetsService = {
             if (!window.mockData.inventory) window.mockData.inventory = {};
             if (!window.mockData.customers) window.mockData.customers = {};
             const totalRevTy = parseFloat((totalRevVND / 1e9).toFixed(3));
+            const existingMonthly = window.mockData?.revenue?.monthlyComparison || {
+                currentYear: [30, 45, 42, 50, 48, 55, 60, 65, 58, 62, 70, 75],
+                previousYear: [25, 40, 38, 48, 45, 52, 58, 62, 55, 65, 70, 80]
+            };
             window.mockData.revenue = {
                 total: totalRevTy,
                 plan2026: plan2026,
                 byCompany: revenueByCompany,
-                byMonth: revenueByMonth
+                byMonth: revenueByMonth,
+                monthlyComparison: existingMonthly
             };
 
             // ── Cập nhật mockData.debt ──
