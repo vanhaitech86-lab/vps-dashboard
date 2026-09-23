@@ -331,6 +331,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (viewId === 'training' && window.TrainingModule) {
                 window.TrainingModule.render();
             }
+            if (viewId === 'culture' && window.CultureModule) {
+                window.CultureModule.render();
+            }
             if (viewId === 'iso' && window.IsoModule) {
                 window.IsoModule.renderAll();
             }

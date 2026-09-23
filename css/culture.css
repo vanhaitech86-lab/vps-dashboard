@@ -1,0 +1,394 @@
+/* ==========================================================================
+   VPS GROUP - CULTURE DASHBOARD STYLES (VĂN HÓA DOANH NGHIỆP)
+   Báo cáo nhân sự: Chưa có tín chỉ, Đạt TC1, 2, 3, Nhân sự Quy Y, Chưa Quy Y
+   High contrast, bold typography, elegant buddhist philosophy styling
+   ========================================================================== */
+
+/* Banner Triết Lý Cốt Lõi */
+.culture-banner {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin-bottom: 22px;
+    box-shadow: 0 6px 20px rgba(49, 46, 129, 0.2);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.culture-banner::after {
+    content: '☸';
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    opacity: 0.08;
+    pointer-events: none;
+    line-height: 1;
+}
+
+.culture-banner-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.culture-banner-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fef08a;
+}
+
+.culture-banner-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #e0e7ff;
+    max-width: 920px;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Filter Bar */
+.culture-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.culture-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.culture-filter-group label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.culture-select {
+    padding: 8px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: #f8fafc;
+    cursor: pointer;
+    min-width: 170px;
+    transition: all 0.2s ease;
+}
+
+.culture-select:focus {
+    outline: none;
+    border-color: #4f46e5;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* 6 KPI Cards Grid */
+.culture-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.culture-kpi-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.culture-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.culture-kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+
+.culture-kpi-card.purple::before { background: #6366f1; }
+.culture-kpi-card.green::before { background: #16a34a; }
+.culture-kpi-card.amber::before { background: #d97706; }
+.culture-kpi-card.blue::before { background: #0284c7; }
+.culture-kpi-card.teal::before { background: #0d9488; }
+.culture-kpi-card.rose::before { background: #e11d48; }
+
+.culture-kpi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.culture-kpi-title {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.culture-kpi-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.culture-kpi-icon.purple { background: #eef2ff; color: #4f46e5; }
+.culture-kpi-icon.green { background: #f0fdf4; color: #16a34a; }
+.culture-kpi-icon.amber { background: #fffbeb; color: #d97706; }
+.culture-kpi-icon.blue { background: #f0f9ff; color: #0284c7; }
+.culture-kpi-icon.teal { background: #f0fdfa; color: #0d9488; }
+.culture-kpi-icon.rose { background: #fff1f2; color: #e11d48; }
+
+.culture-kpi-value {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+
+.culture-kpi-sub {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+}
+
+/* Charts Grid */
+.culture-charts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 1024px) {
+    .culture-charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Culture Summary Table */
+.culture-table-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    margin-bottom: 24px;
+}
+
+.culture-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    color: #0f172a;
+}
+
+.culture-summary-table th,
+.culture-summary-table td {
+    border: 1px solid #cbd5e1;
+    padding: 9px 10px;
+    vertical-align: middle;
+}
+
+.culture-summary-table thead th {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.culture-summary-table th.th-quyy-group {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.culture-summary-table th.th-credit-group {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.culture-summary-table td.company-name {
+    font-weight: 800;
+    color: #1e293b;
+    padding-left: 14px;
+}
+
+.culture-summary-table td.total-staff {
+    text-align: center;
+    font-weight: 900;
+    color: #0f172a;
+    background: #f8fafc;
+}
+
+.culture-summary-table td.cell-num {
+    text-align: center;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.culture-summary-table tr.total-row td {
+    background: #e2e8f0;
+    font-weight: 900;
+    font-size: 0.92rem;
+    color: #0f172a;
+    border-top: 2px solid #64748b;
+}
+
+/* Badges for status */
+.badge-quyy {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.badge-quyy.yes {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+}
+
+.badge-quyy.no {
+    background: #ffedd5;
+    color: #c2410c;
+    border: 1px solid #fdba74;
+}
+
+.badge-credit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.badge-credit.tc3 { background: #ede9fe; color: #6d28d9; border: 1px solid #c4b5fd; }
+.badge-credit.tc2 { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+.badge-credit.tc1 { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.badge-credit.tc0 { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+.badge-eval {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.badge-eval.excellent { background: #dcfce7; color: #166534; }
+.badge-eval.good { background: #e0e7ff; color: #3730a3; }
+.badge-eval.warning { background: #fef3c7; color: #92400e; }
+
+/* Personnel Roster Table */
+.culture-roster-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.culture-roster-table th,
+.culture-roster-table td {
+    border: 1px solid #cbd5e1;
+    padding: 8px 10px;
+    vertical-align: middle;
+}
+
+.culture-roster-table thead th {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* Action Buttons */
+.btn-culture {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-culture-primary {
+    background: #4f46e5;
+    color: #ffffff;
+}
+
+.btn-culture-primary:hover {
+    background: #4338ca;
+}
+
+.btn-culture-success {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+.btn-culture-success:hover {
+    background: #15803d;
+}
+
+.btn-culture-outline {
+    background: #ffffff;
+    color: #334155;
+    border: 1.5px solid #cbd5e1;
+}
+
+.btn-culture-outline:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
