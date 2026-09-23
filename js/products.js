@@ -125,10 +125,10 @@ window.ProductsModule = {
         const rows = [
             { id: 'tong', stt: '', name: 'TỔNG DOANH SỐ', style: 'background: #fef08a; font-weight: bold;', isSum: true },
             { id: 'hp', stt: 'I', name: 'SẢN PHẨM CHUYÊN TRÁCH A3 HP', style: 'background: #fdba74; font-weight: bold;' },
-            { id: 'dong_lon', stt: '1.1', name: 'MÁY ĐÓNG TRUNG, LỚN' },
+            { id: 'dong_lon', stt: '1.1', name: 'DÒNG MÁY TRUNG VÀ LỚN' },
             { id: 'photo_den', stt: '1', name: 'MÁY PHOTOCOPY TRẮNG ĐEN - LỚN' },
             { id: 'photo_mau', stt: '2', name: 'MÁY PHOTOCOPY MÀU' },
-            { id: 'dong_nho', stt: '1.2', name: 'MÁY ĐÓNG NHỎ' },
+            { id: 'dong_nho', stt: '1.2', name: 'DÒNG MÁY NHỎ' },
             { id: 'vat_tu', stt: '1.3', name: 'VẬT TƯ, LINH KIỆN' },
             { id: 'may_in_a4', stt: '1.4', name: 'MÁY IN A4' },
             { id: 'hp_108w', stt: '', name: '&nbsp;&nbsp;&nbsp;&nbsp;HP 108W' },

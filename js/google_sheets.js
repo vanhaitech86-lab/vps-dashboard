@@ -618,6 +618,124 @@ function parseService(csv, compName, rawService) {
 
 function parseCulture(csv, compName) {
     if (!csv || csv.length === 0 || isClonedRevenueSheet(csv)) return null;
+
+    const headerStr = (csv.slice(0, 5).map(r => (r || []).join(' ')).join(' ')).toLowerCase();
+
+    // 1. Định dạng Danh sách nhân sự chi tiết ('họ và tên', 'quy y', 'tín chỉ')
+    if (headerStr.includes('họ và tên') || (headerStr.includes('quy y') && headerStr.includes('tín chỉ'))) {
+        let nameCol = -1, quyyCol = -1, creditCol = -1, deptCol = -1, noteCol = -1, placeCol = -1;
+        let dataStart = 1;
+        for (let i = 0; i < Math.min(csv.length, 5); i++) {
+            const row = csv[i] || [];
+            row.forEach((cell, idx) => {
+                const s = (cell || '').toString().toLowerCase();
+                if (s.includes('họ và tên') || s.includes('họ tên')) nameCol = idx;
+                if (s.includes('quy y')) quyyCol = idx;
+                if (s.includes('tín chỉ') || s.includes('tc')) creditCol = idx;
+                if (s.includes('phòng ban') || s.includes('bộ phận') || s.includes('đơn vị')) deptCol = idx;
+                if (s.includes('nơi') || s.includes('ngày quy y')) placeCol = idx;
+                if (s.includes('ghi chú')) noteCol = idx;
+            });
+            if (nameCol !== -1 && (quyyCol !== -1 || creditCol !== -1)) {
+                dataStart = i + 1;
+                break;
+            }
+        }
+
+        if (nameCol !== -1) {
+            let totalStaff = 0, noCredit = 0, tc1 = 0, tc2 = 0, tc3 = 0, quyY = 0, chuaQuyY = 0;
+            const roster = [];
+            for (let i = dataStart; i < csv.length; i++) {
+                const row = csv[i];
+                if (!row || !row[nameCol] || row[nameCol].trim() === '') continue;
+                totalStaff++;
+                const name = row[nameCol].trim();
+                const quyyVal = quyyCol !== -1 ? (row[quyyCol] || '').toString().toLowerCase() : '';
+                const isQuyY = quyyVal.includes('có') || quyyVal.includes('rồi') || quyyVal.includes('đã') || quyyVal === '1' || quyyVal.includes('yes');
+                if (isQuyY) quyY++; else chuaQuyY++;
+
+                const crVal = creditCol !== -1 ? parseInt(row[creditCol]) : 0;
+                if (crVal === 3) tc3++;
+                else if (crVal === 2) tc2++;
+                else if (crVal === 1) tc1++;
+                else noCredit++;
+
+                roster.push({
+                    name,
+                    company: compName,
+                    dept: deptCol !== -1 ? (row[deptCol] || compName) : compName,
+                    isQuyY,
+                    quyYPlace: placeCol !== -1 ? (row[placeCol] || '-') : '-',
+                    creditLevel: isNaN(crVal) ? 0 : crVal,
+                    note: noteCol !== -1 ? (row[noteCol] || '') : ''
+                });
+            }
+
+            if (totalStaff > 0) {
+                return {
+                    isNewFormat: true,
+                    totalStaff,
+                    noCredit,
+                    tc1,
+                    tc2,
+                    tc3,
+                    quyY,
+                    chuaQuyY,
+                    roster
+                };
+            }
+        }
+    }
+
+    // 2. Định dạng Bảng tổng hợp số lượng ('chưa có', 'đạt tc 1', 'đã quy y')
+    if (headerStr.includes('chưa có') || (headerStr.includes('tín chỉ') && headerStr.includes('quy y'))) {
+        let noCol = -1, tc1Col = -1, tc2Col = -1, tc3Col = -1, qyCol = -1, noQyCol = -1, totCol = -1;
+        let dataStart = 1;
+        for (let i = 0; i < Math.min(csv.length, 5); i++) {
+            const row = csv[i] || [];
+            row.forEach((cell, idx) => {
+                const s = (cell || '').toString().toLowerCase();
+                if (s.includes('tổng số') || s.includes('tổng nhân sự')) totCol = idx;
+                if (s.includes('chưa có')) noCol = idx;
+                if (s.includes('tc 1') || s.includes('tc1') || s.includes('tín chỉ 1')) tc1Col = idx;
+                if (s.includes('tc 2') || s.includes('tc2') || s.includes('tín chỉ 2')) tc2Col = idx;
+                if (s.includes('tc 3') || s.includes('tc3') || s.includes('tín chỉ 3')) tc3Col = idx;
+                if (s.includes('đã quy y')) qyCol = idx;
+                if (s.includes('chưa quy y')) noQyCol = idx;
+            });
+            if (noCol !== -1 || tc1Col !== -1 || qyCol !== -1) {
+                dataStart = i + 1;
+                break;
+            }
+        }
+
+        if (qyCol !== -1 || noCol !== -1) {
+            let row = csv[dataStart];
+            if (row) {
+                const noCredit = noCol !== -1 ? parseNumber(row[noCol]) : 0;
+                const tc1 = tc1Col !== -1 ? parseNumber(row[tc1Col]) : 0;
+                const tc2 = tc2Col !== -1 ? parseNumber(row[tc2Col]) : 0;
+                const tc3 = tc3Col !== -1 ? parseNumber(row[tc3Col]) : 0;
+                const quyY = qyCol !== -1 ? parseNumber(row[qyCol]) : 0;
+                const chuaQuyY = noQyCol !== -1 ? parseNumber(row[noQyCol]) : 0;
+                const totalStaff = totCol !== -1 ? parseNumber(row[totCol]) : (quyY + chuaQuyY || noCredit + tc1 + tc2 + tc3);
+                if (totalStaff > 0) {
+                    return {
+                        isNewFormat: true,
+                        totalStaff,
+                        noCredit,
+                        tc1,
+                        tc2,
+                        tc3,
+                        quyY,
+                        chuaQuyY
+                    };
+                }
+            }
+        }
+    }
+
+    // 3. Fallback: Định dạng cũ (tỷ lệ % các tiêu chí)
     let actCol = 3;
     let dataStart = 1;
     for (let i = 0; i < Math.min(csv.length, 5); i++) {

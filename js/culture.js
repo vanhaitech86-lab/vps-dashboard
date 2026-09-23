@@ -156,8 +156,49 @@ window.CultureModule = {
         return null;
     },
 
+    // ĐỒNG BỘ DỮ LIỆU TỪ GOOGLE SHEETS
+    syncWithGoogleSheets() {
+        if (!window.mockData || !window.mockData.culture_data) return;
+        const cData = window.mockData.culture_data;
+        const compMap = {
+            'THH': 'thh',
+            'Viet': 'viet',
+            'XemSon': 'xemson',
+            'VPSM': 'vpsm',
+            'ITSS': 'itss',
+            'VPVPS': 'vpvps'
+        };
+        Object.keys(compMap).forEach(key => {
+            const val = cData[key];
+            if (val && val.isNewFormat) {
+                const targetId = compMap[key];
+                const unit = this.unitsData.find(u => u.id === targetId);
+                if (unit) {
+                    if (val.totalStaff) unit.totalStaff = val.totalStaff;
+                    if (val.noCredit !== undefined) unit.noCredit = val.noCredit;
+                    if (val.tc1 !== undefined) unit.tc1 = val.tc1;
+                    if (val.tc2 !== undefined) unit.tc2 = val.tc2;
+                    if (val.tc3 !== undefined) unit.tc3 = val.tc3;
+                    if (val.quyY !== undefined) unit.quyY = val.quyY;
+                    if (val.chuaQuyY !== undefined) unit.chuaQuyY = val.chuaQuyY;
+                }
+                if (val.roster && val.roster.length > 0) {
+                    val.roster.forEach(r => {
+                        if (!this.personnelRoster.some(p => p.name === r.name && p.company === r.company)) {
+                            this.personnelRoster.push({
+                                id: 'GS-' + (this.personnelRoster.length + 1),
+                                ...r
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    },
+
     // RENDER CONTROLLER
     render() {
+        this.syncWithGoogleSheets();
         this.renderKPIs();
         this.renderSummaryTable();
         this.renderCharts();

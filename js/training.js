@@ -138,6 +138,17 @@ window.TrainingModule = {
     init() {
         this.loadStorageData();
         this.bindEvents();
+        document.addEventListener('vps_filter_changed', () => {
+            if (window.FilterManager && window.FilterManager.currentCompany) {
+                const comp = window.FilterManager.currentCompany;
+                const select = document.getElementById('training-select-company');
+                if (select) {
+                    select.value = comp;
+                    this.currentCompany = comp;
+                }
+            }
+            this.render();
+        });
         this.render();
     },
 
