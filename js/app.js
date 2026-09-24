@@ -312,6 +312,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const targetEl = document.getElementById(`view-${viewId}`);
             if (targetEl) targetEl.classList.remove('hidden');
+            if (viewId === 'revenue' && window.RevenueModule) {
+                if (window.RevenueModule.currentTab === 'department') {
+                    window.RevenueModule.renderDepartmentDashboard();
+                }
+            }
             if (viewId === 'project-revenue' && window.ProjectRevenueModule) {
                 window.ProjectRevenueModule.render();
             }

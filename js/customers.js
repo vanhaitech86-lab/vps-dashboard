@@ -1,10 +1,36 @@
 /**
- * Customers Module
+ * Customers Module - VPS Dashboard
+ * Redesigned to exact specification:
+ * - 5 Executive KPI Cards: Tổng KH, KH Mới, KH Mất (Màu đỏ), Phát sinh / KH Mất, KH Hiện có
+ * - Charts: Cơ cấu KH hiện có theo mảng & Biến động KH Mới vs KH Mất (Màu đỏ)
+ * - Table: Replicating exact structure of "Báo Cáo Chi Tiết Cơ Cấu Khách Hàng" from user image
+ * - Recency buckets (3, 6 months) completely removed
  */
 
 window.CustomersModule = {
     currentPeriod: 'month',
     currentCompany: 'all',
+    selectedMonth: '08/2026',
+
+    monthlyData: {
+        '08/2026': null, // Uses default mockData.customers which matches user screenshot
+        '07/2026': {
+            thue_may: { dau: { may: 1960, kh: 602 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 18, kh: 7 }, giam: { may: 5, kh: 3 }, cuoi: { may: 1973, kh: 606 } },
+            mc: { dau: { may: 386, kh: 205 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 0 }, giam: { may: 0, kh: 0 }, cuoi: { may: 386, kh: 205 } },
+            dv_photo: { dau: { may: 3328, kh: 1107 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 0 }, giam: { may: 0, kh: 0 }, cuoi: { may: 3328, kh: 1107 } },
+            dv_may_in: { dau: { may: 1936, kh: 283 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 3, kh: 2 }, giam: { may: 0, kh: 0 }, cuoi: { may: 1939, kh: 285 } },
+            dv_khac: { dau: { may: 0, kh: 0 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 0 }, giam: { may: 0, kh: 0 }, cuoi: { may: 0, kh: 0 } },
+            phan_phoi: { dau: { may: 0, kh: 2760 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 45 }, giam: { may: 0, kh: 2 }, cuoi: { may: 0, kh: 2803 } }
+        },
+        '06/2026': {
+            thue_may: { dau: { may: 1945, kh: 598 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 20, kh: 8 }, giam: { may: 5, kh: 4 }, cuoi: { may: 1960, kh: 602 } },
+            mc: { dau: { may: 386, kh: 205 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 0 }, giam: { may: 0, kh: 0 }, cuoi: { may: 386, kh: 205 } },
+            dv_photo: { dau: { may: 3328, kh: 1107 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 0 }, giam: { may: 0, kh: 0 }, cuoi: { may: 3328, kh: 1107 } },
+            dv_may_in: { dau: { may: 1930, kh: 280 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 6, kh: 3 }, giam: { may: 0, kh: 0 }, cuoi: { may: 1936, kh: 283 } },
+            dv_khac: { dau: { may: 0, kh: 0 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 0 }, giam: { may: 0, kh: 0 }, cuoi: { may: 0, kh: 0 } },
+            phan_phoi: { dau: { may: 0, kh: 2720 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 42 }, giam: { may: 0, kh: 2 }, cuoi: { may: 0, kh: 2760 } }
+        }
+    },
 
     init() {
         // Handle global filter changes
@@ -14,7 +40,7 @@ window.CustomersModule = {
             this.loadData(this.currentPeriod, this.currentCompany);
         });
 
-        // Initialize Month Dropdown in table header if exists
+        // Initialize Month Dropdown in table header
         const monthFilter = document.getElementById('customers-month-filter');
         if (monthFilter) {
             const months = ['08/2026', '07/2026', '06/2026'];
@@ -23,17 +49,18 @@ window.CustomersModule = {
                 const opt = document.createElement('option');
                 opt.value = m;
                 opt.textContent = 'THÁNG ' + m.split('/')[0] + ' / ' + m.split('/')[1];
+                if (m === this.selectedMonth) opt.selected = true;
                 monthFilter.appendChild(opt);
             });
 
             monthFilter.addEventListener('change', (e) => {
-                const selectedMonth = e.target.value;
-                if (window.GoogleSheetsService && typeof window.GoogleSheetsService.buildCustomerDataForMonth === 'function') {
-                    window.mockData.customers = window.GoogleSheetsService.buildCustomerDataForMonth(selectedMonth);
-                }
+                this.selectedMonth = e.target.value;
                 this.loadData(this.currentPeriod, this.currentCompany);
             });
         }
+
+        // Initial load
+        this.loadData(this.currentPeriod, this.currentCompany);
     },
 
     async loadData(period, company) {
@@ -54,7 +81,9 @@ window.CustomersModule = {
         else if (company === 'Văn phòng VPS' || company.includes('VPVPS') || company.includes('Văn phòng')) matrixKey = 'VPVPS';
         else if (company !== 'all') matrixKey = 'all';
 
-        let cData = data.matrix[matrixKey] || data.matrix['all'];
+        let cData = (this.monthlyData && this.monthlyData[this.selectedMonth] && matrixKey === 'all')
+            ? this.monthlyData[this.selectedMonth]
+            : (data.matrix[matrixKey] || data.matrix['all']);
 
         // Helper to safely get a category's values
         const getCat = (catId) => {
@@ -78,34 +107,6 @@ window.CustomersModule = {
             { id: 'phan_phoi', name: 'Phân phối (Đại lý)', isPhanPhoi: true }
         ];
 
-        // Revenue Recency rows (3 dòng mới theo yêu cầu)
-        const recencyRowDefs = [
-            { 
-                id: 'kh_duoi_3_thang', 
-                name: 'Khách hàng phát sinh doanh số dưới 3 tháng', 
-                badgeText: '< 3 tháng', 
-                badgeBg: '#dcfce7', 
-                badgeColor: '#15803d',
-                dotColor: '#10b981'
-            },
-            { 
-                id: 'kh_3_den_6_thang', 
-                name: 'Khách hàng phát sinh doanh số từ 3 - 6 tháng', 
-                badgeText: '3 - 6 tháng', 
-                badgeBg: '#fef3c7', 
-                badgeColor: '#b45309',
-                dotColor: '#f59e0b'
-            },
-            { 
-                id: 'kh_tren_6_thang', 
-                name: 'Khách hàng phát sinh doanh số trên 6 tháng', 
-                badgeText: '> 6 tháng', 
-                badgeBg: '#fee2e2', 
-                badgeColor: '#b91c1c',
-                dotColor: '#ef4444'
-            }
-        ];
-
         // 1. Calculate Summary for Thuê máy + MC
         const tm = getCat('thue_may');
         const mc = getCat('mc');
@@ -117,7 +118,7 @@ window.CustomersModule = {
             cuoi: { may: tm.cuoi.may + mc.cuoi.may, kh: tm.cuoi.kh + mc.cuoi.kh }
         };
 
-        // 2. Sums for Service group
+        // 2. Sums for Service group (Total summary)
         let serviceSums = {
             dau: { may: 0, kh: 0 },
             ke_hoach: { may: 0, kh: 0 },
@@ -128,157 +129,191 @@ window.CustomersModule = {
 
         serviceRowDefs.forEach(r => {
             const dataRow = getCat(r.id);
-            serviceSums.dau.may += dataRow.dau.may;
+            if (!r.isPhanPhoi) {
+                serviceSums.dau.may += dataRow.dau.may;
+                serviceSums.ke_hoach.may += dataRow.ke_hoach.may;
+                serviceSums.tang.may += dataRow.tang.may;
+                serviceSums.giam.may += dataRow.giam.may;
+                serviceSums.cuoi.may += dataRow.cuoi.may;
+            }
             serviceSums.dau.kh += dataRow.dau.kh;
-            serviceSums.ke_hoach.may += dataRow.ke_hoach.may;
             serviceSums.ke_hoach.kh += dataRow.ke_hoach.kh;
-            serviceSums.tang.may += dataRow.tang.may;
             serviceSums.tang.kh += dataRow.tang.kh;
-            serviceSums.giam.may += dataRow.giam.may;
             serviceSums.giam.kh += dataRow.giam.kh;
-            serviceSums.cuoi.may += dataRow.cuoi.may;
             serviceSums.cuoi.kh += dataRow.cuoi.kh;
         });
 
-        // 3. Sums for Recency group
-        let recencySums = {
-            dau: { may: 0, kh: 0 },
-            ke_hoach: { may: 0, kh: 0 },
-            tang: { may: 0, kh: 0 },
-            giam: { may: 0, kh: 0 },
-            cuoi: { may: 0, kh: 0 }
-        };
+        // UPDATE 5 EXECUTIVE KPI CARDS
+        const totalKhEl = document.getElementById('cust-kpi-total-kh');
+        if (totalKhEl) totalKhEl.textContent = serviceSums.dau.kh.toLocaleString();
+        const totalMayEl = document.getElementById('cust-kpi-total-may');
+        if (totalMayEl) totalMayEl.textContent = serviceSums.dau.may.toLocaleString();
 
-        recencyRowDefs.forEach(r => {
-            const dataRow = getCat(r.id);
-            recencySums.dau.may += dataRow.dau.may;
-            recencySums.dau.kh += dataRow.dau.kh;
-            recencySums.ke_hoach.may += dataRow.ke_hoach.may;
-            recencySums.ke_hoach.kh += dataRow.ke_hoach.kh;
-            recencySums.tang.may += dataRow.tang.may;
-            recencySums.tang.kh += dataRow.tang.kh;
-            recencySums.giam.may += dataRow.giam.may;
-            recencySums.giam.kh += dataRow.giam.kh;
-            recencySums.cuoi.may += dataRow.cuoi.may;
-            recencySums.cuoi.kh += dataRow.cuoi.kh;
-        });
+        const newKhEl = document.getElementById('cust-kpi-new-kh');
+        if (newKhEl) newKhEl.textContent = serviceSums.tang.kh.toLocaleString();
+        const newMayEl = document.getElementById('cust-kpi-new-may');
+        if (newMayEl) newMayEl.textContent = '+' + serviceSums.tang.may.toLocaleString();
 
-        // BUILD TABLE HTML
+        // LOST CUSTOMERS - DISPLAYED PROMINENTLY IN RED
+        const lostKhEl = document.getElementById('cust-kpi-lost-kh');
+        if (lostKhEl) lostKhEl.textContent = serviceSums.giam.kh.toLocaleString();
+        const lostMayEl = document.getElementById('cust-kpi-lost-may');
+        if (lostMayEl) lostMayEl.textContent = serviceSums.giam.may.toLocaleString();
+
+        // RATIO PHÁT SINH / KHÁCH MẤT
+        const ratioEl = document.getElementById('cust-kpi-ratio');
+        if (ratioEl) {
+            if (serviceSums.giam.kh > 0) {
+                ratioEl.textContent = (serviceSums.tang.kh / serviceSums.giam.kh).toFixed(1);
+            } else {
+                ratioEl.textContent = serviceSums.tang.kh.toString();
+            }
+        }
+        const netGrowthEl = document.getElementById('cust-kpi-net-growth');
+        if (netGrowthEl) {
+            const netKh = serviceSums.tang.kh - serviceSums.giam.kh;
+            netGrowthEl.textContent = (netKh >= 0 ? '+' : '') + netKh.toLocaleString();
+        }
+
+        // ACTIVE CUSTOMERS (CURRENT / END OF PERIOD)
+        const activeKhEl = document.getElementById('cust-kpi-active-kh');
+        if (activeKhEl) activeKhEl.textContent = serviceSums.cuoi.kh.toLocaleString();
+        const activeMayEl = document.getElementById('cust-kpi-active-may');
+        if (activeMayEl) activeMayEl.textContent = serviceSums.cuoi.may.toLocaleString();
+
+        // Overview / Subtext updates
+        const ovVal = document.getElementById('ov-cust-total');
+        if (ovVal) ovVal.textContent = serviceSums.cuoi.kh.toLocaleString();
+
+        const newSub = document.getElementById('cust-total-new-sub');
+        if (newSub) newSub.textContent = '+' + serviceSums.tang.kh.toLocaleString();
+        const lostSub = document.getElementById('cust-total-lost-sub');
+        if (lostSub) lostSub.textContent = '-' + serviceSums.giam.kh.toLocaleString();
+
+        // BUILD DETAILED TABLE HTML
         let tbodyHTML = '';
 
-        // Header Section I
+        // Section I Header
         tbodyHTML += `
-            <tr style="background: #e2e8f0; font-weight: 700; color: #1e293b; border-top: 2px solid #94a3b8;">
-                <td colspan="11" style="text-align: left; padding: 8px 12px; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.5px;">
-                    <i data-lucide="layers" style="width: 15px; height: 15px; display: inline-block; vertical-align: middle; margin-right: 6px; color: #0284c7;"></i>
-                    I. Cơ Cấu Theo Mảng Dịch Vụ &amp; Kinh Doanh
+            <tr class="section-title-row">
+                <td colspan="11" style="text-align: left;">
+                    <i data-lucide="layers" style="width: 16px; height: 16px; display: inline-block; vertical-align: -2px; margin-right: 6px; color: #0284c7;"></i>
+                    I. CƠ CẤU THEO MẢNG DỊCH VỤ &amp; KINH DOANH
                 </td>
             </tr>
         `;
 
-        // Thuê máy, MC - Photo summary row
+        // Row: Thuê máy, MC - Photo summary
+        const tmMcGiamMayHtml = tm_mc.giam.may > 0 ? `<span class="cust-lost-highlight">${tm_mc.giam.may}</span>` : '0';
+        const tmMcGiamKhHtml = tm_mc.giam.kh > 0 ? `<span class="cust-lost-badge">${tm_mc.giam.kh}</span>` : '0';
+
         tbodyHTML += `
-            <tr style="font-weight: bold; background: #f8fafc;">
-                <td style="text-align: left;">Thuê máy, MC - Photo</td>
-                <td>${tm_mc.dau.may || 0}</td><td>${tm_mc.dau.kh || 0}</td>
-                <td style="color: #0369a1; font-weight: bold;">${tm_mc.ke_hoach.may || 0}</td><td style="color: #0369a1; font-weight: bold;">${tm_mc.ke_hoach.kh || 0}</td>
-                <td>${tm_mc.tang.may || 0}</td><td>${tm_mc.tang.kh || 0}</td>
-                <td>${tm_mc.giam.may || 0}</td><td>${tm_mc.giam.kh || 0}</td>
-                <td>${tm_mc.cuoi.may || 0}</td><td>${tm_mc.cuoi.kh || 0}</td>
+            <tr class="parent-row" style="font-weight: 800; background: #ffffff;">
+                <td style="text-align: left; padding-left: 14px; font-weight: 800;">Thuê máy, MC - Photo</td>
+                <td style="font-weight: 800;">${tm_mc.dau.may.toLocaleString()}</td>
+                <td style="font-weight: 800;">${tm_mc.dau.kh.toLocaleString()}</td>
+                <td style="color: #0284c7; font-weight: 800;">${tm_mc.ke_hoach.may}</td>
+                <td style="color: #0284c7; font-weight: 800;">${tm_mc.ke_hoach.kh}</td>
+                <td style="font-weight: 800;">${tm_mc.tang.may}</td>
+                <td style="font-weight: 800;">${tm_mc.tang.kh}</td>
+                <td>${tmMcGiamMayHtml}</td>
+                <td>${tmMcGiamKhHtml}</td>
+                <td style="font-weight: 800;">${tm_mc.cuoi.may.toLocaleString()}</td>
+                <td style="font-weight: 800;">${tm_mc.cuoi.kh.toLocaleString()}</td>
             </tr>
         `;
 
-        // Sub-items for Service
-        serviceRowDefs.forEach(r => {
-            const rowData = getCat(r.id);
-            const prefix = (r.id === 'thue_may' || r.id === 'mc') ? '&nbsp;&nbsp;&nbsp;&nbsp;<i>' : '';
-            const suffix = (r.id === 'thue_may' || r.id === 'mc') ? '</i>' : '';
+        // Sub-rows: Thuê máy & MC
+        const tmData = getCat('thue_may');
+        const tmGiamMayHtml = tmData.giam.may > 0 ? `<span class="cust-lost-highlight">${tmData.giam.may}</span>` : '0';
+        const tmGiamKhHtml = tmData.giam.kh > 0 ? `<span class="cust-lost-badge">${tmData.giam.kh}</span>` : '0';
+        tbodyHTML += `
+            <tr class="child-row">
+                <td style="text-align: left; padding-left: 32px;"><i>Thuê máy</i></td>
+                <td>${tmData.dau.may.toLocaleString()}</td>
+                <td>${tmData.dau.kh.toLocaleString()}</td>
+                <td style="color: #0284c7; font-weight: 700;">${tmData.ke_hoach.may}</td>
+                <td style="color: #0284c7; font-weight: 700;">${tmData.ke_hoach.kh}</td>
+                <td>${tmData.tang.may}</td>
+                <td>${tmData.tang.kh}</td>
+                <td>${tmGiamMayHtml}</td>
+                <td>${tmGiamKhHtml}</td>
+                <td>${tmData.cuoi.may.toLocaleString()}</td>
+                <td>${tmData.cuoi.kh.toLocaleString()}</td>
+            </tr>
+        `;
 
-            // Phân phối (Đại lý) doesn't track machines
-            const mayKeHoach = r.isPhanPhoi ? '-' : (rowData.ke_hoach.may || 0);
-            const mayDau = r.isPhanPhoi ? '-' : (rowData.dau.may || 0);
-            const mayTang = r.isPhanPhoi ? '-' : (rowData.tang.may || 0);
-            const mayGiam = r.isPhanPhoi ? '-' : (rowData.giam.may || 0);
-            const mayCuoi = r.isPhanPhoi ? '-' : (rowData.cuoi.may || 0);
+        const mcData = getCat('mc');
+        const mcGiamMayHtml = mcData.giam.may > 0 ? `<span class="cust-lost-highlight">${mcData.giam.may}</span>` : '0';
+        const mcGiamKhHtml = mcData.giam.kh > 0 ? `<span class="cust-lost-badge">${mcData.giam.kh}</span>` : '0';
+        tbodyHTML += `
+            <tr class="child-row">
+                <td style="text-align: left; padding-left: 32px;"><i>MC</i></td>
+                <td>${mcData.dau.may.toLocaleString()}</td>
+                <td>${mcData.dau.kh.toLocaleString()}</td>
+                <td style="color: #0284c7; font-weight: 700;">${mcData.ke_hoach.may}</td>
+                <td style="color: #0284c7; font-weight: 700;">${mcData.ke_hoach.kh}</td>
+                <td>${mcData.tang.may}</td>
+                <td>${mcData.tang.kh}</td>
+                <td>${mcGiamMayHtml}</td>
+                <td>${mcGiamKhHtml}</td>
+                <td>${mcData.cuoi.may.toLocaleString()}</td>
+                <td>${mcData.cuoi.kh.toLocaleString()}</td>
+            </tr>
+        `;
+
+        // Other service rows: Dịch vụ - Photo, Dịch vụ - Máy in, Dịch vụ khác, Phân phối (Đại lý)
+        const otherRows = [
+            { id: 'dv_photo', name: 'Dịch vụ - Photo' },
+            { id: 'dv_may_in', name: 'Dịch vụ - Máy in' },
+            { id: 'dv_khac', name: 'Dịch vụ khác' },
+            { id: 'phan_phoi', name: 'Phân phối (Đại lý)', isPhanPhoi: true }
+        ];
+
+        otherRows.forEach(r => {
+            const rowData = getCat(r.id);
+            const mayDau = r.isPhanPhoi ? '-' : rowData.dau.may.toLocaleString();
+            const mayKeHoach = r.isPhanPhoi ? '-' : rowData.ke_hoach.may;
+            const mayTang = r.isPhanPhoi ? '-' : rowData.tang.may;
+            const mayGiam = r.isPhanPhoi ? '-' : (rowData.giam.may > 0 ? `<span class="cust-lost-highlight">${rowData.giam.may}</span>` : '0');
+            const mayCuoi = r.isPhanPhoi ? '-' : rowData.cuoi.may.toLocaleString();
+
+            const khGiam = rowData.giam.kh > 0 ? `<span class="cust-lost-badge">${rowData.giam.kh}</span>` : '0';
 
             tbodyHTML += `
                 <tr>
-                    <td style="text-align: left;">${prefix}${r.name}${suffix}</td>
-                    <td>${mayDau}</td><td>${rowData.dau.kh || 0}</td>
-                    <td style="color: #0369a1; font-weight: bold;">${mayKeHoach}</td><td style="color: #0369a1; font-weight: bold;">${rowData.ke_hoach.kh || 0}</td>
-                    <td>${mayTang}</td><td>${rowData.tang.kh || 0}</td>
-                    <td>${mayGiam}</td><td>${rowData.giam.kh || 0}</td>
-                    <td>${mayCuoi}</td><td>${rowData.cuoi.kh || 0}</td>
+                    <td style="text-align: left; padding-left: 14px;">${r.name}</td>
+                    <td>${mayDau}</td>
+                    <td>${rowData.dau.kh.toLocaleString()}</td>
+                    <td style="color: #0284c7; font-weight: 700;">${mayKeHoach}</td>
+                    <td style="color: #0284c7; font-weight: 700;">${rowData.ke_hoach.kh}</td>
+                    <td>${mayTang}</td>
+                    <td>${rowData.tang.kh}</td>
+                    <td>${mayGiam}</td>
+                    <td>${khGiam}</td>
+                    <td>${mayCuoi}</td>
+                    <td>${rowData.cuoi.kh.toLocaleString()}</td>
                 </tr>
             `;
         });
 
-        // Subtotal Section I
-        tbodyHTML += `
-            <tr style="font-weight: bold; background: #f1f5f9; color: #0369a1; border-top: 1px solid #cbd5e1; border-bottom: 2px solid #cbd5e1;">
-                <td style="text-align: left; padding-left: 12px;">Cộng mảng dịch vụ &amp; phân phối</td>
-                <td>${serviceSums.dau.may}</td><td>${serviceSums.dau.kh}</td>
-                <td style="color: #0369a1;">${serviceSums.ke_hoach.may}</td><td style="color: #0369a1;">${serviceSums.ke_hoach.kh}</td>
-                <td>${serviceSums.tang.may}</td><td>${serviceSums.tang.kh}</td>
-                <td>${serviceSums.giam.may}</td><td>${serviceSums.giam.kh}</td>
-                <td>${serviceSums.cuoi.may}</td><td>${serviceSums.cuoi.kh}</td>
-            </tr>
-        `;
+        // Summary Total Row: Cộng mảng dịch vụ & phân phối
+        const totalGiamMayHtml = serviceSums.giam.may > 0 ? `<span class="cust-lost-highlight" style="font-size: 0.95rem;">${serviceSums.giam.may}</span>` : '0';
+        const totalGiamKhHtml = serviceSums.giam.kh > 0 ? `<span class="cust-lost-total-badge">${serviceSums.giam.kh}</span>` : '0';
 
-        // Header Section II (3 dòng mới theo yêu cầu)
         tbodyHTML += `
-            <tr style="background: #fef3c7; font-weight: 700; color: #92400e; border-top: 2px solid #f59e0b;">
-                <td colspan="11" style="text-align: left; padding: 8px 12px; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.5px;">
-                    <i data-lucide="clock" style="width: 15px; height: 15px; display: inline-block; vertical-align: middle; margin-right: 6px; color: #d97706;"></i>
-                    II. Phân Loại Theo Thời Gian Phát Sinh Doanh Số
-                </td>
-            </tr>
-        `;
-
-        // Render 3 Recency Rows
-        recencyRowDefs.forEach(r => {
-            const rowData = getCat(r.id);
-            tbodyHTML += `
-                <tr>
-                    <td style="text-align: left;">
-                        <span style="display: inline-flex; align-items: center; gap: 6px;">
-                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${r.dotColor};"></span>
-                            <strong>${r.name}</strong>
-                        </span>
-                        <span style="background: ${r.badgeBg}; color: ${r.badgeColor}; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: 600; margin-left: 6px;">
-                            ${r.badgeText}
-                        </span>
-                    </td>
-                    <td>${rowData.dau.may || 0}</td><td>${rowData.dau.kh || 0}</td>
-                    <td style="color: #0369a1; font-weight: bold;">${rowData.ke_hoach.may || 0}</td><td style="color: #0369a1; font-weight: bold;">${rowData.ke_hoach.kh || 0}</td>
-                    <td>${rowData.tang.may || 0}</td><td>${rowData.tang.kh || 0}</td>
-                    <td>${rowData.giam.may || 0}</td><td>${rowData.giam.kh || 0}</td>
-                    <td style="font-weight: 600;">${rowData.cuoi.may || 0}</td><td style="font-weight: 600;">${rowData.cuoi.kh || 0}</td>
-                </tr>
-            `;
-        });
-
-        // Subtotal Section II
-        tbodyHTML += `
-            <tr style="font-weight: bold; background: #fffbeb; color: #b45309; border-top: 1px solid #fde68a; border-bottom: 2px solid #fde68a;">
-                <td style="text-align: left; padding-left: 12px;">Cộng theo thời gian phát sinh doanh số</td>
-                <td>${recencySums.dau.may}</td><td>${recencySums.dau.kh}</td>
-                <td style="color: #0369a1;">${recencySums.ke_hoach.may}</td><td style="color: #0369a1;">${recencySums.ke_hoach.kh}</td>
-                <td>${recencySums.tang.may}</td><td>${recencySums.tang.kh}</td>
-                <td>${recencySums.giam.may}</td><td>${recencySums.giam.kh}</td>
-                <td>${recencySums.cuoi.may}</td><td>${recencySums.cuoi.kh}</td>
-            </tr>
-        `;
-
-        // Grand Total Row
-        tbodyHTML += `
-            <tr style="font-weight: bold; background: #e2e8f0; border-top: 2px solid #64748b; color: #b91c1c; font-size: 0.95rem;">
-                <td style="text-align: left; padding: 10px 12px;">Tổng cộng khách hàng quản lý</td>
-                <td>${serviceSums.dau.may}</td><td>${serviceSums.dau.kh}</td>
-                <td style="color: #0369a1; font-weight: bold;">${serviceSums.ke_hoach.may}</td><td style="color: #0369a1; font-weight: bold;">${serviceSums.ke_hoach.kh}</td>
-                <td>${serviceSums.tang.may}</td><td>${serviceSums.tang.kh}</td>
-                <td>${serviceSums.giam.may}</td><td>${serviceSums.giam.kh}</td>
-                <td>${serviceSums.cuoi.may}</td><td>${serviceSums.cuoi.kh}</td>
+            <tr class="total-row">
+                <td style="text-align: left; padding-left: 14px;">Cộng mảng dịch vụ &amp; phân phối</td>
+                <td>${serviceSums.dau.may.toLocaleString()}</td>
+                <td>${serviceSums.dau.kh.toLocaleString()}</td>
+                <td style="color: #0284c7;">${serviceSums.ke_hoach.may}</td>
+                <td style="color: #0284c7;">${serviceSums.ke_hoach.kh}</td>
+                <td>${serviceSums.tang.may}</td>
+                <td>${serviceSums.tang.kh}</td>
+                <td>${totalGiamMayHtml}</td>
+                <td>${totalGiamKhHtml}</td>
+                <td>${serviceSums.cuoi.may.toLocaleString()}</td>
+                <td>${serviceSums.cuoi.kh.toLocaleString()}</td>
             </tr>
         `;
 
@@ -290,44 +325,8 @@ window.CustomersModule = {
             window.lucide.createIcons();
         }
 
-        // Update Overview Mini Cards
-        const totalMayEl = document.getElementById('cust-total-may');
-        if (totalMayEl) totalMayEl.textContent = serviceSums.cuoi.may.toLocaleString();
-        const totalKhEl = document.getElementById('cust-total-kh');
-        if (totalKhEl) totalKhEl.textContent = serviceSums.cuoi.kh.toLocaleString();
-
-        // Update Overview Top KPI Bar
-        const ovVal = document.getElementById('ov-cust-total');
-        if (ovVal) ovVal.textContent = serviceSums.cuoi.kh.toLocaleString();
-
-        // Update 3 Recency Top KPI Cards
-        const u3 = getCat('kh_duoi_3_thang');
-        const m36 = getCat('kh_3_den_6_thang');
-        const o6 = getCat('kh_tren_6_thang');
-        const totalRecKh = (u3.cuoi.kh + m36.cuoi.kh + o6.cuoi.kh) || 1;
-
-        const elU3Kh = document.getElementById('cust-recency-under3m-kh');
-        if (elU3Kh) elU3Kh.textContent = u3.cuoi.kh.toLocaleString();
-        const elU3May = document.getElementById('cust-recency-under3m-may');
-        if (elU3May) elU3May.textContent = u3.cuoi.may.toLocaleString();
-        const elU3Pct = document.getElementById('cust-recency-under3m-pct');
-        if (elU3Pct) elU3Pct.textContent = ((u3.cuoi.kh / totalRecKh) * 100).toFixed(1) + '%';
-
-        const elM36Kh = document.getElementById('cust-recency-3to6m-kh');
-        if (elM36Kh) elM36Kh.textContent = m36.cuoi.kh.toLocaleString();
-        const elM36May = document.getElementById('cust-recency-3to6m-may');
-        if (elM36May) elM36May.textContent = m36.cuoi.may.toLocaleString();
-        const elM36Pct = document.getElementById('cust-recency-3to6m-pct');
-        if (elM36Pct) elM36Pct.textContent = ((m36.cuoi.kh / totalRecKh) * 100).toFixed(1) + '%';
-
-        const elO6Kh = document.getElementById('cust-recency-over6m-kh');
-        if (elO6Kh) elO6Kh.textContent = o6.cuoi.kh.toLocaleString();
-        const elO6May = document.getElementById('cust-recency-over6m-may');
-        if (elO6May) elO6May.textContent = o6.cuoi.may.toLocaleString();
-        const elO6Pct = document.getElementById('cust-recency-over6m-pct');
-        if (elO6Pct) elO6Pct.textContent = ((o6.cuoi.kh / totalRecKh) * 100).toFixed(1) + '%';
-
-        // 1. Chart: Cơ Cấu Khách Hàng Theo Mảng Dịch Vụ (Pie chart for Cuối Tháng - KH)
+        // RENDER CHARTS
+        // 1. Chart: Cơ Cấu Khách Hàng Hiện Có Theo Mảng Dịch Vụ (Doughnut)
         const chartLabels = ['Thuê máy', 'MC', 'Dịch vụ - Photo', 'Dịch vụ - Máy in', 'Phân phối (Đại lý)'];
         const chartValues = [
             getCat('thue_may').cuoi.kh,
@@ -337,62 +336,106 @@ window.CustomersModule = {
             getCat('phan_phoi').cuoi.kh
         ];
 
-        const chartConfig = {
-            labels: chartLabels,
-            datasets: [{
-                data: chartValues,
-                backgroundColor: ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#16A34A'],
-                borderWidth: 1
-            }]
-        };
-
         const ctx = document.getElementById('customersChart');
         if (ctx && window.ChartManager) {
-            window.ChartManager.createChart('customersChart', 'pie', chartConfig, {
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'right' },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.label || '';
-                                if (label) { label += ': '; }
-                                if (context.raw !== null) {
-                                    label += new Intl.NumberFormat('vi-VN').format(context.raw) + ' KH';
-                                }
-                                return label;
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // 2. Chart: Phân Bổ Khách Hàng Theo Thời Gian Phát Sinh Doanh Số (Doughnut chart)
-        const recencyCtx = document.getElementById('customersRecencyChart');
-        if (recencyCtx && window.ChartManager) {
-            window.ChartManager.createChart('customersRecencyChart', 'doughnut', {
-                labels: ['Phát sinh DS < 3 tháng', 'Phát sinh DS từ 3 - 6 tháng', 'Phát sinh DS trên 6 tháng'],
+            window.ChartManager.createChart('customersChart', 'doughnut', {
+                labels: chartLabels,
                 datasets: [{
-                    data: [u3.cuoi.kh, m36.cuoi.kh, o6.cuoi.kh],
-                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                    data: chartValues,
+                    backgroundColor: ['#0284c7', '#6366f1', '#f59e0b', '#ec4899', '#10b981'],
                     borderWidth: 2,
                     borderColor: '#ffffff'
                 }]
             }, {
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'bottom' },
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            boxWidth: 12,
+                            font: { size: 12, weight: '700' }
+                        }
+                    },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
                                 let label = context.label || '';
                                 if (label) { label += ': '; }
                                 if (context.raw !== null) {
-                                    const pct = ((context.raw / totalRecKh) * 100).toFixed(1);
+                                    const total = chartValues.reduce((a, b) => a + b, 0) || 1;
+                                    const pct = ((context.raw / total) * 100).toFixed(1);
                                     label += new Intl.NumberFormat('vi-VN').format(context.raw) + ' KH (' + pct + '%)';
                                 }
                                 return label;
+                            }
+                        }
+                    }
+                },
+                cutout: '62%'
+            });
+        }
+
+        // 2. Chart: Biến Động Khách Hàng: Tăng Mới vs Khách Mất Theo Từng Mảng (Bar chart)
+        const growthLabels = ['Thuê máy', 'MC', 'DV Photo', 'DV Máy in', 'Phân phối'];
+        const growthNew = [
+            getCat('thue_may').tang.kh,
+            getCat('mc').tang.kh,
+            getCat('dv_photo').tang.kh,
+            getCat('dv_may_in').tang.kh,
+            getCat('phan_phoi').tang.kh
+        ];
+        const growthLost = [
+            getCat('thue_may').giam.kh,
+            getCat('mc').giam.kh,
+            getCat('dv_photo').giam.kh,
+            getCat('dv_may_in').giam.kh,
+            getCat('phan_phoi').giam.kh
+        ];
+
+        const growthCtx = document.getElementById('customersGrowthChart');
+        if (growthCtx && window.ChartManager) {
+            window.ChartManager.createChart('customersGrowthChart', 'bar', {
+                labels: growthLabels,
+                datasets: [
+                    {
+                        label: 'Khách hàng mới (+)',
+                        data: growthNew,
+                        backgroundColor: '#10b981',
+                        borderRadius: 6,
+                        borderSkipped: false
+                    },
+                    {
+                        label: 'Khách hàng mất (-)',
+                        data: growthLost,
+                        backgroundColor: '#ef4444',
+                        borderRadius: 6,
+                        borderSkipped: false
+                    }
+                ]
+            }, {
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { weight: '700' } }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0 }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            font: { size: 12, weight: '700' }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw + ' KH';
                             }
                         }
                     }

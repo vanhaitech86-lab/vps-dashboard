@@ -357,3 +357,243 @@
     justify-content: flex-end;
     gap: 10px;
 }
+
+/* ==========================================================================
+   5 Executive KPI Cards in Customers Dashboard
+   ========================================================================== */
+.cust-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+@media (max-width: 1400px) {
+    .cust-kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 900px) {
+    .cust-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 580px) {
+    .cust-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cust-kpi-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1.5px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+.cust-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+.cust-kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 5px;
+}
+
+/* Card 1: Tổng khách hàng */
+.cust-kpi-card.card-total::before { background: #2563eb; }
+.cust-kpi-card.card-total { border-left-color: #2563eb; }
+
+/* Card 2: Khách hàng mới */
+.cust-kpi-card.card-new::before { background: #16a34a; }
+.cust-kpi-card.card-new { border-left-color: #16a34a; }
+
+/* Card 3: Khách hàng mất - Nổi bật màu đỏ */
+.cust-kpi-card.card-lost {
+    border: 1.5px solid #fca5a5;
+    background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.08);
+}
+.cust-kpi-card.card-lost::before { background: #dc2626; width: 6px; }
+
+/* Card 4: Phát sinh / Khách mất */
+.cust-kpi-card.card-ratio::before { background: #7c3aed; }
+.cust-kpi-card.card-ratio { border-left-color: #7c3aed; }
+
+/* Card 5: Khách hàng hiện có */
+.cust-kpi-card.card-active::before { background: #0284c7; }
+.cust-kpi-card.card-active { border-left-color: #0284c7; }
+
+.cust-kpi-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.cust-kpi-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.cust-kpi-label.text-red {
+    color: #b91c1c;
+}
+.cust-kpi-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-blue { background: #eff6ff; color: #2563eb; }
+.icon-green { background: #f0fdf4; color: #16a34a; }
+.icon-red { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+.icon-purple { background: #f5f3ff; color: #7c3aed; }
+.icon-sky { background: #f0f9ff; color: #0284c7; }
+
+.cust-kpi-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin: 4px 0 8px 0;
+}
+.cust-kpi-prefix {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #16a34a;
+}
+.cust-kpi-prefix.text-red {
+    color: #dc2626;
+}
+.cust-kpi-number {
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+.cust-kpi-number.text-green { color: #15803d; }
+.cust-kpi-number.text-red { color: #dc2626; }
+.cust-kpi-number.text-purple { color: #6d28d9; }
+.cust-kpi-number.text-sky { color: #0284c7; }
+
+.cust-kpi-unit {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #64748b;
+    margin-left: 2px;
+}
+.cust-kpi-unit.text-red { color: #b91c1c; }
+
+.cust-kpi-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 0.8rem;
+    color: #475569;
+}
+.cust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    white-space: nowrap;
+}
+.badge-blue { background: #dbeafe; color: #1d4ed8; }
+.badge-green { background: #dcfce7; color: #15803d; }
+.badge-red { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+.badge-purple { background: #ede9fe; color: #6d28d9; }
+.badge-sky { background: #e0f2fe; color: #0369a1; }
+
+/* ==========================================================================
+   Customer Detailed Report Table Styling
+   ========================================================================== */
+.cust-report-card {
+    border: 1.5px solid #cbd5e1;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    background: #ffffff;
+    overflow: hidden;
+}
+.cust-styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.9rem;
+}
+.cust-styled-table th, .cust-styled-table td {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    font-variant-numeric: tabular-nums;
+}
+.cust-styled-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+.cust-styled-table .section-title-row td {
+    background: #e8eff5 !important;
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 11px 14px;
+    border-top: 2px solid #94a3b8;
+    border-bottom: 1.5px solid #cbd5e1;
+}
+.cust-styled-table .parent-row td {
+    font-weight: 800;
+    background: #ffffff;
+    color: #0f172a;
+}
+.cust-styled-table .child-row td {
+    color: #334155;
+    background: #ffffff;
+}
+.cust-styled-table .total-row td {
+    font-weight: 900;
+    background: #f0f7ff !important;
+    color: #0284c7 !important;
+    border-top: 2px solid #0284c7 !important;
+    border-bottom: 2px solid #0284c7 !important;
+    font-size: 0.95rem;
+}
+
+/* Red Highlight for Lost Customers */
+.cust-lost-highlight {
+    color: #dc2626 !important;
+    font-weight: 800 !important;
+}
+.cust-lost-badge {
+    background: #fee2e2;
+    color: #dc2626;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    border: 1px solid #fecaca;
+}
+.cust-lost-total-badge {
+    background: #fef2f2;
+    color: #dc2626;
+    font-weight: 900;
+    font-size: 0.98rem;
+    padding: 2px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    border: 1.5px solid #fca5a5;
+}
+

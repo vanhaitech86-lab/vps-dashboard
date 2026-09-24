@@ -597,114 +597,162 @@
 
                     <!-- TAB 1: CƠ CẤU KHÁCH HÀNG (EXISTING) -->
                     <div id="cust-tab-structure">
-                        <!-- Customer Recency KPI Cards -->
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
-                            <!-- Under 3 months -->
-                            <div class="card" style="border-left: 5px solid #10b981; background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); padding: 16px; position: relative;">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                    <div>
-                                        <div style="font-size: 0.8rem; font-weight: 700; color: #15803d; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS &lt; 3 tháng</div>
-                                        <div style="font-size: 1.6rem; font-weight: 800; color: #166534; margin: 4px 0;"><span id="cust-recency-under3m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
-                                        <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-under3m-may" style="color: #0369a1;">0</strong> máy</div>
+                        <!-- 5 EXECUTIVE KPI CARDS -->
+                        <div class="cust-kpi-grid">
+                            <!-- Card 1: Tổng Khách Hàng -->
+                            <div class="cust-kpi-card card-total">
+                                <div class="cust-kpi-top">
+                                    <div class="cust-kpi-label">Tổng Khách Hàng</div>
+                                    <div class="cust-kpi-icon-wrap icon-blue">
+                                        <i data-lucide="users"></i>
                                     </div>
-                                    <span id="cust-recency-under3m-badge" style="background: #dcfce7; color: #15803d; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #bbf7d0; display: inline-flex; align-items: center; gap: 4px;">
-                                        <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i> Tích cực
-                                    </span>
                                 </div>
-                                <div style="margin-top: 10px; font-size: 0.78rem; color: #16a34a; font-weight: 600;">
-                                    Chiếm <span id="cust-recency-under3m-pct">0%</span> tổng KH phát sinh doanh số
+                                <div class="cust-kpi-value-row">
+                                    <span class="cust-kpi-number" id="cust-kpi-total-kh">5,006</span>
+                                    <span class="cust-kpi-unit">KH</span>
+                                </div>
+                                <div class="cust-kpi-footer">
+                                    <span>Số đầu tháng: <strong id="cust-kpi-total-may">7,626</strong> máy</span>
+                                    <span class="cust-badge badge-blue">Đầu kỳ</span>
                                 </div>
                             </div>
 
-                            <!-- 3 to 6 months -->
-                            <div class="card" style="border-left: 5px solid #f59e0b; background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%); padding: 16px; position: relative;">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                    <div>
-                                        <div style="font-size: 0.8rem; font-weight: 700; color: #b45309; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS từ 3 - 6 tháng</div>
-                                        <div style="font-size: 1.6rem; font-weight: 800; color: #92400e; margin: 4px 0;"><span id="cust-recency-3to6m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
-                                        <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-3to6m-may" style="color: #0369a1;">0</strong> máy</div>
+                            <!-- Card 2: Khách Hàng Mới -->
+                            <div class="cust-kpi-card card-new">
+                                <div class="cust-kpi-top">
+                                    <div class="cust-kpi-label">Khách Hàng Mới</div>
+                                    <div class="cust-kpi-icon-wrap icon-green">
+                                        <i data-lucide="user-plus"></i>
                                     </div>
-                                    <span id="cust-recency-3to6m-badge" style="background: #fef3c7; color: #b45309; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #fde68a; display: inline-flex; align-items: center; gap: 4px;">
-                                        <i data-lucide="clock" style="width: 14px; height: 14px;"></i> Cần chăm sóc
-                                    </span>
                                 </div>
-                                <div style="margin-top: 10px; font-size: 0.78rem; color: #d97706; font-weight: 600;">
-                                    Chiếm <span id="cust-recency-3to6m-pct">0%</span> tổng KH phát sinh doanh số
+                                <div class="cust-kpi-value-row">
+                                    <span class="cust-kpi-prefix">+</span>
+                                    <span class="cust-kpi-number text-green" id="cust-kpi-new-kh">73</span>
+                                    <span class="cust-kpi-unit">KH</span>
+                                </div>
+                                <div class="cust-kpi-footer">
+                                    <span>Tăng mới: <strong id="cust-kpi-new-may" style="color: #16a34a;">+24</strong> máy</span>
+                                    <span class="cust-badge badge-green"><i data-lucide="trending-up"></i> Tích cực</span>
                                 </div>
                             </div>
 
-                            <!-- Over 6 months -->
-                            <div class="card" style="border-left: 5px solid #ef4444; background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%); padding: 16px; position: relative;">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                    <div>
-                                        <div style="font-size: 0.8rem; font-weight: 700; color: #b91c1c; text-transform: uppercase; letter-spacing: 0.5px;">Phát sinh DS trên 6 tháng</div>
-                                        <div style="font-size: 1.6rem; font-weight: 800; color: #991b1b; margin: 4px 0;"><span id="cust-recency-over6m-kh">0</span> <span style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">KH</span></div>
-                                        <div style="font-size: 0.82rem; color: #374151;">Số máy quản lý: <strong id="cust-recency-over6m-may" style="color: #0369a1;">0</strong> máy</div>
+                            <!-- Card 3: Khách Hàng Mất (MÀU ĐỎ NỔI BẬT) -->
+                            <div class="cust-kpi-card card-lost">
+                                <div class="cust-kpi-top">
+                                    <div class="cust-kpi-label text-red">Khách Hàng Mất</div>
+                                    <div class="cust-kpi-icon-wrap icon-red">
+                                        <i data-lucide="user-minus"></i>
                                     </div>
-                                    <span id="cust-recency-over6m-badge" style="background: #fee2e2; color: #b91c1c; font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 9999px; border: 1px solid #fecaca; display: inline-flex; align-items: center; gap: 4px;">
-                                        <i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i> Nguy cơ rời bỏ
-                                    </span>
                                 </div>
-                                <div style="margin-top: 10px; font-size: 0.78rem; color: #dc2626; font-weight: 600;">
-                                    Chiếm <span id="cust-recency-over6m-pct">0%</span> tổng KH phát sinh doanh số
+                                <div class="cust-kpi-value-row">
+                                    <span class="cust-kpi-prefix text-red">-</span>
+                                    <span class="cust-kpi-number text-red" id="cust-kpi-lost-kh">5</span>
+                                    <span class="cust-kpi-unit text-red">KH</span>
+                                </div>
+                                <div class="cust-kpi-footer">
+                                    <span>Giảm: <strong id="cust-kpi-lost-may" style="color: #dc2626;">20</strong> máy</span>
+                                    <span class="cust-badge badge-red"><i data-lucide="alert-triangle"></i> Cần chú ý</span>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Phát Sinh / Khách Mất -->
+                            <div class="cust-kpi-card card-ratio">
+                                <div class="cust-kpi-top">
+                                    <div class="cust-kpi-label">Phát Sinh / KH Mất</div>
+                                    <div class="cust-kpi-icon-wrap icon-purple">
+                                        <i data-lucide="scale"></i>
+                                    </div>
+                                </div>
+                                <div class="cust-kpi-value-row">
+                                    <span class="cust-kpi-number text-purple" id="cust-kpi-ratio">14.6</span>
+                                    <span class="cust-kpi-unit">lần</span>
+                                </div>
+                                <div class="cust-kpi-footer">
+                                    <span>Tăng ròng: <strong id="cust-kpi-net-growth" style="color: #16a34a;">+68</strong> KH</span>
+                                    <span class="cust-badge badge-purple">Tỷ lệ bù đắp</span>
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Khách Hàng Hiện Có -->
+                            <div class="cust-kpi-card card-active">
+                                <div class="cust-kpi-top">
+                                    <div class="cust-kpi-label">Khách Hàng Hiện Có</div>
+                                    <div class="cust-kpi-icon-wrap icon-sky">
+                                        <i data-lucide="shield-check"></i>
+                                    </div>
+                                </div>
+                                <div class="cust-kpi-value-row">
+                                    <span class="cust-kpi-number text-sky" id="cust-kpi-active-kh">5,075</span>
+                                    <span class="cust-kpi-unit">KH</span>
+                                </div>
+                                <div class="cust-kpi-footer">
+                                    <span>Số cuối tháng: <strong id="cust-kpi-active-may" style="color: #0284c7;">7,646</strong> máy</span>
+                                    <span class="cust-badge badge-sky">Đang quản lý</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="grid-layout cols-2">
+                        <!-- CHARTS SECTION -->
+                        <div class="grid-layout cols-2 mb-20">
                             <div class="card">
-                                <div class="card-header">
-                                    <h3>Cơ Cấu Khách Hàng Theo Mảng Dịch Vụ</h3>
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <h3>Cơ Cấu Khách Hàng Hiện Có Theo Mảng Dịch Vụ</h3>
+                                    <span class="badge" style="background: #e0f2fe; color: #0369a1; font-weight: 700;">Tỷ trọng %</span>
                                 </div>
                                 <div class="card-body">
-                                    <div class="chart-container" style="height: 330px;">
+                                    <div class="chart-container" style="height: 320px;">
                                         <canvas id="customersChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                                    <h3>Thời Gian Phát Sinh Doanh Số &amp; Tổng Quản Lý</h3>
+                                    <h3>Biến Động: Khách Mới vs Khách Mất Theo Từng Mảng</h3>
                                     <div style="font-size: 0.82rem; color: #64748b;">
-                                        Tổng Máy: <strong id="cust-total-may" style="color: #0369a1; font-size: 1rem;">0</strong> | 
-                                        Tổng KH: <strong id="cust-total-kh" style="color: #b91c1c; font-size: 1rem;">0</strong>
+                                        Mới: <strong id="cust-total-new-sub" style="color: #16a34a;">+73</strong> | 
+                                        Mất: <strong id="cust-total-lost-sub" style="color: #dc2626;">-5</strong>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="chart-container" style="height: 330px;">
-                                        <canvas id="customersRecencyChart"></canvas>
+                                    <div class="chart-container" style="height: 320px;">
+                                        <canvas id="customersGrowthChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card mt-20">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                                <h3>Báo Cáo Chi Tiết Cơ Cấu Khách Hàng</h3>
-                                <select id="customers-month-filter" style="padding: 4px 8px; font-weight: bold; border-radius: 4px; border: 1px solid #cbd5e1;"></select>
+                        <!-- DETAILED CUSTOMER STRUCTURE REPORT TABLE -->
+                        <div class="card cust-report-card">
+                            <div class="card-header cust-report-header" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #ffffff; border-bottom: 1.5px solid #e2e8f0;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.3px;">Báo Cáo Chi Tiết Cơ Cấu Khách Hàng</h3>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <select id="customers-month-filter" class="cust-month-select" style="padding: 6px 12px; font-weight: 800; font-size: 0.88rem; border-radius: 6px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1e293b; cursor: pointer; outline: none;"></select>
+                                </div>
                             </div>
                             <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                                <table class="data-table" id="customersTable" style="text-align: right;">
+                                <table class="data-table cust-styled-table" id="customersTable" style="width: 100%; text-align: right; border-collapse: collapse;">
                                     <thead>
-                                        <tr>
-                                            <th rowspan="2" style="text-align: left; vertical-align: middle;">NỘI DUNG</th>
-                                            <th colspan="2" style="text-align: center; background: #f8fafc;">SỐ ĐẦU THÁNG</th>
-                                            <th id="plan-header-title" colspan="2" style="text-align: center; background: #e0f2fe; color: #0369a1;">KẾ HOẠCH TÌM KIẾM KHÁCH HÀNG THÊM</th>
-                                            <th colspan="2" style="text-align: center; background: #f0fdf4;">SL TĂNG</th>
-                                            <th colspan="2" style="text-align: center; background: #fef2f2;">SL GIẢM</th>
-                                            <th colspan="2" style="text-align: center; background: #f8fafc; font-weight: bold;">SỐ CUỐI THÁNG</th>
+                                        <tr class="cust-th-main">
+                                            <th rowspan="2" style="text-align: left; vertical-align: middle; padding: 12px 14px; font-weight: 800; color: #475569; background: #f8fafc; border: 1px solid #cbd5e1; width: 26%;">NỘI DUNG</th>
+                                            <th colspan="2" style="text-align: center; background: #f8fafc; color: #475569; font-weight: 800; border: 1px solid #cbd5e1; padding: 8px;">SỐ ĐẦU THÁNG</th>
+                                            <th colspan="2" style="text-align: center; background: #e0f2fe; color: #0284c7; font-weight: 800; border: 1px solid #bae6fd; padding: 8px;">KẾ HOẠCH TÌM KIẾM KHÁCH HÀNG THÊM</th>
+                                            <th colspan="2" style="text-align: center; background: #f0fdf4; color: #15803d; font-weight: 800; border: 1px solid #bbf7d0; padding: 8px;">SL TĂNG</th>
+                                            <th colspan="2" style="text-align: center; background: #fef2f2; color: #dc2626; font-weight: 800; border: 1px solid #fecaca; padding: 8px;">SL GIẢM</th>
+                                            <th colspan="2" style="text-align: center; background: #f8fafc; color: #1e293b; font-weight: 800; border: 1px solid #cbd5e1; padding: 8px;">SỐ CUỐI THÁNG</th>
                                         </tr>
-                                        <tr>
-                                            <th style="background: #f8fafc;">MÁY</th>
-                                            <th style="background: #f8fafc;">KH</th>
-                                            <th style="background: #e0f2fe; color: #0369a1;">MÁY</th>
-                                            <th style="background: #e0f2fe; color: #0369a1;">KH</th>
-                                            <th style="background: #f0fdf4;">MÁY</th>
-                                            <th style="background: #f0fdf4;">KH</th>
-                                            <th style="background: #fef2f2;">MÁY</th>
-                                            <th style="background: #fef2f2;">KH</th>
-                                            <th style="background: #f8fafc;">MÁY</th>
-                                            <th style="background: #f8fafc;">KH</th>
+                                        <tr class="cust-th-sub">
+                                            <th style="background: #f8fafc; color: #475569; font-weight: 700; border: 1px solid #cbd5e1; padding: 6px 10px; text-align: right;">MÁY</th>
+                                            <th style="background: #f8fafc; color: #475569; font-weight: 700; border: 1px solid #cbd5e1; padding: 6px 10px; text-align: right;">KH</th>
+                                            <th style="background: #e0f2fe; color: #0284c7; font-weight: 700; border: 1px solid #bae6fd; padding: 6px 10px; text-align: right;">MÁY</th>
+                                            <th style="background: #e0f2fe; color: #0284c7; font-weight: 700; border: 1px solid #bae6fd; padding: 6px 10px; text-align: right;">KH</th>
+                                            <th style="background: #f0fdf4; color: #16a34a; font-weight: 700; border: 1px solid #bbf7d0; padding: 6px 10px; text-align: right;">MÁY</th>
+                                            <th style="background: #f0fdf4; color: #16a34a; font-weight: 700; border: 1px solid #bbf7d0; padding: 6px 10px; text-align: right;">KH</th>
+                                            <th style="background: #fef2f2; color: #dc2626; font-weight: 700; border: 1px solid #fecaca; padding: 6px 10px; text-align: right;">MÁY</th>
+                                            <th style="background: #fef2f2; color: #dc2626; font-weight: 700; border: 1px solid #fecaca; padding: 6px 10px; text-align: right;">KH</th>
+                                            <th style="background: #f8fafc; color: #1e293b; font-weight: 700; border: 1px solid #cbd5e1; padding: 6px 10px; text-align: right;">MÁY</th>
+                                            <th style="background: #f8fafc; color: #1e293b; font-weight: 700; border: 1px solid #cbd5e1; padding: 6px 10px; text-align: right;">KH</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1012,70 +1060,212 @@
 
                 <!-- Revenue View -->
                 <section id="view-revenue" class="view hidden">
-                    <!-- Revenue Dual Navigation Bar -->
-                    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-                        <button type="button" class="btn" style="background: #2ecc71; color: #fff; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; border: none; cursor: default;">
-                            <i data-lucide="bar-chart-2" style="width: 16px; height: 16px;"></i>
-                            2. Doanh Số Lãi Gộp (Hiện Tại)
+                    <!-- Revenue Multi-Tab Navigation Bar -->
+                    <div class="rev-subnav-container">
+                        <button type="button" id="btn-rev-tab-company" class="rev-tab-btn active" onclick="window.RevenueModule.switchTab('company')">
+                            <i data-lucide="building-2" style="width: 16px; height: 16px;"></i>
+                            <span>2. Doanh Số Lãi Gộp Công Ty</span>
                         </button>
-                        <a href="#project-revenue" onclick="event.preventDefault(); document.querySelector('[data-target=\'project-revenue\']').click();" class="btn" style="background: #ffffff; color: #10b981; border: 1px solid #10b981; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; text-decoration: none; cursor: pointer; transition: all 0.2s;">
+                        <button type="button" id="btn-rev-tab-dept" class="rev-tab-btn" onclick="window.RevenueModule.switchTab('department')">
+                            <i data-lucide="layers" style="width: 16px; height: 16px;"></i>
+                            <span>2.1. Dashboard Theo Phòng Ban (Tháng & Năm)</span>
+                            <span class="badge" style="background: #f59e0b; color: #fff; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; margin-left: 4px;">Mới</span>
+                        </button>
+                        <a href="#project-revenue" onclick="event.preventDefault(); document.querySelector('[data-target=\'project-revenue\']').click();" class="rev-tab-btn rev-tab-btn-link" title="Xem chi tiết Doanh số các gói thầu dự án">
                             <i data-lucide="briefcase" style="width: 16px; height: 16px;"></i>
-                            2.1. Doanh Số Dự Án ↗
+                            <span>2.2. Doanh Số Dự Án ↗</span>
                         </a>
                     </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Doanh Số Các Công Ty (Tỷ VNĐ)</h3>
+                    <!-- SUBVIEW 1: Company Overview (Giữ nguyên giao diện hiện tại) -->
+                    <div id="rev-subview-company">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Doanh Số Các Công Ty (Tỷ VNĐ)</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="height: 350px;">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="chart-container" style="height: 350px;">
-                                <canvas id="revenueChart"></canvas>
+                        
+                        <div class="card mt-20">
+                            <div class="card-header">
+                                <h3>KẾ HOẠCH TÀI CHÍNH NĂM 2026 (ĐVT: Triệu VNĐ)</h3>
+                            </div>
+                            <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                                <table class="data-table" id="revenuePlanTable">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" style="vertical-align: middle;">CÔNG TY</th>
+                                            <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc; background: rgba(0,0,0,0.02);">DOANH SỐ</th>
+                                            <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc;">TT LÃI GỘP</th>
+                                            <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc; background: rgba(0,0,0,0.02);">% LÃI GỘP</th>
+                                            <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc;">% CP / LÃI GỘP</th>
+                                            <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc; background: rgba(0,0,0,0.02);">CHI PHÍ</th>
+                                            <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc;">LNTT</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">KH</th>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">TH</th>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">% Đạt</th>
+                                            <th style="text-align: right;">KH</th>
+                                            <th style="text-align: right;">TH</th>
+                                            <th style="text-align: right;">% Đạt</th>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">KH</th>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">TH</th>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">% Đạt</th>
+                                            <th style="text-align: right;">KH</th>
+                                            <th style="text-align: right;">TH</th>
+                                            <th style="text-align: right;">% Đạt</th>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">KH</th>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">TH</th>
+                                            <th style="text-align: right; background: rgba(0,0,0,0.02);">% Đạt</th>
+                                            <th style="text-align: right;">KH</th>
+                                            <th style="text-align: right;">TH</th>
+                                            <th style="text-align: right;">% Đạt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="card mt-20">
-                        <div class="card-header">
-                            <h3>KẾ HOẠCH TÀI CHÍNH NĂM 2026 (ĐVT: Triệu VNĐ)</h3>
+
+                    <!-- SUBVIEW 2: Department Dashboard (Bổ sung mới cho 7 phòng ban) -->
+                    <div id="rev-subview-dept" class="hidden">
+                        <!-- Toolbar Bộ lọc cục bộ -->
+                        <div class="dept-toolbar-card">
+                            <div class="dept-toolbar-inner">
+                                <div class="dept-title-group">
+                                    <h3>
+                                        <i data-lucide="pie-chart" style="color: #10b981; width: 20px; height: 20px;"></i>
+                                        <span>BÁO CÁO DOANH SỐ & LÃI GỘP 7 PHÒNG BAN</span>
+                                    </h3>
+                                    <p>Phân phối • Thuê máy • Dịch vụ • Online • Dự án • KDTH • Khác của từng đơn vị</p>
+                                </div>
+                                <div class="dept-controls-group">
+                                    <!-- Chọn Đơn Vị -->
+                                    <div class="dept-select-wrapper">
+                                        <select id="dept-filter-company" class="dept-select" onchange="window.RevenueModule.onDeptFilterChange()">
+                                            <option value="all">Tất cả đơn vị (Toàn tập đoàn)</option>
+                                            <option value="THH">Tân Hồng Hà</option>
+                                            <option value="Viet">Việt</option>
+                                            <option value="XemSon">Xem Sơn</option>
+                                            <option value="VPSM">VPS M</option>
+                                            <option value="ITSS">ITSS</option>
+                                            <option value="VPVPS">Văn phòng VPS</option>
+                                        </select>
+                                        <i data-lucide="chevron-down" class="dept-select-arrow" style="width: 14px; height: 14px;"></i>
+                                    </div>
+
+                                    <!-- Chọn Tháng -->
+                                    <div class="dept-select-wrapper">
+                                        <select id="dept-filter-month" class="dept-select" onchange="window.RevenueModule.onDeptFilterChange()">
+                                            <option value="1">Tháng 01</option>
+                                            <option value="2">Tháng 02</option>
+                                            <option value="3">Tháng 03</option>
+                                            <option value="4">Tháng 04</option>
+                                            <option value="5">Tháng 05</option>
+                                            <option value="6">Tháng 06</option>
+                                            <option value="7">Tháng 07</option>
+                                            <option value="8" selected>Tháng 08 (Chốt sổ)</option>
+                                            <option value="9">Tháng 09</option>
+                                            <option value="10">Tháng 10</option>
+                                            <option value="11">Tháng 11</option>
+                                            <option value="12">Tháng 12</option>
+                                        </select>
+                                        <i data-lucide="chevron-down" class="dept-select-arrow" style="width: 14px; height: 14px;"></i>
+                                    </div>
+
+                                    <!-- Chuyển đổi Tháng vs Lũy Kế Năm -->
+                                    <div class="dept-view-toggle">
+                                        <button type="button" id="btn-dept-mode-month" class="dept-toggle-btn active" onclick="window.RevenueModule.setDeptMode('month')">Theo Tháng</button>
+                                        <button type="button" id="btn-dept-mode-year" class="dept-toggle-btn" onclick="window.RevenueModule.setDeptMode('year')">Lũy Kế Năm (YTD)</button>
+                                    </div>
+
+                                    <!-- Nút Xuất Excel -->
+                                    <button type="button" class="dept-btn-export" onclick="window.RevenueModule.exportDeptExcel()" title="Xuất dữ liệu 7 phòng ban ra file Excel/CSV">
+                                        <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+                                        <span>Xuất Excel</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                            <table class="data-table" id="revenuePlanTable">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" style="vertical-align: middle;">CÔNG TY</th>
-                                        <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc; background: rgba(0,0,0,0.02);">DOANH SỐ</th>
-                                        <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc;">TT LÃI GỘP</th>
-                                        <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc; background: rgba(0,0,0,0.02);">% LÃI GỘP</th>
-                                        <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc;">% CP / LÃI GỘP</th>
-                                        <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc; background: rgba(0,0,0,0.02);">CHI PHÍ</th>
-                                        <th colspan="3" style="text-align: center; border-bottom: 1px solid #ccc;">LNTT</th>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">KH</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">TH</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">% Đạt</th>
-                                        <th style="text-align: right;">KH</th>
-                                        <th style="text-align: right;">TH</th>
-                                        <th style="text-align: right;">% Đạt</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">KH</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">TH</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">% Đạt</th>
-                                        <th style="text-align: right;">KH</th>
-                                        <th style="text-align: right;">TH</th>
-                                        <th style="text-align: right;">% Đạt</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">KH</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">TH</th>
-                                        <th style="text-align: right; background: rgba(0,0,0,0.02);">% Đạt</th>
-                                        <th style="text-align: right;">KH</th>
-                                        <th style="text-align: right;">TH</th>
-                                        <th style="text-align: right;">% Đạt</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
+
+                        <!-- 7 KPI Cards Phòng Ban -->
+                        <div class="dept-kpi-grid" id="dept-kpi-container">
+                            <!-- Populated dynamically by JS -->
+                        </div>
+
+                        <!-- 2 Biểu đồ Phân tích Phòng Ban -->
+                        <div class="dept-charts-grid">
+                            <div class="dept-chart-card">
+                                <div class="dept-chart-header">
+                                    <h4 id="dept-chart-rev-title">So Sánh Doanh Số: Kế Hoạch vs Thực Tế (Triệu VNĐ)</h4>
+                                </div>
+                                <div class="dept-chart-container">
+                                    <canvas id="deptRevenueChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="dept-chart-card">
+                                <div class="dept-chart-header">
+                                    <h4 id="dept-chart-profit-title">Lãi Gộp & Tỷ Trọng Lãi Gộp (% LG)</h4>
+                                </div>
+                                <div class="dept-chart-container">
+                                    <canvas id="deptProfitChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bảng Ma Trận Tài Chính Chi Tiết 7 Phòng Ban -->
+                        <div class="dept-table-card">
+                            <div class="dept-table-header">
+                                <div>
+                                    <h4 id="dept-table-title">BẢNG KẾ HOẠCH & THỰC HIỆN DOANH SỐ - LÃI GỘP THEO PHÒNG BAN</h4>
+                                    <div class="dept-table-sub" id="dept-table-subtitle">ĐVT: Triệu VNĐ • Dữ liệu chi tiết từng mảng kinh doanh</div>
+                                </div>
+                                <span class="badge" id="dept-table-badge" style="background: #10b981; color: #fff; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px;">Toàn Tập Đoàn</span>
+                            </div>
+                            <div class="dept-table-responsive">
+                                <table class="dept-matrix-table" id="deptMatrixTable">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" style="vertical-align: middle; min-width: 220px;">PHÒNG BAN / MẢNG KINH DOANH</th>
+                                            <th colspan="3" style="text-align: center; background: #e0f2fe; color: #0369a1; border-bottom: 2px solid #bae6fd;">DOANH SỐ THÁNG</th>
+                                            <th colspan="4" style="text-align: center; background: #ecfdf5; color: #047857; border-bottom: 2px solid #a7f3d0;">LÃI GỘP THÁNG</th>
+                                            <th colspan="3" style="text-align: center; background: #fef3c7; color: #92400e; border-bottom: 2px solid #fde68a;">DOANH SỐ NĂM</th>
+                                            <th colspan="4" style="text-align: center; background: #f3e8ff; color: #6b21a8; border-bottom: 2px solid #e9d5ff;">LÃI GỘP NĂM</th>
+                                        </tr>
+                                        <tr>
+                                            <!-- Doanh số tháng -->
+                                            <th style="text-align: right; background: #f0f9ff;">KH</th>
+                                            <th style="text-align: right; background: #f0f9ff;">TH</th>
+                                            <th style="text-align: right; background: #f0f9ff;">% Đạt</th>
+                                            <!-- Lãi gộp tháng -->
+                                            <th style="text-align: right; background: #f0fdf4;">KH</th>
+                                            <th style="text-align: right; background: #f0fdf4;">TH</th>
+                                            <th style="text-align: right; background: #f0fdf4;">% Đạt</th>
+                                            <th style="text-align: right; background: #f0fdf4;">% LG</th>
+                                            <!-- Doanh số năm -->
+                                            <th style="text-align: right; background: #fffbeb;">KH Năm</th>
+                                            <th style="text-align: right; background: #fffbeb;">Lũy Kế TH</th>
+                                            <th style="text-align: right; background: #fffbeb;">% Đạt</th>
+                                            <!-- Lãi gộp năm -->
+                                            <th style="text-align: right; background: #faf5ff;">KH Năm</th>
+                                            <th style="text-align: right; background: #faf5ff;">Lũy Kế TH</th>
+                                            <th style="text-align: right; background: #faf5ff;">% Đạt</th>
+                                            <th style="text-align: right; background: #faf5ff;">% LG LK</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="deptMatrixTableBody">
+                                        <!-- Populated dynamically by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1345,333 +1535,161 @@
 
                 <!-- Debt View -->
                 <section id="view-debt" class="view hidden">
-                    <!-- Primary Dual Tabs Navigation -->
-                    <div class="debt-main-tabs-nav">
-                        <button id="tab-debt-current" class="debt-main-tab-btn active" type="button">
-                            <i data-lucide="bar-chart-2" style="width:18px;height:18px;"></i>
-                            <span>📊 Tình Hình Công Nợ (Dashboard Hiện Tại)</span>
-                        </button>
-                        <button id="tab-debt-report" class="debt-main-tab-btn" type="button">
-                            <i data-lucide="file-spreadsheet" style="width:18px;height:18px;"></i>
-                            <span>📑 Báo Cáo Tổng Hợp & Chi Tiết (Tự Động)</span>
-                        </button>
-                    </div>
-
-                    <!-- Tab 1 Container: Dashboard Hiện Tại (Giữ nguyên vẹn 100%) -->
-                    <div id="debt-main-content-current" class="debt-main-content">
-                        <div class="card">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-                                <h3>Tình Hình Công Nợ (Tỷ VNĐ)</h3>
-                                <span style="font-size: 0.8rem; color: #0284c7; font-weight: 500; background: #e0f2fe; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">
-                                    <i data-lucide="mouse-pointer-click" style="width: 13px; height: 13px;"></i>
-                                    Nhấn vào cột đơn vị trên biểu đồ để xem chi tiết khách hàng
-                                </span>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container" style="height: 350px;">
-                                    <canvas id="debtChart"></canvas>
+                    <!-- Executive KPI Cards -->
+                    <div class="debt-kpi-grid mb-20">
+                        <!-- Card 1: Tổng Dư Nợ -->
+                        <div class="debt-kpi-card card-total">
+                            <div class="debt-kpi-top">
+                                <span class="debt-kpi-label">Tổng Công Nợ</span>
+                                <div class="debt-kpi-icon icon-blue">
+                                    <i data-lucide="wallet"></i>
                                 </div>
+                            </div>
+                            <div class="debt-kpi-value-row">
+                                <span class="debt-kpi-val" id="debt-summary-total">26.90</span>
+                                <span class="debt-kpi-unit">Tỷ VNĐ</span>
+                            </div>
+                            <div class="debt-kpi-footer">
+                                <span>Toàn Tập đoàn VPS</span>
+                                <span class="debt-badge badge-blue">6 đơn vị</span>
                             </div>
                         </div>
-                        
-                        <div class="card mt-20">
-                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <h3 id="bad-debt-title" style="margin: 0;">Danh Sách Khách Hàng Khó Đòi</h3>
-                                    <button id="bad-debt-reset-filter" class="btn btn-sm" type="button" style="display: none; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1; cursor: pointer; font-weight: 500;">
-                                        ✕ Xem tất cả
-                                    </button>
+
+                        <!-- Card 2: Nợ Trong Hạn -->
+                        <div class="debt-kpi-card card-normal">
+                            <div class="debt-kpi-top">
+                                <span class="debt-kpi-label">Nợ Trong Hạn</span>
+                                <div class="debt-kpi-icon icon-teal">
+                                    <i data-lucide="shield-check"></i>
                                 </div>
                             </div>
-                            <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                                <table class="data-table">
+                            <div class="debt-kpi-value-row">
+                                <span class="debt-kpi-val text-teal" id="debt-summary-normal">22.44</span>
+                                <span class="debt-kpi-unit">Tỷ VNĐ</span>
+                            </div>
+                            <div class="debt-kpi-footer">
+                                <span>Chiếm <strong id="debt-summary-normal-rate">83.4%</strong> tổng nợ</span>
+                                <span class="debt-badge badge-green">An toàn</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Nợ Quá Hạn -->
+                        <div class="debt-kpi-card card-overdue">
+                            <div class="debt-kpi-top">
+                                <span class="debt-kpi-label">Nợ Quá Hạn</span>
+                                <div class="debt-kpi-icon icon-amber">
+                                    <i data-lucide="clock"></i>
+                                </div>
+                            </div>
+                            <div class="debt-kpi-value-row">
+                                <span class="debt-kpi-val text-amber" id="debt-summary-overdue">4.45</span>
+                                <span class="debt-kpi-unit">Tỷ VNĐ</span>
+                            </div>
+                            <div class="debt-kpi-footer">
+                                <span>Chiếm <strong id="debt-summary-overdue-rate">16.5%</strong> tổng nợ</span>
+                                <span class="debt-badge badge-amber">Cần đôn đốc</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Nợ Khó Đòi -->
+                        <div class="debt-kpi-card card-bad">
+                            <div class="debt-kpi-top">
+                                <span class="debt-kpi-label text-red">Nợ Khó Đòi</span>
+                                <div class="debt-kpi-icon icon-red">
+                                    <i data-lucide="alert-triangle"></i>
+                                </div>
+                            </div>
+                            <div class="debt-kpi-value-row">
+                                <span class="debt-kpi-val text-red" id="debt-summary-bad">0.01</span>
+                                <span class="debt-kpi-unit text-red">Tỷ VNĐ</span>
+                            </div>
+                            <div class="debt-kpi-footer">
+                                <span>10 Triệu (Đơn vị Việt)</span>
+                                <span class="debt-badge badge-red">Cảnh báo rủi ro</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spotlight Chart Card (EXACT MATCH TO USER SCREENSHOT) -->
+                    <div class="card debt-chart-card mb-20">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding: 14px 20px; background: #ffffff; border-bottom: 1.5px solid #e2e8f0;">
+                            <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #0f172a;">Tình Hình Công Nợ (Tỷ VNĐ)</h3>
+                            <span class="debt-chart-hint" style="font-size: 0.8rem; color: #0284c7; font-weight: 600; background: #e0f2fe; padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #bae6fd;">
+                                <i data-lucide="mouse-pointer-click" style="width: 13px; height: 13px;"></i>
+                                * Nhấn vào cột đơn vị trên biểu đồ để xem chi tiết khách hàng
+                            </span>
+                        </div>
+                        <div class="card-body" style="padding: 20px;">
+                            <div class="chart-container" style="height: 380px; position: relative;">
+                                <canvas id="debtChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Executive Summary Table (SCIENTIFIC & PROFESSIONAL BREAKDOWN) -->
+                    <div class="card debt-summary-card">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: #ffffff; border-bottom: 1.5px solid #e2e8f0;">
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="table-2" style="width: 18px; height: 18px; color: #0284c7;"></i>
+                                    Bảng Tổng Hợp Công Nợ Theo Đơn Vị Thành Viên
+                                </h3>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #64748b;">
+                                Đơn vị tính: <strong>Tỷ VNĐ</strong>
+                            </div>
+                        </div>
+                        <div class="table-responsive" style="width: 100%; overflow-x: auto;">
+                            <table class="data-table debt-styled-table" style="width: 100%; text-align: right; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left; background: #f8fafc; color: #475569; font-weight: 800; border: 1px solid #cbd5e1; padding: 10px 14px; width: 22%;">ĐƠN VỊ THÀNH VIÊN</th>
+                                        <th style="text-align: right; background: #f0f9ff; color: #0369a1; font-weight: 800; border: 1px solid #cbd5e1; padding: 10px 14px;">NỢ TRONG HẠN</th>
+                                        <th style="text-align: right; background: #fffbeb; color: #b45309; font-weight: 800; border: 1px solid #cbd5e1; padding: 10px 14px;">NỢ QUÁ HẠN</th>
+                                        <th style="text-align: right; background: #fef2f2; color: #dc2626; font-weight: 800; border: 1px solid #cbd5e1; padding: 10px 14px;">NỢ KHÓ ĐÒI</th>
+                                        <th style="text-align: right; background: #f8fafc; color: #0f172a; font-weight: 800; border: 1px solid #cbd5e1; padding: 10px 14px;">TỔNG CÔNG NỢ</th>
+                                        <th style="text-align: center; background: #f8fafc; color: #475569; font-weight: 800; border: 1px solid #cbd5e1; padding: 10px 14px; width: 14%;">TỶ TRỌNG</th>
+                                        <th style="text-align: center; background: #f8fafc; color: #475569; font-weight: 800; border: 1px solid #cbd5e1; padding: 10px 14px; width: 18%;">TÌNH TRẠNG &amp; CHI TIẾT</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="debt-unit-summary-tbody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Lightweight Drilldown Modal for Company Customers -->
+                    <div id="debt-company-modal" class="debt-modal" style="display: none;">
+                        <div class="debt-modal-content" style="max-width: 850px; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.25);">
+                            <div class="debt-modal-header" style="padding: 16px 20px; background: #f8fafc; border-bottom: 1.5px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h3 id="debt-modal-comp-name" style="margin: 0; font-size: 1.1rem; font-weight: 800; color: #0f172a;">Chi Tiết Khách Hàng - Tân Hồng Hà</h3>
+                                    <p id="debt-modal-comp-summary" style="margin: 3px 0 0 0; font-size: 0.82rem; color: #64748b;">Tổng công nợ: 13.20 Tỷ VNĐ</p>
+                                </div>
+                                <button type="button" class="btn-close" onclick="window.DebtModule.closeCompanyModal()" style="background: none; border: none; font-size: 1.5rem; line-height: 1; cursor: pointer; color: #64748b;">&times;</button>
+                            </div>
+                            <div class="debt-modal-body" style="padding: 16px 20px; max-height: 65vh; overflow-y: auto;">
+                                <table class="data-table" style="width: 100%; font-size: 0.88rem; border-collapse: collapse;">
                                     <thead>
-                                        <tr>
-                                            <th>Khách Hàng</th>
-                                            <th style="padding-left: 0;">
-                                                <select id="bad-debt-company-filter" style="border: none; border-bottom: 1px dashed #ccc; border-radius: 0; padding: 2px 0; font-weight: bold; background: transparent; cursor: pointer; color: #6c757d; text-transform: uppercase; font-size: 0.75rem; outline: none;">
-                                                    <option value="all">ĐƠN VỊ</option>
-                                                    <option value="THH">Tân Hồng Hà</option>
-                                                    <option value="Viet">Việt</option>
-                                                    <option value="XemSon">Xem Sơn</option>
-                                                    <option value="VPSM">VPS M</option>
-                                                    <option value="ITSS">ITSS</option>
-                                                    <option value="VPVPS">Văn phòng VPS</option>
-                                                </select>
-                                            </th>
-                                            <th>Số Tiền (VNĐ)</th>
-                                            <th>Số Ngày Quá Hạn</th>
-                                            <th>Trạng Thái</th>
+                                        <tr style="background: #f1f5f9; color: #334155; font-size: 0.8rem; text-transform: uppercase;">
+                                            <th style="padding: 8px 10px; width: 40px; text-align: center;">STT</th>
+                                            <th style="padding: 8px 10px; text-align: left;">Khách Hàng</th>
+                                            <th style="padding: 8px 10px; text-align: right;">Trong Hạn</th>
+                                            <th style="padding: 8px 10px; text-align: right;">Quá Hạn</th>
+                                            <th style="padding: 8px 10px; text-align: right;">Khó Đòi</th>
+                                            <th style="padding: 8px 10px; text-align: right;">Tổng Nợ</th>
+                                            <th style="padding: 8px 10px; text-align: center;">Tuổi Nợ</th>
+                                            <th style="padding: 8px 10px; text-align: center;">Trạng Thái / Xử Lý</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="bad-debt-table-body">
-                                        <!-- Populated by JS -->
+                                    <tbody id="debt-company-customers-tbody">
+                                        <!-- Populated on bar click -->
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Tab 2 Container: Báo Cáo Tổng Hợp & Chi Tiết Tự Động (Mới) -->
-                    <div id="debt-main-content-report" class="debt-main-content" style="display: none;">
-                        <!-- Sub-Tabs Navigation for Report -->
-                        <div class="debt-tabs-nav">
-                            <button class="debt-tab-btn tab-summary active" data-tab="summary">
-                                <i data-lucide="file-spreadsheet" style="width:16px;height:16px;"></i>
-                                <span>Báo Cáo Tổng Hợp (Mẫu 1)</span>
-                            </button>
-                            <button class="debt-tab-btn tab-detail" data-tab="detail">
-                                <i data-lucide="list" style="width:16px;height:16px;"></i>
-                                <span>Danh Sách Chi Tiết (Mẫu 2)</span>
-                            </button>
-                            <button class="debt-tab-btn tab-chart" data-tab="chart">
-                                <i data-lucide="bar-chart-3" style="width:16px;height:16px;"></i>
-                                <span>Biểu Đồ & Cơ Cấu Nợ</span>
-                            </button>
-                        </div>
-
-                        <!-- Debt Control Bar -->
-                        <div class="debt-control-bar">
-                            <div class="debt-filters-group">
-                                <div style="display:flex; align-items:center; gap:6px;">
-                                    <label style="font-size:0.8rem; font-weight:600; color:#475569;">Đơn vị:</label>
-                                    <select id="debt-unit-filter" class="debt-select-input">
-                                        <option value="all">Toàn Tập đoàn VPS</option>
-                                        <option value="THH">Tân Hồng Hà</option>
-                                        <option value="Viet">Việt</option>
-                                        <option value="XemSon">Xem Sơn</option>
-                                        <option value="VPSM">VPS M</option>
-                                        <option value="ITSS">ITSS</option>
-                                        <option value="VPVPS">Văn phòng VPS</option>
-                                    </select>
-                                </div>
-                                <div style="display:flex; align-items:center; gap:6px;">
-                                    <label style="font-size:0.8rem; font-weight:600; color:#475569;">Kỳ Báo Cáo:</label>
-                                    <select id="debt-period-filter" class="debt-select-input">
-                                        <option value="9">Tháng 9/2026</option>
-                                        <option value="8">Tháng 8/2026</option>
-                                        <option value="7">Tháng 7/2026</option>
-                                        <option value="6">Tháng 6/2026</option>
-                                        <option value="5">Tháng 5/2026</option>
-                                        <option value="4">Tháng 4/2026</option>
-                                        <option value="3">Tháng 3/2026</option>
-                                        <option value="2">Tháng 2/2026</option>
-                                        <option value="1">Tháng 1/2026</option>
-                                        <option value="10">Tháng 10/2026</option>
-                                        <option value="11">Tháng 11/2026</option>
-                                        <option value="12">Tháng 12/2026</option>
-                                    </select>
-                                </div>
-                                <div id="debt-search-box" style="display:none; align-items:center; gap:6px;">
-                                    <input type="text" id="debt-search-customer" placeholder="Tìm tên/mã khách hàng..." class="debt-select-input" style="width: 200px;">
-                                </div>
-                            </div>
-                            <div class="debt-actions-group">
-                                <a href="Mau_Bao_Cao_Cong_No_VPS.xlsx" download="Mau_Bao_Cao_Cong_No_VPS.xlsx" class="debt-btn-action debt-btn-download" title="Tải mẫu Excel 2 sheet có sẵn công thức tự động để gửi đơn vị nhập liệu">
-                                    <i data-lucide="download" style="width:14px;height:14px;"></i>
-                                    <span>Tải Mẫu Excel</span>
-                                </a>
-                                <button id="btn-debt-export" class="debt-btn-action debt-btn-export" title="Xuất dữ liệu công nợ đang xem ra file CSV/Excel">
-                                    <i data-lucide="file-spreadsheet" style="width:14px;height:14px;"></i>
-                                    <span>Xuất Dữ Liệu</span>
-                                </button>
-                                <button id="btn-debt-add-cust" class="debt-btn-action debt-btn-add" title="Thêm khách hàng mới vào danh sách chi tiết và tự động cập nhật báo cáo tổng hợp">
-                                    <i data-lucide="plus-circle" style="width:14px;height:14px;"></i>
-                                    <span>Thêm Khách Hàng</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Debt KPI Grid -->
-                        <div class="debt-kpi-grid">
-                            <div class="debt-kpi-card normal">
-                                <div class="kpi-title">Tổng Dư Nợ Kỳ Này</div>
-                                <div class="kpi-num" id="debt-kpi-total">0 ₫</div>
-                                <div class="kpi-desc" id="debt-kpi-total-sub">So với tháng trước</div>
-                            </div>
-                            <div class="debt-kpi-card rate">
-                                <div class="kpi-title">Nợ Trong Hạn / Bình Thường</div>
-                                <div class="kpi-num" id="debt-kpi-normal" style="color:#0284c7;">0 ₫</div>
-                                <div class="kpi-desc" id="debt-kpi-normal-rate">0% tổng dư nợ</div>
-                            </div>
-                            <div class="debt-kpi-card overdue">
-                                <div class="kpi-title">Nợ Quá Hạn</div>
-                                <div class="kpi-num" id="debt-kpi-overdue" style="color:#f59e0b;">0 ₫</div>
-                                <div class="kpi-desc" id="debt-kpi-overdue-rate">0% tổng dư nợ</div>
-                            </div>
-                            <div class="debt-kpi-card bad">
-                                <div class="kpi-title">Nợ Khó Đòi</div>
-                                <div class="kpi-num" id="debt-kpi-bad" style="color:#dc2626;">0 ₫</div>
-                                <div class="kpi-desc" id="debt-kpi-bad-count">0 khách hàng</div>
-                            </div>
-                        </div>
-
-                        <!-- Sub-Tab 1: Summary Table (Image 1) -->
-                        <div id="debt-view-summary" class="debt-view-content">
-                            <div class="card">
-                                <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                                    <div>
-                                        <h3 id="summary-report-title" style="color:#002060; font-size:1.05rem; font-weight:700;">BÁO CÁO TỔNG HỢP CÔNG NỢ - TẬP ĐOÀN VPS</h3>
-                                        <p id="summary-report-sub" style="font-size:0.8rem; color:#64748b; margin-top:2px;">Tháng 9 năm 2026 • Đơn vị tính: Đồng • Công thức tự động</p>
-                                    </div>
-                                    <div style="font-size:0.75rem; color:#059669; font-weight:600; display:flex; align-items:center; gap:4px; background:#ecfdf5; padding:4px 8px; border-radius:4px; border:1px solid #a7f3d0;">
-                                        <i data-lucide="check-circle-2" style="width:14px;height:14px;"></i>
-                                        <span>Tự động tính theo logic công thức</span>
-                                    </div>
-                                </div>
-                                <div class="debt-table-wrapper">
-                                    <table class="excel-debt-table" id="table-debt-summary">
-                                        <thead class="summary-header">
-                                            <tr>
-                                                <th rowspan="2" style="width: 45px;">TT</th>
-                                                <th rowspan="2" style="width: 220px;">PHÒNG BAN</th>
-                                                <th rowspan="2" style="width: 130px;">DƯ NỢ THÁNG TRƯỚC</th>
-                                                <th rowspan="2" style="width: 130px;">DƯ NỢ THÁNG NÀY</th>
-                                                <th colspan="5" style="background:#bdd7ee; color:#002060;">THU TIỀN THÁNG</th>
-                                                <th rowspan="2" style="width: 200px;">TÊN KH NỢ KHÓ ĐÒI</th>
-                                            </tr>
-                                            <tr>
-                                                <th style="width: 120px;">KẾ HOẠCH THÁNG</th>
-                                                <th style="width: 105px;">KH TUẦN</th>
-                                                <th style="width: 105px;">THỰC HIỆN TUẦN</th>
-                                                <th style="width: 120px;">LŨY KẾ THU TIỀN</th>
-                                                <th style="width: 85px;">TỶ LỆ (%)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="debt-summary-tbody">
-                                            <!-- Populated by debt.js -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sub-Tab 2: Detail Table (Image 2) -->
-                        <div id="debt-view-detail" class="debt-view-content" style="display: none;">
-                            <div class="card">
-                                <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                                    <div>
-                                        <h3 id="detail-report-title" style="color:#15803d; font-size:1.05rem; font-weight:700;">DANH SÁCH CÔNG NỢ CHI TIẾT CỦA ĐƠN VỊ</h3>
-                                        <p id="detail-report-sub" style="font-size:0.8rem; color:#64748b; margin-top:2px;">Theo dõi chi tiết theo từng khách hàng • Công thức: Nợ cuối kỳ = Trong hạn + Quá hạn + Khó đòi</p>
-                                    </div>
-                                    <div style="display:flex; gap:8px;">
-                                        <button class="debt-btn-action debt-btn-add" onclick="window.DebtModule && window.DebtModule.openAddModal()" style="font-size:0.78rem; padding:5px 10px;">
-                                            <i data-lucide="user-plus" style="width:13px;height:13px;"></i> Thêm Khách Hàng
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="debt-table-wrapper">
-                                    <table class="excel-debt-table" id="table-debt-detail">
-                                        <thead class="detail-header">
-                                            <tr>
-                                                <th style="width: 50px;">Stt</th>
-                                                <th style="width: 120px;">Mã khách</th>
-                                                <th style="min-width: 240px; text-align: left;">Tên khách</th>
-                                                <th style="width: 150px; background:#5a9336;">Nợ cuối kỳ</th>
-                                                <th style="width: 140px;">Trong hạn</th>
-                                                <th style="width: 140px;">Quá hạn</th>
-                                                <th style="width: 140px;">Khó đòi</th>
-                                                <th style="width: 90px;">Thao tác</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="debt-detail-tbody">
-                                            <!-- Populated by debt.js -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sub-Tab 3: Chart View -->
-                        <div id="debt-view-chart" class="debt-view-content" style="display: none;">
-                            <div class="grid-layout cols-2">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>Cơ Cấu Công Nợ Theo Loại (Tỷ VNĐ)</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart-container" style="height: 340px;">
-                                            <canvas id="debtStructureChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>Tỷ Trọng Nợ Theo Đơn Vị & Phòng Ban</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart-container" style="height: 340px;">
-                                            <canvas id="debtDeptChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Customer Modal for Adding / Editing -->
-                        <div id="debt-cust-modal" class="debt-modal">
-                            <div class="debt-modal-content">
-                                <div class="debt-modal-header">
-                                    <h3 id="debt-modal-title">Thêm Khách Hàng Nợ</h3>
-                                    <button class="debt-modal-close" onclick="window.DebtModule && window.DebtModule.closeModal()">&times;</button>
-                                </div>
-                                <form id="debt-customer-form" onsubmit="event.preventDefault(); window.DebtModule && window.DebtModule.saveCustomer();">
-                                    <div class="debt-modal-body">
-                                        <input type="hidden" id="debt-form-id">
-                                        <div class="debt-form-group">
-                                            <label for="debt-form-unit">Đơn Vị *</label>
-                                            <select id="debt-form-unit" class="debt-select-input" required>
-                                                <option value="THH">Tân Hồng Hà</option>
-                                                <option value="Viet">Việt</option>
-                                                <option value="XemSon">Xem Sơn</option>
-                                                <option value="VPSM">VPS M</option>
-                                                <option value="ITSS">ITSS</option>
-                                                <option value="VPVPS">Văn phòng VPS</option>
-                                            </select>
-                                        </div>
-                                        <div class="debt-form-group">
-                                            <label for="debt-form-dept">Phòng Ban Quản Lý *</label>
-                                            <select id="debt-form-dept" class="debt-select-input" required>
-                                                <option value="dept_kt">I. Phòng Kỹ thuật/ thuê máy</option>
-                                                <option value="dept_kd">II. Phòng KD bán máy</option>
-                                                <option value="dept_da">III. Dự Án</option>
-                                                <option value="dept_ttpp">IV. TTPP/ Bán buôn</option>
-                                            </select>
-                                        </div>
-                                        <div style="display:grid; grid-template-columns: 1fr 2fr; gap: 10px;">
-                                            <div class="debt-form-group">
-                                                <label for="debt-form-code">Mã Khách *</label>
-                                                <input type="text" id="debt-form-code" placeholder="VD: KH-001" required>
-                                            </div>
-                                            <div class="debt-form-group">
-                                                <label for="debt-form-name">Tên Khách Hàng *</label>
-                                                <input type="text" id="debt-form-name" placeholder="Tên đơn vị, cơ quan, cá nhân..." required>
-                                            </div>
-                                        </div>
-                                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-                                            <div class="debt-form-group">
-                                                <label for="debt-form-normal">Trong Hạn (₫)</label>
-                                                <input type="number" id="debt-form-normal" value="0" min="0" step="1000">
-                                            </div>
-                                            <div class="debt-form-group">
-                                                <label for="debt-form-overdue">Quá Hạn (₫)</label>
-                                                <input type="number" id="debt-form-overdue" value="0" min="0" step="1000">
-                                            </div>
-                                            <div class="debt-form-group">
-                                                <label for="debt-form-bad" style="color:#dc2626;">Khó Đòi (₫)</label>
-                                                <input type="number" id="debt-form-bad" value="0" min="0" step="1000">
-                                            </div>
-                                        </div>
-                                        <div class="debt-form-group">
-                                            <label for="debt-form-note">Ghi Chú / Tình Trạng Thu Hồi</label>
-                                            <input type="text" id="debt-form-note" placeholder="VD: Khoá máy, đang pháp lý, chờ ký nghiệm thu...">
-                                        </div>
-                                    </div>
-                                    <div class="debt-modal-footer">
-                                        <button type="button" class="debt-btn-action" style="background:#e2e8f0; color:#334155;" onclick="window.DebtModule && window.DebtModule.closeModal()">Hủy Bỏ</button>
-                                        <button type="submit" class="debt-btn-action debt-btn-add">Lưu Dữ Liệu</button>
-                                    </div>
-                                </form>
+                            <div class="debt-modal-footer" style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end;">
+                                <button type="button" class="btn btn-secondary" onclick="window.DebtModule.closeCompanyModal()" style="padding: 6px 16px; font-weight: 700; border-radius: 6px; cursor: pointer; background: #e2e8f0; color: #334155; border: none;">Đóng</button>
                             </div>
                         </div>
                     </div>

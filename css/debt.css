@@ -430,13 +430,17 @@
 
 .debt-modal-content {
     background: #ffffff;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 540px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    width: 92%;
+    max-width: 900px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     overflow: hidden;
     transform: scale(0.95);
     transition: transform 0.2s ease;
+}
+
+.debt-modal.active .debt-modal-content {
+    transform: scale(1);
 }
 
 .debt-modal.active .debt-modal-content {
@@ -533,3 +537,196 @@
     from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
+/* ==========================================================================
+   Redesigned Executive Debt Dashboard Styles (Clean, Scientific, Focused)
+   ========================================================================== */
+.debt-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+@media (max-width: 1024px) {
+    .debt-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 580px) {
+    .debt-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.debt-kpi-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1.5px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+.debt-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+.debt-kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 5px;
+}
+
+.debt-kpi-card.card-total::before { background: #1e40af; }
+.debt-kpi-card.card-total { border-left-color: #1e40af; }
+
+.debt-kpi-card.card-normal::before { background: #2b7a9e; }
+.debt-kpi-card.card-normal { border-left-color: #2b7a9e; }
+
+.debt-kpi-card.card-overdue::before { background: #f59e0b; }
+.debt-kpi-card.card-overdue { border-left-color: #f59e0b; }
+
+.debt-kpi-card.card-bad {
+    border: 1.5px solid #fca5a5;
+    background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.08);
+}
+.debt-kpi-card.card-bad::before { background: #dc2626; width: 6px; }
+
+.debt-kpi-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.debt-kpi-label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.debt-kpi-label.text-red {
+    color: #b91c1c;
+}
+.debt-kpi-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-blue { background: #eff6ff; color: #1e40af; }
+.icon-teal { background: #e0f2fe; color: #2b7a9e; }
+.icon-amber { background: #fffbeb; color: #d97706; }
+.icon-red { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+
+.debt-kpi-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin: 4px 0 8px 0;
+}
+.debt-kpi-val {
+    font-size: 1.95rem;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+.debt-kpi-val.text-teal { color: #2b7a9e; }
+.debt-kpi-val.text-amber { color: #d97706; }
+.debt-kpi-val.text-red { color: #dc2626; }
+
+.debt-kpi-unit {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #64748b;
+}
+.debt-kpi-unit.text-red { color: #b91c1c; }
+
+.debt-kpi-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 0.8rem;
+    color: #475569;
+}
+.debt-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    white-space: nowrap;
+}
+.badge-blue { background: #dbeafe; color: #1d4ed8; }
+.badge-green { background: #dcfce7; color: #15803d; }
+.badge-amber { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.badge-red { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+
+/* Chart Card & Table */
+.debt-chart-card, .debt-summary-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1.5px solid #cbd5e1;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+.debt-styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.88rem;
+}
+.debt-styled-table th, .debt-styled-table td {
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    font-variant-numeric: tabular-nums;
+}
+.debt-styled-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+.debt-styled-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+.debt-styled-table .total-row td {
+    background: #f0f7ff !important;
+    font-weight: 900;
+    color: #0369a1 !important;
+    border-top: 2px solid #0284c7 !important;
+    border-bottom: 2px solid #0284c7 !important;
+    font-size: 0.94rem;
+}
+
+/* Modal */
+.debt-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+.debt-modal-content {
+    background: #ffffff;
+    width: 100%;
+    border: 1.5px solid #cbd5e1;
+    animation: modalScaleUp 0.2s ease-out;
+}
+@keyframes modalScaleUp {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+

@@ -7,138 +7,51 @@ const COMPANIES = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'Văn phòng VPS'];
 
 const mockData = {
     customers: {
-        total: 12450,
-        trend: { new: 650, lost: -30, decreased: -15, totalIncreased: 650, percentage: 5.2 },
+        total: 5075,
+        trend: { new: 73, lost: 5, decreased: 5, totalIncreased: 73, percentage: 1.46 },
         matrix: {
           "all": {
                     "thue_may": {
-                              "dau": {
-                                        "may": 1938,
-                                        "kh": 601
-                              },
-                              "tang": {
-                                        "may": 45,
-                                        "kh": 12
-                              },
-                              "giam": {
-                                        "may": 21,
-                                        "kh": 4
-                              },
-                              "cuoi": {
-                                        "may": 1962,
-                                        "kh": 609
-                              }
+                              "dau": { "may": 1973, "kh": 606 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 22, "kh": 9 },
+                              "giam": { "may": 20, "kh": 4 },
+                              "cuoi": { "may": 1975, "kh": 611 }
                     },
                     "mc": {
-                              "dau": {
-                                        "may": 396,
-                                        "kh": 207
-                              },
-                              "tang": {
-                                        "may": 0,
-                                        "kh": 0
-                              },
-                              "giam": {
-                                        "may": 10,
-                                        "kh": 2
-                              },
-                              "cuoi": {
-                                        "may": 386,
-                                        "kh": 205
-                              }
+                              "dau": { "may": 386, "kh": 205 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 386, "kh": 205 }
                     },
                     "dv_photo": {
-                              "dau": {
-                                        "may": 3317,
-                                        "kh": 1096
-                              },
-                              "tang": {
-                                        "may": 4,
-                                        "kh": 4
-                              },
-                              "giam": {
-                                        "may": 0,
-                                        "kh": 0
-                              },
-                              "cuoi": {
-                                        "may": 3330,
-                                        "kh": 1099
-                              }
+                              "dau": { "may": 3328, "kh": 1107 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 3337, "kh": 1106 }
                     },
                     "dv_may_in": {
-                              "dau": {
-                                        "may": 1939,
-                                        "kh": 285
-                              },
-                              "tang": {
-                                        "may": 2,
-                                        "kh": 2
-                              },
-                              "giam": {
-                                        "may": 0,
-                                        "kh": 0
-                              },
-                              "cuoi": {
-                                        "may": 1948,
-                                        "kh": 289
-                              }
+                              "dau": { "may": 1939, "kh": 285 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 2, "kh": 2 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 1948, "kh": 289 }
                     },
                     "dv_khac": {
-                              "dau": {
-                                        "may": 0,
-                                        "kh": 0
-                              },
-                              "tang": {
-                                        "may": 0,
-                                        "kh": 0
-                              },
-                              "giam": {
-                                        "may": 0,
-                                        "kh": 0
-                              },
-                              "cuoi": {
-                                        "may": 0,
-                                        "kh": 0
-                              }
+                              "dau": { "may": 0, "kh": 0 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 0 },
+                              "giam": { "may": 0, "kh": 0 },
+                              "cuoi": { "may": 0, "kh": 0 }
                     },
                     "phan_phoi": {
-                              "dau": {
-                                        "may": 0,
-                                        "kh": 2790
-                              },
-                              "tang": {
-                                        "may": 0,
-                                        "kh": 64
-                              },
-                              "giam": {
-                                        "may": 0,
-                                        "kh": 1
-                              },
-                              "cuoi": {
-                                        "may": 0,
-                                        "kh": 2853
-                              }
-                    },
-                    "kh_duoi_3_thang": {
-                              "dau": { "may": 5720, "kh": 3790 },
-                              "ke_hoach": { "may": 40, "kh": 65 },
-                              "tang": { "may": 38, "kh": 60 },
-                              "giam": { "may": 18, "kh": 5 },
-                              "cuoi": { "may": 5740, "kh": 3845 }
-                    },
-                    "kh_3_den_6_thang": {
-                              "dau": { "may": 1250, "kh": 820 },
-                              "ke_hoach": { "may": 10, "kh": 15 },
-                              "tang": { "may": 8, "kh": 14 },
-                              "giam": { "may": 7, "kh": 1 },
-                              "cuoi": { "may": 1251, "kh": 833 }
-                    },
-                    "kh_tren_6_thang": {
-                              "dau": { "may": 620, "kh": 367 },
-                              "ke_hoach": { "may": 5, "kh": 10 },
-                              "tang": { "may": 5, "kh": 8 },
-                              "giam": { "may": 6, "kh": 1 },
-                              "cuoi": { "may": 619, "kh": 374 }
+                              "dau": { "may": 0, "kh": 2803 },
+                              "ke_hoach": { "may": 0, "kh": 0 },
+                              "tang": { "may": 0, "kh": 62 },
+                              "giam": { "may": 0, "kh": 1 },
+                              "cuoi": { "may": 0, "kh": 2864 }
                     }
           },
           "THH": {
@@ -972,23 +885,23 @@ const mockData = {
         }
     },
     debt: {
-        total: 45.2,
+        total: 26.9,
         plan2026: {
-                'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
-        'THH': { ds: 300000, actual: 68204, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
-        'Viet': { ds: 106000, actual: 40891, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
-        'XemSon': { ds: 168000, actual: 69426, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
-        'VPSM': { ds: 45000, actual: 11251, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
-        'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
-        'Văn phòng VPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
-    },
-    byCompany: {
-            'THH': { current: 8.5, overdue: 2.1, bad: 0.5 },
-            'Viet': { current: 5.2, overdue: 1.5, bad: 0.2 },
-            'XemSon': { current: 9.0, overdue: 3.0, bad: 1.1 },
-            'VPSM': { current: 7.5, overdue: 1.0, bad: 0.1 },
-            'ITSS': { current: 4.0, overdue: 1.2, bad: 0.3 },
-            'Văn phòng VPS': { current: 1.5, overdue: 0.2, bad: 0.0 }
+            'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
+            'THH': { ds: 300000, actual: 68204, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
+            'Viet': { ds: 106000, actual: 40891, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
+            'XemSon': { ds: 168000, actual: 69426, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
+            'VPSM': { ds: 45000, actual: 11251, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
+            'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
+            'Văn phòng VPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+        },
+        byCompany: {
+            'THH': { current: 12.3, overdue: 0.9, bad: 0.0 },
+            'Viet': { current: 2.85, overdue: 1.25, bad: 0.01 },
+            'XemSon': { current: 5.79, overdue: 2.0, bad: 0.0 },
+            'VPSM': { current: 1.5, overdue: 0.3, bad: 0.0 },
+            'ITSS': { current: 0.0, overdue: 0.0, bad: 0.0 },
+            'Văn phòng VPS': { current: 0.0, overdue: 0.0, bad: 0.0 }
         },
         badDebtsList: [
             { id: 1, customer: 'Công ty CP Tập đoàn Hòa Bình', company: 'THH', amount: 250000000, daysOverdue: 120, status: 'Khoá tài khoản' },
