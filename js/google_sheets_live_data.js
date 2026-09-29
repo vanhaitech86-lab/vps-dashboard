@@ -326,56 +326,51 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   "hr_by_company": {
     "THH": {
         "quota": 47,
-        "official": 44,
+        "official": 42,
         "probation": 5,
-        "totalEmployees": 49,
+        "totalEmployees": 47,
         "resigned": 0,
         "newHires": 0,
         "departments": [
             {
                 "name": "Kinh doanh",
-                "quota": 12,
                 "official": 12,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 12,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kỹ thuật",
-                "quota": 26,
                 "official": 23,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 3,
-                "vacancy": 0
+                "totalEnd": 26,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kế toán",
-                "quota": 9,
-                "official": 9,
-                "newHires": 0,
-                "resigned": 0,
+                "official": 7,
                 "probation": 2,
-                "vacancy": 0
+                "totalEnd": 9,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Hành chính",
-                "quota": 0,
                 "official": 0,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 0,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kho/Giao vận",
-                "quota": 0,
                 "official": 0,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 0,
+                "newHires": 0,
+                "resigned": 0
             }
         ]
     },
@@ -389,48 +384,43 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "departments": [
             {
                 "name": "Kinh doanh",
-                "quota": 15,
                 "official": 15,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 15,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kỹ thuật",
-                "quota": 16,
                 "official": 16,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 16,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kế toán",
-                "quota": 7,
                 "official": 7,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 7,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Hành chính",
-                "quota": 0,
                 "official": 0,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 0,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kho/Giao vận",
-                "quota": 1,
                 "official": 1,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 1,
+                "newHires": 0,
+                "resigned": 0
             }
         ]
     },
@@ -444,48 +434,43 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "departments": [
             {
                 "name": "Kinh doanh",
-                "quota": 30,
                 "official": 30,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 30,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kỹ thuật",
-                "quota": 44,
                 "official": 44,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 44,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kế toán",
-                "quota": 5,
                 "official": 5,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 5,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Hành chính",
-                "quota": 7,
                 "official": 7,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 7,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kho/Giao vận",
-                "quota": 5,
                 "official": 5,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 5,
+                "newHires": 0,
+                "resigned": 0
             }
         ]
     },
@@ -499,103 +484,93 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "departments": [
             {
                 "name": "Kinh doanh",
-                "quota": 3,
                 "official": 3,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 3,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kỹ thuật",
-                "quota": 6,
                 "official": 6,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 6,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kế toán",
-                "quota": 1,
                 "official": 1,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 1,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Hành chính",
-                "quota": 0,
                 "official": 0,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 0,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kho/Giao vận",
-                "quota": 0,
                 "official": 0,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 0,
+                "newHires": 0,
+                "resigned": 0
             }
         ]
     },
     "ITSS": {
         "quota": 5,
-        "official": 5,
+        "official": 4,
         "probation": 1,
-        "totalEmployees": 6,
+        "totalEmployees": 5,
         "resigned": 0,
         "newHires": 0,
         "departments": [
             {
                 "name": "Kinh doanh",
-                "quota": 3,
-                "official": 3,
-                "newHires": 0,
-                "resigned": 0,
+                "official": 2,
                 "probation": 1,
-                "vacancy": 0
+                "totalEnd": 3,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kỹ thuật",
-                "quota": 1,
                 "official": 1,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 1,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kế toán",
-                "quota": 1,
                 "official": 1,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 1,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Hành chính",
-                "quota": 0,
                 "official": 0,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 0,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kho/Giao vận",
-                "quota": 0,
                 "official": 0,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 0,
+                "newHires": 0,
+                "resigned": 0
             }
         ]
     },
@@ -609,66 +584,59 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "departments": [
             {
                 "name": "Ban Lãnh đạo",
-                "quota": 2,
                 "official": 2,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 2,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kế hoạch - Cung ứng",
-                "quota": 3,
                 "official": 3,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 3,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kỹ thuật",
-                "quota": 2,
                 "official": 2,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 2,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Kế toán",
-                "quota": 2,
                 "official": 1,
-                "newHires": 1,
-                "resigned": 0,
                 "probation": 1,
-                "vacancy": 0
+                "totalEnd": 2,
+                "newHires": 1,
+                "resigned": 0
             },
             {
                 "name": "Hành chính",
-                "quota": 5,
                 "official": 5,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 5,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Nhân sự",
-                "quota": 2,
                 "official": 2,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 2,
+                "newHires": 0,
+                "resigned": 0
             },
             {
                 "name": "Marketing",
-                "quota": 3,
                 "official": 3,
-                "newHires": 0,
-                "resigned": 0,
                 "probation": 0,
-                "vacancy": 0
+                "totalEnd": 3,
+                "newHires": 0,
+                "resigned": 0
             }
         ]
     }
