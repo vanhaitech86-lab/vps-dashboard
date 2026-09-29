@@ -985,103 +985,83 @@ const mockData = {
     hr: {
         byCompany: {
             'THH': { 
-                quota: 54, official: 48, probation: 2, resigned: 3,
-                kpi: { A: 12, B: 30, C: 5, D: 1 },
+                quota: 47, official: 42, probation: 5, resigned: 0, newHires: 0,
                 departments: [
-                    { name: 'Kinh doanh', quota: 18, official: 15, probation: 0, resigned: 1, vacancy: 3 },
-                    { name: 'Kỹ thuật', quota: 25, official: 23, probation: 0, resigned: 2, vacancy: 2 },
-                    { name: 'Kế toán', quota: 11, official: 10, probation: 2, resigned: 0, vacancy: 1 }
+                    { name: 'Kinh doanh',   quota: 12, official: 12, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ef9 thu\u1eadt',  quota: 26, official: 23, probation: 3, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf to\u00e1n',   quota:  9, official:  7, probation: 2, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'H\u00e0nh ch\u00ednh', quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kho/Giao v\u1eadn', quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
                 ],
-                analysis: { 
-                    cause: 'Nhân sự chính thức đạt 48/54 định biên (88.9%). Khối kinh doanh còn thiếu 3 nhân sự, trong kỳ có 3 nhân sự nghỉ việc.', 
-                    solution: 'Đẩy mạnh tuyển dụng nhân viên kinh doanh theo định mức để bù đắp quân số thiếu hụt.' 
-                } 
+                analysis: { cause: 'K\u1ef3 09/2026: 42 nh\u00e2n s\u1ef1 ch\u00ednh th\u1ee9c, 5 th\u1eed vi\u1ec7c (K\u1ef9 thu\u1eadt: 3, K\u1ebf to\u00e1n: 2).', solution: '' }
             },
             'Viet': { 
-                quota: 43, official: 38, probation: 1, resigned: 0,
-                kpi: { A: 10, B: 24, C: 3, D: 1 },
+                quota: 39, official: 39, probation: 0, resigned: 0, newHires: 0,
                 departments: [
-                    { name: 'Kinh doanh', quota: 17, official: 15, probation: 0, resigned: 0, vacancy: 2 },
-                    { name: 'Kỹ thuật', quota: 18, official: 15, probation: 1, resigned: 0, vacancy: 2 },
-                    { name: 'Kế toán', quota: 5, official: 5, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Kho/Giao vận', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 }
+                    { name: 'Kinh doanh',   quota: 15, official: 15, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ef9 thu\u1eadt',  quota: 16, official: 16, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf to\u00e1n',   quota:  7, official:  7, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'H\u00e0nh ch\u00ednh', quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kho/Giao v\u1eadn', quota: 1, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
                 ],
-                analysis: { 
-                    cause: 'Nhân sự chính thức đạt 38/43 định biên (88.4%). Khối kỹ thuật có 1 nhân sự đang thử việc.', 
-                    solution: 'Tuyển bổ sung 5 nhân sự còn thiếu so với định biên, kèm cặp nhân sự thử việc chuyển chính thức.' 
-                } 
+                analysis: { cause: 'K\u1ef3 09/2026: 39 nh\u00e2n s\u1ef1 ch\u00ednh th\u1ee9c.', solution: '' }
             },
             'XemSon': { 
-                quota: 98, official: 94, probation: 1, resigned: 1,
-                kpi: { A: 26, B: 58, C: 8, D: 2 },
+                quota: 91, official: 91, probation: 0, resigned: 0, newHires: 0,
                 departments: [
-                    { name: 'Kinh doanh', quota: 33, official: 32, probation: 0, resigned: 0, vacancy: 1 },
-                    { name: 'Kỹ thuật', quota: 46, official: 44, probation: 1, resigned: 1, vacancy: 2 },
-                    { name: 'Kế toán', quota: 5, official: 5, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Hành chính', quota: 8, official: 8, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Kho/Giao vận', quota: 6, official: 5, probation: 0, resigned: 0, vacancy: 1 }
+                    { name: 'Kinh doanh',   quota: 30, official: 30, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ef9 thu\u1eadt',  quota: 44, official: 44, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf to\u00e1n',   quota:  5, official:  5, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'H\u00e0nh ch\u00ednh', quota:  7, official:  7, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kho/Giao v\u1eadn', quota: 5, official: 5, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
                 ],
-                analysis: { 
-                    cause: 'Nhân sự chính thức đạt 94/98 định biên (95.9%). Cơ cấu nhân sự cơ bản ổn định.', 
-                    solution: 'Tuyển thêm 4 nhân sự để hoàn thiện đầy đủ 100% định biên các bộ phận.' 
-                } 
+                analysis: { cause: 'K\u1ef3 08/2026: 91 nh\u00e2n s\u1ef1 ch\u00ednh th\u1ee9c.', solution: '' }
             },
             'VPSM': { 
-                quota: 15, official: 10, probation: 0, resigned: 0,
-                kpi: { A: 2, B: 7, C: 1, D: 0 },
+                quota: 10, official: 10, probation: 0, resigned: 0, newHires: 0,
                 departments: [
-                    { name: 'Kinh doanh', quota: 6, official: 3, probation: 0, resigned: 0, vacancy: 3 },
-                    { name: 'Kỹ thuật', quota: 8, official: 6, probation: 0, resigned: 0, vacancy: 2 },
-                    { name: 'Kế toán', quota: 1, official: 1, probation: 0, resigned: 0, vacancy: 0 }
+                    { name: 'Kinh doanh',   quota: 3, official: 3, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ef9 thu\u1eadt',  quota: 6, official: 6, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf to\u00e1n',   quota: 1, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'H\u00e0nh ch\u00ednh', quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kho/Giao v\u1eadn', quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
                 ],
-                analysis: { 
-                    cause: 'Nhân sự chính thức đạt 10/15 định biên (66.7%). Thiếu hụt 5 chỉ tiêu so với định biên.', 
-                    solution: 'Gấp rút đẩy mạnh hoạt động tuyển dụng nhân sự kinh doanh và kỹ thuật.' 
-                } 
+                analysis: { cause: 'K\u1ef3 08/2026: 10 nh\u00e2n s\u1ef1 ch\u00ednh th\u1ee9c.', solution: '' }
             },
             'ITSS': { 
-                quota: 8, official: 3, probation: 1, resigned: 0,
-                kpi: { A: 1, B: 2, C: 0, D: 0 },
+                quota: 5, official: 4, probation: 1, resigned: 0, newHires: 0,
                 departments: [
-                    { name: 'Kỹ thuật / Lập trình', quota: 5, official: 2, probation: 1, resigned: 0, vacancy: 3 },
-                    { name: 'Hỗ trợ CRM', quota: 3, official: 1, probation: 0, resigned: 0, vacancy: 2 }
+                    { name: 'Kinh doanh', quota: 3, official: 2, probation: 1, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ef9 thu\u1eadt', quota: 1, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf to\u00e1n', quota: 1, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
                 ],
-                analysis: { 
-                    cause: 'Quy mô team ITSS hiện có 3 chính thức và 1 thử việc trên định biên 8 người (37.5%).', 
-                    solution: 'Tuyển dụng thêm các lập trình viên và nhân sự hỗ trợ hệ thống CRM.' 
-                } 
+                analysis: { cause: 'K\u1ef3 08/2026: 4 ch\u00ednh th\u1ee9c, 1 th\u1eed vi\u1ec7c.', solution: '' }
             },
             'VPVPS': { 
-                quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1,
-                kpi: { A: 4, B: 12, C: 1, D: 0 },
+                quota: 19, official: 18, probation: 1, resigned: 0, newHires: 1,
                 departments: [
-                    { name: 'Kế hoạch - Cung ứng', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Kỹ thuật', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Kế toán', quota: 2, official: 1, probation: 1, resigned: 0, vacancy: 1 },
-                    { name: 'Hành chính', quota: 5, official: 5, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Nhân sự', quota: 2, official: 2, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Marketing', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 }
+                    { name: 'Ban L\u00e3nh \u0111\u1ea1o', quota: 2, official: 2, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf ho\u1ea1ch - Cung \u1ee9ng', quota: 3, official: 3, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ef9 thu\u1eadt', quota: 2, official: 2, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf to\u00e1n', quota: 2, official: 1, probation: 1, resigned: 0, newHires: 1, vacancy: 0 },
+                    { name: 'H\u00e0nh ch\u00ednh', quota: 5, official: 5, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Nh\u00e2n s\u1ef1', quota: 2, official: 2, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Marketing', quota: 3, official: 3, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
                 ],
-                analysis: { 
-                    cause: 'Nhân sự Văn phòng VPS đạt 17/18 định biên chính thức (94.4%). Trong kỳ tuyển mới 1 nhân sự (1 đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.', 
-                    solution: 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.' 
-                } 
+                analysis: { cause: 'K\u1ef3 08/2026: 18 ch\u00ednh th\u1ee9c, 1 th\u1eed vi\u1ec7c.', solution: '' }
             },
-            'Văn phòng VPS': { 
-                quota: 18, official: 17, probation: 1, resigned: 0, newHires: 1,
-                kpi: { A: 4, B: 12, C: 1, D: 0 },
+            'V\u0103n ph\u00f2ng VPS': { 
+                quota: 19, official: 18, probation: 1, resigned: 0, newHires: 1,
                 departments: [
-                    { name: 'Kế hoạch - Cung ứng', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Kỹ thuật', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Kế toán', quota: 2, official: 1, probation: 1, resigned: 0, vacancy: 1 },
-                    { name: 'Hành chính', quota: 5, official: 5, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Nhân sự', quota: 2, official: 2, probation: 0, resigned: 0, vacancy: 0 },
-                    { name: 'Marketing', quota: 3, official: 3, probation: 0, resigned: 0, vacancy: 0 }
+                    { name: 'Ban L\u00e3nh \u0111\u1ea1o', quota: 2, official: 2, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf ho\u1ea1ch - Cung \u1ee9ng', quota: 3, official: 3, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ef9 thu\u1eadt', quota: 2, official: 2, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'K\u1ebf to\u00e1n', quota: 2, official: 1, probation: 1, resigned: 0, newHires: 1, vacancy: 0 },
+                    { name: 'H\u00e0nh ch\u00ednh', quota: 5, official: 5, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Nh\u00e2n s\u1ef1', quota: 2, official: 2, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Marketing', quota: 3, official: 3, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
                 ],
-                analysis: { 
-                    cause: 'Nhân sự Văn phòng VPS đạt 17/18 định biên chính thức (94.4%). Trong kỳ tuyển mới 1 nhân sự (1 đang thử việc tại phòng Kế toán), không có nhân sự nghỉ việc.', 
-                    solution: 'Theo dõi đánh giá kết quả thử việc tại phòng Kế toán và duy trì định biên ổn định cho các phòng ban.' 
-                } 
+                analysis: { cause: 'K\u1ef3 08/2026: 18 ch\u00ednh th\u1ee9c, 1 th\u1eed vi\u1ec7c.', solution: '' }
             }
         }
     }
