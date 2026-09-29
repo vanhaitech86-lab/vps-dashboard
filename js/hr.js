@@ -74,7 +74,7 @@ window.HrModule = {
                 const official = compData.official || 0;
                 const probation = compData.probation || 0;
                 const resigned = compData.resigned || 0;
-                const vacancy = Math.max(0, quota - official - probation);
+                const vacancy = 0; // Sheet không có cột Chỉ tiêu/Định biên => Cần tuyển = 0
                 const fulfillment = quota > 0 ? Math.round((official / quota) * 100) : 0;
 
                 tQuota += quota;
@@ -116,7 +116,7 @@ window.HrModule = {
                 const official = compData.official || 0;
                 const probation = compData.probation || 0;
                 const resigned = compData.resigned || 0;
-                const vacancy = Math.max(0, quota - official - probation);
+                const vacancy = 0; // Sheet không có cột Chỉ tiêu/Định biên => Cần tuyển = 0
                 const fulfillment = quota > 0 ? Math.round((official / quota) * 100) : 0;
 
                 tQuota += quota;
@@ -188,7 +188,7 @@ window.HrModule = {
                         const dOfficial = dept.official || 0;
                         const dProbation = dept.probation || 0;
                         const dResigned = dept.resigned || 0;
-                        const dVacancy = dept.vacancy !== undefined ? dept.vacancy : Math.max(0, dQuota - dOfficial - (dept.probation || 0));
+                        const dVacancy = 0; // Sheet không có cột Chỉ tiêu/Định biên => Cần tuyển = 0
                         const dFulfillment = dQuota > 0 ? Math.round((dOfficial / dQuota) * 100) : 0;
 
                         chartLabels.push(dept.name);
@@ -281,9 +281,9 @@ window.HrModule = {
                     backgroundColor: '#F59E0B',
                 },
                 {
-                    label: 'Cần tuyển',
+                    label: 'Tuyển mới',
                     data: vacancyData,
-                    backgroundColor: '#3B82F6',
+                    backgroundColor: '#10B981',
                 },
                 {
                     label: 'Đã nghỉ việc',

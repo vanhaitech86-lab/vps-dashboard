@@ -1141,10 +1141,11 @@ if (window.LIVE_GOOGLE_SHEETS_DATA) {
         }
         mockData.debt.total = parseFloat(dTot.toFixed(2));
     }
-    if (live.hr_by_company) {
-        if (!mockData.hr) mockData.hr = {};
-        mockData.hr.byCompany = live.hr_by_company;
-    }
+    // HR data is managed manually from Google Sheets scan - do not override with live data
+    // if (live.hr_by_company) {
+    //     if (!mockData.hr) mockData.hr = {};
+    //     mockData.hr.byCompany = live.hr_by_company;
+    // }
     if (live.inventory_by_company) {
         if (!mockData.inventory) mockData.inventory = {};
         mockData.inventory.byCompany = live.inventory_by_company;
