@@ -12,84 +12,94 @@
 (function () {
     'use strict';
 
-    // Dữ liệu công nợ chuẩn xác theo hình ảnh người dùng cung cấp (Đơn vị: Tỷ VNĐ)
-    const DEBT_UNITS_DATA = [
-        {
-            key: 'THH',
-            name: 'Tân Hồng Hà',
-            current: 12.3,
-            overdue: 0.9,
-            bad: 0.0,
-            statusBadge: { text: 'An toàn', class: 'badge-green' },
-            note: 'Quản lý công nợ tốt, tỷ lệ thu hồi cao',
-            customers: [
-                { id: 1, name: 'Công ty Cổ phần Tập đoàn Hòa Bình', current: 8500000000, overdue: 0, bad: 0, total: 8500000000, days: 0, status: 'Trong hạn (Hợp đồng thuê dài hạn)' },
-                { id: 2, name: 'Bệnh viện Đa Khoa Hồng Ngọc', current: 2000000000, overdue: 400000000, bad: 0, total: 2400000000, days: 35, status: 'Chờ quyết toán chi phí quý 3' },
-                { id: 3, name: 'Trường Quốc tế Wellspring', current: 1800000000, overdue: 500000000, bad: 0, total: 2300000000, days: 45, status: 'Đang làm thủ tục đối chiếu biên bản' }
-            ]
-        },
-        {
-            key: 'Viet',
-            name: 'Việt',
-            current: 2.85,
-            overdue: 1.25,
-            bad: 0.01,
-            statusBadge: { text: 'Cần đôn đốc', class: 'badge-amber' },
-            note: 'Theo dõi nợ quá hạn và xử lý 10 Triệu nợ khó đòi',
-            customers: [
-                { id: 4, name: 'Đại lý Gamma', current: 1800000000, overdue: 700000000, bad: 0, total: 2500000000, days: 60, status: 'Cam kết thanh toán tuần tới' },
-                { id: 5, name: 'Công ty CP Viễn thông Đông Dương', current: 1050000000, overdue: 550000000, bad: 0, total: 1600000000, days: 75, status: 'Đang gửi công văn đôn đốc thu hồi' },
-                { id: 6, name: 'Công ty CP Đầu tư Delta', current: 0, overdue: 0, bad: 10000000, total: 10000000, days: 180, status: 'Khoá tài khoản - Chuyển bộ phận pháp lý' }
-            ]
-        },
-        {
-            key: 'XemSon',
-            name: 'Xem Sơn',
-            current: 5.79,
-            overdue: 2.0,
-            bad: 0.0,
-            statusBadge: { text: 'Quá hạn 2 Tỷ', class: 'badge-amber' },
-            note: 'Tập trung thu hồi 2.0 Tỷ nợ quá hạn từ các dự án',
-            customers: [
-                { id: 7, name: 'Tập đoàn Beta', current: 3500000000, overdue: 1200000000, bad: 0, total: 4700000000, days: 55, status: 'Chờ nghiệm thu đợt 2' },
-                { id: 8, name: 'Công ty CP May Phú Thịnh', current: 1500000000, overdue: 500000000, bad: 0, total: 2000000000, days: 45, status: 'Kế toán hẹn thanh toán cuối tháng' },
-                { id: 9, name: 'Công ty CP Địa ốc Sông Hồng', current: 790000000, overdue: 300000000, bad: 0, total: 1090000000, days: 40, status: 'Đối chiếu chứng từ thanh toán' }
-            ]
-        },
-        {
-            key: 'VPSM',
-            name: 'VPS M',
-            current: 1.5,
-            overdue: 0.3,
-            bad: 0.0,
-            statusBadge: { text: 'An toàn', class: 'badge-green' },
-            note: 'Tỷ lệ nợ quá hạn thấp (16.7%), dòng tiền tốt',
-            customers: [
-                { id: 10, name: 'Đại lý Epsilon', current: 1000000000, overdue: 200000000, bad: 0, total: 1200000000, days: 35, status: 'Đại lý thanh toán định kỳ' },
-                { id: 11, name: 'Công ty CP Vận tải Biển Đông', current: 500000000, overdue: 100000000, bad: 0, total: 600000000, days: 30, status: 'Chờ thanh toán hóa đơn mới' }
-            ]
-        },
-        {
-            key: 'ITSS',
-            name: 'ITSS',
-            current: 0.0,
-            overdue: 0.0,
-            bad: 0.0,
-            statusBadge: { text: 'Tốt', class: 'badge-blue' },
-            note: 'Không có số dư công nợ trong kỳ',
-            customers: []
-        },
-        {
-            key: 'VPVPS',
-            name: 'Văn phòng VPS',
-            current: 0.0,
-            overdue: 0.0,
-            bad: 0.0,
-            statusBadge: { text: 'Tốt', class: 'badge-blue' },
-            note: 'Không có số dư công nợ trong kỳ',
-            customers: []
-        }
-    ];
+    function getDebtUnitsData() {
+        const live = (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.debt_by_company)
+            ? window.LIVE_GOOGLE_SHEETS_DATA.debt_by_company
+            : ((window.mockData && window.mockData.debt && window.mockData.debt.byCompany) ? window.mockData.debt.byCompany : null);
+
+        return [
+            {
+                key: 'THH',
+                name: 'Tân Hồng Hà',
+                current: (live && live.THH) ? live.THH.current : 11.78,
+                overdue: (live && live.THH) ? live.THH.overdue : 1.26,
+                bad: (live && live.THH) ? live.THH.bad : 0.0,
+                statusBadge: { text: 'An toàn', class: 'badge-green' },
+                note: 'Quản lý công nợ tốt, tỷ lệ thu hồi cao',
+                customers: [
+                    { id: 1, name: 'Công ty Cổ phần Tập đoàn Hòa Bình', current: 8500000000, overdue: 0, bad: 0, total: 8500000000, days: 0, status: 'Trong hạn (Hợp đồng thuê dài hạn)' },
+                    { id: 2, name: 'Bệnh viện Đa Khoa Hồng Ngọc', current: 2000000000, overdue: 758965000, bad: 0, total: 2758965000, days: 35, status: 'Chờ quyết toán chi phí quý 3' },
+                    { id: 3, name: 'Trường Quốc tế Wellspring', current: 1279332000, overdue: 500000000, bad: 0, total: 1779332000, days: 45, status: 'Đang làm thủ tục đối chiếu biên bản' }
+                ]
+            },
+            {
+                key: 'Viet',
+                name: 'Việt',
+                current: (live && live.Viet) ? live.Viet.current : 3.23,
+                overdue: (live && live.Viet) ? live.Viet.overdue : 1.27,
+                bad: (live && live.Viet) ? live.Viet.bad : 0.01,
+                statusBadge: { text: 'Cần đôn đốc', class: 'badge-amber' },
+                note: 'Theo dõi nợ quá hạn và xử lý nợ khó đòi',
+                customers: [
+                    { id: 4, name: 'Đại lý Gamma', current: 1800000000, overdue: 700000000, bad: 0, total: 2500000000, days: 60, status: 'Cam kết thanh toán tuần tới' },
+                    { id: 5, name: 'Công ty CP Viễn thông Đông Dương', current: 1433844687, overdue: 568926001, bad: 0, total: 2002770688, days: 75, status: 'Đang gửi công văn đôn đốc thu hồi' },
+                    { id: 6, name: 'Công ty CP Đầu tư Delta', current: 0, overdue: 0, bad: 10933092, total: 10933092, days: 180, status: 'Khoá tài khoản - Chuyển bộ phận pháp lý' }
+                ]
+            },
+            {
+                key: 'XemSon',
+                name: 'Xem Sơn',
+                current: (live && live.XemSon) ? live.XemSon.current : 5.72,
+                overdue: (live && live.XemSon) ? live.XemSon.overdue : 0.69,
+                bad: (live && live.XemSon) ? live.XemSon.bad : 0.0,
+                statusBadge: { text: 'Quá hạn 0.69 Tỷ', class: 'badge-amber' },
+                note: 'Tập trung thu hồi nợ quá hạn từ các dự án',
+                customers: [
+                    { id: 7, name: 'Tập đoàn Beta', current: 3500000000, overdue: 387812250, bad: 0, total: 3887812250, days: 55, status: 'Chờ nghiệm thu đợt 2' },
+                    { id: 8, name: 'Công ty CP May Phú Thịnh', current: 1500000000, overdue: 300000000, bad: 0, total: 1800000000, days: 45, status: 'Kế toán hẹn thanh toán cuối tháng' },
+                    { id: 9, name: 'Công ty CP Địa ốc Sông Hồng', current: 722750831, overdue: 0, bad: 0, total: 722750831, days: 20, status: 'Đối chiếu chứng từ thanh toán' }
+                ]
+            },
+            {
+                key: 'VPSM',
+                name: 'VPS M',
+                current: (live && live.VPSM) ? live.VPSM.current : 1.61,
+                overdue: (live && live.VPSM) ? live.VPSM.overdue : 0.21,
+                bad: (live && live.VPSM) ? live.VPSM.bad : 0.0,
+                statusBadge: { text: 'An toàn', class: 'badge-green' },
+                note: 'Tỷ lệ nợ quá hạn thấp (11.5%), dòng tiền tốt',
+                customers: [
+                    { id: 10, name: 'Đại lý Epsilon', current: 1110600705, overdue: 150000000, bad: 0, total: 1260600705, days: 35, status: 'Đại lý thanh toán định kỳ' },
+                    { id: 11, name: 'Công ty CP Vận tải Biển Đông', current: 500000000, overdue: 56894969, bad: 0, total: 556894969, days: 30, status: 'Chờ thanh toán hóa đơn mới' }
+                ]
+            },
+            {
+                key: 'ITSS',
+                name: 'ITSS',
+                current: (live && live.ITSS) ? live.ITSS.current : 1.10,
+                overdue: (live && live.ITSS) ? live.ITSS.overdue : 0.15,
+                bad: (live && live.ITSS) ? live.ITSS.bad : 0.0,
+                statusBadge: { text: 'Tốt', class: 'badge-blue' },
+                note: 'Công nợ giải pháp phần mềm và thiết bị mạng',
+                customers: [
+                    { id: 12, name: 'Công ty CP Giải pháp Số Việt Nam', current: 800000000, overdue: 100000000, bad: 0, total: 900000000, days: 35, status: 'Nghiệm thu phần mềm giai đoạn 2' },
+                    { id: 13, name: 'Tập đoàn Công nghệ Hà Nội', current: 300000000, overdue: 50000000, bad: 0, total: 350000000, days: 40, status: 'Thanh toán theo tiến độ hợp đồng' }
+                ]
+            },
+            {
+                key: 'VPVPS',
+                name: 'Văn phòng VPS',
+                current: (live && live.VPVPS) ? live.VPVPS.current : 8.33,
+                overdue: (live && live.VPVPS) ? live.VPVPS.overdue : 0.0,
+                bad: (live && live.VPVPS) ? live.VPVPS.bad : 0.0,
+                statusBadge: { text: 'Tốt', class: 'badge-blue' },
+                note: 'Công nợ nội bộ và mua sắm tập trung',
+                customers: [
+                    { id: 14, name: 'Công ty CP Đầu tư & Dịch vụ Tổng hợp VPS', current: 8327659602, overdue: 0, bad: 0, total: 8327659602, days: 0, status: 'Công nợ nội bộ điều chuyển thiết bị' }
+                ]
+            }
+        ];
+    }
 
     window.DebtModule = {
         currentPeriod: 'month',
@@ -112,12 +122,21 @@
         },
 
         updateUI() {
+            const canViewAll = window.AuthService ? window.AuthService.canViewAll() : true;
+            const allowedCompany = window.AuthService ? window.AuthService.getAllowedCompany() : 'all';
+            const effectiveCompany = !canViewAll ? allowedCompany : (this.currentCompany || 'all');
+
+            const allUnits = getDebtUnitsData();
+            const filteredUnits = (effectiveCompany !== 'all')
+                ? allUnits.filter(u => u.name === effectiveCompany || u.key === effectiveCompany || (effectiveCompany === 'VPS M' && u.key === 'VPSM') || (effectiveCompany === 'Văn phòng VPS' && u.key === 'VPVPS') || (effectiveCompany === 'Xem Sơn' && (u.key === 'XemSon' || u.key === 'XESCO')))
+                : allUnits;
+
             // 1. Tính toán tổng hợp KPI
             let totalCurrent = 0;
             let totalOverdue = 0;
             let totalBad = 0;
 
-            DEBT_UNITS_DATA.forEach(u => {
+            filteredUnits.forEach(u => {
                 totalCurrent += u.current;
                 totalOverdue += u.overdue;
                 totalBad += u.bad;
@@ -145,10 +164,10 @@
             if (elBad) elBad.textContent = totalBad.toFixed(2);
 
             // 3. Vẽ Biểu Đồ Cột Chồng "Tình Hình Công Nợ (Tỷ VNĐ)"
-            this.renderDebtChart();
+            this.renderDebtChart(filteredUnits);
 
             // 4. Vẽ Bảng Tổng Hợp Theo Đơn Vị Thành Viên
-            this.renderSummaryTable(grandTotal);
+            this.renderSummaryTable(filteredUnits, grandTotal);
 
             // 5. Khởi tạo lại Lucide Icons
             if (window.lucide && typeof window.lucide.createIcons === 'function') {
@@ -156,14 +175,14 @@
             }
         },
 
-        renderDebtChart() {
+        renderDebtChart(units = DEBT_UNITS_DATA) {
             const ctx = document.getElementById('debtChart');
             if (!ctx || !window.ChartManager) return;
 
-            const labels = DEBT_UNITS_DATA.map(u => u.name);
-            const currentData = DEBT_UNITS_DATA.map(u => u.current);
-            const overdueData = DEBT_UNITS_DATA.map(u => u.overdue);
-            const badData = DEBT_UNITS_DATA.map(u => u.bad);
+            const labels = units.map(u => u.name);
+            const currentData = units.map(u => u.current);
+            const overdueData = units.map(u => u.overdue);
+            const badData = units.map(u => u.bad);
 
             const chartConfig = {
                 labels: labels,
@@ -294,14 +313,15 @@
             window.ChartManager.createChart('debtChart', 'bar', chartConfig, chartOptions);
         },
 
-        renderSummaryTable(grandTotal) {
+        renderSummaryTable(units = DEBT_UNITS_DATA, grandTotal) {
             const tbody = document.getElementById('debt-unit-summary-tbody');
             if (!tbody) return;
 
+            const canViewAll = window.AuthService ? window.AuthService.canViewAll() : true;
             let html = '';
             let sumCurrent = 0, sumOverdue = 0, sumBad = 0;
 
-            DEBT_UNITS_DATA.forEach((unit, idx) => {
+            units.forEach((unit, idx) => {
                 const unitTotal = unit.current + unit.overdue + unit.bad;
                 const unitPct = grandTotal > 0 ? ((unitTotal / grandTotal) * 100).toFixed(1) : '0';
 
@@ -354,18 +374,19 @@
                 `;
             });
 
-            // Hàng Tổng Cộng Toàn Tập Đoàn
+            // Hàng Tổng Cộng
             const sumTotal = sumCurrent + sumOverdue + sumBad;
+            const labelTotal = units.length === 1 ? `TỔNG CỘNG ĐƠN VỊ (${units[0].name})` : 'TỔNG CỘNG TOÀN TẬP ĐOÀN';
             html += `
                 <tr class="total-row">
-                    <td style="text-align: left; padding: 12px 14px;">TỔNG CỘNG TẬP ĐOÀN</td>
+                    <td style="text-align: left; padding: 12px 14px;">${labelTotal}</td>
                     <td>${sumCurrent.toFixed(2)}</td>
                     <td>${sumOverdue.toFixed(2)}</td>
                     <td style="color: ${sumBad > 0 ? '#dc2626' : '#0369a1'};">${sumBad.toFixed(2)}</td>
                     <td style="font-size: 1rem; color: #0f172a;">${sumTotal.toFixed(2)} Tỷ</td>
                     <td style="text-align: center;">100.0%</td>
                     <td style="text-align: center;">
-                        <span class="debt-badge badge-blue">Tỷ lệ trong hạn ${((sumCurrent / sumTotal) * 100).toFixed(1)}%</span>
+                        <span class="debt-badge badge-blue">Tỷ lệ trong hạn ${sumTotal > 0 ? ((sumCurrent / sumTotal) * 100).toFixed(1) : 100}%</span>
                     </td>
                 </tr>
             `;
@@ -374,7 +395,21 @@
         },
 
         openCompanyModal(compName) {
+            const canViewAll = window.AuthService ? window.AuthService.canViewAll() : true;
+            const allowedCompany = window.AuthService ? window.AuthService.getAllowedCompany() : 'all';
+            if (!canViewAll && allowedCompany !== 'all') {
+                const isMatch = (compName === allowedCompany) || 
+                                (allowedCompany.includes('Xem') && compName.includes('Xem')) || 
+                                (allowedCompany.includes('Hồng') && compName.includes('Hồng')) ||
+                                (allowedCompany.includes('Việt') && compName.includes('Việt'));
+                if (!isMatch) {
+                    alert('Quyền truy cập bị từ chối: Đơn vị chỉ được xem công nợ của đơn vị mình!');
+                    return;
+                }
+            }
+
             const unit = DEBT_UNITS_DATA.find(u => u.name === compName || u.key === compName);
+            if (!unit) return;
             if (!unit) return;
 
             const modal = document.getElementById('debt-company-modal');

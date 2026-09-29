@@ -18,7 +18,8 @@ const MIME_TYPES = {
     '.ico':  'image/x-icon',
     '.webp': 'image/webp',
     '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    '.csv':  'text/csv; charset=utf-8'
+    '.csv':  'text/csv; charset=utf-8',
+    '.zip':  'application/zip'
 };
 
 const server = http.createServer((req, res) => {
@@ -47,8 +48,13 @@ const server = http.createServer((req, res) => {
 
         const ext = path.extname(filePath).toLowerCase();
         const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+        const headers = { 'Content-Type': contentType, 'Content-Length': stats.size };
 
-        res.writeHead(200, { 'Content-Type': contentType, 'Content-Length': stats.size });
+        if (ext === '.zip' || ext === '.xlsx' || ext === '.csv') {
+            headers['Content-Disposition'] = `attachment; filename="${encodeURIComponent(path.basename(filePath))}"`;
+        }
+
+        res.writeHead(200, headers);
         fs.createReadStream(filePath).pipe(res);
     });
 });

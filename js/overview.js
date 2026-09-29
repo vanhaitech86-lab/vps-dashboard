@@ -37,69 +37,128 @@ window.OverviewModule = {
     // ======= 1. Update 6 KPI Summary Cards =======
     updateKPIs(d) {
         const fallbackHR = {
-            'THH': { quota: 54, official: 48 },
-            'Viet': { quota: 43, official: 38 },
-            'XemSon': { quota: 98, official: 94 },
+            'THH': { quota: 54, official: 47 },
+            'Viet': { quota: 43, official: 39 },
+            'XemSon': { quota: 98, official: 91 },
             'VPSM': { quota: 15, official: 10 },
-            'ITSS': { quota: 12, official: 8 },
-            'VPVPS': { quota: 25, official: 23 }
+            'ITSS': { quota: 15, official: 13 },
+            'VPVPS': { quota: 25, official: 19 }
         };
         const fallbackPlan = {
-            'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
-            'THH': { ds: 300000, actual: 68204, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
-            'Viet': { ds: 106000, actual: 40891, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
-            'XemSon': { ds: 168000, actual: 69426, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
-            'VPSM': { ds: 45000, actual: 11251, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
-            'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
-            'VPVPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+            'all': { ds: 43989, actual: 36949, ttlg: 8605, lg_pct: 23.3, cp_lg_pct: 79.5, cp: 6843, lntt: 1872 },
+            'THH': { ds: 17010, actual: 10096, ttlg: 1910, lg_pct: 18.9, cp_lg_pct: 72.9, cp: 1392, lntt: 525 },
+            'Viet': { ds: 8779, actual: 7715, ttlg: 1697, lg_pct: 22.0, cp_lg_pct: 74.5, cp: 1265, lntt: 433 },
+            'XemSon': { ds: 14000, actual: 15102, ttlg: 4020, lg_pct: 26.6, cp_lg_pct: 54.5, cp: 2190, lntt: 1858 },
+            'VPSM': { ds: 2000, actual: 1686, ttlg: 320, lg_pct: 19.0, cp_lg_pct: 83.2, cp: 266, lntt: 128 },
+            'ITSS': { ds: 2200, actual: 2350, ttlg: 658, lg_pct: 28.0, cp_lg_pct: 72.9, cp: 480, lntt: 178 },
+            'VPVPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 1250, lntt: -1250 }
         };
         const hr = (d && d.hr && d.hr.byCompany) ? d.hr.byCompany : fallbackHR;
         const rev = (d && d.revenue && d.revenue.plan2026) ? d.revenue.plan2026 : fallbackPlan;
-        const debt = (d && d.debt && d.debt.byCompany) ? d.debt : { total: 45.2, byCompany: {} };
-        const inv = (d && d.inventory) ? d.inventory : { total: 69.2 };
+        const debt = (d && d.debt && d.debt.byCompany) ? d.debt : { total: 35.4, byCompany: {} };
+        const inv = (d && d.inventory) ? d.inventory : { total: 69.86 };
         const iso = window.IsoModule ? window.IsoModule.summaryData : [];
 
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : true;
+        const allowedCompany = window.AuthService ? window.AuthService.getAllowedCompany() : 'all';
+        const currentCompany = canViewAll ? (window.FilterManager ? window.FilterManager.currentCompany : 'all') : allowedCompany;
+        const isFiltered = (currentCompany && currentCompany !== 'all');
+
+        const compMap = {
+            'Tân Hồng Hà': { hr: 'THH', rev: 'THH', debt: 'THH', inv: 'THH', iso: 'TÂN HỒNG HÀ' },
+            'THH': { hr: 'THH', rev: 'THH', debt: 'THH', inv: 'THH', iso: 'TÂN HỒNG HÀ' },
+            'Việt': { hr: 'Viet', rev: 'Viet', debt: 'Viet', inv: 'Viet', iso: 'VIỆT' },
+            'VIET': { hr: 'Viet', rev: 'Viet', debt: 'Viet', inv: 'Viet', iso: 'VIỆT' },
+            'Xem Sơn': { hr: 'XemSon', rev: 'XemSon', debt: 'XemSon', inv: 'XemSon', iso: 'XESCO' },
+            'XESCO': { hr: 'XemSon', rev: 'XemSon', debt: 'XemSon', inv: 'XemSon', iso: 'XESCO' },
+            'XEMSON': { hr: 'XemSon', rev: 'XemSon', debt: 'XemSon', inv: 'XemSon', iso: 'XESCO' },
+            'VPS M': { hr: 'VPSM', rev: 'VPSM', debt: 'VPSM', inv: 'VPSM', iso: 'VPSM' },
+            'VPSM': { hr: 'VPSM', rev: 'VPSM', debt: 'VPSM', inv: 'VPSM', iso: 'VPSM' },
+            'ITSS': { hr: 'ITSS', rev: 'ITSS', debt: 'ITSS', inv: null, iso: 'ITSS' },
+            'Văn phòng VPS': { hr: 'VPVPS', rev: 'Văn phòng VPS', debt: 'Văn phòng VPS', inv: null, iso: 'VPS' },
+            'VPVPS': { hr: 'VPVPS', rev: 'Văn phòng VPS', debt: 'Văn phòng VPS', inv: null, iso: 'VPS' }
+        };
+        const cKey = isFiltered ? (compMap[currentCompany] || compMap['Tân Hồng Hà']) : null;
+
         // --- HR ---
-        let totalQuota = 0, totalOfficial = 0;
-        for (const key of Object.keys(hr)) {
-            if (key === 'Văn phòng VPS') continue; // avoid duplicate with VPVPS
-            totalQuota += (hr[key].quota || 0);
-            totalOfficial += (hr[key].official || 0);
+        let totalQuota = 0, totalOfficial = 0, totalProbation = 0, totalHeadcount = 0;
+        if (isFiltered && cKey) {
+            const cHR = hr[cKey.hr] || hr[currentCompany] || fallbackHR[cKey.hr] || { quota: 0, official: 0 };
+            totalQuota = cHR.quota || 0;
+            totalOfficial = cHR.official || 0;
+            totalProbation = cHR.probation || 0;
+            totalHeadcount = cHR.totalEmployees || (totalOfficial + totalProbation) || totalOfficial;
+        } else {
+            for (const key of Object.keys(hr)) {
+                if (key === 'Văn phòng VPS') continue; // avoid duplicate with VPVPS
+                totalQuota += (hr[key].quota || 0);
+                totalOfficial += (hr[key].official || 0);
+                totalProbation += (hr[key].probation || 0);
+                totalHeadcount += (hr[key].totalEmployees || ((hr[key].official || 0) + (hr[key].probation || 0)) || (hr[key].official || 0));
+            }
         }
-        const hrPct = totalQuota > 0 ? ((totalOfficial / totalQuota) * 100).toFixed(1) : 0;
-        this.setEl('sc-hr-value', `${totalOfficial} / ${totalQuota}`);
-        this.setEl('sc-hr-sub', `Lấp đầy: ${hrPct}%`);
+        const hrPct = totalQuota > 0 ? ((totalHeadcount / totalQuota) * 100).toFixed(1) : 0;
+        this.setEl('sc-hr-value', `${totalHeadcount} / ${totalQuota}`);
+        this.setEl('sc-hr-sub', isFiltered ? `Chính thức: ${totalOfficial} | Thử việc: ${totalProbation}` : `Lấp đầy: ${hrPct}% (Tổng: ${totalHeadcount})`);
         this.setBadge('sc-hr-badge', hrPct, '%');
         this.setBar('sc-hr-bar', hrPct, '#e74c3c');
 
         // --- Revenue ---
-        const allRev = (rev && rev['all']) ? rev['all'] : fallbackPlan['all'];
-        const revActual = ((allRev.actual || 0) / 1000).toFixed(1);
-        const revPlan = ((allRev.ds || 0) / 1000).toFixed(1);
-        const revPct = allRev.ds > 0 ? (((allRev.actual || 0) / allRev.ds) * 100).toFixed(1) : 0;
-        this.setEl('sc-rev-value', `${this.fmtNum(allRev.actual || 0)} Tr`);
-        this.setEl('sc-rev-sub', `KH: ${this.fmtNum(allRev.ds || 0)} Tr | Đạt ${revPct}%`);
+        let revActual = 0, revPlan = 0, profitVal = 0, profitPct = 0;
+        if (isFiltered && cKey) {
+            const cRev = rev[cKey.rev] || rev[cKey.hr] || fallbackPlan[cKey.hr] || { ds: 0, actual: 0, ttlg: 0, lg_pct: 0 };
+            revActual = cRev.actual || 0;
+            revPlan = cRev.ds || 0;
+            profitVal = cRev.actual_ttlg || cRev.ttlg || 0;
+            profitPct = cRev.actual_lg_pct || cRev.lg_pct || 0;
+        } else {
+            const allRev = (rev && rev['all']) ? rev['all'] : fallbackPlan['all'];
+            revActual = allRev.actual || 0;
+            revPlan = allRev.ds || 0;
+            profitVal = allRev.actual_ttlg || allRev.ttlg || 0;
+            profitPct = allRev.actual_lg_pct || allRev.lg_pct || 0;
+        }
+        const revPct = revPlan > 0 ? ((revActual / revPlan) * 100).toFixed(1) : 0;
+        this.setEl('sc-rev-value', `${this.fmtNum(revActual)} Tr`);
+        this.setEl('sc-rev-sub', `KH: ${this.fmtNum(revPlan)} Tr | Đạt ${revPct}%`);
         this.setBadge('sc-rev-badge', revPct, '%');
         this.setBar('sc-rev-bar', Math.min(revPct, 100), '#10b981');
 
         // --- Profit ---
-        const profitVal = allRev.ttlg || 0;
-        const profitPct = allRev.lg_pct || 0;
         this.setEl('sc-profit-value', `${this.fmtNum(profitVal)} Tr`);
         this.setEl('sc-profit-sub', `Tỷ lệ LG: ${profitPct}%`);
         this.setBadge('sc-profit-badge', profitPct > 15 ? 85 : profitPct > 10 ? 60 : 30, '%');
         this.setBar('sc-profit-bar', Math.min(profitPct * 4, 100), '#8b5cf6');
 
         // --- Inventory ---
-        const invTotal = (inv.total || 69183.27).toFixed(1);
-        this.setEl('sc-inv-value', `${this.fmtBillion(inv.total || 69183.27)} Tỷ`);
-        this.setEl('sc-inv-sub', `Tổng giá trị tồn kho`);
+        let invDisplay = 0;
+        if (isFiltered && cKey) {
+            const compInv = inv.byCompany ? inv.byCompany[cKey.inv] : null;
+            if (compInv) {
+                invDisplay = typeof compInv.total === 'number' ? compInv.total : (compInv.total_vnd / 1e9);
+            } else if (cKey.inv === 'THH') invDisplay = 30.34;
+            else if (cKey.inv === 'Viet') invDisplay = 4.58;
+            else if (cKey.inv === 'XemSon') invDisplay = 26.36;
+            else if (cKey.inv === 'VPSM') invDisplay = 5.48;
+            else if (cKey.inv === 'ITSS') invDisplay = 0.18;
+            else if (cKey.inv === 'VPVPS') invDisplay = 2.91;
+            else invDisplay = 0;
+        } else {
+            invDisplay = (inv && typeof inv.total === 'number' && inv.total < 1000) ? inv.total : 69.86;
+        }
+        this.setEl('sc-inv-value', `${invDisplay.toFixed(1)} Tỷ`);
+        this.setEl('sc-inv-sub', isFiltered ? `Tồn kho: ${currentCompany}` : `Tổng giá trị tồn kho`);
         const invBadgeEl = document.getElementById('sc-inv-badge');
-        if (invBadgeEl) { invBadgeEl.textContent = `${this.fmtBillion(inv.total || 69183.27)} Tỷ`; invBadgeEl.className = 'sc-kpi-badge badge-yellow'; }
+        if (invBadgeEl) { invBadgeEl.textContent = `${invDisplay.toFixed(1)} Tỷ`; invBadgeEl.className = 'sc-kpi-badge badge-yellow'; }
 
         // --- Debt ---
         let debtTotal = 0, debtOverdue = 0, debtBad = 0;
-        if (debt && debt.byCompany) {
+        if (isFiltered && cKey) {
+            const cDebt = (debt && debt.byCompany) ? (debt.byCompany[cKey.debt] || debt.byCompany[cKey.hr] || { current: 0, overdue: 0, bad: 0 }) : { current: 0, overdue: 0, bad: 0 };
+            debtTotal = (cDebt.current || 0) + (cDebt.overdue || 0) + (cDebt.bad || 0);
+            debtOverdue = cDebt.overdue || 0;
+            debtBad = cDebt.bad || 0;
+        } else if (debt && debt.byCompany) {
             for (const [, v] of Object.entries(debt.byCompany)) {
                 debtTotal += (v.current || 0) + (v.overdue || 0) + (v.bad || 0);
                 debtOverdue += (v.overdue || 0);
@@ -109,11 +168,17 @@ window.OverviewModule = {
         this.setEl('sc-debt-value', `${debtTotal.toFixed(1)} Tỷ`);
         this.setEl('sc-debt-sub', `Quá hạn: ${debtOverdue.toFixed(1)} | Khó đòi: ${debtBad.toFixed(1)}`);
         const debtBadgeEl = document.getElementById('sc-debt-badge');
-        if (debtBadgeEl) { debtBadgeEl.textContent = `${debtBad.toFixed(1)} Tỷ khó đòi`; debtBadgeEl.className = `sc-kpi-badge ${debtBad > 3 ? 'badge-red' : debtBad > 1 ? 'badge-yellow' : 'badge-green'}`; }
+        if (debtBadgeEl) { debtBadgeEl.textContent = `${debtBad.toFixed(1)} Tỷ khó đòi`; debtBadgeEl.className = `sc-kpi-badge ${debtBad > 3 ? 'badge-red' : debtBad > 0.5 ? 'badge-yellow' : 'badge-green'}`; }
 
         // --- ISO ---
         let totalQT = 0, totalQD = 0;
-        iso.forEach(c => { totalQT += (c.qt || 0); totalQD += (c.qd || 0); });
+        if (isFiltered && cKey) {
+            const cIso = iso.find(x => x.name && x.name.toUpperCase() === cKey.iso.toUpperCase()) || { qt: 0, qd: 0 };
+            totalQT = cIso.qt || 0;
+            totalQD = cIso.qd || 0;
+        } else {
+            iso.forEach(c => { totalQT += (c.qt || 0); totalQD += (c.qd || 0); });
+        }
         this.setEl('sc-iso-value', `${totalQT + totalQD} Văn bản`);
         this.setEl('sc-iso-sub', `QT: ${totalQT} | QĐ: ${totalQD}`);
         const isoBadgeEl = document.getElementById('sc-iso-badge');
@@ -126,21 +191,21 @@ window.OverviewModule = {
         if (!body) return;
 
         const fallbackHR = {
-            'THH': { quota: 54, official: 48 },
-            'Viet': { quota: 43, official: 38 },
-            'XemSon': { quota: 98, official: 94 },
+            'THH': { quota: 54, official: 47 },
+            'Viet': { quota: 43, official: 39 },
+            'XemSon': { quota: 98, official: 91 },
             'VPSM': { quota: 15, official: 10 },
-            'ITSS': { quota: 12, official: 8 },
-            'VPVPS': { quota: 25, official: 23 }
+            'ITSS': { quota: 15, official: 13 },
+            'VPVPS': { quota: 25, official: 19 }
         };
         const fallbackPlan = {
-            'all': { ds: 632640, actual: 192686, ttlg: 120976, lg_pct: 19, cp_lg_pct: 64, cp: 77545, lntt: 44071 },
-            'THH': { ds: 300000, actual: 68204, ttlg: 43080, lg_pct: 14, cp_lg_pct: 57, cp: 24705, lntt: 18385 },
-            'Viet': { ds: 106000, actual: 40891, ttlg: 22940, lg_pct: 22, cp_lg_pct: 61, cp: 13932, lntt: 9000 },
-            'XemSon': { ds: 168000, actual: 69426, ttlg: 43060, lg_pct: 26, cp_lg_pct: 71, cp: 30618, lntt: 13000 },
-            'VPSM': { ds: 45000, actual: 11251, ttlg: 8469, lg_pct: 19, cp_lg_pct: 64, cp: 5390, lntt: 3160 },
-            'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, lg_pct: 25, cp_lg_pct: 84.6, cp: 2900, lntt: 526 },
-            'VPVPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 0, lntt: 0 }
+            'all': { ds: 43989, actual: 36949, ttlg: 8605, lg_pct: 23.3, cp_lg_pct: 79.5, cp: 6843, lntt: 1872 },
+            'THH': { ds: 17010, actual: 10096, ttlg: 1910, lg_pct: 18.9, cp_lg_pct: 72.9, cp: 1392, lntt: 525 },
+            'Viet': { ds: 8779, actual: 7715, ttlg: 1697, lg_pct: 22.0, cp_lg_pct: 74.5, cp: 1265, lntt: 433 },
+            'XemSon': { ds: 14000, actual: 15102, ttlg: 4020, lg_pct: 26.6, cp_lg_pct: 54.5, cp: 2190, lntt: 1858 },
+            'VPSM': { ds: 2000, actual: 1686, ttlg: 320, lg_pct: 19.0, cp_lg_pct: 83.2, cp: 266, lntt: 128 },
+            'ITSS': { ds: 2200, actual: 2350, ttlg: 658, lg_pct: 28.0, cp_lg_pct: 72.9, cp: 480, lntt: 178 },
+            'VPVPS': { ds: 0, actual: 0, ttlg: 0, lg_pct: 0, cp_lg_pct: 0, cp: 1250, lntt: -1250 }
         };
         const hr = (d && d.hr && d.hr.byCompany) ? d.hr.byCompany : fallbackHR;
         const rev = (d && d.revenue && d.revenue.plan2026) ? d.revenue.plan2026 : fallbackPlan;
@@ -152,11 +217,11 @@ window.OverviewModule = {
         // Company keys mapping
         const keys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
         const hrKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
-        const revKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'Văn phòng VPS'];
-        const debtKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'Văn phòng VPS'];
-        const invKeys = ['THH', 'Viet', 'XemSon', 'VPSM', null, null];
-        const custKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'Văn phòng VPS'];
-        const isoNames = ['TÂN HỒNG HÀ', 'VIỆT', 'VPS', 'VPSM', 'ITSS', 'XESCO'];
+        const revKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+        const debtKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+        const invKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+        const custKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+        const isoNames = ['TÂN HỒNG HÀ', 'VIỆT', 'XESCO', 'VPSM', 'ITSS', 'VPS'];
 
         // Helper: get value or dash
         const v = (val) => val !== undefined && val !== null ? val : '—';
@@ -224,25 +289,41 @@ window.OverviewModule = {
         revRow3.total = sumDS > 0 ? ((sumActual / sumDS) * 100).toFixed(1) : '—';
         rows.push(revRow3);
 
-        // Row: Lãi Gộp
-        const lgRow = { label: 'Lãi Gộp (Tr đ)', values: [], total: '' };
+        // Row: Lãi Gộp KH
+        const lgKhRow = { label: 'Lãi Gộp KH (Tr đ)', values: [], total: '' };
+        let sumLGKH = 0;
+        revKeys.forEach(k => {
+            const c = rev[k];
+            if (c) { lgKhRow.values.push(fN(c.ttlg)); sumLGKH += c.ttlg; }
+            else lgKhRow.values.push('—');
+        });
+        lgKhRow.total = fN(sumLGKH);
+        rows.push(lgKhRow);
+
+        // Row: Lãi Gộp TT
+        const lgRow = { label: 'Lãi Gộp TT (Tr đ)', values: [], total: '' };
         let sumLG = 0;
         revKeys.forEach(k => {
             const c = rev[k];
-            if (c) { lgRow.values.push(fN(c.ttlg)); sumLG += c.ttlg; }
-            else lgRow.values.push('—');
+            if (c) {
+                const val = c.actual_ttlg !== undefined ? c.actual_ttlg : c.ttlg;
+                lgRow.values.push(fN(val));
+                sumLG += val;
+            } else lgRow.values.push('—');
         });
         lgRow.total = fN(sumLG);
         rows.push(lgRow);
 
-        // Row: % Lãi Gộp
-        const lgPctRow = { label: '% Lãi Gộp', values: [], total: '', colorType: 'lg' };
+        // Row: % Lãi Gộp TT
+        const lgPctRow = { label: '% Lãi Gộp TT', values: [], total: '', colorType: 'lg' };
         revKeys.forEach(k => {
             const c = rev[k];
-            if (c) { lgPctRow.values.push(c.lg_pct); }
-            else lgPctRow.values.push('—');
+            if (c) {
+                const pct = c.actual_lg_pct !== undefined ? c.actual_lg_pct : c.lg_pct;
+                lgPctRow.values.push(pct);
+            } else lgPctRow.values.push('—');
         });
-        lgPctRow.total = rev['all'] ? rev['all'].lg_pct : '—';
+        lgPctRow.total = rev['all'] ? (rev['all'].actual_lg_pct || rev['all'].lg_pct) : '—';
         rows.push(lgPctRow);
 
         // Row: Chi phí
@@ -250,8 +331,11 @@ window.OverviewModule = {
         let sumCP = 0;
         revKeys.forEach(k => {
             const c = rev[k];
-            if (c) { cpRow.values.push(fN(c.cp)); sumCP += c.cp; }
-            else cpRow.values.push('—');
+            if (c) {
+                const val = c.actual_cp !== undefined ? c.actual_cp : c.cp;
+                cpRow.values.push(fN(val));
+                sumCP += val;
+            } else cpRow.values.push('—');
         });
         cpRow.total = fN(sumCP);
         rows.push(cpRow);
@@ -261,8 +345,11 @@ window.OverviewModule = {
         let sumLN = 0;
         revKeys.forEach(k => {
             const c = rev[k];
-            if (c) { lnRow.values.push(fN(c.lntt)); sumLN += c.lntt; }
-            else lnRow.values.push('—');
+            if (c) {
+                const val = c.actual_lntt !== undefined ? c.actual_lntt : c.lntt;
+                lnRow.values.push(fN(val));
+                sumLN += val;
+            } else lnRow.values.push('—');
         });
         lnRow.total = fN(sumLN);
         rows.push(lnRow);
@@ -273,38 +360,41 @@ window.OverviewModule = {
         // Row: Tồn kho
         const invRow = { label: 'Tồn Kho (Tỷ đ)', values: [], total: '' };
         let sumInv = 0;
+        const defaultInvMap = { THH: 30.34, Viet: 4.58, XemSon: 26.36, VPSM: 5.48, ITSS: 0.18, VPVPS: 2.91 };
         invKeys.forEach(k => {
-            if (k && inv[k]) {
-                const val = inv[k].categories.Tong.Cong / 1e9;
-                invRow.values.push(val.toFixed(1));
-                sumInv += val;
+            const c = inv[k] || (inv.byCompany && inv.byCompany[k]);
+            let val = 0;
+            if (c) {
+                val = typeof c.total === 'number' ? c.total : (c.total_vnd ? c.total_vnd / 1e9 : (defaultInvMap[k] || 0));
             } else {
-                invRow.values.push('—');
+                val = defaultInvMap[k] || 0;
             }
+            invRow.values.push(val.toFixed(1));
+            sumInv += val;
         });
-        invRow.total = sumInv > 0 ? sumInv.toFixed(1) : (d.inventory.total / 1e3).toFixed(1);
+        invRow.total = sumInv.toFixed(1);
         rows.push(invRow);
 
         // Row: Công nợ Quá hạn
         const debtRow1 = { label: 'CN Quá hạn (Tỷ đ)', values: [], total: '', colorType: 'debt' };
         let sumOverdue = 0;
         debtKeys.forEach(k => {
-            const c = debt[k];
-            if (c) { debtRow1.values.push(c.overdue.toFixed(1)); sumOverdue += c.overdue; }
+            const c = debt[k] || (debt.byCompany && debt.byCompany[k]) || (k === 'VPVPS' ? debt['Văn phòng VPS'] : null);
+            if (c && typeof c.overdue === 'number') { debtRow1.values.push(c.overdue.toFixed(2)); sumOverdue += c.overdue; }
             else debtRow1.values.push('—');
         });
-        debtRow1.total = sumOverdue.toFixed(1);
+        debtRow1.total = sumOverdue.toFixed(2);
         rows.push(debtRow1);
 
         // Row: Công nợ Khó đòi
         const debtRow2 = { label: 'CN Khó đòi (Tỷ đ)', values: [], total: '', colorType: 'debt' };
         let sumBad = 0;
         debtKeys.forEach(k => {
-            const c = debt[k];
-            if (c) { debtRow2.values.push(c.bad.toFixed(1)); sumBad += c.bad; }
+            const c = debt[k] || (debt.byCompany && debt.byCompany[k]) || (k === 'VPVPS' ? debt['Văn phòng VPS'] : null);
+            if (c && typeof c.bad === 'number') { debtRow2.values.push(c.bad.toFixed(2)); sumBad += c.bad; }
             else debtRow2.values.push('—');
         });
-        debtRow2.total = sumBad.toFixed(1);
+        debtRow2.total = sumBad.toFixed(2);
         rows.push(debtRow2);
 
         // Category: KHÁCH HÀNG & ISO
@@ -336,26 +426,101 @@ window.OverviewModule = {
         rows.push(isoRow);
 
         // Render HTML
-        let html = '';
-        rows.forEach(row => {
-            if (row.category) {
-                html += `<tr class="sc-row-category"><td colspan="8">${row.category}</td></tr>`;
-                return;
-            }
-            html += '<tr>';
-            html += `<td>${row.label}</td>`;
-            row.values.forEach(val => {
-                const cls = this.getCellClass(val, row.colorType);
-                const displayVal = row.colorType === 'pct' || row.colorType === 'lg' ? (val !== '—' ? val + '%' : '—') : val;
-                html += `<td class="${cls}">${displayVal}</td>`;
-            });
-            const totalCls = this.getCellClass(row.total, row.colorType);
-            const totalDisplay = (row.colorType === 'pct' || row.colorType === 'lg') && row.total !== '—' ? row.total + '%' : row.total;
-            html += `<td class="${totalCls}" style="font-weight:800;">${totalDisplay}</td>`;
-            html += '</tr>';
-        });
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : true;
+        const allowedComp = window.AuthService ? window.AuthService.getAllowedCompany() : 'all';
+        const isUnitOnly = !canViewAll;
 
-        body.innerHTML = html;
+        const table = document.getElementById('sc-matrix-table');
+        const thead = table ? table.querySelector('thead') : null;
+
+        if (isUnitOnly) {
+            // Find unit index in keys array ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS']
+            let unitIndex = 0;
+            if (allowedComp.includes('Việt') || allowedComp === 'VIET') unitIndex = 1;
+            else if (allowedComp.includes('Xem') || allowedComp === 'XESCO' || allowedComp === 'XEMSON') unitIndex = 2;
+            else if (allowedComp.includes('VPS M') || allowedComp === 'VPSM') unitIndex = 3;
+            else if (allowedComp.includes('ITSS')) unitIndex = 4;
+            else if (allowedComp.includes('Văn phòng') || allowedComp === 'VPVPS') unitIndex = 5;
+
+            if (thead) {
+                thead.innerHTML = `
+                    <tr>
+                        <th style="width: 42%; text-align: left;">Chỉ Tiêu Đo Lường</th>
+                        <th style="width: 28%; text-align: center;">${allowedComp}</th>
+                        <th style="width: 30%; text-align: center;">Tình Trạng</th>
+                    </tr>
+                `;
+            }
+
+            let html = '';
+            rows.forEach(row => {
+                if (row.category) {
+                    html += `<tr class="sc-row-category"><td colspan="3">${row.category}</td></tr>`;
+                    return;
+                }
+                const val = row.values[unitIndex];
+                const cls = this.getCellClass(val, row.colorType);
+                const displayVal = (row.colorType === 'pct' || row.colorType === 'lg') ? (val !== '—' ? val + '%' : '—') : val;
+
+                let statusBadge = '—';
+                const n = parseFloat(val);
+                if (!isNaN(n)) {
+                    if (row.colorType === 'pct') {
+                        statusBadge = n >= 80 ? '<span class="sc-legend-dot green"></span> Đạt tốt' : (n >= 50 ? '<span class="sc-legend-dot yellow"></span> Trung bình' : '<span class="sc-legend-dot red"></span> Cần cải thiện');
+                    } else if (row.colorType === 'lg') {
+                        statusBadge = n >= 20 ? '<span class="sc-legend-dot green"></span> Tốt' : (n >= 15 ? '<span class="sc-legend-dot yellow"></span> Trung bình' : '<span class="sc-legend-dot red"></span> Thấp');
+                    } else if (row.colorType === 'debt') {
+                        statusBadge = n <= 0.5 ? '<span class="sc-legend-dot green"></span> An toàn' : (n <= 2 ? '<span class="sc-legend-dot yellow"></span> Cần đôn đốc' : '<span class="sc-legend-dot red"></span> Rủi ro');
+                    } else {
+                        statusBadge = '<span style="color:#0284c7;font-weight:600;">Bình thường</span>';
+                    }
+                }
+
+                html += '<tr>';
+                html += `<td style="font-weight:600;">${row.label}</td>`;
+                html += `<td class="${cls}" style="text-align:center; font-weight:700; font-size:0.95rem;">${displayVal}</td>`;
+                html += `<td style="text-align:center; font-size:0.85rem;">${statusBadge}</td>`;
+                html += '</tr>';
+            });
+            body.innerHTML = html;
+        } else {
+            // Admin & CEO: full matrix
+            if (thead) {
+                thead.innerHTML = `
+                    <tr>
+                        <th>Chỉ Tiêu</th>
+                        <th>Tân Hồng Hà</th>
+                        <th>Việt</th>
+                        <th>Xem Sơn</th>
+                        <th>VPSM</th>
+                        <th>ITSS</th>
+                        <th>VP VPS</th>
+                        <th>TỔNG</th>
+                    </tr>
+                `;
+            }
+
+            let html = '';
+            rows.forEach(row => {
+                if (row.category) {
+                    html += `<tr class="sc-row-category"><td colspan="8">${row.category}</td></tr>`;
+                    return;
+                }
+                html += '<tr>';
+                html += `<td>${row.label}</td>`;
+                row.values.forEach(val => {
+                    const cls = this.getCellClass(val, row.colorType);
+                    const displayVal = row.colorType === 'pct' || row.colorType === 'lg' ? (val !== '—' ? val + '%' : '—') : val;
+                    html += `<td class="${cls}">${displayVal}</td>`;
+                });
+                const totalCls = this.getCellClass(row.total, row.colorType);
+                const totalDisplay = (row.colorType === 'pct' || row.colorType === 'lg') && row.total !== '—' ? row.total + '%' : row.total;
+                html += `<td class="${totalCls}" style="font-weight:800;">${totalDisplay}</td>`;
+                html += '</tr>';
+            });
+
+            body.innerHTML = html;
+        }
     },
 
     getCellClass(val, type) {
@@ -389,30 +554,66 @@ window.OverviewModule = {
         }
 
         const fallbackHR = {
-            'THH': { quota: 54, official: 48 },
-            'Viet': { quota: 43, official: 38 },
-            'XemSon': { quota: 98, official: 94 },
+            'THH': { quota: 54, official: 47 },
+            'Viet': { quota: 43, official: 39 },
+            'XemSon': { quota: 98, official: 91 },
             'VPSM': { quota: 15, official: 10 },
-            'ITSS': { quota: 12, official: 8 },
-            'VPVPS': { quota: 25, official: 23 },
-            'Văn phòng VPS': { quota: 25, official: 23 }
+            'ITSS': { quota: 15, official: 13 },
+            'VPVPS': { quota: 25, official: 19 },
+            'Văn phòng VPS': { quota: 25, official: 19 }
         };
 
         const fallbackPlan = {
-            'THH': { ds: 300000, actual: 68204, ttlg: 43080, cp: 24705 },
-            'Viet': { ds: 106000, actual: 40891, ttlg: 22940, cp: 13932 },
-            'XemSon': { ds: 168000, actual: 69426, ttlg: 43060, cp: 30618 },
-            'VPSM': { ds: 45000, actual: 11251, ttlg: 8469, cp: 5390 },
-            'ITSS': { ds: 13640, actual: 2914, ttlg: 3427, cp: 2900 },
-            'VPVPS': { ds: 10000, actual: 5000, ttlg: 2000, cp: 1500 },
-            'Văn phòng VPS': { ds: 10000, actual: 5000, ttlg: 2000, cp: 1500 }
+            'THH': { ds: 17010, actual: 10096, ttlg: 1910, cp: 1392 },
+            'Viet': { ds: 8779, actual: 7715, ttlg: 1697, cp: 1265 },
+            'XemSon': { ds: 14000, actual: 15102, ttlg: 4020, cp: 2190 },
+            'VPSM': { ds: 2000, actual: 1686, ttlg: 320, cp: 266 },
+            'ITSS': { ds: 2200, actual: 2350, ttlg: 658, cp: 480 },
+            'VPVPS': { ds: 0, actual: 0, ttlg: 0, cp: 1250 },
+            'Văn phòng VPS': { ds: 0, actual: 0, ttlg: 0, cp: 1250 }
         };
 
         const hr = (d && d.hr && d.hr.byCompany) ? d.hr.byCompany : fallbackHR;
         const rev = (d && d.revenue && d.revenue.plan2026) ? d.revenue.plan2026 : fallbackPlan;
-        const labels = ['THH', 'Việt', 'Xem Sơn', 'VPSM', 'ITSS', 'VP VPS'];
-        const hrKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
-        const revKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+
+        const canViewAll = window.AuthService ? window.AuthService.canViewAll() : true;
+        const allowedComp = window.AuthService ? window.AuthService.getAllowedCompany() : 'all';
+        const isUnitOnly = !canViewAll;
+
+        const compKeyMap = {
+            'Tân Hồng Hà': { key: 'THH', label: 'Tân Hồng Hà' },
+            'THH': { key: 'THH', label: 'Tân Hồng Hà' },
+            'Việt': { key: 'Viet', label: 'Việt' },
+            'VIET': { key: 'Viet', label: 'Việt' },
+            'Xem Sơn': { key: 'XemSon', label: 'Xem Sơn' },
+            'XESCO': { key: 'XemSon', label: 'Xem Sơn' },
+            'XEMSON': { key: 'XemSon', label: 'Xem Sơn' },
+            'VPS M': { key: 'VPSM', label: 'VPS M' },
+            'VPSM': { key: 'VPSM', label: 'VPS M' },
+            'ITSS': { key: 'ITSS', label: 'ITSS' },
+            'Văn phòng VPS': { key: 'VPVPS', label: 'VP VPS' },
+            'VPVPS': { key: 'VPVPS', label: 'VP VPS' }
+        };
+
+        const activeInfo = compKeyMap[allowedComp] || { key: 'THH', label: allowedComp };
+
+        const labels = isUnitOnly ? [activeInfo.label] : ['THH', 'Việt', 'Xem Sơn', 'VPSM', 'ITSS', 'VP VPS'];
+        const hrKeys = isUnitOnly ? [activeInfo.key] : ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+        const revKeys = isUnitOnly ? [activeInfo.key] : ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
+
+        const hrTitle = document.querySelector('#view-overview .sc-chart-card:nth-child(1) h3');
+        const revTitle = document.querySelector('#view-overview .sc-chart-card:nth-child(2) h3');
+        const profitTitle = document.querySelector('#view-overview .sc-chart-card:nth-child(3) h3');
+        if (isUnitOnly) {
+            if (hrTitle) hrTitle.innerHTML = `<i data-lucide="users" style="width:16px;height:16px;margin-right:6px;color:#e74c3c;"></i> Nhân Sự - ${activeInfo.label}`;
+            if (revTitle) revTitle.innerHTML = `<i data-lucide="bar-chart-2" style="width:16px;height:16px;margin-right:6px;color:#10b981;"></i> Doanh Số KH vs Thực Tế - ${activeInfo.label}`;
+            if (profitTitle) profitTitle.innerHTML = `<i data-lucide="trending-up" style="width:16px;height:16px;margin-right:6px;color:#8b5cf6;"></i> Lãi Gộp & Chi Phí - ${activeInfo.label}`;
+        } else {
+            if (hrTitle) hrTitle.innerHTML = `<i data-lucide="users" style="width:16px;height:16px;margin-right:6px;color:#e74c3c;"></i> Nhân Sự theo Đơn Vị`;
+            if (revTitle) revTitle.innerHTML = `<i data-lucide="bar-chart-2" style="width:16px;height:16px;margin-right:6px;color:#10b981;"></i> Doanh Số KH vs Thực Tế`;
+            if (profitTitle) profitTitle.innerHTML = `<i data-lucide="trending-up" style="width:16px;height:16px;margin-right:6px;color:#8b5cf6;"></i> Lãi Gộp & Chi Phí`;
+        }
+        if (window.lucide && typeof window.lucide.createIcons === 'function') window.lucide.createIcons();
 
         // Chart 1: HR — Stacked bar (Chính thức vs Thiếu hụt)
         try {

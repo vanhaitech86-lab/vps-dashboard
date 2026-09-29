@@ -28,7 +28,7 @@ window.RevenueModule = {
             plans: {
                 'THH':    { ds: 45000, lg: 4500, lg_pct: 10 },
                 'Viet':   { ds: 0, lg: 0, lg_pct: 0 },
-                'XemSon': { ds: 42000, lg: 6720, lg_pct: 16 },
+                'XemSon': { ds: 66000, lg: 6300, lg_pct: 10 },
                 'VPSM':   { ds: 13500, lg: 1350, lg_pct: 10 },
                 'ITSS':   { ds: 0, lg: 0, lg_pct: 0 },
                 'VPVPS':  { ds: 0, lg: 0, lg_pct: 0 }
@@ -46,7 +46,7 @@ window.RevenueModule = {
             plans: {
                 'THH':    { ds: 7000, lg: 2450, lg_pct: 35 },
                 'Viet':   { ds: 18500, lg: 10730, lg_pct: 58 },
-                'XemSon': { ds: 23000, lg: 15640, lg_pct: 68 },
+                'XemSon': { ds: 42000, lg: 25480, lg_pct: 61 },
                 'VPSM':   { ds: 1200, lg: 780, lg_pct: 65 },
                 'ITSS':   { ds: 0, lg: 0, lg_pct: 0 },
                 'VPVPS':  { ds: 0, lg: 0, lg_pct: 0 }
@@ -64,7 +64,7 @@ window.RevenueModule = {
             plans: {
                 'THH':    { ds: 20000, lg: 7600, lg_pct: 38 },
                 'Viet':   { ds: 0, lg: 0, lg_pct: 0 },
-                'XemSon': { ds: 18500, lg: 8140, lg_pct: 44 },
+                'XemSon': { ds: 26000, lg: 8580, lg_pct: 33 },
                 'VPSM':   { ds: 3500, lg: 1820, lg_pct: 52 },
                 'ITSS':   { ds: 0, lg: 0, lg_pct: 0 },
                 'VPVPS':  { ds: 0, lg: 0, lg_pct: 0 }
@@ -82,7 +82,7 @@ window.RevenueModule = {
             plans: {
                 'THH':    { ds: 1500, lg: 75, lg_pct: 5 },
                 'Viet':   { ds: 30500, lg: 1830, lg_pct: 6 },
-                'XemSon': { ds: 36000, lg: 1800, lg_pct: 5 },
+                'XemSon': { ds: 24000, lg: 1200, lg_pct: 5 },
                 'VPSM':   { ds: 1400, lg: 84, lg_pct: 6 },
                 'ITSS':   { ds: 0, lg: 0, lg_pct: 0 },
                 'VPVPS':  { ds: 0, lg: 0, lg_pct: 0 }
@@ -100,7 +100,7 @@ window.RevenueModule = {
             plans: {
                 'THH':    { ds: 22000, lg: 8800, lg_pct: 40 },
                 'Viet':   { ds: 0, lg: 0, lg_pct: 0 },
-                'XemSon': { ds: 6000, lg: 2160, lg_pct: 36 },
+                'XemSon': { ds: 0, lg: 0, lg_pct: 0 },
                 'VPSM':   { ds: 0, lg: 0, lg_pct: 0 },
                 'ITSS':   { ds: 5500, lg: 2035, lg_pct: 37 },
                 'VPVPS':  { ds: 0, lg: 0, lg_pct: 0 }
@@ -136,7 +136,7 @@ window.RevenueModule = {
             plans: {
                 'THH':    { ds: 0, lg: 0, lg_pct: 0 },
                 'Viet':   { ds: 3000, lg: 1050, lg_pct: 35 },
-                'XemSon': { ds: 5500, lg: 1265, lg_pct: 23 },
+                'XemSon': { ds: 10000, lg: 1500, lg_pct: 15 },
                 'VPSM':   { ds: 600, lg: 108, lg_pct: 18 },
                 'ITSS':   { ds: 0, lg: 0, lg_pct: 0 },
                 'VPVPS':  { ds: 36000, lg: 4320, lg_pct: 12 }
@@ -144,55 +144,59 @@ window.RevenueModule = {
         }
     ],
 
-    // ── Chi tiết mảng con của từng đơn vị thuộc 7 phòng ban ──
-    DEPT_SUB_ITEMS: [
+    // ── Chi tiết mảng con của từng đơn vị thuộc 7 phòng ban (Đồng bộ trực tiếp từ Google Sheets) ──
+    DEPT_SUB_ITEMS: (typeof window !== 'undefined' && window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.dept_7_sub_items && window.LIVE_GOOGLE_SHEETS_DATA.dept_7_sub_items.length > 0)
+        ? window.LIVE_GOOGLE_SHEETS_DATA.dept_7_sub_items
+        : [
         // 1. Phân phối
         { deptId: 'phan_phoi', comp: 'THH', name: 'Kinh doanh bán buôn', note: 'Phân phối đại lý miền Bắc', ytd_ds: 30362.0, ytd_lg: 2847.1, m8_ds: 5135.0, m8_lg: 572.0, plan_year_ds: 45000, plan_year_lg: 4500 },
-        { deptId: 'phan_phoi', comp: 'XemSon', name: 'Kinh doanh sỉ (KD sỉ)', note: 'Phân phối thiết bị Xesco', ytd_ds: 27002.0, ytd_lg: 4410.0, m8_ds: 4169.0, m8_lg: 682.0, plan_year_ds: 42000, plan_year_lg: 6720 },
+        { deptId: 'phan_phoi', comp: 'XemSon', name: 'Kinh doanh bán buôn', note: 'Phân phối đại lý miền Nam', ytd_ds: 27002.0, ytd_lg: 4410.0, m8_ds: 4168.0, m8_lg: 682.0, plan_m_ds: 5500, plan_m_lg: 525, plan_year_ds: 66000, plan_year_lg: 6300 },
         { deptId: 'phan_phoi', comp: 'VPSM', name: 'Kinh doanh máy - bán buôn', note: 'Bán buôn máy VPS Miền Trung', ytd_ds: 6698.0, ytd_lg: 575.0, m8_ds: 810.0, m8_lg: 45.0, plan_year_ds: 10000, plan_year_lg: 900 },
         { deptId: 'phan_phoi', comp: 'VPSM', name: 'Kinh doanh linh kiện - bán buôn', note: 'Bán buôn linh kiện mực in', ytd_ds: 2028.0, ytd_lg: 312.0, m8_ds: 240.0, m8_lg: 22.0, plan_year_ds: 3500, plan_year_lg: 450 },
 
         // 2. Thuê máy
         { deptId: 'thue_may', comp: 'THH', name: 'Thuê máy Tân Hồng Hà', note: 'Cho thuê máy photocopy miền Bắc', ytd_ds: 4304.0, ytd_lg: 1424.8, m8_ds: 650.0, m8_lg: 233.0, plan_year_ds: 7000, plan_year_lg: 2450 },
         { deptId: 'thue_may', comp: 'Viet', name: 'Thuê máy Công ty Việt', note: 'Cho thuê máy Công ty Việt', ytd_ds: 12422.0, ytd_lg: 7195.0, m8_ds: 1546.0, m8_lg: 910.0, plan_year_ds: 18500, plan_year_lg: 10730 },
-        { deptId: 'thue_may', comp: 'XemSon', name: 'Kỹ thuật thuê máy (KT)', note: 'Máy thuê kỹ thuật Xesco', ytd_ds: 11785.0, ytd_lg: 7875.0, m8_ds: 1427.0, m8_lg: 918.0, plan_year_ds: 18000, plan_year_lg: 12240 },
-        { deptId: 'thue_may', comp: 'XemSon', name: 'KD Thuê máy (Thương mại)', note: 'Hợp đồng thuê máy mới', ytd_ds: 3033.0, ytd_lg: 2104.0, m8_ds: 381.0, m8_lg: 249.0, plan_year_ds: 5000, plan_year_lg: 3400 },
+        { deptId: 'thue_may', comp: 'XemSon', name: 'Thuê máy Xem Sơn', note: 'Cho thuê máy photocopy miền Nam', ytd_ds: 16958.0, ytd_lg: 11264.0, m8_ds: 2078.0, m8_lg: 1337.0, plan_m_ds: 3500, plan_m_lg: 2123, plan_year_ds: 42000, plan_year_lg: 25480 },
         { deptId: 'thue_may', comp: 'VPSM', name: 'Thuê máy Miền Trung', note: 'Thuê máy khu vực miền Trung', ytd_ds: 743.0, ytd_lg: 496.0, m8_ds: 80.0, m8_lg: 20.0, plan_year_ds: 1200, plan_year_lg: 780 },
 
         // 3. Dịch vụ
         { deptId: 'dich_vu', comp: 'THH', name: 'Tổ Dịch vụ THH', note: 'Bảo trì bảo dưỡng sửa chữa', ytd_ds: 9304.0, ytd_lg: 3103.0, m8_ds: 959.0, m8_lg: 281.0, plan_year_ds: 14000, plan_year_lg: 5320 },
         { deptId: 'dich_vu', comp: 'THH', name: 'Tổ mực in THH', note: 'Cung cấp thay thế mực in', ytd_ds: 2319.0, ytd_lg: 1181.7, m8_ds: 354.0, m8_lg: 196.0, plan_year_ds: 3500, plan_year_lg: 1470 },
         { deptId: 'dich_vu', comp: 'THH', name: 'Metercharge THH', note: 'Dịch vụ thu phí bản in chụp', ytd_ds: 1684.0, ytd_lg: 873.0, m8_ds: 233.0, m8_lg: 141.0, plan_year_ds: 2500, plan_year_lg: 1250 },
-        { deptId: 'dich_vu', comp: 'XemSon', name: 'Dịch vụ kỹ thuật Xem Sơn', note: 'Kỹ thuật dịch vụ máy VP', ytd_ds: 9931.0, ytd_lg: 4063.0, m8_ds: 1439.0, m8_lg: 574.0, plan_year_ds: 15000, plan_year_lg: 6450 },
-        { deptId: 'dich_vu', comp: 'XemSon', name: 'Metercharge Xem Sơn', note: 'Dịch vụ Metercharge Xesco', ytd_ds: 2139.0, ytd_lg: 1284.0, m8_ds: 278.0, m8_lg: 164.0, plan_year_ds: 3500, plan_year_lg: 1890 },
+        { deptId: 'dich_vu', comp: 'XemSon', name: 'Tổ Dịch vụ Xem Sơn', note: 'Kỹ thuật dịch vụ máy VP', ytd_ds: 9931.0, ytd_lg: 4063.0, m8_ds: 1295.0, m8_lg: 597.0, plan_m_ds: 2137, plan_m_lg: 715, plan_year_ds: 26000, plan_year_lg: 8580 },
+        { deptId: 'dich_vu', comp: 'XemSon', name: 'Tổ mực In', note: 'Cung cấp thay thế mực in', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
+        { deptId: 'dich_vu', comp: 'XemSon', name: 'Metercharge', note: 'Dịch vụ thu phí bản in chụp', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
         { deptId: 'dich_vu', comp: 'VPSM', name: 'Dịch vụ kỹ thuật VPSM', note: 'Bảo trì sửa chữa máy', ytd_ds: 1737.0, ytd_lg: 844.0, m8_ds: 220.0, m8_lg: 95.0, plan_year_ds: 2700, plan_year_lg: 1350 },
         { deptId: 'dich_vu', comp: 'VPSM', name: 'Dịch vụ toàn phần VPSM', note: 'Hợp đồng bảo trì trọn gói', ytd_ds: 478.0, ytd_lg: 324.0, m8_ds: 60.0, m8_lg: 35.0, plan_year_ds: 800, plan_year_lg: 470 },
 
         // 4. Online
         { deptId: 'online', comp: 'THH', name: 'Kinh doanh Online THH', note: 'Bán hàng trực tuyến', ytd_ds: 772.0, ytd_lg: 15.1, m8_ds: 102.0, m8_lg: 0.0, plan_year_ds: 1500, plan_year_lg: 75 },
         { deptId: 'online', comp: 'Viet', name: 'KD Online Việt', note: 'Kênh online sàn TMĐT', ytd_ds: 19902.0, ytd_lg: 1239.0, m8_ds: 3764.0, m8_lg: 241.0, plan_year_ds: 30500, plan_year_lg: 1830 },
-        { deptId: 'online', comp: 'XemSon', name: 'KD Online Xem Sơn', note: 'Thương mại điện tử Xesco', ytd_ds: 23597.0, ytd_lg: 882.0, m8_ds: 6770.0, m8_lg: 244.0, plan_year_ds: 36000, plan_year_lg: 1800 },
+        { deptId: 'online', comp: 'XemSon', name: 'Kinh doanh Online', note: 'Bán hàng trực tuyến', ytd_ds: 23597.0, ytd_lg: 882.0, m8_ds: 3918.0, m8_lg: 113.0, plan_m_ds: 2000, plan_m_lg: 100, plan_year_ds: 24000, plan_year_lg: 1200 },
         { deptId: 'online', comp: 'VPSM', name: 'Shopee-Online VPSM', note: 'Gian hàng Shopee Miền Trung', ytd_ds: 898.0, ytd_lg: 48.0, m8_ds: 105.0, m8_lg: 3.0, plan_year_ds: 1400, plan_year_lg: 84 },
 
         // 5. Dự án
         { deptId: 'du_an', comp: 'THH', name: 'Dự án Tân Hồng Hà', note: 'Dự án thầu thiết bị miền Bắc', ytd_ds: 14503.0, ytd_lg: 5690.3, m8_ds: 1415.0, m8_lg: 310.0, plan_year_ds: 22000, plan_year_lg: 8800 },
-        { deptId: 'du_an', comp: 'XemSon', name: 'Dự án Xesco', note: 'Gói thầu thiết bị miền Nam', ytd_ds: 3426.0, ytd_lg: 1245.0, m8_ds: 447.0, m8_lg: 161.0, plan_year_ds: 6000, plan_year_lg: 2160 },
+        { deptId: 'du_an', comp: 'XemSon', name: 'Dự án Xem Sơn', note: 'Dự án thầu thiết bị miền Nam', ytd_ds: 4182.0, ytd_lg: 1351.0, m8_ds: 3426.0, m8_lg: 1245.0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
         { deptId: 'du_an', comp: 'ITSS', name: 'Dự án CNTT ITSS', note: 'Giải pháp phần mềm và mạng', ytd_ds: 3555.0, ytd_lg: 1309.0, m8_ds: 640.0, m8_lg: 210.0, plan_year_ds: 5500, plan_year_lg: 2035 },
 
         // 6. Kinh doanh tổng hợp (KDTH)
         { deptId: 'kdth', comp: 'THH', name: 'Kinh doanh tổng hợp THH', note: 'Thương mại tổng hợp', ytd_ds: 14949.0, ytd_lg: 1212.1, m8_ds: 1248.0, m8_lg: 177.0, plan_year_ds: 22500, plan_year_lg: 2250 },
         { deptId: 'kdth', comp: 'Viet', name: 'KDTH Công ty Việt', note: 'Kinh doanh tổng hợp', ytd_ds: 14838.0, ytd_lg: 1135.0, m8_ds: 2213.0, m8_lg: 166.0, plan_year_ds: 23000, plan_year_lg: 1840 },
+        { deptId: 'kdth', comp: 'XemSon', name: 'Kinh doanh tổng hợp', note: 'Thương mại tổng hợp', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
 
         // 7. Kinh doanh khác
         { deptId: 'khac', comp: 'Viet', name: 'Cửa hàng Việt', note: 'Bán lẻ tại điểm bán', ytd_ds: 835.0, ytd_lg: 356.0, m8_ds: 120.0, m8_lg: 52.0, plan_year_ds: 1800, plan_year_lg: 720 },
         { deptId: 'khac', comp: 'Viet', name: 'Bán nội bộ Việt', note: 'Hoạt động nội bộ', ytd_ds: 608.0, ytd_lg: 79.0, m8_ds: 70.0, m8_lg: 21.0, plan_year_ds: 1200, plan_year_lg: 330 },
-        { deptId: 'khac', comp: 'XemSon', name: 'Bán máy lẻ Xem Sơn', note: 'Bán lẻ thiết bị văn phòng', ytd_ds: 3614.0, ytd_lg: 823.0, m8_ds: 191.0, m8_lg: 49.0, plan_year_ds: 5500, plan_year_lg: 1265 },
+        { deptId: 'khac', comp: 'XemSon', name: 'Kinh doanh bán lẻ', note: 'Bán lẻ thiết bị văn phòng', ytd_ds: 2858.0, ytd_lg: 717.0, m8_ds: 216.0, m8_lg: 46.0, plan_m_ds: 833, plan_m_lg: 125, plan_year_ds: 10000, plan_year_lg: 1500 },
         { deptId: 'khac', comp: 'VPSM', name: 'Bán lẻ VPS Miền Trung', note: 'Bán lẻ tại showroom', ytd_ds: 355.0, ytd_lg: 63.0, m8_ds: 5.0, m8_lg: 1.0, plan_year_ds: 600, plan_year_lg: 108 },
         { deptId: 'khac', comp: 'VPVPS', name: 'VP VPS - Hoạt động KD', note: 'Bán nội bộ, xuất khẩu, thương mại', ytd_ds: 24017.0, ytd_lg: 2818.0, m8_ds: 7386.0, m8_lg: 288.0, plan_year_ds: 36000, plan_year_lg: 4320 }
     ],
 
     init() {
         document.addEventListener('vps_filter_changed', (e) => {
+            this.initDeptRBAC();
             const period = e.detail ? e.detail.period : 'month';
             const comp = e.detail ? e.detail.company : 'all';
             this.loadData(period, comp);
@@ -205,7 +209,8 @@ window.RevenueModule = {
     initDeptRBAC() {
         const canViewAll = window.AuthService ? window.AuthService.canViewAll() : true;
         const select = document.getElementById('dept-filter-company');
-        if (!canViewAll && select && window.AuthService) {
+        if (!select) return;
+        if (!canViewAll && window.AuthService) {
             const allowed = window.AuthService.getAllowedCompany();
             const compMap = { 'Tân Hồng Hà': 'THH', 'Việt': 'Viet', 'Xem Sơn': 'XemSon', 'VPS M': 'VPSM', 'ITSS': 'ITSS', 'Văn phòng VPS': 'VPVPS' };
             const cKey = compMap[allowed] || 'THH';
@@ -214,6 +219,20 @@ window.RevenueModule = {
             select.disabled = true;
             select.style.background = '#f1f5f9';
             select.style.cursor = 'not-allowed';
+        } else {
+            select.disabled = false;
+            select.style.background = '#ffffff';
+            select.style.cursor = 'pointer';
+            select.innerHTML = `
+                <option value="all">Toàn bộ 6 Công ty</option>
+                <option value="THH">Tân Hồng Hà (Miền Bắc)</option>
+                <option value="Viet">Công ty Việt (Miền Bắc)</option>
+                <option value="XemSon">Xem Sơn (Miền Nam)</option>
+                <option value="VPSM">VPS Miền Trung</option>
+                <option value="ITSS">ITSS (CNTT & Giải pháp)</option>
+                <option value="VPVPS">Văn phòng VPS</option>
+            `;
+            this.currentDeptCompany = 'all';
         }
     },
 
@@ -462,9 +481,9 @@ window.RevenueModule = {
                 deptPlanYearDs += item.plan_year_ds;
                 deptPlanYearLg += item.plan_year_lg;
 
-                // Kế hoạch tháng = Kế hoạch năm / 12
-                const itPlanMonthDs = Math.round(item.plan_year_ds / 12);
-                const itPlanMonthLg = Math.round(item.plan_year_lg / 12);
+                // Kế hoạch tháng = Kế hoạch năm / 12 (hoặc plan_m nếu có chỉ định riêng theo kỳ)
+                const itPlanMonthDs = (item.plan_m_ds !== undefined && selM === 8) ? item.plan_m_ds : Math.round(item.plan_year_ds / 12);
+                const itPlanMonthLg = (item.plan_m_lg !== undefined && selM === 8) ? item.plan_m_lg : Math.round(item.plan_year_lg / 12);
                 deptPlanMonthDs += itPlanMonthDs;
                 deptPlanMonthLg += itPlanMonthLg;
 
@@ -862,8 +881,8 @@ window.RevenueModule = {
             if (isExpanded && hasSub) {
                 const selM = parseInt(this.currentDeptMonth) || 8;
                 dept.subItems.forEach((item, idx) => {
-                    const itDsKhMonth = Math.round(item.plan_year_ds / 12);
-                    const itLgKhMonth = Math.round(item.plan_year_lg / 12);
+                    const itDsKhMonth = (item.plan_m_ds !== undefined && selM === 8) ? item.plan_m_ds : Math.round(item.plan_year_ds / 12);
+                    const itLgKhMonth = (item.plan_m_lg !== undefined && selM === 8) ? item.plan_m_lg : Math.round(item.plan_year_lg / 12);
 
                     let itDsThMonth = item.m8_ds;
                     let itLgThMonth = item.m8_lg;
@@ -977,8 +996,8 @@ window.RevenueModule = {
 
             if (dept.subItems) {
                 dept.subItems.forEach(item => {
-                    const itDsKhMonth = Math.round(item.plan_year_ds / 12);
-                    const itLgKhMonth = Math.round(item.plan_year_lg / 12);
+                    const itDsKhMonth = (item.plan_m_ds !== undefined && selM === 8) ? item.plan_m_ds : Math.round(item.plan_year_ds / 12);
+                    const itLgKhMonth = (item.plan_m_lg !== undefined && selM === 8) ? item.plan_m_lg : Math.round(item.plan_year_lg / 12);
                     csvContent += `"","  - [${item.comp}] ${item.name}","${itDsKhMonth}","${item.m8_ds}","-","${itLgKhMonth}","${item.m8_lg}","-","-","${item.plan_year_ds}","${item.ytd_ds}","-","${item.plan_year_lg}","${item.ytd_lg}","-","-"\n`;
                 });
             }

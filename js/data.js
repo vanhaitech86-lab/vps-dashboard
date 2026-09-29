@@ -1140,6 +1140,48 @@ window.CrmConnector = {
     }
 };
 
+if (window.LIVE_GOOGLE_SHEETS_DATA) {
+    const live = window.LIVE_GOOGLE_SHEETS_DATA;
+    if (live.products_raw) mockData.products_raw = live.products_raw;
+    if (live.plan2026) {
+        mockData.plan2026 = live.plan2026;
+        if (!mockData.revenue) mockData.revenue = {};
+        mockData.revenue.plan2026 = live.plan2026;
+    }
+    if (live.revenue_by_company) {
+        if (!mockData.revenue) mockData.revenue = {};
+        mockData.revenue.byCompany = live.revenue_by_company;
+    }
+    if (live.debt_by_company) {
+        if (!mockData.debt) mockData.debt = {};
+        mockData.debt.byCompany = live.debt_by_company;
+        let dTot = 0;
+        for (const k in live.debt_by_company) {
+            dTot += (live.debt_by_company[k].total || 0);
+        }
+        mockData.debt.total = parseFloat(dTot.toFixed(2));
+    }
+    if (live.hr_by_company) {
+        if (!mockData.hr) mockData.hr = {};
+        mockData.hr.byCompany = live.hr_by_company;
+    }
+    if (live.inventory_by_company) {
+        if (!mockData.inventory) mockData.inventory = {};
+        mockData.inventory.byCompany = live.inventory_by_company;
+        let invTot = 0;
+        for (const k in live.inventory_by_company) {
+            invTot += (live.inventory_by_company[k].total || 0);
+        }
+        mockData.inventory.total = parseFloat(invTot.toFixed(2));
+    }
+    if (live.customers_matrix) {
+        if (!mockData.customers) mockData.customers = {};
+        mockData.customers.matrix = live.customers_matrix;
+    }
+    if (live.dept_7_sub_items) {
+        mockData.dept_7_sub_items = live.dept_7_sub_items;
+    }
+}
 window.mockData = mockData;
 
 window.DataService = {

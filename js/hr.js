@@ -244,8 +244,9 @@ window.HrModule = {
         const hrQuotaEl = document.getElementById('hr-quota');
         if (hrQuotaEl) hrQuotaEl.textContent = tQuota.toLocaleString();
 
+        const totalHeadcount = tOfficial + tProbation;
         const hrFulfillmentEl = document.getElementById('hr-fulfillment');
-        if (hrFulfillmentEl) hrFulfillmentEl.textContent = `Đạt ${fulfillment}% định biên`;
+        if (hrFulfillmentEl) hrFulfillmentEl.textContent = `Tổng thực tế: ${totalHeadcount} • Đạt ${fulfillment}% định biên`;
 
         const barEl = document.getElementById('hr-fulfillment-bar');
         if (barEl) {

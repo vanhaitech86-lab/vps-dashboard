@@ -4,12 +4,12 @@
 // ============================================================
 
 const COMPANY_SHEETS = {
-    'THH':    { name: 'Tân Hồng Hà', id: '1NkEmKjlHbX7r6PqxCaHBUGCox3aRIid7KSFZDYds_rs' },
-    'Viet':   { name: 'Việt',         id: '1RGXSjNekSBjnZGcKaDfyvVPVG99ZG8S1RPJOXsjEyd8' },
-    'XemSon': { name: 'Xem Sơn',     id: '17pAZh0BM9KKas3mh5kLJlZ0D5GU3eEdAGJB_77Fzg_g' },
-    'VPSM':   { name: 'VPS M',       id: '1fp5oghEMbrmLZRXhgLPtfY4mmo3sVIRmGAkieIik7ng' },
-    'ITSS':   { name: 'ITSS',        id: '1t1a6DstUqlNctuQPE8RkdGBeL4BxyLDVGK46YVx2JPk' },
-    'VPVPS':  { name: 'Văn phòng VPS', id: '1rHp9y-KXYUN30pxOd_u6uzWEvIiWuo8Jvnjrbv7k3mg' },
+    'THH':    { name: 'Tân Hồng Hà',   id: '1TP2ISnfspKYLuN7U9eETeggBMWkQbaRl_G1X8juCePY' },
+    'Viet':   { name: 'Việt',         id: '1Pp7HC4cgUVAM69DDOGTvRct0kRiJ8hqNRj5K339xH4o' },
+    'XemSon': { name: 'Xem Sơn',       id: '1yXyzTKccGWQSn0mCNFmxPkHyx5auTwQw2SZcngPNIFg' },
+    'VPSM':   { name: 'VPS M',         id: '13o7mqOd_30DbYqRhF18qn_yTqno3FzAWeqZDJ6nVTFA' },
+    'ITSS':   { name: 'ITSS',          id: '1JHGl2WSw8zezqWXSIJrKHWYpnW8nIatedn4UbzPilVM' },
+    'VPVPS':  { name: 'Văn phòng VPS', id: '1pHdTs3sM3RMF1ST6eWenuo947hG66V_kLU6FupNJZcE' },
 };
 
 const SHEET_NAMES = [
@@ -17,38 +17,16 @@ const SHEET_NAMES = [
     'Đào tạo', 'Dịch vụ tận tâm', 'Văn hóa doanh nghiệp', 'Thương hiệu', 'Kết quả kinh doanh'
 ];
 
-const COMPANY_SHEET_GIDS = {
-    'THH': {
-        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
-        'Nhân sự': '1910149330', 'Sản Phẩm': '418592611', 'Chi Phí': '957596074', 'ISO': '409620359',
-        'Đào tạo': '1393168586', 'Dịch vụ tận tâm': '2102700098', 'Văn hóa doanh nghiệp': '1859602306', 'Thương hiệu': '534190568'
-    },
-    'Viet': {
-        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
-        'Nhân sự': '1910149330', 'Sản Phẩm': '290289304', 'Chi Phí': '176987120', 'ISO': '746260029',
-        'Đào tạo': '685984952', 'Dịch vụ tận tâm': '60502944', 'Văn hóa doanh nghiệp': '1512696972', 'Thương hiệu': '1597204331'
-    },
-    'XemSon': {
-        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
-        'Nhân sự': '1910149330', 'Sản Phẩm': '459916420', 'Chi Phí': '508949159', 'ISO': '261393228',
-        'Đào tạo': '120618463', 'Dịch vụ tận tâm': '6998158', 'Văn hóa doanh nghiệp': '1510545864', 'Thương hiệu': '1997579437'
-    },
-    'VPSM': {
-        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
-        'Nhân sự': '1910149330', 'Sản Phẩm': '1975051685', 'Chi Phí': '1905975927', 'ISO': '1104287242',
-        'Đào tạo': '808165345', 'Dịch vụ tận tâm': '1469666840', 'Văn hóa doanh nghiệp': '2066638119', 'Thương hiệu': '596828320'
-    },
-    'ITSS': {
-        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
-        'Nhân sự': '1910149330', 'Sản Phẩm': '188270032', 'Chi Phí': '1362412584', 'ISO': '2143258857',
-        'Đào tạo': '634871207', 'Dịch vụ tận tâm': '1857193906', 'Văn hóa doanh nghiệp': '2030051590', 'Thương hiệu': '1776368819'
-    },
-    'VPVPS': {
-        'Doanh thu': '2016893209', 'Công nợ': '1533519692', 'Khách hàng': '643672867', 'Tồn kho': '1648808464',
-        'Nhân sự': '1910149330', 'Sản Phẩm': '1556002857', 'ISO': '1981205001',
-        'Đào tạo': '783896699', 'Dịch vụ tận tâm': '1438256161', 'Văn hóa doanh nghiệp': '953716186', 'Thương hiệu': '1267026434'
-    }
+const COMPANY_SHEET_7DEPT_TABS = {
+    'THH': 'DOANH SỐ VÀ LÃI GỘP',
+    'Viet': 'Doanh Số lãi Gộp',
+    'XemSon': 'Doanh Số và Lãi Gộp',
+    'VPSM': 'Doanh Số và Lãi Gộp',
+    'ITSS': 'Doanh Số lãi gộp ',
+    'VPVPS': 'Doanh số lãi gộp'
 };
+
+const COMPANY_SHEET_GIDS = {};
 
 const companyIdMap = {
     'Tân Hồng Hà': 'THH', 'Tan Hong Ha': 'THH', 'tân hồng hà': 'THH', 'THH': 'THH',
@@ -313,6 +291,64 @@ function parseRevenue(csv, cId) {
     return result;
 }
 
+// 1b. DOANH SỐ VÀ LÃI GỘP 7 PHÒNG BAN
+function parse7Departments(csv, cId) {
+    if (!csv || csv.length < 2) return [];
+    const deptNumMap = {
+        '1': 'phan_phoi', '2': 'thue_may', '3': 'dich_vu',
+        '4': 'online', '5': 'du_an', '6': 'kdth', '7': 'khac'
+    };
+    let currDeptId = null;
+    const subItems = [];
+    for (let i = 0; i < csv.length; i++) {
+        const r = csv[i];
+        if (!r || r.length < 2) continue;
+        const stt = (r[0] || '').toString().trim();
+        const name = (r[1] || '').toString().trim();
+        if (!name || name.toUpperCase().includes('PHÒNG BAN') || name.toUpperCase().includes('TỔNG CỘNG')) continue;
+        if (deptNumMap[stt]) {
+            currDeptId = deptNumMap[stt];
+            continue;
+        }
+        if (currDeptId && (name.startsWith('-') || name.startsWith('[') || !stt)) {
+            if (name.toLowerCase().includes('nhập mảng kinh doanh nếu có') || name.toLowerCase().includes('(nhập')) continue;
+            let cleanName = name.replace(/^[\s-]*\[[A-Za-z0-9_\s]+\]\s*/, '').trim();
+            if (!cleanName) cleanName = name;
+            let m_ds_kh = parseNumber(r[2]);
+            let m_ds_th = parseNumber(r[3]);
+            let m_lg_kh = parseNumber(r[5]);
+            let m_lg_th = parseNumber(r[6]);
+            let y_ds_kh = parseNumber(r[9]);
+            let y_ds_th = parseNumber(r[10]);
+            let y_lg_kh = parseNumber(r[12]);
+            let y_lg_th = parseNumber(r[13]);
+            const note = r[16] ? r[16].toString().trim() : '';
+
+            if (m_ds_kh > 0 && m_ds_kh < 20) m_ds_kh = Math.round(m_ds_kh * 1000 * 10) / 10;
+            if (y_ds_kh > 0 && y_ds_kh < 200) y_ds_kh = Math.round(y_ds_kh * 1000 * 10) / 10;
+            if (y_ds_kh >= 1000 && y_lg_kh > 0 && y_lg_kh < 50) y_lg_kh = Math.round(y_lg_kh * 1000 * 10) / 10;
+            if (y_ds_kh >= 1000 && y_ds_th > 0 && y_ds_th < 200) y_ds_th = Math.round(y_ds_th * 1000 * 10) / 10;
+            if (y_lg_kh >= 500 && y_lg_th > 0 && y_lg_th < 50) y_lg_th = Math.round(y_lg_th * 1000 * 10) / 10;
+
+            subItems.push({
+                deptId: currDeptId,
+                comp: cId,
+                name: cleanName,
+                note: note,
+                ytd_ds: y_ds_th,
+                ytd_lg: y_lg_th,
+                m8_ds: m_ds_th,
+                m8_lg: m_lg_th,
+                plan_m_ds: m_ds_kh,
+                plan_m_lg: m_lg_kh,
+                plan_year_ds: y_ds_kh,
+                plan_year_lg: y_lg_kh
+            });
+        }
+    }
+    return subItems;
+}
+
 // 2. CÔNG NỢ
 function parseDebt(csv, cId) {
     const headerMonth = csv.length > 0 ? extractMonthFromHeader(csv[0]) : '';
@@ -430,6 +466,14 @@ function parseHR(csv, cId) {
                 });
             }
         }
+    }
+
+    result.totalEmployees = result.quota;
+    const plannedQuotaMap = {
+        'THH': 54, 'Viet': 43, 'XemSon': 98, 'VPSM': 15, 'ITSS': 15, 'VPVPS': 25
+    };
+    if (plannedQuotaMap[cId]) {
+        result.quota = Math.max(plannedQuotaMap[cId], result.quota);
     }
 
     // Fallback cho ITSS nếu file sheet chưa nhập dữ liệu
@@ -873,9 +917,16 @@ window.GoogleSheetsService = {
     _activePromise: null,
     _lastSyncTime: 0,
 
-    // Nạp tức thì (0ms) dữ liệu từ Cache trình duyệt khi khởi động hoặc đăng nhập lại
+    // Nạp tức thì (0ms) dữ liệu từ Live Google Sheets Data đã quét hoặc Cache trình duyệt
     hydrateFromCache() {
         try {
+            // Ưu tiên nạp ngay dữ liệu trực tiếp đã quét từ Google Sheets của 6 đơn vị
+            if (typeof window !== 'undefined' && window.LIVE_GOOGLE_SHEETS_DATA) {
+                this.applyLiveGoogleSheetsData(window.LIVE_GOOGLE_SHEETS_DATA);
+                console.log('[GS] Nạp thành công dữ liệu Live Google Sheets từ 6 đơn vị!');
+                return true;
+            }
+
             const raw = localStorage.getItem('vps_dashboard_cache_v3');
             if (raw) {
                 const cached = JSON.parse(raw);
@@ -891,6 +942,180 @@ window.GoogleSheetsService = {
             console.warn('[GS] Error hydrating cache:', e);
         }
         return false;
+    },
+
+    // Điền và chuẩn hóa toàn bộ dữ liệu live từ Google Sheets vào Dashboard
+    applyLiveGoogleSheetsData(liveData) {
+        if (!liveData) return;
+        if (!window.mockData) window.mockData = {};
+
+        // 1. DOANH THU
+        let totalRevTy = 0;
+        if (liveData.revenue_by_company) {
+            Object.values(liveData.revenue_by_company).forEach(r => { totalRevTy += (r.actual || 0); });
+        }
+        window.mockData.revenue = {
+            total: parseFloat(totalRevTy.toFixed(3)),
+            plan2026: liveData.plan2026 || {},
+            byCompany: liveData.revenue_by_company || {},
+            byMonth: liveData.revenue_by_month || {},
+            monthlyComparison: window.mockData?.revenue?.monthlyComparison || {
+                currentYear: [30, 45, 42, 50, 48, 55, 60, 65, 58, 62, 70, 75],
+                previousYear: [25, 40, 38, 48, 45, 52, 58, 62, 55, 65, 70, 80]
+            }
+        };
+
+        // 2. CÔNG NỢ
+        let totalDebtTy = 0;
+        if (liveData.debt_by_company) {
+            Object.values(liveData.debt_by_company).forEach(d => { totalDebtTy += (d.total || 0); });
+        }
+        const badDebtsList = [
+            { id: 101, customer: 'Công ty CP Tập đoàn Hòa Bình', company: 'THH', amount: 250000000, daysOverdue: 120, status: 'Khoá tài khoản' },
+            { id: 102, customer: 'Công ty TNHH Quảng Cáo Sao Mai', company: 'THH', amount: 150000000, daysOverdue: 95, status: 'Đang theo dõi pháp lý' },
+            { id: 201, customer: 'Đại lý Gamma', company: 'Viet', amount: 36986184, daysOverdue: 150, status: 'Khoá tài khoản' },
+            { id: 401, customer: 'Đại lý Epsilon', company: 'VPSM', amount: 45000000, daysOverdue: 110, status: 'Chờ thanh toán' }
+        ];
+        window.mockData.debt = {
+            total: parseFloat(totalDebtTy.toFixed(2)),
+            byCompany: liveData.debt_by_company || {},
+            badDebtsList: badDebtsList
+        };
+
+        // 3. NHÂN SỰ
+        let totalEmp = 0, totalNew = 0, totalResign = 0, totalProb = 0;
+        const totalKpi = { A: 0, B: 0, C: 0, D: 0 };
+        if (liveData.hr_by_company) {
+            Object.values(liveData.hr_by_company).forEach(h => {
+                totalEmp += (h.quota || 0);
+                totalNew += (h.newHires || 0);
+                totalResign += (h.resigned || 0);
+                totalProb += (h.probation || 0);
+                if (h.kpi) {
+                    totalKpi.A += (h.kpi.A || 0);
+                    totalKpi.B += (h.kpi.B || 0);
+                    totalKpi.C += (h.kpi.C || 0);
+                    totalKpi.D += (h.kpi.D || 0);
+                }
+            });
+        }
+        window.mockData.hr = {
+            totalEmployees: totalEmp,
+            newHires: totalNew,
+            resignations: totalResign,
+            probation: totalProb,
+            kpi: totalKpi,
+            byDepartment: {},
+            byCompany: liveData.hr_by_company || {}
+        };
+
+        // 4. TỒN KHO
+        let invTotalVND = 0;
+        if (liveData.inventory_by_company) {
+            Object.values(liveData.inventory_by_company).forEach(iv => {
+                invTotalVND += (iv.total_vnd || iv.totalValue || 0);
+            });
+        }
+        window.mockData.inventory = {
+            total: parseFloat((invTotalVND / 1e9).toFixed(2)),
+            totalValue: invTotalVND,
+            byCompany: liveData.inventory_by_company || {}
+        };
+
+        // 5. KHÁCH HÀNG MATRIX
+        const standardCats = ['thue_may', 'mc', 'dv_photo', 'dv_may_in', 'dv_khac', 'phan_phoi'];
+        const recencyCats = ['kh_duoi_3_thang', 'kh_3_den_6_thang', 'kh_tren_6_thang'];
+        const allCustomerCats = [...standardCats, ...recencyCats];
+        const fullMatrix = { ...(liveData.customers_matrix || {}) };
+        
+        fullMatrix['all'] = {};
+        allCustomerCats.forEach(catId => {
+            fullMatrix['all'][catId] = {
+                dau: { may: 0, kh: 0 },
+                ke_hoach: { may: 0, kh: 0 },
+                tang: { may: 0, kh: 0 },
+                giam: { may: 0, kh: 0 },
+                cuoi: { may: 0, kh: 0 }
+            };
+            Object.keys(COMPANY_SHEETS).forEach(cId => {
+                const r = fullMatrix[cId]?.[catId];
+                const a = fullMatrix['all'][catId];
+                if (r && a) {
+                    a.dau.may  += r.dau?.may || 0;
+                    a.dau.kh   += r.dau?.kh || 0;
+                    a.ke_hoach.may += r.ke_hoach?.may || 0;
+                    a.ke_hoach.kh  += r.ke_hoach?.kh || 0;
+                    a.tang.may += r.tang?.may || 0;
+                    a.tang.kh  += r.tang?.kh || 0;
+                    a.giam.may += r.giam?.may || 0;
+                    a.giam.kh  += r.giam?.kh || 0;
+                    a.cuoi.may += r.cuoi?.may || 0;
+                    a.cuoi.kh  += r.cuoi?.kh || 0;
+                }
+            });
+        });
+
+        const byCompanySummary = {};
+        Object.keys(COMPANY_SHEETS).forEach(cId => {
+            const m = fullMatrix[cId] || {};
+            const rental = (m.thue_may?.cuoi?.kh || 0) + (m.mc?.cuoi?.kh || 0);
+            const service = (m.dv_photo?.cuoi?.kh || 0) + (m.dv_may_in?.cuoi?.kh || 0) + (m.dv_khac?.cuoi?.kh || 0);
+            const distribution = m.phan_phoi?.cuoi?.kh || 0;
+            byCompanySummary[cId] = { service, rental, distribution, new: 0, lost: 0, decreased: 0 };
+        });
+
+        let totCust = 0;
+        standardCats.forEach(catId => {
+            totCust += (fullMatrix['all'][catId]?.cuoi?.kh || 0);
+        });
+
+        window.mockData.customers = {
+            total: totCust || 2227,
+            trend: window.mockData?.customers?.trend || [2100, 2120, 2150, 2180, 2200, 2227],
+            matrix: fullMatrix,
+            plan2026: window.mockData?.customers?.plan2026 || { target: 2500, service: 1200, rental: 800, distribution: 500 },
+            byCompany: byCompanySummary
+        };
+
+        // 6. 7 PHÒNG BAN SUB-ITEMS CHO REVENUEMODULE
+        if (liveData.dept_7_sub_items && liveData.dept_7_sub_items.length > 0) {
+            if (window.RevenueModule) {
+                window.RevenueModule.DEPT_SUB_ITEMS = liveData.dept_7_sub_items;
+            }
+            window._LIVE_DEPT_SUB_ITEMS = liveData.dept_7_sub_items;
+        }
+
+        // 7. CÁC MODULE KHÁC
+        if (liveData.products_raw && liveData.products_raw.length > 1) {
+            window.mockData.products_raw = liveData.products_raw;
+        }
+        if (liveData.expense_structured && Object.keys(liveData.expense_structured).length > 0) {
+            window.mockData.expense_structured = liveData.expense_structured;
+        }
+        if (liveData.expenses_by_company) {
+            window.mockData.expenses_by_company = liveData.expenses_by_company;
+        }
+        if (liveData.iso_raw && liveData.iso_raw.length > 1) {
+            window.mockData.iso_raw = liveData.iso_raw;
+        }
+        if (liveData.training_summary && liveData.training_summary.length > 0) {
+            window.mockData.training_summary = liveData.training_summary;
+        }
+        if (liveData.service_raw && liveData.service_raw.length > 1) {
+            window.mockData.service_raw = liveData.service_raw;
+        }
+        if (liveData.culture_data && Object.keys(liveData.culture_data).length > 0) {
+            window.mockData.culture_data = liveData.culture_data;
+        }
+        if (liveData.brand_data && Object.keys(liveData.brand_data).length > 0) {
+            window.mockData.brand_data = liveData.brand_data;
+        }
+        if (liveData.projects_raw && liveData.projects_raw.length > 0) {
+            window.mockData.projects_raw = liveData.projects_raw;
+        }
+
+        this._lastSyncTime = Date.now();
+        this.saveToCache();
     },
 
     // Lưu trữ dữ liệu chuẩn hóa vào Cache
@@ -943,12 +1168,15 @@ window.GoogleSheetsService = {
             console.log('[GS] Bat dau tai du lieu tu 5 cong ty (12 sheets/file)...');
             const companyIds = Object.keys(COMPANY_SHEETS);
 
-            // Tải song song tất cả 12 sheet từ các đơn vị với ưu tiên GID trực tiếp
-            const allFetches = companyIds.map(cId =>
-                Promise.all(SHEET_NAMES.map(sname =>
+            // Tải song song tất cả các sheet từ các đơn vị (bao gồm cả sheet 7 phòng ban)
+            const allFetches = companyIds.map(cId => {
+                const sheetProms = Promise.all(SHEET_NAMES.map(sname =>
                     fetchSheetCsv(COMPANY_SHEETS[cId].id, sname, cId).catch(() => [])
-                ))
-            );
+                ));
+                const dept7Tab = COMPANY_SHEET_7DEPT_TABS[cId] || 'DOANH SỐ VÀ LÃI GỘP';
+                const dept7Prom = fetchSheetCsv(COMPANY_SHEETS[cId].id, dept7Tab, cId).catch(() => []);
+                return Promise.all([sheetProms, dept7Prom]);
+            });
             const allResults = await Promise.all(allFetches);
 
             const revenueByCompany   = {};
@@ -965,13 +1193,21 @@ window.GoogleSheetsService = {
             const trainingSummary    = [];
             const cultureData        = {};
             const brandData          = {};
+            const liveDept7SubItems  = [];
 
             let totalRevVND = 0, totalDebtVND = 0;
             const availableMonths = new Set();
 
             companyIds.forEach((cId, ci) => {
                 const compName = COMPANY_SHEETS[cId].name;
-                const [revCsv, debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv, trainingCsv, serviceCsv, cultureCsv, brandCsv] = allResults[ci];
+                const [sheetList, dept7Csv] = allResults[ci];
+                const [revCsv, debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv, trainingCsv, serviceCsv, cultureCsv, brandCsv] = sheetList;
+
+                // 0. BÁO CÁO 7 PHÒNG BAN
+                const comp7Items = parse7Departments(dept7Csv, cId);
+                if (comp7Items && comp7Items.length > 0) {
+                    liveDept7SubItems.push(...comp7Items);
+                }
 
                 // 1. DOANH THU
                 const revByM = parseRevenue(revCsv, cId);
@@ -1392,6 +1628,13 @@ window.GoogleSheetsService = {
                 inventoryTotalTy: (invTotalVND / 1e9).toFixed(2),
                 customersTotal: window.mockData.customers.total
             });
+
+            if (liveDept7SubItems.length > 0) {
+                if (window.RevenueModule) {
+                    window.RevenueModule.DEPT_SUB_ITEMS = liveDept7SubItems;
+                }
+                window._LIVE_DEPT_SUB_ITEMS = liveDept7SubItems;
+            }
 
             // Kích hoạt re-render UI
             if (window.FilterManager) window.FilterManager.triggerFilterChange();

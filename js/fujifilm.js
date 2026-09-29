@@ -28,13 +28,16 @@ window.FujifilmModule = {
         
         this.generateMockData();
         
-        // Parse from Google Sheets if available
-        if (window.mockData && window.mockData.products_raw && window.mockData.products_raw.length > 1) {
-            let csv = window.mockData.products_raw;
+        // Parse from Google Sheets live data
+        const rawProducts = (window.mockData && window.mockData.products_raw) 
+            || (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.products_raw);
+
+        if (rawProducts && rawProducts.length > 1) {
+            let csv = rawProducts;
             let valMap = {};
-            for (let i=1; i<csv.length; i++) {
+            for (let i = 1; i < csv.length; i++) {
                 let row = csv[i];
-                if(!row || !row[0]) continue;
+                if (!row || !row[0]) continue;
                 
                 let cty = row[0].toString().trim().toUpperCase();
                 let hang = (row[2] || '').toString().trim().toUpperCase();
@@ -42,47 +45,39 @@ window.FujifilmModule = {
                 let valStr = (row[4] || 0).toString().replace(/,/g, '');
                 let val = parseFloat(valStr) || 0;
                 
-                // Only process matching Hang
-                let targetHang = "FUJIFILM".toUpperCase();
-                if (targetHang === 'KHAC') {
-                    if (hang === 'HP' || hang === 'FUJIFILM') continue;
-                } else {
-                    if (hang !== targetHang) continue;
-                }
+                // Only process matching Hang (FUJIFILM)
+                if (hang !== 'FUJIFILM') continue;
                 
                 let cid = 'thh';
-                if(cty.includes('VIỆT') || cty === 'VIET' || cty === 'VI?T') cid = 'viet';
-                else if(cty.includes('SƠN') || cty.includes('SON')) cid = 'xesco';
-                else if(cty.includes('ITSS')) cid = 'itss';
-                else if(cty.includes('VPS M') || cty === 'VPSM') cid = 'vpsm';
+                if (cty.includes('VIỆT') || cty === 'VIET') cid = 'viet';
+                else if (cty.includes('SƠN') || cty.includes('SON') || cty.includes('XESCO')) cid = 'xesco';
+                else if (cty.includes('ITSS')) cid = 'itss';
+                else if (cty.includes('VPS M') || cty === 'VPSM' || cty.includes('MIỀN TRUNG')) cid = 'vpsm';
+                else if (cty.includes('HÀ') || cty.includes('THH')) cid = 'thh';
                 
-                let key = nhom + '|' + cid;
+                let targetId = 'fuji_den';
+                if (nhom.includes('MÀU')) targetId = 'fuji_mau';
+                else if (nhom.includes('DÒNG NHỎ') || nhom.includes('NHỎ')) targetId = 'fuji_nho';
+                else if (nhom.includes('DÒNG TRUNG') || nhom.includes('LỚN')) targetId = 'fuji_lon';
+                else if (nhom.includes('MÁY IN')) targetId = 'fuji_in';
+                else if (nhom.includes('VẬT TƯ') || nhom.includes('LINH KIỆN')) targetId = 'fuji_vat_tu';
+                else if (nhom.includes('PHOTOCOPY') || nhom.includes('PHOTO') || nhom.includes('KỸ THUẬT SỐ')) targetId = 'fuji_den';
+                
+                let key = targetId + '|' + cid;
                 valMap[key] = (valMap[key] || 0) + val;
             }
             
-            // Override the generated random data with CSV data
+            // Map values to rows
             this.mockRows.forEach(row => {
-                if (row.isSum || !row.id) return; // Skip headers/totals
-                let upperName = row.name.replace(/&nbsp;/g, '').trim().toUpperCase();
+                if (row.isSum || row.id === 'fujifilm' || !row.id) return;
                 
                 ['thh', 'viet', 'xesco', 'itss', 'vpsm'].forEach(cid => {
-                    let key = upperName + '|' + cid;
-                    if(valMap[key]) {
+                    let key = row.id + '|' + cid;
+                    if (valMap[key]) {
                         row.data[cid].th_ds = valMap[key];
-                    } else {
-                        // Fuzzy match
-                        for(let k in valMap) {
-                            if(k.includes(upperName) && k.endsWith('|'+cid)) {
-                                row.data[cid].th_ds += valMap[k];
-                            }
-                        }
                     }
-                });
-                
-                // Recalculate totals
-                ['thh', 'viet', 'xesco', 'itss', 'vpsm'].forEach(cid => {
                     let d = row.data[cid];
-                    d.pct = (d.th_ds / (d.kh_ds || 1) * 100).toFixed(1);
+                    d.pct = d.kh_ds > 0 ? (d.th_ds / d.kh_ds * 100).toFixed(1) : (d.th_ds > 0 ? '100.0' : '0.0');
                 });
             });
             
@@ -94,9 +89,9 @@ window.FujifilmModule = {
                     d.th_ds += row.data[cid].th_ds;
                     d.kh_ds += row.data[cid].kh_ds;
                     d.th_sl += row.data[cid].th_sl || 0;
-                    if(typeof d.kh_sl !== 'string') d.kh_sl += (row.data[cid].kh_sl || 0);
+                    if (typeof d.kh_sl !== 'string') d.kh_sl += (row.data[cid].kh_sl || 0);
                 });
-                d.pct = (d.th_ds / (d.kh_ds || 1) * 100).toFixed(1);
+                d.pct = d.kh_ds > 0 ? (d.th_ds / d.kh_ds * 100).toFixed(1) : (d.th_ds > 0 ? '100.0' : '0.0');
             });
             
             // Recalculate 'tong' row
@@ -104,12 +99,15 @@ window.FujifilmModule = {
             if (tongRow) {
                 ['thh', 'viet', 'xesco', 'itss', 'vpsm', 'all'].forEach(cid => {
                     tongRow.data[cid].th_ds = 0;
+                    tongRow.data[cid].kh_ds = 0;
                     this.mockRows.forEach(r => {
-                        if (r.id !== 'tong' && r.id !== 'hp' && r.id !== 'fujifilm' && r.id !== 'khac' && !r.name.includes('&nbsp;')) {
+                        if (r.id !== 'tong' && r.id !== 'fujifilm' && !r.name.includes('&nbsp;')) {
                             tongRow.data[cid].th_ds += r.data[cid].th_ds;
+                            tongRow.data[cid].kh_ds += r.data[cid].kh_ds;
                         }
                     });
-                    tongRow.data[cid].pct = (tongRow.data[cid].th_ds / (tongRow.data[cid].kh_ds || 1) * 100).toFixed(1);
+                    let d = tongRow.data[cid];
+                    d.pct = d.kh_ds > 0 ? (d.th_ds / d.kh_ds * 100).toFixed(1) : (d.th_ds > 0 ? '100.0' : '0.0');
                 });
             }
         }
@@ -139,16 +137,15 @@ window.FujifilmModule = {
         rows.forEach(r => {
             let rowData = { ...r, data: {} };
             companies.forEach(c => {
-                let kh_sl = Math.floor(Math.random() * 5000);
-                let kh_ds = Math.floor(Math.random() * 200000);
-                let th_sl = Math.floor(kh_sl * (Math.random() * 0.5 + 0.5));
-                let th_ds = Math.floor(kh_ds * (Math.random() * 0.5 + 0.5));
-                
+                let kh_sl = 0;
+                let kh_ds = 0;
+                let th_sl = 0;
+                let th_ds = 0;
                 if (r.name.includes('VẬT TƯ')) kh_sl = '-';
                 
                 rowData.data[c] = {
                     kh_sl, kh_ds, th_sl, th_ds,
-                    pct: (th_ds / (kh_ds || 1) * 100).toFixed(1)
+                    pct: '0.0'
                 };
             });
             this.mockRows.push(rowData);

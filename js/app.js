@@ -21,6 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         bindEvents() {
+            window.quickFillLogin = (u, p) => {
+                const userIn = document.getElementById('username');
+                const passIn = document.getElementById('password');
+                if (userIn && passIn) {
+                    userIn.value = u;
+                    passIn.value = p;
+                    document.getElementById('login-form').dispatchEvent(new Event('submit', { cancelable: true }));
+                }
+            };
+
             // Login Form (Đăng nhập tức thì 0ms, không chờ mạng)
             document.getElementById('login-form').addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -178,30 +188,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }, 50);
 
-            // KÍCH HOẠT ĐỒNG BỘ NGẦM REALTIME (NON-BLOCKING)
+            // KÍCH HOẠT ĐỒNG BỘ TỰ ĐỘNG LIÊN TỤC TỪ GOOGLE SHEETS (REALTIME LIVE PIPELINE)
             this.triggerBackgroundRealtimeSync();
 
-            // Thiết lập chu kỳ tự động đồng bộ mỗi 60 giây trong nền (Realtime liên tục)
+            // Thiết lập chu kỳ tự động quét trang tính mỗi 30 giây trong nền (Realtime liên tục)
             if (!this._syncInterval) {
                 this._syncInterval = setInterval(() => {
                     this.syncData(false);
-                }, 60000);
+                }, 30000);
+            }
+
+            // Tự động quét lại ngay lập tức khi người dùng quay lại tab Dashboard từ tab Google Sheets
+            if (!this._hasVisibilityListener) {
+                this._hasVisibilityListener = true;
+                const triggerOnFocus = () => {
+                    const now = Date.now();
+                    const lastSync = window.GoogleSheetsService ? (window.GoogleSheetsService._lastSyncTime || 0) : 0;
+                    // Nếu đã quá 10 giây kể từ lần quét cuối, quét ngay khi người dùng nhìn vào Dashboard
+                    if (now - lastSync > 10000) {
+                        this.syncData(false);
+                    }
+                };
+                document.addEventListener('visibilitychange', () => {
+                    if (document.visibilityState === 'visible') triggerOnFocus();
+                });
+                window.addEventListener('focus', triggerOnFocus);
             }
         },
 
-        // Đồng bộ ngầm không gián đoạn giao diện
+        // Đồng bộ ngầm không gián đoạn giao diện (Tự động chạy ngay khi mở trang)
         triggerBackgroundRealtimeSync() {
-            const lastSync = window.GoogleSheetsService ? (window.GoogleSheetsService._lastSyncTime || 0) : 0;
-            const now = Date.now();
-            const isFresh = (now - lastSync) < 180000; // Dữ liệu dưới 3 phút được coi là tươi mới
-
-            this.updateRealtimeBadge(isFresh ? 'synced' : 'syncing');
-
-            if (!isFresh) {
-                setTimeout(() => {
-                    this.syncData(false);
-                }, 300);
-            }
+            this.updateRealtimeBadge('syncing');
+            // Kích hoạt quét ngầm ngay sau 1.2 giây khi giao diện khởi tạo xong
+            setTimeout(() => {
+                this.syncData(false);
+            }, 1200);
         },
 
         // Cập nhật huy hiệu trạng thái Realtime trên thanh tiêu đề
@@ -212,21 +233,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!badge || !dot || !text) return;
 
             const now = new Date();
-            const timeStr = customTime || `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            const timeStr = customTime || `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
             if (status === 'syncing') {
                 dot.style.background = '#38bdf8';
-                dot.style.boxShadow = '0 0 6px #38bdf8';
-                text.textContent = 'Đang đồng bộ ngầm...';
+                dot.style.boxShadow = '0 0 8px #38bdf8';
+                text.textContent = 'Đang quét Google Sheets...';
                 text.style.color = '#38bdf8';
             } else if (status === 'synced') {
                 dot.style.background = '#10b981';
-                dot.style.boxShadow = '0 0 6px #10b981';
-                text.textContent = `Realtime • Cập nhật ${timeStr}`;
+                dot.style.boxShadow = '0 0 8px #10b981';
+                text.textContent = `Auto Sync (30s) • ${timeStr}`;
                 text.style.color = '#10b981';
             } else if (status === 'error') {
                 dot.style.background = '#f59e0b';
-                dot.style.boxShadow = '0 0 6px #f59e0b';
+                dot.style.boxShadow = '0 0 8px #f59e0b';
                 text.textContent = `Offline • ${timeStr}`;
                 text.style.color = '#f59e0b';
             }
@@ -237,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const syncIcon = document.getElementById('sync-icon');
             const syncText = document.getElementById('sync-text');
             if (syncIcon) syncIcon.style.animation = 'spin 0.8s linear infinite';
-            if (syncText) syncText.textContent = isManual ? 'Đang tải...' : 'Đồng bộ';
+            if (syncText) syncText.textContent = isManual ? 'Đang quét...' : 'Đồng bộ';
             this.updateRealtimeBadge('syncing');
 
             if (window.GoogleSheetsService) {
@@ -248,9 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     const now = new Date();
                     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-                    if (syncText) syncText.textContent = 'Đã cập nhật';
-                    if (btnSync) btnSync.title = `Lần đồng bộ gần nhất: ${timeStr} (Nhấn để đồng bộ lại)`;
-                    this.updateRealtimeBadge('synced', `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`);
+                    if (syncText) syncText.textContent = isManual ? 'Đã xong' : 'Đồng bộ';
+                    if (btnSync) btnSync.title = `Tự động quét liên tục mỗi 30s. Lần quét gần nhất: ${timeStr} (Nhấn để quét ngay)`;
+                    this.updateRealtimeBadge('synced', timeStr);
                 } catch(e) {
                     console.warn('Sync failed:', e);
                     if (syncText) syncText.textContent = 'Lỗi tải';
