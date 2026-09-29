@@ -74,7 +74,7 @@ window.HrModule = {
                 const official = compData.official || 0;
                 const probation = compData.probation || 0;
                 const resigned = compData.resigned || 0;
-                const vacancy = Math.max(0, quota - official);
+                const vacancy = Math.max(0, quota - official - probation);
                 const fulfillment = quota > 0 ? Math.round((official / quota) * 100) : 0;
 
                 tQuota += quota;
@@ -116,7 +116,7 @@ window.HrModule = {
                 const official = compData.official || 0;
                 const probation = compData.probation || 0;
                 const resigned = compData.resigned || 0;
-                const vacancy = Math.max(0, quota - official);
+                const vacancy = Math.max(0, quota - official - probation);
                 const fulfillment = quota > 0 ? Math.round((official / quota) * 100) : 0;
 
                 tQuota += quota;
@@ -188,7 +188,7 @@ window.HrModule = {
                         const dOfficial = dept.official || 0;
                         const dProbation = dept.probation || 0;
                         const dResigned = dept.resigned || 0;
-                        const dVacancy = dept.vacancy !== undefined ? dept.vacancy : Math.max(0, dQuota - dOfficial);
+                        const dVacancy = dept.vacancy !== undefined ? dept.vacancy : Math.max(0, dQuota - dOfficial - (dept.probation || 0));
                         const dFulfillment = dQuota > 0 ? Math.round((dOfficial / dQuota) * 100) : 0;
 
                         chartLabels.push(dept.name);
