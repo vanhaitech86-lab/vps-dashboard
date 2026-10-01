@@ -1119,6 +1119,140 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Modal: Danh Sách Khách Hàng Đại Lý Phát Sinh Doanh Số < 3 Tháng -->
+                    <div id="modal-dealer-recency" class="dealer-modal-backdrop" style="display: none;">
+                        <div class="dealer-modal-dialog">
+                            <!-- Modal Header -->
+                            <div class="dealer-modal-header">
+                                <div>
+                                    <h3 style="margin: 0; font-size: 1.18rem; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 10px;">
+                                        <i data-lucide="store" style="width: 22px; height: 22px; color: #38bdf8;"></i>
+                                        DANH SÁCH KHÁCH HÀNG ĐẠI LÝ PHÁT SINH DOANH SỐ &lt; 3 THÁNG
+                                    </h3>
+                                    <div style="font-size: 0.82rem; color: #94a3b8; margin-top: 4px;">
+                                        Lọc danh sách khách hàng đại lý có phát sinh doanh số / đơn hàng trong vòng 90 ngày gần nhất
+                                    </div>
+                                </div>
+                                <button type="button" class="dealer-modal-close-btn" onclick="window.CustomersModule.closeDealerModal()" title="Đóng">&times;</button>
+                            </div>
+
+                            <!-- Modal Body -->
+                            <div class="dealer-modal-body">
+                                <!-- 4 KPI Stat Cards -->
+                                <div class="dealer-kpi-grid">
+                                    <div class="dealer-kpi-card kpi-sky">
+                                        <div class="dealer-kpi-label">Tổng Đại Lý PSDS &lt; 3T</div>
+                                        <div id="dealer-kpi-count" class="dealer-kpi-val" style="color: #0284c7;">1,512</div>
+                                        <div class="dealer-kpi-sub" id="dealer-kpi-count-sub">Đang hoạt động giao dịch</div>
+                                    </div>
+                                    <div class="dealer-kpi-card kpi-emerald">
+                                        <div class="dealer-kpi-label">Đại Lý Tăng Mới (Tháng)</div>
+                                        <div id="dealer-kpi-new" class="dealer-kpi-val" style="color: #16a34a;">+28</div>
+                                        <div class="dealer-kpi-sub">Kế hoạch tìm thêm: <strong style="color: #0284c7;">50</strong></div>
+                                    </div>
+                                    <div class="dealer-kpi-card kpi-amber">
+                                        <div class="dealer-kpi-label">Tổng Doanh Số 3 Tháng</div>
+                                        <div id="dealer-kpi-revenue" class="dealer-kpi-val" style="color: #d97706;">24.85 Tỷ</div>
+                                        <div class="dealer-kpi-sub" id="dealer-kpi-avg-rev">Trung bình: 16.4 Tr/ĐL</div>
+                                    </div>
+                                    <div class="dealer-kpi-card kpi-purple">
+                                        <div class="dealer-kpi-label">Tỷ Lệ Tương Tác / Tổng ĐL</div>
+                                        <div id="dealer-kpi-ratio" class="dealer-kpi-val" style="color: #7c3aed;">72.4%</div>
+                                        <div class="dealer-kpi-sub">Trên tổng 2,089 đại lý toàn quốc</div>
+                                    </div>
+                                </div>
+
+                                <!-- Filter and Controls Bar -->
+                                <div class="dealer-controls-bar">
+                                    <div class="dealer-filter-group">
+                                        <div class="dealer-control-item">
+                                            <label><i data-lucide="building-2" style="width: 14px; height: 14px;"></i> Đơn Vị:</label>
+                                            <select id="dealer-company-filter" class="dealer-select">
+                                                <option value="all">Tất cả đơn vị</option>
+                                                <option value="THH">Tân Hồng Hà</option>
+                                                <option value="Viet">Việt</option>
+                                                <option value="XemSon">Xem Sơn (XESCO)</option>
+                                                <option value="VPSM">VPS Miền Trung</option>
+                                                <option value="ITSS">ITSS</option>
+                                                <option value="VPVPS">Văn phòng VPS</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="dealer-control-item">
+                                            <label><i data-lucide="package" style="width: 14px; height: 14px;"></i> Nhóm Mặt Hàng:</label>
+                                            <select id="dealer-cat-filter" class="dealer-select">
+                                                <option value="all">Tất cả mặt hàng</option>
+                                                <option value="Máy Photocopy">Máy Photocopy</option>
+                                                <option value="Máy in & Mực in">Máy in & Mực in</option>
+                                                <option value="Linh kiện / Vật tư">Linh kiện / Vật tư</option>
+                                                <option value="Option & Phụ tùng">Option & Phụ tùng</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="dealer-control-item">
+                                            <label><i data-lucide="clock" style="width: 14px; height: 14px;"></i> Đơn Gần Nhất:</label>
+                                            <select id="dealer-recency-filter" class="dealer-select">
+                                                <option value="all">Tất cả (&lt; 3 tháng)</option>
+                                                <option value="recent_30">Rất gần (&lt; 30 ngày)</option>
+                                                <option value="mid_60">30 - 60 ngày</option>
+                                                <option value="late_90">60 - 90 ngày</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="dealer-search-action-group">
+                                        <div class="dealer-search-wrap">
+                                            <i data-lucide="search" style="width: 16px; height: 16px; color: #64748b;"></i>
+                                            <input type="text" id="dealer-search-input" placeholder="Tìm tên ĐL, mã, tỉnh thành, SĐT...">
+                                        </div>
+                                        <button type="button" id="btn-dealer-export" class="dealer-btn dealer-btn-export" onclick="window.CustomersModule.exportDealerListCSV()">
+                                            <i data-lucide="file-spreadsheet" style="width: 16px; height: 16px;"></i>
+                                            <span>Xuất Excel</span>
+                                        </button>
+                                        <button type="button" id="btn-dealer-reset" class="dealer-btn dealer-btn-reset" onclick="window.CustomersModule.resetFilters()">
+                                            <i data-lucide="rotate-ccw" style="width: 14px; height: 14px;"></i>
+                                            <span>Đặt Lại</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Table Container -->
+                                <div class="dealer-table-container">
+                                    <table class="data-table dealer-styled-table" id="table-dealer-recency">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 48px; text-align: center;">STT</th>
+                                                <th style="width: 100px; text-align: center;">MÃ ĐL</th>
+                                                <th style="min-width: 220px; text-align: left;">TÊN KHÁCH HÀNG ĐẠI LÝ</th>
+                                                <th style="min-width: 130px; text-align: center;">ĐƠN VỊ</th>
+                                                <th style="min-width: 130px; text-align: left;">KHU VỰC / TỈNH</th>
+                                                <th style="min-width: 160px; text-align: left;">LIÊN HỆ &amp; SĐT</th>
+                                                <th style="min-width: 140px; text-align: left;">MẶT HÀNG CHỦ LỰC</th>
+                                                <th style="min-width: 125px; text-align: center;">NGÀY ĐƠN GẦN NHẤT</th>
+                                                <th style="min-width: 140px; text-align: right;">DOANH SỐ 3T (VNĐ)</th>
+                                                <th style="width: 80px; text-align: center;">SỐ ĐƠN</th>
+                                                <th style="min-width: 110px; text-align: center;">TRẠNG THÁI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dealer-table-tbody">
+                                            <!-- Populated by window.CustomersModule.renderDealerList() -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Modal Footer -->
+                            <div class="dealer-modal-footer">
+                                <div id="dealer-summary-text" style="font-weight: 700; color: #475569; font-size: 0.88rem;">
+                                    Hiển thị 0 đại lý
+                                </div>
+                                <div style="display: flex; gap: 10px;">
+                                    <button type="button" class="dealer-btn dealer-btn-secondary" onclick="window.CustomersModule.closeDealerModal()">Đóng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- Revenue View -->

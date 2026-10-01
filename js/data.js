@@ -47,11 +47,18 @@ const mockData = {
                               "cuoi": { "may": 0, "kh": 0 }
                     },
                     "phan_phoi": {
-                              "dau": { "may": 0, "kh": 2803 },
-                              "ke_hoach": { "may": 0, "kh": 0 },
-                              "tang": { "may": 0, "kh": 62 },
+                              "dau": { "may": 0, "kh": 2060 },
+                              "ke_hoach": { "may": 0, "kh": 70 },
+                              "tang": { "may": 0, "kh": 31 },
+                              "giam": { "may": 0, "kh": 2 },
+                              "cuoi": { "may": 0, "kh": 2089 }
+                    },
+                    "kh_duoi_3_thang": {
+                              "dau": { "may": 0, "kh": 1485 },
+                              "ke_hoach": { "may": 0, "kh": 50 },
+                              "tang": { "may": 0, "kh": 28 },
                               "giam": { "may": 0, "kh": 1 },
-                              "cuoi": { "may": 0, "kh": 2864 }
+                              "cuoi": { "may": 0, "kh": 1512 }
                     }
           },
           "THH": {

@@ -1992,7 +1992,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "ke_hoach": {
           "may": 0,
-          "kh": 0
+          "kh": 70
         },
         "tang": {
           "may": 0,
@@ -2005,6 +2005,28 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "cuoi": {
           "may": 0,
           "kh": 2089
+        }
+      },
+      "kh_duoi_3_thang": {
+        "dau": {
+          "may": 0,
+          "kh": 1485
+        },
+        "ke_hoach": {
+          "may": 0,
+          "kh": 50
+        },
+        "tang": {
+          "may": 0,
+          "kh": 28
+        },
+        "giam": {
+          "may": 0,
+          "kh": 1
+        },
+        "cuoi": {
+          "may": 0,
+          "kh": 1512
         }
       }
     }
