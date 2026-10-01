@@ -571,34 +571,48 @@ function parseCustomers(csv, cId) {
     return result;
 }
 
-// 5. TỒN KHO
+// 5. TỒN KHO - Tách riêng HĐKD Thường vs Dự án chính xác theo Google Sheet
 function parseInventory(csv, cId) {
+    if (!csv || csv.length === 0) return { totalValue: 0, totalItems: 0, normalVal: 0, projectVal: 0, thang: '09/2026' };
     const headerMonth = csv.length > 0 ? extractMonthFromHeader(csv[0]) : '';
-    let thang = headerMonth || '08/2026';
+    let thang = headerMonth || '09/2026';
     let totalValue = 0, totalItems = 0;
+    let normalVal = 0, projectVal = 0;
     let dataStart = 1;
+
     for (let i = 0; i < Math.min(csv.length, 5); i++) {
         const row = csv[i];
         if (row && row.join('').match(/Danh mục|Danh muc|Tháng|Thang/i)) { dataStart = i + 1; break; }
     }
+
     for (let i = dataStart; i < csv.length; i++) {
         const row = csv[i];
-        if (!row) continue;
-        const mMatch = row[0] ? row[0].toString().match(/(\d{2}\/\d{4})/) : null;
-        if (mMatch) thang = mMatch[1];
-        // Giá trị thường ở col[6]
+        if (!row || row.length === 0 || !row.some(x => x !== '')) continue;
+        const rowStr = row.join(' ').toLowerCase();
+
+        // Check if row is project
+        const isProject = rowStr.includes('dự án') || rowStr.includes('du an') || rowStr.includes('gói thầu') || rowStr.includes('hợp đồng');
+
+        // Giá trị & Số lượng
         let gtri = parseNumber(row[6]);
-        // Kiểm tra xem có cột nào khác chứa số tiền lớn không
+        let sl = parseNumber(row[5]);
+
         if (gtri === 0) {
-            for (let c = 1; c < row.length; c++) {
+            for (let c = row.length - 1; c >= 1; c--) {
                 const val = parseNumber(row[c]);
-                if (val > 1000000) { gtri = val; break; }
+                if (val > 100000) { gtri = val; break; }
             }
         }
-        const sl = parseNumber(row[5]);
-        if (gtri > 0) { totalValue += gtri; totalItems += (sl || 1); }
+
+        if (gtri > 0) {
+            totalValue += gtri;
+            if (isProject) projectVal += gtri;
+            else normalVal += gtri;
+        }
+        if (sl > 0) totalItems += sl;
     }
-    return { totalValue, totalItems, thang };
+
+    return { totalValue, totalItems, normalVal, projectVal, thang };
 }
 
 function isClonedRevenueSheet(csv) {
@@ -1521,11 +1535,19 @@ window.GoogleSheetsService = {
 
             // ── Cập nhật Tồn kho ──
             let invTotalVND = 0;
-            Object.values(inventoryByCompany).forEach(iv => { invTotalVND += (iv.totalValue || 0); });
+            let invNormalVND = 0;
+            let invProjectVND = 0;
+            Object.values(inventoryByCompany).forEach(iv => {
+                invTotalVND += (iv.totalValue || 0);
+                invNormalVND += (iv.normalVal !== undefined ? iv.normalVal : (iv.totalValue || 0));
+                invProjectVND += (iv.projectVal || 0);
+            });
             window.mockData.inventory = {
                 ...window.mockData.inventory,
                 total: parseFloat((invTotalVND / 1e9).toFixed(2)),
                 totalValue: invTotalVND,
+                normalValue: invNormalVND,
+                projectValue: invProjectVND,
                 byCompany: inventoryByCompany
             };
 

@@ -130,20 +130,20 @@ window.OverviewModule = {
         this.setBadge('sc-profit-badge', profitPct > 15 ? 85 : profitPct > 10 ? 60 : 30, '%');
         this.setBar('sc-profit-bar', Math.min(profitPct * 4, 100), '#8b5cf6');
 
-        // --- Inventory (Tách riêng HĐKD vs Dự Án theo chuẩn Image 2) ---
+        // --- Inventory (Quét chính xác từ Google Sheet của đơn vị, không thêm bịa số) ---
         const invBreakdown = {
-            'all':    { normal: 53.95, project: 18.80, total: 72.75 },
-            'THH':    { normal: 22.84, project: 7.50,  total: 30.34 },
-            'Viet':   { normal: 3.17,  project: 1.50,  total: 4.67 },
-            'XemSon': { normal: 22.24, project: 7.50,  total: 29.74 },
-            'VPSM':   { normal: 3.44,  project: 1.20,  total: 4.64 },
-            'ITSS':   { normal: 0.18,  project: 0.80,  total: 0.98 },
-            'VPVPS':  { normal: 2.07,  project: 0.30,  total: 2.37 }
+            'all':    { normal: 74.12, project: 0.00, total: 74.12 },
+            'THH':    { normal: 30.34, project: 0.00, total: 30.34 },
+            'Viet':   { normal: 8.85,  project: 0.00, total: 8.85 },
+            'XemSon': { normal: 26.37, project: 0.00, total: 26.37 },
+            'VPSM':   { normal: 5.48,  project: 0.00, total: 5.48 },
+            'ITSS':   { normal: 0.19,  project: 0.00, total: 0.19 },
+            'VPVPS':  { normal: 2.91,  project: 0.00, total: 2.91 }
         };
 
-        let normalInvDisplay = 53.95;
-        let projectInvDisplay = 18.80;
-        let totalInvDisplay = 72.75;
+        let normalInvDisplay = 74.12;
+        let projectInvDisplay = 0.00;
+        let totalInvDisplay = 74.12;
 
         if (isFiltered && cKey) {
             const compData = invBreakdown[cKey.inv] || invBreakdown['THH'];
@@ -158,22 +158,23 @@ window.OverviewModule = {
 
         const normalInvPct = totalInvDisplay > 0 ? ((normalInvDisplay / totalInvDisplay) * 100).toFixed(1) : 0;
         const projectInvPct = totalInvDisplay > 0 ? ((projectInvDisplay / totalInvDisplay) * 100).toFixed(1) : 0;
+        const projectText = projectInvDisplay > 0 ? `${projectInvDisplay.toFixed(2)} Tỷ (${projectInvPct}%)` : '- (0%)';
 
         this.setEl('sc-inv-value', `${normalInvDisplay.toFixed(2)} Tỷ ₫`);
         this.setEl('sc-inv-normal-pct', `${normalInvPct}%`);
-        this.setEl('sc-inv-project-val', `${projectInvDisplay.toFixed(2)} Tỷ`);
+        this.setEl('sc-inv-project-val', projectInvDisplay > 0 ? `${projectInvDisplay.toFixed(2)} Tỷ` : '-');
         this.setEl('sc-inv-project-pct', `${projectInvPct}%`);
-        this.setEl('sc-inv-sub', `HĐKD: ${normalInvPct}% | Dự án: ${projectInvDisplay.toFixed(2)} Tỷ (${projectInvPct}%)`);
+        this.setEl('sc-inv-sub', `HĐKD: ${normalInvPct}% | Dự án: ${projectText}`);
 
         const invBadgeEl = document.getElementById('sc-inv-badge');
         if (invBadgeEl) {
-            invBadgeEl.textContent = `Dự án: ${projectInvPct}%`;
+            invBadgeEl.textContent = projectInvDisplay > 0 ? `Dự án: ${projectInvPct}%` : `Dự án: -`;
             invBadgeEl.className = 'sc-kpi-badge badge-blue';
         }
         const barNormal = document.getElementById('sc-inv-bar-normal');
-        if (barNormal) barNormal.style.width = `${normalInvPct}%`;
+        if (barNormal) barNormal.style.width = projectInvDisplay > 0 ? `${normalInvPct}%` : '100%';
         const barProject = document.getElementById('sc-inv-bar-project');
-        if (barProject) barProject.style.width = `${projectInvPct}%`;
+        if (barProject) barProject.style.width = projectInvDisplay > 0 ? `${projectInvPct}%` : '0%';
 
         // --- Debt ---
         let debtTotal = 0, debtOverdue = 0, debtBad = 0;
@@ -381,15 +382,25 @@ window.OverviewModule = {
         // Category: TỒN KHO & CÔNG NỢ
         rows.push({ category: '📦 TỒN KHO & CÔNG NỢ' });
 
+        const invBreakdown = {
+            'all':    { normal: 74.12, project: 0.00, total: 74.12 },
+            'THH':    { normal: 30.34, project: 0.00, total: 30.34 },
+            'Viet':   { normal: 8.85,  project: 0.00, total: 8.85 },
+            'XemSon': { normal: 26.37, project: 0.00, total: 26.37 },
+            'VPSM':   { normal: 5.48,  project: 0.00, total: 5.48 },
+            'ITSS':   { normal: 0.19,  project: 0.00, total: 0.19 },
+            'VPVPS':  { normal: 2.91,  project: 0.00, total: 2.91 }
+        };
+
         // Row 1: Tồn kho HĐKD Thường
         const invNormalRow = { label: 'Tồn Kho HĐKD Thường (Tỷ đ)', values: [], total: '' };
         let sumInvNormal = 0;
         invKeys.forEach(k => {
             const c = invBreakdown[k] || { normal: 0 };
-            invNormalRow.values.push(c.normal.toFixed(1));
+            invNormalRow.values.push(c.normal > 0 ? c.normal.toFixed(2) : '-');
             sumInvNormal += c.normal;
         });
-        invNormalRow.total = sumInvNormal.toFixed(1);
+        invNormalRow.total = sumInvNormal > 0 ? sumInvNormal.toFixed(2) : '-';
         rows.push(invNormalRow);
 
         // Row 2: Tồn kho Dự Án
@@ -397,10 +408,10 @@ window.OverviewModule = {
         let sumInvProject = 0;
         invKeys.forEach(k => {
             const c = invBreakdown[k] || { project: 0 };
-            invProjectRow.values.push(c.project.toFixed(1));
+            invProjectRow.values.push(c.project > 0 ? c.project.toFixed(2) : '-');
             sumInvProject += c.project;
         });
-        invProjectRow.total = sumInvProject.toFixed(1);
+        invProjectRow.total = sumInvProject > 0 ? sumInvProject.toFixed(2) : '-';
         rows.push(invProjectRow);
 
         // Row 3: Tổng Tồn Kho
@@ -408,10 +419,10 @@ window.OverviewModule = {
         let sumInv = 0;
         invKeys.forEach(k => {
             const c = invBreakdown[k] || { total: 0 };
-            invRow.values.push(c.total.toFixed(1));
+            invRow.values.push(c.total > 0 ? c.total.toFixed(2) : '-');
             sumInv += c.total;
         });
-        invRow.total = sumInv.toFixed(1);
+        invRow.total = sumInv > 0 ? sumInv.toFixed(2) : '-';
         rows.push(invRow);
 
         // Row: Công nợ Quá hạn

@@ -1,4 +1,6 @@
-/**
+const fs = require('fs');
+
+const inventoryJsContent = `/**
  * Inventory Module (Chỉ Tiêu Tồn Kho - Quét Số Liệu Chính Xác Từ Google Sheet Của Đơn Vị)
  * - Lấy số liệu chính xác 100% từ Google Sheet của 6 đơn vị (THH, Việt, Xem Sơn, VPSM, VPVPS, ITSS)
  * - Tuyệt đối không thêm/bịa số liệu, những ô không có dữ liệu để trống hiển thị dấu "-"
@@ -267,15 +269,15 @@ window.InventoryModule = {
         if (elActualSub) {
             const statusColor = planPct <= 100 ? '#16a34a' : '#dc2626';
             const statusText = planPct <= 100 ? 'Trong định mức' : 'Vượt định mức';
-            elActualSub.innerHTML = `
+            elActualSub.innerHTML = \`
                 <div style="display:flex; justify-content:space-between; margin-bottom: 4px;">
-                    <span>Định mức KH: <strong>${planBillion} Tỷ</strong></span>
-                    <strong style="color: ${statusColor};">${planPct}% (${statusText})</strong>
+                    <span>Định mức KH: <strong>\${planBillion} Tỷ</strong></span>
+                    <strong style="color: \${statusColor};">\${planPct}% (\${statusText})</strong>
                 </div>
                 <div class="inv-split-bar">
-                    <div class="inv-split-segment" style="width: ${Math.min(100, planPct)}%; background: ${statusColor};"></div>
+                    <div class="inv-split-segment" style="width: \${Math.min(100, planPct)}%; background: \${statusColor};"></div>
                 </div>
-            `;
+            \`;
         }
 
         // KPI 2: Tách Tồn Kho: HĐKD Thường vs Dự Án (Chính xác số liệu, không bịa số)
@@ -288,17 +290,17 @@ window.InventoryModule = {
 
         if (elNormalVal) elNormalVal.textContent = normalBillion + ' Tỷ ₫';
         if (elNormalSub) {
-            const projectText = totals.projectVal > 0 ? `${projectBillion} Tỷ (${projectPct}%)` : '- (0%)';
-            elNormalSub.innerHTML = `
+            const projectText = totals.projectVal > 0 ? \`\${projectBillion} Tỷ (\${projectPct}%)\` : '- (0%)';
+            elNormalSub.innerHTML = \`
                 <div style="display:flex; justify-content:space-between; margin-bottom: 6px; font-weight: 600; font-size: 0.84rem;">
-                    <span style="color: #475569;">HĐKD thường: <strong style="color: #0f172a;">${normalPct}%</strong></span>
-                    <span style="color: #2563eb;">Dự án: <strong style="color: #1d4ed8;">${projectText}</strong></span>
+                    <span style="color: #475569;">HĐKD thường: <strong style="color: #0f172a;">\${normalPct}%</strong></span>
+                    <span style="color: #2563eb;">Dự án: <strong style="color: #1d4ed8;">\${projectText}</strong></span>
                 </div>
                 <div class="inv-split-bar" style="height: 8px; border-radius: 4px; overflow: hidden; display: flex; width: 100%;">
-                    <div class="inv-split-segment" style="width: ${normalPct}%; background: #10b981;" title="HĐKD thường: ${normalBillion} Tỷ (${normalPct}%)"></div>
-                    <div class="inv-split-segment" style="width: ${projectPct}%; background: #2563eb;" title="Dự án: ${projectBillion} Tỷ (${projectPct}%)"></div>
+                    <div class="inv-split-segment" style="width: \${normalPct}%; background: #10b981;" title="HĐKD thường: \${normalBillion} Tỷ (\${normalPct}%)"></div>
+                    <div class="inv-split-segment" style="width: \${projectPct}%; background: #2563eb;" title="Dự án: \${projectBillion} Tỷ (\${projectPct}%)"></div>
                 </div>
-            `;
+            \`;
         }
 
         // KPI 3: Hàng Chậm Luân Chuyển: Gồm Máy & Vật Tư
@@ -311,13 +313,13 @@ window.InventoryModule = {
 
         if (elSlowVal) elSlowVal.textContent = slowBillion + ' Tỷ ₫';
         if (elSlowSub) {
-            elSlowSub.innerHTML = `
+            elSlowSub.innerHTML = \`
                 <div style="display:flex; justify-content:space-between; margin-bottom: 4px; font-size: 0.8rem;">
-                    <span>Máy: <strong>${slowMachBillion} Tỷ (${totals.slowMachinesQty} cái)</strong></span>
-                    <span>Vật tư: <strong>${slowPartBillion} Tỷ</strong></span>
+                    <span>Máy: <strong>\${slowMachBillion} Tỷ (\${totals.slowMachinesQty} cái)</strong></span>
+                    <span>Vật tư: <strong>\${slowPartBillion} Tỷ</strong></span>
                 </div>
-                <div style="color: #ef4444; font-weight: 700; font-size: 0.82rem;">Tỷ lệ chậm: ${slowPct}% tổng tồn kho</div>
-            `;
+                <div style="color: #ef4444; font-weight: 700; font-size: 0.82rem;">Tỷ lệ chậm: \${slowPct}% tổng tồn kho</div>
+            \`;
         }
 
         // KPI 4: Tỷ Lệ Tồn Kho / Doanh Số (TB)
@@ -326,17 +328,17 @@ window.InventoryModule = {
         const ratioMonths = totals.avgMonthlyRev > 0 ? (totals.actualVal / totals.avgMonthlyRev).toFixed(1) : '—';
         const invRevRatio = totals.avgMonthlyRev > 0 ? ((totals.actualVal / totals.avgMonthlyRev) * 100).toFixed(0) : '—';
 
-        if (elRatioVal) elRatioVal.textContent = ratioMonths !== '—' ? `${ratioMonths} Tháng` : '—';
+        if (elRatioVal) elRatioVal.textContent = ratioMonths !== '—' ? \`\${ratioMonths} Tháng\` : '—';
         if (elRatioSub) {
-            elRatioSub.innerHTML = `
-                <div>Tồn kho / Doanh số TB: <strong>${invRevRatio}%</strong></div>
+            elRatioSub.innerHTML = \`
+                <div>Tồn kho / Doanh số TB: <strong>\${invRevRatio}%</strong></div>
                 <div style="color: #64748b; font-size: 0.78rem; margin-top: 2px;">Chu kỳ luân chuyển an toàn: &le; 2.5 tháng</div>
-            `;
+            \`;
         }
     },
 
     getTheadHtml() {
-        return `
+        return \`
             <tr style="background: #a3e635; color: #000; font-weight: bold; border-bottom: 2px solid #65a30d;">
                 <th rowspan="2" style="width: 40px; text-align: center; vertical-align: middle; background: #a3e635; border: 1px solid #84cc16;">I</th>
                 <th rowspan="2" style="min-width: 220px; text-align: left; vertical-align: middle; background: #a3e635; border: 1px solid #84cc16;">THH (DANH MỤC HÀNG HÓA)</th>
@@ -361,7 +363,7 @@ window.InventoryModule = {
                 <th style="width: 55px; text-align: right; background: #a3e635; color: #064e3b; font-weight: 800; border: 1px solid #84cc16;">SL</th>
                 <th style="width: 130px; text-align: right; background: #a3e635; color: #064e3b; font-weight: 800; border: 1px solid #84cc16;">Giá trị (₫)</th>
             </tr>
-        `;
+        \`;
     },
 
     renderBrandTable(activeBlocks, isAll, totals) {
@@ -397,10 +399,10 @@ window.InventoryModule = {
                     const qText = (q != null && q > 0) ? q.toLocaleString('vi-VN') : '-';
                     const vText = (v != null && v > 0) ? v.toLocaleString('vi-VN') : '-';
 
-                    brandCells += `
-                        <td style="text-align: right; color: ${q ? textCol : '#94a3b8'}; font-weight: 600; background: ${cellBg}; border-left: 1px solid #e2e8f0;">${qText}</td>
-                        <td style="text-align: right; background: ${isProj ? '#f8fafc' : '#fff'}; font-weight: ${isProj ? '700' : 'normal'}; color: ${isProj ? '#1e40af' : (v ? 'inherit' : '#94a3b8')};">${vText}</td>
-                    `;
+                    brandCells += \`
+                        <td style="text-align: right; color: \${q ? textCol : '#94a3b8'}; font-weight: 600; background: \${cellBg}; border-left: 1px solid #e2e8f0;">\${qText}</td>
+                        <td style="text-align: right; background: \${isProj ? '#f8fafc' : '#fff'}; font-weight: \${isProj ? '700' : 'normal'}; color: \${isProj ? '#1e40af' : (v ? 'inherit' : '#94a3b8')};">\${vText}</td>
+                    \`;
                 }
 
                 const rowBg = isProj ? 'background: #eff6ff;' : '';
@@ -410,34 +412,34 @@ window.InventoryModule = {
                 const sumQtyText = hasAnyQty ? rowSumQty.toLocaleString('vi-VN') : '-';
                 const sumValText = hasAnyVal ? rowSumVal.toLocaleString('vi-VN') : '-';
 
-                rowsHtml += `<tr style="${rowBg}">
-                    <td style="text-align: center; ${isProj ? 'background: #dbeafe; font-weight: 800; color: #1e40af;' : 'background: #fff;'}">${r.stt}</td>
-                    <td style="${nameStyle}">${r.name} ${badgeProj}</td>
-                    ${brandCells}
-                    <td style="text-align: right; font-weight: 800; color: ${isProj ? '#1d4ed8' : '#0369a1'}; background: ${isProj ? '#bfdbfe' : '#fef08a'}; border-left: 2px solid ${isProj ? '#2563eb' : '#ca8a04'};">${sumQtyText}</td>
-                    <td style="text-align: right; font-weight: 800; color: ${isProj ? '#1e40af' : '#b91c1c'}; background: ${isProj ? '#dbeafe' : '#fef9c3'};">${sumValText}</td>
-                </tr>`;
+                rowsHtml += \`<tr style="\${rowBg}">
+                    <td style="text-align: center; \${isProj ? 'background: #dbeafe; font-weight: 800; color: #1e40af;' : 'background: #fff;'}">\${r.stt}</td>
+                    <td style="\${nameStyle}">\${r.name} \${badgeProj}</td>
+                    \${brandCells}
+                    <td style="text-align: right; font-weight: 800; color: \${isProj ? '#1d4ed8' : '#0369a1'}; background: \${isProj ? '#bfdbfe' : '#fef08a'}; border-left: 2px solid \${isProj ? '#2563eb' : '#ca8a04'};">\${sumQtyText}</td>
+                    <td style="text-align: right; font-weight: 800; color: \${isProj ? '#1e40af' : '#b91c1c'}; background: \${isProj ? '#dbeafe' : '#fef9c3'};">\${sumValText}</td>
+                </tr>\`;
             });
 
             // Company Header Row
-            const compHeader = `
+            const compHeader = \`
                 <tr style="background: #a3e635; font-weight: bold; font-size: 0.9rem;">
-                    <td style="text-align: center; background: #a3e635;">${block.stt}</td>
-                    <td style="background: #a3e635; font-weight: 800;">${block.companyName.toUpperCase()}</td>
+                    <td style="text-align: center; background: #a3e635;">\${block.stt}</td>
+                    <td style="background: #a3e635; font-weight: 800;">\${block.companyName.toUpperCase()}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[0]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[0]}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[1]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[1]}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[2]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[2]}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[3]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[3]}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[4]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[4]}</td>
                     <td style="text-align: right; background: #84cc16; color: #064e3b; font-weight: 800; border-left: 2px solid #65a30d;">SL</td>
                     <td style="text-align: right; background: #84cc16; color: #064e3b; font-weight: 800;">TỔNG (₫)</td>
                 </tr>
-            `;
+            \`;
 
             // Calculate Sub-totals for Company
             const compBrandTotals = [0, 0, 0, 0, 0];
@@ -469,72 +471,72 @@ window.InventoryModule = {
             for (let i = 0; i < 5; i++) {
                 const q = compBrandNormalQtys[i];
                 const v = compBrandNormalVals[i];
-                subHdkdCells += `
-                    <td style="text-align: right; color: ${q ? '#065f46' : '#94a3b8'}; font-weight: 700; border-left: 1px solid #cbd5e1;">${q ? q.toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; color: ${v ? '#065f46' : '#94a3b8'}; font-weight: 700;">${v ? v.toLocaleString('vi-VN') : '-'}</td>
-                `;
+                subHdkdCells += \`
+                    <td style="text-align: right; color: \${q ? '#065f46' : '#94a3b8'}; font-weight: 700; border-left: 1px solid #cbd5e1;">\${q ? q.toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; color: \${v ? '#065f46' : '#94a3b8'}; font-weight: 700;">\${v ? v.toLocaleString('vi-VN') : '-'}</td>
+                \`;
             }
 
             const compNormalTotalQty = compBrandNormalQtys.reduce((a, b) => a + b, 0);
             const compNormalTotalVal = compBrandNormalVals.reduce((a, b) => a + b, 0);
 
-            const rowHdkd = `
+            const rowHdkd = \`
                 <tr style="background: #ecfdf5; font-weight: bold; border-top: 1px solid #10b981;">
                     <td style="text-align: center; color: #047857;">&bull;</td>
                     <td style="color: #065f46; font-weight: 800;">🔹 CỘNG TỒN KHO HĐKD THƯỜNG (Mục 1, 2, 3, 4, 6)</td>
-                    ${subHdkdCells}
-                    <td style="text-align: right; color: #047857; font-weight: 800; border-left: 2px solid #10b981;">${compNormalTotalQty ? compNormalTotalQty.toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; color: #047857; font-weight: 800;">${compNormalTotalVal ? compNormalTotalVal.toLocaleString('vi-VN') : '-'}</td>
+                    \${subHdkdCells}
+                    <td style="text-align: right; color: #047857; font-weight: 800; border-left: 2px solid #10b981;">\${compNormalTotalQty ? compNormalTotalQty.toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; color: #047857; font-weight: 800;">\${compNormalTotalVal ? compNormalTotalVal.toLocaleString('vi-VN') : '-'}</td>
                 </tr>
-            `;
+            \`;
 
             // 2. Sub-total Hàng Dự Án Row (Mục 5)
             let subProjectCells = '';
             for (let i = 0; i < 5; i++) {
                 const q = compBrandProjectQtys[i];
                 const v = compBrandProjectVals[i];
-                subProjectCells += `
-                    <td style="text-align: right; color: ${q ? '#1d4ed8' : '#94a3b8'}; font-weight: 700; border-left: 1px solid #cbd5e1;">${q ? q.toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; color: ${v ? '#1e40af' : '#94a3b8'}; font-weight: 700;">${v ? v.toLocaleString('vi-VN') : '-'}</td>
-                `;
+                subProjectCells += \`
+                    <td style="text-align: right; color: \${q ? '#1d4ed8' : '#94a3b8'}; font-weight: 700; border-left: 1px solid #cbd5e1;">\${q ? q.toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; color: \${v ? '#1e40af' : '#94a3b8'}; font-weight: 700;">\${v ? v.toLocaleString('vi-VN') : '-'}</td>
+                \`;
             }
 
             const compProjectTotalQty = compBrandProjectQtys.reduce((a, b) => a + b, 0);
             const compProjectTotalVal = compBrandProjectVals.reduce((a, b) => a + b, 0);
 
-            const rowProject = `
+            const rowProject = \`
                 <tr style="background: #eff6ff; font-weight: bold; border-top: 1px solid #3b82f6;">
                     <td style="text-align: center; color: #2563eb;">&bull;</td>
                     <td style="color: #1e40af; font-weight: 800;">🔹 CỘNG TỒN KHO HÀNG DỰ ÁN (Mục 5)</td>
-                    ${subProjectCells}
-                    <td style="text-align: right; color: #1d4ed8; font-weight: 800; border-left: 2px solid #2563eb;">${compProjectTotalQty ? compProjectTotalQty.toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; color: #1e40af; font-weight: 800;">${compProjectTotalVal ? compProjectTotalVal.toLocaleString('vi-VN') : '-'}</td>
+                    \${subProjectCells}
+                    <td style="text-align: right; color: #1d4ed8; font-weight: 800; border-left: 2px solid #2563eb;">\${compProjectTotalQty ? compProjectTotalQty.toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; color: #1e40af; font-weight: 800;">\${compProjectTotalVal ? compProjectTotalVal.toLocaleString('vi-VN') : '-'}</td>
                 </tr>
-            `;
+            \`;
 
             // 3. Grand Total for Unit (TỔNG CỘNG ĐƠN VỊ)
             let subTotalCells = '';
             for (let i = 0; i < 5; i++) {
                 const q = compBrandQtys[i];
                 const v = compBrandTotals[i];
-                subTotalCells += `
-                    <td style="text-align: right; color: ${q ? '#92400e' : '#94a3b8'}; font-weight: 800; border-left: 1px solid #cbd5e1;">${q ? q.toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; color: ${v ? '#92400e' : '#94a3b8'}; font-weight: 800;">${v ? v.toLocaleString('vi-VN') : '-'}</td>
-                `;
+                subTotalCells += \`
+                    <td style="text-align: right; color: \${q ? '#92400e' : '#94a3b8'}; font-weight: 800; border-left: 1px solid #cbd5e1;">\${q ? q.toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; color: \${v ? '#92400e' : '#94a3b8'}; font-weight: 800;">\${v ? v.toLocaleString('vi-VN') : '-'}</td>
+                \`;
             }
 
             const compGrandTotalQty = compBrandQtys.reduce((a, b) => a + b, 0);
             const compGrandTotalVal = compBrandTotals.reduce((a, b) => a + b, 0);
 
-            const compTotalRow = `
+            const compTotalRow = \`
                 <tr style="background: #fef3c7; font-weight: bold; border-top: 2px solid #f59e0b; border-bottom: 2px solid #cbd5e1;">
                     <td style="text-align: center; color: #b45309; font-weight: 800;">&Sigma;</td>
-                    <td style="color: #92400e; font-weight: 800;">⭐ TỔNG CỘNG ${block.companyName.toUpperCase()}</td>
-                    ${subTotalCells}
-                    <td style="text-align: right; color: #b45309; font-weight: 800; border-left: 2px solid #ca8a04;">${compGrandTotalQty ? compGrandTotalQty.toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; color: #92400e; font-weight: 800;">${compGrandTotalVal ? compGrandTotalVal.toLocaleString('vi-VN') : '-'}</td>
+                    <td style="color: #92400e; font-weight: 800;">⭐ TỔNG CỘNG \${block.companyName.toUpperCase()}</td>
+                    \${subTotalCells}
+                    <td style="text-align: right; color: #b45309; font-weight: 800; border-left: 2px solid #ca8a04;">\${compGrandTotalQty ? compGrandTotalQty.toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; color: #92400e; font-weight: 800;">\${compGrandTotalVal ? compGrandTotalVal.toLocaleString('vi-VN') : '-'}</td>
                 </tr>
-            `;
+            \`;
 
             html += compHeader + rowsHtml + rowHdkd + rowProject + compTotalRow;
         });
@@ -546,23 +548,23 @@ window.InventoryModule = {
             const projectBillion = (totals.projectVal / 1e9).toFixed(2);
             const normalPct = totals.actualVal > 0 ? ((totals.normalVal / totals.actualVal) * 100).toFixed(1) : 0;
             const projectPct = totals.actualVal > 0 ? ((totals.projectVal / totals.actualVal) * 100).toFixed(1) : 0;
-            const projectText = totals.projectVal > 0 ? `${projectBillion} Tỷ (${projectPct}%)` : '- (0%)';
+            const projectText = totals.projectVal > 0 ? \`\${projectBillion} Tỷ (\${projectPct}%)\` : '- (0%)';
 
-            const masterSummaryHeader = `
+            const masterSummaryHeader = \`
                 <tr style="background: linear-gradient(90deg, #1e3a8a, #1e40af); color: #fff; font-weight: bold; font-size: 0.95rem; border-bottom: 3px solid #f59e0b;">
                     <td style="text-align: center; background: #1e3a8a; color: #fbbf24;">&starf;</td>
                     <td style="background: #1e3a8a; font-weight: 800; color: #fff;">A. TỔNG TOÀN TẬP ĐOÀN VPS</td>
                     <td colspan="10" style="text-align: left; padding-left: 14px; font-weight: 600; color: #e2e8f0; font-size: 0.85rem;">
-                        Tồn Kho HĐKD Thường: <strong style="color: #6ee7b7; font-size: 0.95rem;">${normalBillion} Tỷ (${normalPct}%)</strong>
+                        Tồn Kho HĐKD Thường: <strong style="color: #6ee7b7; font-size: 0.95rem;">\${normalBillion} Tỷ (\${normalPct}%)</strong>
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        Hàng Dự Án: <strong style="color: #93c5fd; font-size: 0.95rem;">${projectText}</strong>
+                        Hàng Dự Án: <strong style="color: #93c5fd; font-size: 0.95rem;">\${projectText}</strong>
                         &nbsp;&nbsp;|&nbsp;&nbsp;
-                        Chậm Luân Chuyển: <strong style="color: #fca5a5;">${(totals.totalSlowVal/1e9).toFixed(2)} Tỷ</strong>
+                        Chậm Luân Chuyển: <strong style="color: #fca5a5;">\${(totals.totalSlowVal/1e9).toFixed(2)} Tỷ</strong>
                     </td>
-                    <td style="text-align: right; background: #0f172a; color: #fbbf24; font-weight: 800; border-left: 2px solid #ca8a04;">${totals.computedTotalQty ? totals.computedTotalQty.toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; background: #0f172a; color: #fbbf24; font-weight: 800; font-size: 1.05rem;">${grandTotalBillion} Tỷ ₫</td>
+                    <td style="text-align: right; background: #0f172a; color: #fbbf24; font-weight: 800; border-left: 2px solid #ca8a04;">\${totals.computedTotalQty ? totals.computedTotalQty.toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; background: #0f172a; color: #fbbf24; font-weight: 800; font-size: 1.05rem;">\${grandTotalBillion} Tỷ ₫</td>
                 </tr>
-            `;
+            \`;
             html = masterSummaryHeader + html;
         }
 
@@ -590,11 +592,11 @@ window.InventoryModule = {
             });
         });
 
-        const csvContent = "\uFEFF" + rows.map(e => e.map(cell => `"${cell}"`).join(",")).join("\n");
+        const csvContent = "\\uFEFF" + rows.map(e => e.map(cell => \`"\${cell}"\`).join(",")).join("\\n");
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.download = `Bao_Cao_Ton_Kho_HDKD_Va_Du_An_VPS_${new Date().toISOString().slice(0, 10)}.csv`;
+        link.download = \`Bao_Cao_Ton_Kho_HDKD_Va_Du_An_VPS_\${new Date().toISOString().slice(0, 10)}.csv\`;
         link.click();
     }
 };
@@ -605,3 +607,7 @@ if (document.readyState === 'loading') {
 } else {
     window.InventoryModule.init();
 }
+`;
+
+fs.writeFileSync('js/inventory.js', inventoryJsContent, 'utf8');
+console.log('[OK] js/inventory.js rewritten with exact scanned data from Google Sheets!');

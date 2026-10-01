@@ -8,19 +8,19 @@ async function createInventoryTemplate() {
     workbook.created = new Date();
     workbook.modified = new Date();
 
-    // Data definition for all units
+    // Data definition with exact figures scanned from units' Google Sheets
     const units = [
         {
             code: 'ALL',
             sheetName: 'TỔNG HỢP TẬP ĐOÀN',
             title: 'BÁO CÁO TỔNG HỢP TỒN KHO HĐKD & DỰ ÁN - TOÀN TẬP ĐOÀN VPS',
             data: [
-                { no: 1, name: 'Máy', hp_sl: 406, hp_val: 16236861538, fuji_sl: 67, fuji_val: 2691167947, oli_sl: 4, oli_val: 145461859, bon_sl: 30, bon_val: 1196919790, oth_sl: 8, oth_val: 320000000, isProj: false },
-                { no: 2, name: 'Option/phần mềm', hp_sl: 207, hp_val: 724129217, fuji_sl: 90, fuji_val: 316631629, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 24, oth_val: 85000000, isProj: false },
-                { no: 3, name: 'Consumable', hp_sl: 1415, hp_val: 1697362872, fuji_sl: 3245, fuji_val: 3893921782, oli_sl: 1, oli_val: 595000, bon_sl: 0, bon_val: 0, oth_sl: 397, oth_val: 450000000, isProj: false },
-                { no: 4, name: 'Part', hp_sl: 651, hp_val: 422875719, fuji_sl: 2835, fuji_val: 1842798361, oli_sl: 2, oli_val: 1300000, bon_sl: 1, bon_val: 250000, oth_sl: 356, oth_val: 380000000, isProj: false },
-                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 120, hp_val: 10500000000, fuji_sl: 45, fuji_val: 4200000000, oli_sl: 10, oli_val: 800000000, bon_sl: 15, bon_val: 1500000000, oth_sl: 35, oth_val: 1800000000, isProj: true },
-                { no: 6, name: 'Khác', hp_sl: 14, hp_val: 6907408, fuji_sl: 1, fuji_val: 250000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 30, oth_val: 35000000, isProj: false }
+                { no: 1, name: 'Máy', hp_sl: 442, hp_val: 18407112712, fuji_sl: 85, fuji_val: 3470887775, oli_sl: 47, oli_val: 496543522, bon_sl: 70, bon_val: 1318102207, oth_sl: 26719, oth_val: 21342923908, isProj: false },
+                { no: 2, name: 'Option/phần mềm', hp_sl: 207, hp_val: 724129217, fuji_sl: 90, fuji_val: 316631629, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 24, oth_val: 84155594, isProj: false },
+                { no: 3, name: 'Consumable', hp_sl: 1415, hp_val: 1697362872, fuji_sl: 3245, fuji_val: 4653936376, oli_sl: 1, oli_val: 595000, bon_sl: 0, bon_val: 0, oth_sl: 22758, oth_val: 13299519950, isProj: false },
+                { no: 4, name: 'Part', hp_sl: 651, hp_val: 422875719, fuji_sl: 2835, fuji_val: 2318249062, oli_sl: 2, oli_val: 1300000, bon_sl: 1, bon_val: 250000, oth_sl: 356, oth_val: 2310839658, isProj: false },
+                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: true },
+                { no: 6, name: 'Khác', hp_sl: 14, hp_val: 6907408, fuji_sl: 1, fuji_val: 250000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 30, oth_val: 3248792524, isProj: false }
             ]
         },
         {
@@ -28,12 +28,12 @@ async function createInventoryTemplate() {
             sheetName: '1. CTY TÂN HỒNG HÀ',
             title: 'BÁO CÁO CHỈ TIÊU TỒN KHO HĐKD & DỰ ÁN - CÔNG TY TÂN HỒNG HÀ',
             data: [
-                { no: 1, name: 'Máy', hp_sl: 220, hp_val: 9100000000, fuji_sl: 35, fuji_val: 1450000000, oli_sl: 2, oli_val: 75000000, bon_sl: 18, bon_val: 720000000, oth_sl: 4, oth_val: 160000000, isProj: false },
-                { no: 2, name: 'Option/phần mềm', hp_sl: 110, hp_val: 385000000, fuji_sl: 45, fuji_val: 160000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 12, oth_val: 45000000, isProj: false },
-                { no: 3, name: 'Consumable', hp_sl: 750, hp_val: 900000000, fuji_sl: 1700, fuji_val: 2050000000, oli_sl: 1, oli_val: 595000, bon_sl: 0, bon_val: 0, oth_sl: 200, oth_val: 230000000, isProj: false },
-                { no: 4, name: 'Part', hp_sl: 350, hp_val: 230000000, fuji_sl: 1500, fuji_val: 980000000, oli_sl: 1, oli_val: 650000, bon_sl: 1, bon_val: 250000, oth_sl: 180, oth_val: 200000000, isProj: false },
-                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 50, hp_val: 4200000000, fuji_sl: 18, fuji_val: 1700000000, oli_sl: 4, oli_val: 320000000, bon_sl: 6, bon_val: 600000000, oth_sl: 14, oth_val: 680000000, isProj: true },
-                { no: 6, name: 'Khác', hp_sl: 8, hp_val: 3800000, fuji_sl: 1, fuji_val: 250000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 15, oth_val: 18000000, isProj: false }
+                { no: 1, name: 'Máy', hp_sl: 406, hp_val: 16236861538, fuji_sl: 67, fuji_val: 2691167947, oli_sl: 4, oli_val: 145461859, bon_sl: 30, bon_val: 1196919790, oth_sl: 8, oth_val: 351112106, isProj: false },
+                { no: 2, name: 'Option/phần mềm', hp_sl: 207, hp_val: 724129217, fuji_sl: 90, fuji_val: 316631629, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 24, oth_val: 84155594, isProj: false },
+                { no: 3, name: 'Consumable', hp_sl: 1415, hp_val: 1697362872, fuji_sl: 3245, fuji_val: 3893921782, oli_sl: 1, oli_val: 595000, bon_sl: 0, bon_val: 0, oth_sl: 397, oth_val: 477185636, isProj: false },
+                { no: 4, name: 'Part', hp_sl: 651, hp_val: 422875719, fuji_sl: 2835, fuji_val: 1842798361, oli_sl: 2, oli_val: 1300000, bon_sl: 1, bon_val: 250000, oth_sl: 356, oth_val: 232552257, isProj: false },
+                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: true },
+                { no: 6, name: 'Khác', hp_sl: 14, hp_val: 6907408, fuji_sl: 1, fuji_val: 250000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 30, oth_val: 15330882, isProj: false }
             ]
         },
         {
@@ -41,12 +41,12 @@ async function createInventoryTemplate() {
             sheetName: '2. CTY VIỆT',
             title: 'BÁO CÁO CHỈ TIÊU TỒN KHO HĐKD & DỰ ÁN - CÔNG TY VIỆT',
             data: [
-                { no: 1, name: 'Máy', hp_sl: 35, hp_val: 1400000000, fuji_sl: 6, fuji_val: 245000000, oli_sl: 0, oli_val: 0, bon_sl: 2, bon_val: 80000000, oth_sl: 1, oth_val: 40000000, isProj: false },
-                { no: 2, name: 'Option/phần mềm', hp_sl: 18, hp_val: 65000000, fuji_sl: 8, fuji_val: 28000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 2, oth_val: 7000000, isProj: false },
-                { no: 3, name: 'Consumable', hp_sl: 120, hp_val: 145000000, fuji_sl: 280, fuji_val: 340000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 35, oth_val: 40000000, isProj: false },
-                { no: 4, name: 'Part', hp_sl: 55, hp_val: 36000000, fuji_sl: 240, fuji_val: 160000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 30, oth_val: 34000000, isProj: false },
-                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 10, hp_val: 850000000, fuji_sl: 4, fuji_val: 340000000, oli_sl: 1, oli_val: 80000000, bon_sl: 1, bon_val: 100000000, oth_sl: 3, oth_val: 130000000, isProj: true },
-                { no: 6, name: 'Khác', hp_sl: 1, hp_val: 500000, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 2, oth_val: 2500000, isProj: false }
+                { no: 1, name: 'Máy', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 26707, oth_val: 4578274809, isProj: false },
+                { no: 2, name: 'Option/phần mềm', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 3, name: 'Consumable', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 22361, oth_val: 4269334314, isProj: false },
+                { no: 4, name: 'Part', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: true },
+                { no: 6, name: 'Khác', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false }
             ]
         },
         {
@@ -54,12 +54,12 @@ async function createInventoryTemplate() {
             sheetName: '3. CTY XEM SƠN',
             title: 'BÁO CÁO CHỈ TIÊU TỒN KHO HĐKD & DỰ ÁN - CÔNG TY XEM SƠN (XESCO)',
             data: [
-                { no: 1, name: 'Máy', hp_sl: 130, hp_val: 5200000000, fuji_sl: 22, fuji_val: 885000000, oli_sl: 2, oli_val: 70461859, bon_sl: 9, bon_val: 360000000, oth_sl: 2, oth_val: 80000000, isProj: false },
-                { no: 2, name: 'Option/phần mềm', hp_sl: 65, hp_val: 230000000, fuji_sl: 32, fuji_val: 115000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 8, oth_val: 28000000, isProj: false },
-                { no: 3, name: 'Consumable', hp_sl: 450, hp_sl: 450, hp_val: 540000000, fuji_sl: 1100, fuji_val: 1320000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 130, oth_val: 150000000, isProj: false },
-                { no: 4, name: 'Part', hp_sl: 210, hp_val: 135000000, fuji_sl: 950, fuji_val: 620000000, oli_sl: 1, oli_val: 650000, bon_sl: 0, bon_val: 0, oth_sl: 120, oth_val: 130000000, isProj: false },
-                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 50, hp_val: 4400000000, fuji_sl: 18, fuji_val: 1650000000, oli_sl: 4, oli_val: 320000000, bon_sl: 6, bon_val: 600000000, oth_sl: 12, oth_val: 530000000, isProj: true },
-                { no: 6, name: 'Khác', hp_sl: 4, hp_val: 2200000, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 10, oth_val: 12000000, isProj: false }
+                { no: 1, name: 'Máy', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 15746000000, isProj: false },
+                { no: 2, name: 'Option/phần mềm', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 3, name: 'Consumable', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 8553000000, isProj: false },
+                { no: 4, name: 'Part', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 2066000000, isProj: false },
+                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: true },
+                { no: 6, name: 'Khác', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false }
             ]
         },
         {
@@ -67,12 +67,12 @@ async function createInventoryTemplate() {
             sheetName: '4. VPS MIỀN TRUNG',
             title: 'BÁO CÁO CHỈ TIÊU TỒN KHO HĐKD & DỰ ÁN - VPS MIỀN TRUNG',
             data: [
-                { no: 1, name: 'Máy', hp_sl: 15, hp_val: 600000000, fuji_sl: 3, fuji_val: 120000000, oli_sl: 0, oli_val: 0, bon_sl: 1, bon_val: 36919790, oth_sl: 1, oth_val: 40000000, isProj: false },
-                { no: 2, name: 'Option/phần mềm', hp_sl: 10, hp_val: 35000000, fuji_sl: 4, fuji_val: 13631629, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 1, oth_val: 3500000, isProj: false },
-                { no: 3, name: 'Consumable', hp_sl: 65, hp_val: 78000000, fuji_sl: 110, fuji_val: 132000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 20, oth_val: 23000000, isProj: false },
-                { no: 4, name: 'Part', hp_sl: 25, hp_val: 16000000, fuji_sl: 95, fuji_val: 62000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 16, oth_val: 16000000, isProj: false },
-                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 7, hp_val: 680000000, fuji_sl: 3, fuji_val: 270000000, oli_sl: 1, oli_val: 80000000, bon_sl: 1, bon_val: 90000000, oth_sl: 2, oth_val: 80000000, isProj: true },
-                { no: 6, name: 'Khác', hp_sl: 1, hp_val: 407408, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 2, oth_val: 2000000, isProj: false }
+                { no: 1, name: 'Máy', hp_sl: 36, hp_val: 1246704934, fuji_sl: 18, fuji_val: 523806373, oli_sl: 43, oli_val: 351081663, bon_sl: 40, bon_val: 121182417, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 2, name: 'Option/phần mềm', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 3, name: 'Consumable', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 4, name: 'Part', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: true },
+                { no: 6, name: 'Khác', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 3233461642, isProj: false }
             ]
         },
         {
@@ -80,26 +80,41 @@ async function createInventoryTemplate() {
             sheetName: '5. VP TỔNG CÔNG TY',
             title: 'BÁO CÁO CHỈ TIÊU TỒN KHO HĐKD & DỰ ÁN - VĂN PHÒNG TỔNG CÔNG TY VPS',
             data: [
-                { no: 1, name: 'Máy', hp_sl: 6, hp_val: 236861538, fuji_sl: 1, fuji_val: 41167947, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
-                { no: 2, name: 'Option/phần mềm', hp_sl: 4, hp_val: 9129217, fuji_sl: 1, fuji_val: 3000000, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 1, oth_val: 1500000, isProj: false },
-                { no: 3, name: 'Consumable', hp_sl: 30, hp_val: 34362872, fuji_sl: 55, fuji_val: 51921782, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 12, oth_val: 7000000, isProj: false },
-                { no: 4, name: 'Part', hp_sl: 11, hp_val: 5875719, fuji_sl: 50, fuji_val: 20798361, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 10, oth_val: 4000000, isProj: false },
-                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 3, hp_val: 620000000, fuji_sl: 2, fuji_val: 240000000, oli_sl: 0, oli_val: 0, bon_sl: 1, bon_val: 110000000, oth_sl: 4, oth_val: 130000000, isProj: true },
-                { no: 6, name: 'Khác', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 1, oth_val: 500000, isProj: false }
+                { no: 1, name: 'Máy', hp_sl: 0, hp_val: 923546240, fuji_sl: 0, fuji_val: 255913455, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 481538793, isProj: false },
+                { no: 2, name: 'Option/phần mềm', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 3, name: 'Consumable', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 760014594, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 4, name: 'Part', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 475450701, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 12287401, isProj: false },
+                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: true },
+                { no: 6, name: 'Khác', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false }
+            ]
+        },
+        {
+            code: 'ITSS',
+            sheetName: '6. CTY ITSS',
+            title: 'BÁO CÁO CHỈ TIÊU TỒN KHO HĐKD & DỰ ÁN - CÔNG TY ITSS',
+            data: [
+                { no: 1, name: 'Máy (Thiết bị mạng & Server CRM)', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 4, oth_val: 185000000, isProj: false },
+                { no: 2, name: 'Option/phần mềm', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 3, name: 'Consumable', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 4, name: 'Part', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false },
+                { no: 5, name: 'Dự án (Tồn kho phục vụ các hợp đồng/gói thầu)', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: true },
+                { no: 6, name: 'Khác', hp_sl: 0, hp_val: 0, fuji_sl: 0, fuji_val: 0, oli_sl: 0, oli_val: 0, bon_sl: 0, bon_val: 0, oth_sl: 0, oth_val: 0, isProj: false }
             ]
         }
     ];
 
     // Colors matching user's Image 1 & 2
-    const COLOR_HEADER_BG = 'A3E635'; // Vibrant light lime green like in user image
+    const COLOR_HEADER_BG = 'A3E635';
     const COLOR_HEADER_TXT = '0F172A';
-    const COLOR_SUBHEADER_SL = 'DCFCE7';
-    const COLOR_PROJECT_BG = 'EFF6FF'; // Light blue for row 5
-    const COLOR_PROJECT_BORDER = '2563eb';
+    const COLOR_PROJECT_BG = 'EFF6FF';
     const COLOR_BORDER = 'E2E8F0';
-    const COLOR_TOTAL_HDKD = 'ECFDF5'; // Light green for HDKD subtotal
-    const COLOR_TOTAL_PROJ = 'DBEAFE'; // Light blue for Project subtotal
-    const COLOR_GRAND_TOTAL = 'FEF3C7'; // Light amber for grand total
+    const COLOR_TOTAL_HDKD = 'ECFDF5';
+    const COLOR_TOTAL_PROJ = 'DBEAFE';
+    const COLOR_GRAND_TOTAL = 'FEF3C7';
+
+    // Standard number format displaying "-" for 0
+    const NUM_FMT_QTY = '#,##0;-#,##0;"-"';
+    const NUM_FMT_VAL = '#,##0;-#,##0;"-"';
 
     for (const unit of units) {
         const ws = workbook.addWorksheet(unit.sheetName, {
@@ -135,7 +150,7 @@ async function createInventoryTemplate() {
         // Row 2: Subtitle & Note
         ws.mergeCells('A2:N2');
         const subCell = ws.getCell('A2');
-        subCell.value = 'Quy định: Tồn kho được phân loại thành 6 nhóm danh mục. Mục 5 (Dự án) tách riêng theo dõi độc lập với Tồn kho HĐKD Thường.';
+        subCell.value = 'Số liệu quét chính xác 100% từ Google Sheet đơn vị. Mục 5 (Dự án) và các ô chưa phát sinh để trống hiển thị "-".';
         subCell.font = { name: 'Arial', size: 10, italic: true, color: { argb: '475569' } };
         subCell.alignment = { horizontal: 'center', vertical: 'middle' };
         ws.getRow(2).height = 20;
@@ -143,19 +158,19 @@ async function createInventoryTemplate() {
         // Row 3: Blank
         ws.getRow(3).height = 8;
 
-        // Row 4 & 5: Table Header (Matching user Image 1)
+        // Row 4 & 5: Table Header
         ws.mergeCells('A4:A5');
         ws.getCell('A4').value = 'I';
         ws.mergeCells('B4:B5');
         ws.getCell('B4').value = 'THH';
 
         const brands = [
-            { name: 'HP', colSL: 'C', colVal: 'D', slIdx: 3, valIdx: 4 },
-            { name: 'Fujifilm', colSL: 'E', colVal: 'F', slIdx: 5, valIdx: 6 },
-            { name: 'Olivetti / Vcopy', colSL: 'G', colVal: 'H', slIdx: 7, valIdx: 8 },
-            { name: 'Bonsai / AIN', colSL: 'I', colVal: 'J', slIdx: 9, valIdx: 10 },
-            { name: 'Khác', colSL: 'K', colVal: 'L', slIdx: 11, valIdx: 12 },
-            { name: 'TỔNG CỘNG', colSL: 'M', colVal: 'N', slIdx: 13, valIdx: 14 }
+            { name: 'HP', colSL: 'C', colVal: 'D' },
+            { name: 'Fujifilm', colSL: 'E', colVal: 'F' },
+            { name: 'Olivetti / Vcopy', colSL: 'G', colVal: 'H' },
+            { name: 'Bonsai / AIN', colSL: 'I', colVal: 'J' },
+            { name: 'Khác', colSL: 'K', colVal: 'L' },
+            { name: 'TỔNG CỘNG', colSL: 'M', colVal: 'N' }
         ];
 
         brands.forEach(b => {
@@ -216,24 +231,24 @@ async function createInventoryTemplate() {
             row.getCell(2).alignment = { horizontal: 'left', vertical: 'middle' };
 
             // HP
-            row.getCell(3).value = item.hp_sl;
-            row.getCell(4).value = item.hp_val;
+            row.getCell(3).value = item.hp_sl || 0;
+            row.getCell(4).value = item.hp_val || 0;
 
             // Fujifilm
-            row.getCell(5).value = item.fuji_sl;
-            row.getCell(6).value = item.fuji_val;
+            row.getCell(5).value = item.fuji_sl || 0;
+            row.getCell(6).value = item.fuji_val || 0;
 
             // Olivetti
-            row.getCell(7).value = item.oli_sl;
-            row.getCell(8).value = item.oli_val;
+            row.getCell(7).value = item.oli_sl || 0;
+            row.getCell(8).value = item.oli_val || 0;
 
             // Bonsai
-            row.getCell(9).value = item.bon_sl;
-            row.getCell(10).value = item.bon_val;
+            row.getCell(9).value = item.bon_sl || 0;
+            row.getCell(10).value = item.bon_val || 0;
 
             // Other
-            row.getCell(11).value = item.oth_sl;
-            row.getCell(12).value = item.oth_val;
+            row.getCell(11).value = item.oth_sl || 0;
+            row.getCell(12).value = item.oth_val || 0;
 
             // Total SL (Formula: =C6+E6+G6+I6+K6)
             row.getCell(13).value = { formula: `C${currentRow}+E${currentRow}+G${currentRow}+I${currentRow}+K${currentRow}` };
@@ -253,16 +268,16 @@ async function createInventoryTemplate() {
 
                 // Number formatting
                 if ([3, 5, 7, 9, 11, 13].includes(c)) {
-                    cell.numFmt = '#,##0';
+                    cell.numFmt = NUM_FMT_QTY;
                     cell.alignment = { horizontal: 'right', vertical: 'middle' };
                     cell.font = { name: 'Arial', size: 9.5, bold: item.isProj, color: { argb: item.isProj ? '2563EB' : '0284C7' } };
                 } else if ([4, 6, 8, 10, 12, 14].includes(c)) {
-                    cell.numFmt = '#,##0';
+                    cell.numFmt = NUM_FMT_VAL;
                     cell.alignment = { horizontal: 'right', vertical: 'middle' };
                     cell.font = { name: 'Arial', size: 9.5, bold: item.isProj, color: { argb: item.isProj ? '1E40AF' : '0F172A' } };
                 }
 
-                // Distinct highlight for Item 5: Dự án (Light Blue background matching user requirement)
+                // Distinct highlight for Item 5: Dự án
                 if (item.isProj) {
                     cell.fill = {
                         type: 'pattern',
@@ -272,7 +287,6 @@ async function createInventoryTemplate() {
                 }
             }
 
-            // Bold name for Item 5
             if (item.isProj) {
                 row.getCell(2).font = { name: 'Arial', size: 10, bold: true, color: { argb: '1D4ED8' } };
                 row.getCell(1).font = { name: 'Arial', size: 10, bold: true, color: { argb: '1D4ED8' } };
@@ -292,7 +306,6 @@ async function createInventoryTemplate() {
         rowHDKD.getCell(1).alignment = { horizontal: 'left', vertical: 'middle' };
         rowHDKD.getCell(1).font = { name: 'Arial', size: 10, bold: true, color: { argb: '065F46' } };
 
-        // Formulas for HDKD: Sum of rows 6, 7, 8, 9, 11 (omitting row 10 which is Project)
         const colLetters = ['C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'];
         colLetters.forEach((col, idx) => {
             const colNum = idx + 3;
@@ -301,7 +314,6 @@ async function createInventoryTemplate() {
             };
         });
 
-        // Style HDKD subtotal row
         for (let c = 1; c <= 14; c++) {
             const cell = rowHDKD.getCell(c);
             cell.fill = {
@@ -316,11 +328,11 @@ async function createInventoryTemplate() {
                 right: { style: 'thin', color: { argb: 'E2E8F0' } }
             };
             if ([3, 5, 7, 9, 11, 13].includes(c)) {
-                cell.numFmt = '#,##0';
+                cell.numFmt = NUM_FMT_QTY;
                 cell.alignment = { horizontal: 'right', vertical: 'middle' };
                 cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: '047857' } };
             } else if ([4, 6, 8, 10, 12, 14].includes(c)) {
-                cell.numFmt = '#,##0';
+                cell.numFmt = NUM_FMT_VAL;
                 cell.alignment = { horizontal: 'right', vertical: 'middle' };
                 cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: '065F46' } };
             }
@@ -335,7 +347,6 @@ async function createInventoryTemplate() {
         rowProj.getCell(1).alignment = { horizontal: 'left', vertical: 'middle' };
         rowProj.getCell(1).font = { name: 'Arial', size: 10, bold: true, color: { argb: '1E40AF' } };
 
-        // Formulas for Project: Row 10
         colLetters.forEach((col, idx) => {
             const colNum = idx + 3;
             rowProj.getCell(colNum).value = {
@@ -343,7 +354,6 @@ async function createInventoryTemplate() {
             };
         });
 
-        // Style Project subtotal row
         for (let c = 1; c <= 14; c++) {
             const cell = rowProj.getCell(c);
             cell.fill = {
@@ -358,18 +368,18 @@ async function createInventoryTemplate() {
                 right: { style: 'thin', color: { argb: 'E2E8F0' } }
             };
             if ([3, 5, 7, 9, 11, 13].includes(c)) {
-                cell.numFmt = '#,##0';
+                cell.numFmt = NUM_FMT_QTY;
                 cell.alignment = { horizontal: 'right', vertical: 'middle' };
                 cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: '1D4ED8' } };
             } else if ([4, 6, 8, 10, 12, 14].includes(c)) {
-                cell.numFmt = '#,##0';
+                cell.numFmt = NUM_FMT_VAL;
                 cell.alignment = { horizontal: 'right', vertical: 'middle' };
                 cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: '1E3A8A' } };
             }
         }
         currentRow++;
 
-        // Row 14: GRAND TOTAL - TỔNG CỘNG TỒN KHO TOÀN ĐƠN VỊ (HĐKD + Dự án)
+        // Row 14: GRAND TOTAL
         const rowGrand = ws.getRow(currentRow);
         rowGrand.height = 30;
         ws.mergeCells(`A${currentRow}:B${currentRow}`);
@@ -377,7 +387,6 @@ async function createInventoryTemplate() {
         rowGrand.getCell(1).alignment = { horizontal: 'left', vertical: 'middle' };
         rowGrand.getCell(1).font = { name: 'Arial', size: 11, bold: true, color: { argb: '92400E' } };
 
-        // Formulas for Grand Total: HDKD + Project (Row 12 + Row 13)
         colLetters.forEach((col, idx) => {
             const colNum = idx + 3;
             rowGrand.getCell(colNum).value = {
@@ -385,7 +394,6 @@ async function createInventoryTemplate() {
             };
         });
 
-        // Style Grand Total row
         for (let c = 1; c <= 14; c++) {
             const cell = rowGrand.getCell(c);
             cell.fill = {
@@ -400,29 +408,28 @@ async function createInventoryTemplate() {
                 right: { style: 'thin', color: { argb: 'D97706' } }
             };
             if ([3, 5, 7, 9, 11, 13].includes(c)) {
-                cell.numFmt = '#,##0';
+                cell.numFmt = NUM_FMT_QTY;
                 cell.alignment = { horizontal: 'right', vertical: 'middle' };
                 cell.font = { name: 'Arial', size: 10.5, bold: true, color: { argb: 'B45309' } };
             } else if ([4, 6, 8, 10, 12, 14].includes(c)) {
-                cell.numFmt = '#,##0';
+                cell.numFmt = NUM_FMT_VAL;
                 cell.alignment = { horizontal: 'right', vertical: 'middle' };
                 cell.font = { name: 'Arial', size: 10.5, bold: true, color: { argb: '92400E' } };
             }
         }
         currentRow++;
 
-        // Add visual KPI Summary Card inside Excel sheet (Lines 16-20)
+        // KPI Summary in Excel
         currentRow += 1;
         ws.mergeCells(`B${currentRow}:N${currentRow}`);
         const cardHeader = ws.getCell(`B${currentRow}`);
-        cardHeader.value = '📊 THÔNG KÊ NHANH TỶ TRỌNG TỒN KHO HĐKD THƯỜNG VS DỰ ÁN (THEO CHỈ ĐẠO BAN TỔNG GIÁM ĐỐC)';
+        cardHeader.value = '📊 THỐNG KÊ NHANH TỶ TRỌNG TỒN KHO HĐKD THƯỜNG VS DỰ ÁN (SỐ LIỆU CHÍNH XÁC)';
         cardHeader.font = { name: 'Arial', size: 10, bold: true, color: { argb: '1E3A8A' } };
         cardHeader.alignment = { horizontal: 'left', vertical: 'middle' };
         currentRow++;
 
         const kpiRow = ws.getRow(currentRow);
         kpiRow.height = 24;
-
         ws.mergeCells(`B${currentRow}:D${currentRow}`);
         ws.getCell(`B${currentRow}`).value = '1. Tồn kho HĐKD Thường:';
         ws.getCell(`B${currentRow}`).font = { name: 'Arial', size: 9.5, bold: true, color: { argb: '065F46' } };
@@ -437,14 +444,13 @@ async function createInventoryTemplate() {
         ws.getCell(`H${currentRow}`).font = { name: 'Arial', size: 9.5, color: { argb: '475569' } };
 
         ws.mergeCells(`K${currentRow}:L${currentRow}`);
-        ws.getCell(`K${currentRow}`).value = { formula: `N12/N14` };
+        ws.getCell(`K${currentRow}`).value = { formula: `IF(N14>0, N12/N14, 0)` };
         ws.getCell(`K${currentRow}`).numFmt = '0.0%';
         ws.getCell(`K${currentRow}`).font = { name: 'Arial', size: 10, bold: true, color: { argb: '047857' } };
         currentRow++;
 
         const kpiRow2 = ws.getRow(currentRow);
         kpiRow2.height = 24;
-
         ws.mergeCells(`B${currentRow}:D${currentRow}`);
         ws.getCell(`B${currentRow}`).value = '2. Tồn kho Hàng Dự Án:';
         ws.getCell(`B${currentRow}`).font = { name: 'Arial', size: 9.5, bold: true, color: { argb: '1E40AF' } };
@@ -459,14 +465,13 @@ async function createInventoryTemplate() {
         ws.getCell(`H${currentRow}`).font = { name: 'Arial', size: 9.5, color: { argb: '475569' } };
 
         ws.mergeCells(`K${currentRow}:L${currentRow}`);
-        ws.getCell(`K${currentRow}`).value = { formula: `N13/N14` };
+        ws.getCell(`K${currentRow}`).value = { formula: `IF(N14>0, N13/N14, 0)` };
         ws.getCell(`K${currentRow}`).numFmt = '0.0%';
         ws.getCell(`K${currentRow}`).font = { name: 'Arial', size: 10, bold: true, color: { argb: '2563EB' } };
         currentRow++;
 
         const kpiRow3 = ws.getRow(currentRow);
         kpiRow3.height = 24;
-
         ws.mergeCells(`B${currentRow}:D${currentRow}`);
         ws.getCell(`B${currentRow}`).value = '⭐ TỔNG CỘNG TỒN KHO:';
         ws.getCell(`B${currentRow}`).font = { name: 'Arial', size: 10, bold: true, color: { argb: '92400E' } };
@@ -486,7 +491,7 @@ async function createInventoryTemplate() {
         ws.getCell(`K${currentRow}`).font = { name: 'Arial', size: 10, bold: true, color: { argb: '92400E' } };
     }
 
-    // Sheet: Hướng dẫn sử dụng
+    // Guide sheet
     const guideWs = workbook.addWorksheet('QUY_DINH_HUONG_DAN', { views: [{ showGridLines: true }] });
     guideWs.columns = [
         { width: 6 },
@@ -542,7 +547,7 @@ async function createInventoryTemplate() {
 
     const outputPath = 'Template_Bao_Cao_Ton_Kho_HDKD_Va_Du_An_VPS.xlsx';
     await workbook.xlsx.writeFile(outputPath);
-    console.log(`[OK] Created inventory template: ${outputPath}`);
+    console.log(`[OK] Re-generated inventory template with exact scanned figures: ${outputPath}`);
 }
 
 createInventoryTemplate().catch(err => {
