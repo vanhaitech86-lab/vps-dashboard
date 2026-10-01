@@ -1,7 +1,7 @@
 /**
  * ============================================================
  * Revenue Module & Department Dashboard
- * Mục 2: Doanh Số Lãi Gộp Công Ty & Dashboard 7 Phòng Ban (Tháng & Năm)
+ * Mục 2: Doanh Số Lãi Gộp Công Ty & Dashboard 8 Phòng Ban / Mảng Kinh Doanh (Tháng & Năm)
  * ============================================================
  */
 
@@ -125,19 +125,37 @@ window.RevenueModule = {
             }
         },
         {
-            id: 'khac',
+            id: 'ban_le',
             num: '7',
+            name: 'Kinh doanh lẻ',
+            shortName: 'Bán lẻ',
+            icon: 'shopping-bag',
+            color: '#f97316',
+            bgColor: 'rgba(249, 115, 22, 0.1)',
+            desc: 'Cửa hàng, bán máy lẻ, showroom',
+            plans: {
+                'THH':    { ds: 0, lg: 0, lg_pct: 0 },
+                'Viet':   { ds: 6000, lg: 900, lg_pct: 15 },
+                'XemSon': { ds: 5500, lg: 1265, lg_pct: 23 },
+                'VPSM':   { ds: 600, lg: 108, lg_pct: 18 },
+                'ITSS':   { ds: 0, lg: 0, lg_pct: 0 },
+                'VPVPS':  { ds: 0, lg: 0, lg_pct: 0 }
+            }
+        },
+        {
+            id: 'khac',
+            num: '8',
             name: 'Kinh doanh khác',
             shortName: 'Khác',
             icon: 'more-horizontal',
             color: '#64748b',
             bgColor: 'rgba(100, 116, 139, 0.1)',
-            desc: 'Cửa hàng, bán máy lẻ, nội bộ, khác',
+            desc: 'Bán nội bộ, thương mại khác, xuất khẩu',
             plans: {
                 'THH':    { ds: 0, lg: 0, lg_pct: 0 },
-                'Viet':   { ds: 3000, lg: 1050, lg_pct: 35 },
-                'XemSon': { ds: 10000, lg: 1500, lg_pct: 15 },
-                'VPSM':   { ds: 600, lg: 108, lg_pct: 18 },
+                'Viet':   { ds: 600, lg: 75, lg_pct: 12.5 },
+                'XemSon': { ds: 0, lg: 0, lg_pct: 0 },
+                'VPSM':   { ds: 0, lg: 0, lg_pct: 0 },
                 'ITSS':   { ds: 0, lg: 0, lg_pct: 0 },
                 'VPVPS':  { ds: 36000, lg: 4320, lg_pct: 12 }
             }
@@ -186,12 +204,14 @@ window.RevenueModule = {
         { deptId: 'kdth', comp: 'Viet', name: 'KDTH Công ty Việt', note: 'Kinh doanh tổng hợp', ytd_ds: 14838.0, ytd_lg: 1135.0, m8_ds: 2213.0, m8_lg: 166.0, plan_year_ds: 23000, plan_year_lg: 1840 },
         { deptId: 'kdth', comp: 'XemSon', name: 'Kinh doanh tổng hợp', note: 'Thương mại tổng hợp', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
 
-        // 7. Kinh doanh khác
-        { deptId: 'khac', comp: 'Viet', name: 'Cửa hàng Việt', note: 'Bán lẻ tại điểm bán', ytd_ds: 835.0, ytd_lg: 356.0, m8_ds: 120.0, m8_lg: 52.0, plan_year_ds: 1800, plan_year_lg: 720 },
-        { deptId: 'khac', comp: 'Viet', name: 'Bán nội bộ Việt', note: 'Hoạt động nội bộ', ytd_ds: 608.0, ytd_lg: 79.0, m8_ds: 70.0, m8_lg: 21.0, plan_year_ds: 1200, plan_year_lg: 330 },
-        { deptId: 'khac', comp: 'XemSon', name: 'Kinh doanh bán lẻ', note: 'Bán lẻ thiết bị văn phòng', ytd_ds: 2858.0, ytd_lg: 717.0, m8_ds: 216.0, m8_lg: 46.0, plan_m_ds: 833, plan_m_lg: 125, plan_year_ds: 10000, plan_year_lg: 1500 },
-        { deptId: 'khac', comp: 'VPSM', name: 'Bán lẻ VPS Miền Trung', note: 'Bán lẻ tại showroom', ytd_ds: 355.0, ytd_lg: 63.0, m8_ds: 5.0, m8_lg: 1.0, plan_year_ds: 600, plan_year_lg: 108 },
-        { deptId: 'khac', comp: 'VPVPS', name: 'VP VPS - Hoạt động KD', note: 'Bán nội bộ, xuất khẩu, thương mại', ytd_ds: 24017.0, ytd_lg: 2818.0, m8_ds: 7386.0, m8_lg: 288.0, plan_year_ds: 36000, plan_year_lg: 4320 }
+        // 7. Kinh doanh lẻ
+        { deptId: 'ban_le', comp: 'Viet', name: 'Cửa hàng Việt', note: 'Bán lẻ tại điểm bán', ytd_ds: 835.27, ytd_lg: 355.78, m8_ds: 90.37, m8_lg: 61.81, plan_m_ds: 550, plan_m_lg: 82.5, plan_year_ds: 6000, plan_year_lg: 900 },
+        { deptId: 'ban_le', comp: 'XemSon', name: 'Bán máy lẻ Xem Sơn', note: 'Bán lẻ thiết bị văn phòng', ytd_ds: 3667.0, ytd_lg: 843.0, m8_ds: 191.0, m8_lg: 49.0, plan_m_ds: 458, plan_m_lg: 105, plan_year_ds: 5500, plan_year_lg: 1265 },
+        { deptId: 'ban_le', comp: 'VPSM', name: 'Bán lẻ VPS Miền Trung', note: 'Bán lẻ tại showroom', ytd_ds: 400.0, ytd_lg: 72.0, m8_ds: 5.0, m8_lg: 1.0, plan_m_ds: 103, plan_m_lg: 9, plan_year_ds: 600, plan_year_lg: 108 },
+
+        // 8. Kinh doanh khác
+        { deptId: 'khac', comp: 'Viet', name: 'Bán nội bộ Việt', note: 'Hoạt động nội bộ', ytd_ds: 607.91, ytd_lg: 78.97, m8_ds: 11.1, m8_lg: 0.13, plan_m_ds: 10, plan_m_lg: 1, plan_year_ds: 600, plan_year_lg: 75 },
+        { deptId: 'khac', comp: 'VPVPS', name: 'VP VPS - Hoạt động KD', note: 'Bán nội bộ, xuất khẩu, thương mại', ytd_ds: 24000.0, ytd_lg: 2880.0, m8_ds: 7386.0, m8_lg: 288.0, plan_m_ds: 3000, plan_m_lg: 360, plan_year_ds: 36000, plan_year_lg: 4320 }
     ],
 
     init() {
@@ -216,6 +236,7 @@ window.RevenueModule = {
             const cKey = compMap[allowed] || 'THH';
             this.currentDeptCompany = cKey;
             select.innerHTML = `<option value="${cKey}">${allowed}</option>`;
+            select.value = cKey;
             select.disabled = true;
             select.style.background = '#f1f5f9';
             select.style.cursor = 'not-allowed';
@@ -223,16 +244,19 @@ window.RevenueModule = {
             select.disabled = false;
             select.style.background = '#ffffff';
             select.style.cursor = 'pointer';
-            select.innerHTML = `
-                <option value="all">Toàn bộ 6 Công ty</option>
-                <option value="THH">Tân Hồng Hà (Miền Bắc)</option>
-                <option value="Viet">Công ty Việt (Miền Bắc)</option>
-                <option value="XemSon">Xem Sơn (Miền Nam)</option>
-                <option value="VPSM">VPS Miền Trung</option>
-                <option value="ITSS">ITSS (CNTT & Giải pháp)</option>
-                <option value="VPVPS">Văn phòng VPS</option>
-            `;
-            this.currentDeptCompany = 'all';
+            const curVal = select.value || this.currentDeptCompany || 'all';
+            if (select.options.length <= 1) {
+                select.innerHTML = `
+                    <option value="all">Toàn bộ 6 Công ty</option>
+                    <option value="THH">Tân Hồng Hà (Miền Bắc)</option>
+                    <option value="Viet">Công ty Việt (Miền Bắc)</option>
+                    <option value="XemSon">Xem Sơn (Miền Nam)</option>
+                    <option value="VPSM">VPS Miền Trung</option>
+                    <option value="ITSS">ITSS (CNTT & Giải pháp)</option>
+                    <option value="VPVPS">Văn phòng VPS</option>
+                `;
+            }
+            if (curVal) select.value = curVal;
         }
     },
 
@@ -276,8 +300,10 @@ window.RevenueModule = {
             };
             const mapped = compKeyMap[company] || 'all';
             const deptSelect = document.getElementById('dept-filter-company');
-            if (deptSelect && !deptSelect.disabled) {
-                deptSelect.value = mapped;
+            if (deptSelect) {
+                if (!deptSelect.disabled) {
+                    deptSelect.value = mapped;
+                }
                 this.currentDeptCompany = mapped;
             }
         }
@@ -443,8 +469,21 @@ window.RevenueModule = {
         this.renderMatrixTableOnly();
     },
 
-    // Tính toán dữ liệu 7 phòng ban theo bộ lọc đang chọn
+    // Tính toán dữ liệu 8 phòng ban / mảng kinh doanh theo bộ lọc đang chọn
     computeDepartmentData() {
+        // Tự động chuẩn hóa phân loại Kinh doanh lẻ (ban_le) và Kinh doanh khác (khac) nếu còn chung mã
+        if (this.DEPT_SUB_ITEMS) {
+            this.DEPT_SUB_ITEMS.forEach(it => {
+                if (it.deptId === 'khac') {
+                    const n = (it.name || '').toLowerCase();
+                    const note = (it.note || '').toLowerCase();
+                    if (n.includes('lẻ') || n.includes('cửa hàng') || note.includes('bán lẻ')) {
+                        it.deptId = 'ban_le';
+                    }
+                }
+            });
+        }
+
         const selComp = this.currentDeptCompany;
         const selM = parseInt(this.currentDeptMonth) || 8;
         const companies = selComp === 'all' ? ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'] : [selComp];
@@ -570,6 +609,15 @@ window.RevenueModule = {
     },
 
     renderDepartmentDashboard() {
+        const selectComp = document.getElementById('dept-filter-company');
+        const selectMonth = document.getElementById('dept-filter-month');
+        if (selectComp && selectComp.value) {
+            this.currentDeptCompany = selectComp.value;
+        }
+        if (selectMonth && selectMonth.value) {
+            this.currentDeptMonth = selectMonth.value;
+        }
+
         const data = this.computeDepartmentData();
         this.renderKpiCards(data);
         this.renderDeptCharts(data);
@@ -983,7 +1031,7 @@ window.RevenueModule = {
         const selComp = this.currentDeptCompany;
 
         let csvContent = '\uFEFF'; // UTF-8 BOM để Excel hiển thị đúng tiếng Việt
-        csvContent += `BÁO CÁO DOANH SỐ VÀ LÃI GỘP 7 PHÒNG BAN - TẬP ĐOÀN VPS\n`;
+        csvContent += `BÁO CÁO DOANH SỐ VÀ LÃI GỘP CÁC PHÒNG BAN - TẬP ĐOÀN VPS\n`;
         csvContent += `Đơn vị: ${selComp} - Kỳ báo cáo: Tháng ${selM}/2026\n`;
         csvContent += `Đơn vị tính: Triệu VNĐ\n\n`;
 

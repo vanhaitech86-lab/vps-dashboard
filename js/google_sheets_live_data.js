@@ -2191,7 +2191,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "plan_year_lg": 2880.0
     },
     {
-      "deptId": "khac",
+      "deptId": "ban_le",
       "comp": "Viet",
       "name": "Cửa hàng Việt",
       "note": "Bán lẻ tại điểm bán",
@@ -2317,7 +2317,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "plan_year_lg": 2160.0
     },
     {
-      "deptId": "khac",
+      "deptId": "ban_le",
       "comp": "XemSon",
       "name": "Bán máy lẻ Xem Sơn",
       "note": "Bán lẻ thiết bị văn phòng",
@@ -2415,7 +2415,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "plan_year_lg": 84.0
     },
     {
-      "deptId": "khac",
+      "deptId": "ban_le",
       "comp": "VPSM",
       "name": "Bán lẻ VPS Miền Trung",
       "note": "Bán lẻ tại showroom",
@@ -2630,7 +2630,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "plan_year_lg": 2880.0
       },
       {
-        "deptId": "khac",
+        "deptId": "ban_le",
         "comp": "Viet",
         "name": "Cửa hàng Việt",
         "note": "Bán lẻ tại điểm bán",
@@ -2758,7 +2758,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "plan_year_lg": 2160.0
       },
       {
-        "deptId": "khac",
+        "deptId": "ban_le",
         "comp": "XemSon",
         "name": "Bán máy lẻ Xem Sơn",
         "note": "Bán lẻ thiết bị văn phòng",
@@ -2858,7 +2858,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "plan_year_lg": 84.0
       },
       {
-        "deptId": "khac",
+        "deptId": "ban_le",
         "comp": "VPSM",
         "name": "Bán lẻ VPS Miền Trung",
         "note": "Bán lẻ tại showroom",

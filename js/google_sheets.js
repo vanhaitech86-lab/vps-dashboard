@@ -1077,8 +1077,17 @@ window.GoogleSheetsService = {
             byCompany: byCompanySummary
         };
 
-        // 6. 7 PHÒNG BAN SUB-ITEMS CHO REVENUEMODULE
+        // 6. PHÒNG BAN SUB-ITEMS CHO REVENUEMODULE
         if (liveData.dept_7_sub_items && liveData.dept_7_sub_items.length > 0) {
+            liveData.dept_7_sub_items.forEach(it => {
+                if (it.deptId === 'khac') {
+                    const n = (it.name || '').toLowerCase();
+                    const note = (it.note || '').toLowerCase();
+                    if (n.includes('lẻ') || n.includes('cửa hàng') || note.includes('bán lẻ')) {
+                        it.deptId = 'ban_le';
+                    }
+                }
+            });
             if (window.RevenueModule) {
                 window.RevenueModule.DEPT_SUB_ITEMS = liveData.dept_7_sub_items;
             }
