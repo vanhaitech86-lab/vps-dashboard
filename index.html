@@ -272,15 +272,26 @@
                             <p class="sc-kpi-sub" id="sc-profit-sub">Tỷ lệ LG: —%</p>
                             <div class="sc-kpi-progress"><div class="sc-kpi-progress-bar" id="sc-profit-bar" style="width:0%; background:#8b5cf6;"></div></div>
                         </div>
-                        <!-- 4. Tồn kho -->
-                        <div class="sc-kpi-card kpi-inventory clickable-card" data-target="inventory" title="Nhấn xem Tồn kho">
+                        <!-- 4. Tồn kho: HĐKD vs Dự Án -->
+                        <div class="sc-kpi-card kpi-inventory clickable-card" data-target="inventory" title="Nhấn xem chi tiết Tồn kho HĐKD & Dự án">
                             <div class="sc-kpi-top">
-                                <div class="sc-kpi-icon icon-inventory"><i data-lucide="archive"></i></div>
-                                <span class="sc-kpi-badge badge-yellow" id="sc-inv-badge">—</span>
+                                <div class="sc-kpi-icon icon-inventory" style="background:#dbeafe; color:#2563eb; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center;">
+                                    <i data-lucide="layers" style="width:20px; height:20px;"></i>
+                                </div>
+                                <span class="sc-kpi-badge badge-blue" id="sc-inv-badge" style="background:#eff6ff; color:#1d4ed8; font-weight:700; border:1px solid #bfdbfe;">Dự án: 25.9%</span>
                             </div>
-                            <p class="sc-kpi-label">4. Tồn Kho</p>
-                            <p class="sc-kpi-value" id="sc-inv-value">— Tỷ</p>
-                            <p class="sc-kpi-sub" id="sc-inv-sub">Tổng giá trị tồn kho</p>
+                            <p class="sc-kpi-label" style="font-weight:700; font-size:0.82rem; color:#475569; text-transform:uppercase; letter-spacing:0.5px;">TỒN KHO: HĐKD VS DỰ ÁN</p>
+                            <p class="sc-kpi-value" id="sc-inv-value" style="font-size:1.85rem; font-weight:800; color:#0f172a; margin:4px 0;">53.95 Tỷ ₫</p>
+                            <div id="sc-inv-sub-wrapper" style="font-size:0.8rem; margin-top:2px;">
+                                <div style="display:flex; justify-content:space-between; color:#475569; font-weight:600; margin-bottom:4px;">
+                                    <span>HĐKD thường: <strong id="sc-inv-normal-pct" style="color:#0f172a;">74.3%</strong></span>
+                                    <span style="color:#2563eb;">Dự án: <strong id="sc-inv-project-val">18.80 Tỷ</strong> (<span id="sc-inv-project-pct">25.9%</span>)</span>
+                                </div>
+                                <div style="height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden; display:flex;">
+                                    <div id="sc-inv-bar-normal" style="width:74.3%; background:#10b981; height:100%; transition:width 0.3s;" title="HĐKD thường"></div>
+                                    <div id="sc-inv-bar-project" style="width:25.9%; background:#2563eb; height:100%; transition:width 0.3s;" title="Dự án"></div>
+                                </div>
+                            </div>
                         </div>
                         <!-- 5. Công nợ -->
                         <div class="sc-kpi-card kpi-debt clickable-card" data-target="debt" title="Nhấn xem Công nợ">
@@ -2094,6 +2105,10 @@
                                 <i data-lucide="file-spreadsheet" style="width: 15px; height: 15px;"></i>
                                 <span>Xuất Excel</span>
                             </button>
+                            <a href="Template_Bao_Cao_Ton_Kho_HDKD_Va_Du_An_VPS.xlsx" download="Template_Bao_Cao_Ton_Kho_HDKD_Va_Du_An_VPS.xlsx" id="btn-inv-download-template" class="btn" style="background: #10b981; color: #ffffff; font-weight: 700; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 6px; text-decoration: none; box-shadow: 0 2px 4px rgba(16,185,129,0.3);" title="Tải file Excel Template Mẫu báo cáo Tồn kho HĐKD & Dự án">
+                                <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                                <span>Tải Mẫu Excel</span>
+                            </a>
                         </div>
                     </div>
 
@@ -2239,8 +2254,11 @@
                     <div class="card mt-20">
                         <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
                             <div>
-                                <h3 style="margin:0; font-size:0.95rem; font-weight:700;">Chi Tiết Tồn Kho Theo Thương Hiệu & Phân Loại</h3>
-                                <p style="margin:3px 0 0 0; font-size:0.76rem; color:#64748b;">Số lượng và giá trị (VNĐ) theo từng dòng máy, consumable, part cho HP, Fujifilm, Olivetti, Bonsai...</p>
+                                <h3 style="margin:0; font-size:0.95rem; font-weight:700; color:#0f172a; display:flex; align-items:center; gap:8px;">
+                                    <i data-lucide="boxes" style="width:18px;height:18px;color:#2563eb;"></i>
+                                    Chi Tiết Tồn Kho Theo Thương Hiệu & 6 Phân Loại (Tách Riêng HĐKD & Dự Án)
+                                </h3>
+                                <p style="margin:3px 0 0 0; font-size:0.76rem; color:#64748b;">Số lượng và giá trị (VNĐ) theo 6 mục: 1. Máy • 2. Option/phần mềm • 3. Consumable • 4. Part • 5. Dự án • 6. Khác (HP, Fujifilm, Olivetti, Bonsai...)</p>
                             </div>
                         </div>
                         <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">

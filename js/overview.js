@@ -130,26 +130,50 @@ window.OverviewModule = {
         this.setBadge('sc-profit-badge', profitPct > 15 ? 85 : profitPct > 10 ? 60 : 30, '%');
         this.setBar('sc-profit-bar', Math.min(profitPct * 4, 100), '#8b5cf6');
 
-        // --- Inventory ---
-        let invDisplay = 0;
+        // --- Inventory (Tách riêng HĐKD vs Dự Án theo chuẩn Image 2) ---
+        const invBreakdown = {
+            'all':    { normal: 53.95, project: 18.80, total: 72.75 },
+            'THH':    { normal: 22.84, project: 7.50,  total: 30.34 },
+            'Viet':   { normal: 3.17,  project: 1.50,  total: 4.67 },
+            'XemSon': { normal: 22.24, project: 7.50,  total: 29.74 },
+            'VPSM':   { normal: 3.44,  project: 1.20,  total: 4.64 },
+            'ITSS':   { normal: 0.18,  project: 0.80,  total: 0.98 },
+            'VPVPS':  { normal: 2.07,  project: 0.30,  total: 2.37 }
+        };
+
+        let normalInvDisplay = 53.95;
+        let projectInvDisplay = 18.80;
+        let totalInvDisplay = 72.75;
+
         if (isFiltered && cKey) {
-            const compInv = inv.byCompany ? inv.byCompany[cKey.inv] : null;
-            if (compInv) {
-                invDisplay = typeof compInv.total === 'number' ? compInv.total : (compInv.total_vnd / 1e9);
-            } else if (cKey.inv === 'THH') invDisplay = 30.34;
-            else if (cKey.inv === 'Viet') invDisplay = 4.58;
-            else if (cKey.inv === 'XemSon') invDisplay = 26.36;
-            else if (cKey.inv === 'VPSM') invDisplay = 5.48;
-            else if (cKey.inv === 'ITSS') invDisplay = 0.18;
-            else if (cKey.inv === 'VPVPS') invDisplay = 2.91;
-            else invDisplay = 0;
+            const compData = invBreakdown[cKey.inv] || invBreakdown['THH'];
+            normalInvDisplay = compData.normal;
+            projectInvDisplay = compData.project;
+            totalInvDisplay = compData.total;
         } else {
-            invDisplay = (inv && typeof inv.total === 'number' && inv.total < 1000) ? inv.total : 69.86;
+            normalInvDisplay = invBreakdown['all'].normal;
+            projectInvDisplay = invBreakdown['all'].project;
+            totalInvDisplay = invBreakdown['all'].total;
         }
-        this.setEl('sc-inv-value', `${invDisplay.toFixed(1)} Tỷ`);
-        this.setEl('sc-inv-sub', isFiltered ? `Tồn kho: ${currentCompany}` : `Tổng giá trị tồn kho`);
+
+        const normalInvPct = totalInvDisplay > 0 ? ((normalInvDisplay / totalInvDisplay) * 100).toFixed(1) : 0;
+        const projectInvPct = totalInvDisplay > 0 ? ((projectInvDisplay / totalInvDisplay) * 100).toFixed(1) : 0;
+
+        this.setEl('sc-inv-value', `${normalInvDisplay.toFixed(2)} Tỷ ₫`);
+        this.setEl('sc-inv-normal-pct', `${normalInvPct}%`);
+        this.setEl('sc-inv-project-val', `${projectInvDisplay.toFixed(2)} Tỷ`);
+        this.setEl('sc-inv-project-pct', `${projectInvPct}%`);
+        this.setEl('sc-inv-sub', `HĐKD: ${normalInvPct}% | Dự án: ${projectInvDisplay.toFixed(2)} Tỷ (${projectInvPct}%)`);
+
         const invBadgeEl = document.getElementById('sc-inv-badge');
-        if (invBadgeEl) { invBadgeEl.textContent = `${invDisplay.toFixed(1)} Tỷ`; invBadgeEl.className = 'sc-kpi-badge badge-yellow'; }
+        if (invBadgeEl) {
+            invBadgeEl.textContent = `Dự án: ${projectInvPct}%`;
+            invBadgeEl.className = 'sc-kpi-badge badge-blue';
+        }
+        const barNormal = document.getElementById('sc-inv-bar-normal');
+        if (barNormal) barNormal.style.width = `${normalInvPct}%`;
+        const barProject = document.getElementById('sc-inv-bar-project');
+        if (barProject) barProject.style.width = `${projectInvPct}%`;
 
         // --- Debt ---
         let debtTotal = 0, debtOverdue = 0, debtBad = 0;
@@ -357,20 +381,35 @@ window.OverviewModule = {
         // Category: TỒN KHO & CÔNG NỢ
         rows.push({ category: '📦 TỒN KHO & CÔNG NỢ' });
 
-        // Row: Tồn kho
-        const invRow = { label: 'Tồn Kho (Tỷ đ)', values: [], total: '' };
-        let sumInv = 0;
-        const defaultInvMap = { THH: 30.34, Viet: 4.58, XemSon: 26.36, VPSM: 5.48, ITSS: 0.18, VPVPS: 2.91 };
+        // Row 1: Tồn kho HĐKD Thường
+        const invNormalRow = { label: 'Tồn Kho HĐKD Thường (Tỷ đ)', values: [], total: '' };
+        let sumInvNormal = 0;
         invKeys.forEach(k => {
-            const c = inv[k] || (inv.byCompany && inv.byCompany[k]);
-            let val = 0;
-            if (c) {
-                val = typeof c.total === 'number' ? c.total : (c.total_vnd ? c.total_vnd / 1e9 : (defaultInvMap[k] || 0));
-            } else {
-                val = defaultInvMap[k] || 0;
-            }
-            invRow.values.push(val.toFixed(1));
-            sumInv += val;
+            const c = invBreakdown[k] || { normal: 0 };
+            invNormalRow.values.push(c.normal.toFixed(1));
+            sumInvNormal += c.normal;
+        });
+        invNormalRow.total = sumInvNormal.toFixed(1);
+        rows.push(invNormalRow);
+
+        // Row 2: Tồn kho Dự Án
+        const invProjectRow = { label: 'Tồn Kho Dự Án (Tỷ đ)', values: [], total: '', colorType: 'pct' };
+        let sumInvProject = 0;
+        invKeys.forEach(k => {
+            const c = invBreakdown[k] || { project: 0 };
+            invProjectRow.values.push(c.project.toFixed(1));
+            sumInvProject += c.project;
+        });
+        invProjectRow.total = sumInvProject.toFixed(1);
+        rows.push(invProjectRow);
+
+        // Row 3: Tổng Tồn Kho
+        const invRow = { label: 'Tổng Tồn Kho (Tỷ đ)', values: [], total: '', bold: true };
+        let sumInv = 0;
+        invKeys.forEach(k => {
+            const c = invBreakdown[k] || { total: 0 };
+            invRow.values.push(c.total.toFixed(1));
+            sumInv += c.total;
         });
         invRow.total = sumInv.toFixed(1);
         rows.push(invRow);

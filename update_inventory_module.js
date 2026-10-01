@@ -1,4 +1,7 @@
-/**
+const fs = require('fs');
+const path = require('path');
+
+const inventoryJsContent = `/**
  * Inventory Module (Chỉ Tiêu Tồn Kho - Cập Nhật Toàn Diện Theo Yêu Cầu)
  * 1. Bổ sung mục số 5: Tồn kho Dự Án & mục số 6: Khác ở tất cả đơn vị
  * 2. Tách riêng Tồn kho Hoạt Động Kinh Doanh (Mục 1, 2, 3, 4, 6) & Tồn kho Dự Án (Mục 5)
@@ -171,7 +174,7 @@ window.InventoryModule = {
     },
 
     getTheadHtml() {
-        return `
+        return \`
             <tr style="background: #84cc16; color: #0f172a; font-size: 0.9rem; text-align: center;">
                 <th rowspan="2" style="width: 40px; vertical-align: middle; background: #84cc16; border-right: 1px solid #65a30d;">STT</th>
                 <th rowspan="2" style="min-width: 140px; vertical-align: middle; background: #84cc16; border-right: 1px solid #65a30d;">ĐƠN VỊ / PHÂN LOẠI</th>
@@ -202,7 +205,7 @@ window.InventoryModule = {
                 <th style="background: #fef08a; color: #0369a1; font-weight: 800; min-width: 85px; text-align: right; border-left: 2px solid #ca8a04; border-right: 1px solid #fde047;">TỔNG SL</th>
                 <th style="background: #fef9c3; color: #b91c1c; font-weight: 800; min-width: 125px; text-align: right;">CỘNG (VNĐ)</th>
             </tr>
-        `;
+        \`;
     },
 
     renderUI(companyFilter, week = '3') {
@@ -344,15 +347,15 @@ window.InventoryModule = {
         if (elActualSub) {
             const statusColor = planPct <= 100 ? '#16a34a' : '#dc2626';
             const statusText = planPct <= 100 ? 'Trong định mức' : 'Vượt định mức';
-            elActualSub.innerHTML = `
+            elActualSub.innerHTML = \`
                 <div style="display:flex; justify-content:space-between; margin-bottom: 4px;">
-                    <span>Định mức KH: <strong>${planBillion} Tỷ</strong></span>
-                    <strong style="color: ${statusColor};">${planPct}% (${statusText})</strong>
+                    <span>Định mức KH: <strong>\${planBillion} Tỷ</strong></span>
+                    <strong style="color: \${statusColor};">\${planPct}% (\${statusText})</strong>
                 </div>
                 <div class="inv-split-bar">
-                    <div class="inv-split-segment" style="width: ${Math.min(100, planPct)}%; background: ${statusColor};"></div>
+                    <div class="inv-split-segment" style="width: \${Math.min(100, planPct)}%; background: \${statusColor};"></div>
                 </div>
-            `;
+            \`;
         }
 
         // KPI 2: Tách Tồn Kho: HĐKD Bình Thường vs Dự Án (Chuẩn hóa theo đúng thiết kế Image 2)
@@ -365,16 +368,16 @@ window.InventoryModule = {
 
         if (elNormalVal) elNormalVal.textContent = normalBillion + ' Tỷ ₫';
         if (elNormalSub) {
-            elNormalSub.innerHTML = `
+            elNormalSub.innerHTML = \`
                 <div style="display:flex; justify-content:space-between; margin-bottom: 6px; font-weight: 600; font-size: 0.84rem;">
-                    <span style="color: #475569;">HĐKD thường: <strong style="color: #0f172a;">${normalPct}%</strong></span>
-                    <span style="color: #2563eb;">Dự án: <strong style="color: #1d4ed8;">${projectBillion} Tỷ (${projectPct}%)</strong></span>
+                    <span style="color: #475569;">HĐKD thường: <strong style="color: #0f172a;">\${normalPct}%</strong></span>
+                    <span style="color: #2563eb;">Dự án: <strong style="color: #1d4ed8;">\${projectBillion} Tỷ (\${projectPct}%)</strong></span>
                 </div>
                 <div class="inv-split-bar" style="height: 8px; border-radius: 4px; overflow: hidden; display: flex; width: 100%;">
-                    <div class="inv-split-segment" style="width: ${normalPct}%; background: #10b981;" title="HĐKD thường: ${normalBillion} Tỷ (${normalPct}%)"></div>
-                    <div class="inv-split-segment" style="width: ${projectPct}%; background: #2563eb;" title="Dự án: ${projectBillion} Tỷ (${projectPct}%)"></div>
+                    <div class="inv-split-segment" style="width: \${normalPct}%; background: #10b981;" title="HĐKD thường: \${normalBillion} Tỷ (\${normalPct}%)"></div>
+                    <div class="inv-split-segment" style="width: \${projectPct}%; background: #2563eb;" title="Dự án: \${projectBillion} Tỷ (\${projectPct}%)"></div>
                 </div>
-            `;
+            \`;
         }
 
         // KPI 3: Hàng Chậm Luân Chuyển: Gồm Máy & Vật Tư
@@ -387,15 +390,15 @@ window.InventoryModule = {
 
         if (elSlowVal) elSlowVal.textContent = slowBillion + ' Tỷ ₫';
         if (elSlowSub) {
-            elSlowSub.innerHTML = `
+            elSlowSub.innerHTML = \`
                 <div style="margin-bottom: 2px;">
-                    Tỷ trọng chậm: <strong style="color: #ea580c;">${slowPct}%</strong> tổng kho
+                    Tỷ trọng chậm: <strong style="color: #ea580c;">\${slowPct}%</strong> tổng kho
                 </div>
                 <div style="font-size: 0.75rem; color: #475569;">
-                    • <strong>Máy:</strong> ${slowMachBillion} Tỷ (${totals.slowMachinesQty.toLocaleString('vi-VN')} chiếc)<br>
-                    • <strong>Vật tư:</strong> ${slowPartBillion} Tỷ (${totals.slowPartsQty.toLocaleString('vi-VN')} món)
+                    • <strong>Máy:</strong> \${slowMachBillion} Tỷ (\${totals.slowMachinesQty.toLocaleString('vi-VN')} chiếc)<br>
+                    • <strong>Vật tư:</strong> \${slowPartBillion} Tỷ (\${totals.slowPartsQty.toLocaleString('vi-VN')} món)
                 </div>
-            `;
+            \`;
         }
 
         // KPI 4: Tỷ Lệ Tồn Kho / Doanh Số Trung Bình Các Tháng
@@ -409,15 +412,15 @@ window.InventoryModule = {
         if (elRatioVal) elRatioVal.textContent = ratioPct + '%';
         if (elRatioSub) {
             const ratioColor = ratioPct <= 150 ? '#16a34a' : (ratioPct <= 200 ? '#ea580c' : '#dc2626');
-            elRatioSub.innerHTML = `
+            elRatioSub.innerHTML = \`
                 <div style="margin-bottom: 2px;">
-                    Tương đương: <strong style="color: ${ratioColor};">${monthsInventory} tháng</strong> doanh thu
+                    Tương đương: <strong style="color: \${ratioColor};">\${monthsInventory} tháng</strong> doanh thu
                 </div>
                 <div style="font-size: 0.75rem; color: #475569;">
-                    • DS TB: ${avgRevBillion} Tỷ/tháng<br>
-                    • Tồn TB: ${avgInvBillion} Tỷ/tháng
+                    • DS TB: \${avgRevBillion} Tỷ/tháng<br>
+                    • Tồn TB: \${avgInvBillion} Tỷ/tháng
                 </div>
-            `;
+            \`;
         }
     },
 
@@ -450,7 +453,7 @@ window.InventoryModule = {
                 legend: { position: 'top' },
                 tooltip: {
                     callbacks: {
-                        label: (ctx) => `${ctx.dataset.label}: ${ctx.raw} Tỷ ₫`
+                        label: (ctx) => \`\${ctx.dataset.label}: \${ctx.raw} Tỷ ₫\`
                     }
                 }
             },
@@ -484,7 +487,7 @@ window.InventoryModule = {
                 legend: { position: 'top' },
                 tooltip: {
                     callbacks: {
-                        label: (ctx) => `${ctx.dataset.label}: ${ctx.raw} Tỷ ₫`
+                        label: (ctx) => \`\${ctx.dataset.label}: \${ctx.raw} Tỷ ₫\`
                     }
                 }
             },
@@ -513,7 +516,7 @@ window.InventoryModule = {
                 legend: { position: 'bottom' },
                 tooltip: {
                     callbacks: {
-                        label: (ctx) => `${ctx.label}: ${ctx.raw} Tỷ ₫`
+                        label: (ctx) => \`\${ctx.label}: \${ctx.raw} Tỷ ₫\`
                     }
                 }
             },
@@ -541,23 +544,23 @@ window.InventoryModule = {
             const masterRatio = masterAvgRev > 0 ? ((masterAvgInv / masterAvgRev) * 100).toFixed(1) : 0;
             const masterMonths = masterAvgRev > 0 ? (masterAvgInv / masterAvgRev).toFixed(2) : 0;
 
-            html += `
+            html += \`
                 <tr style="background: #fde047; font-weight: 800; font-size: 0.88rem;">
                     <td style="text-align: center;">A</td>
                     <td>TỔNG TẬP ĐOÀN VPS</td>
-                    <td style="text-align: right;">${(masterPlan / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; color: #b91c1c;">${(masterActual / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; color: ${masterPct <= 100 ? '#15803d' : '#b91c1c'};">${masterPct}%</td>
-                    <td style="text-align: right; color: #15803d;">${(masterNormal / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; color: #1d4ed8;">${(masterProject / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; color: #c2410c;">${(masterSlowMach / 1e9).toFixed(2)} (${totals.slowMachinesQty})</td>
-                    <td style="text-align: right; color: #c2410c;">${(masterSlowPart / 1e9).toFixed(2)} (${totals.slowPartsQty})</td>
-                    <td style="text-align: right;">${(masterAvgRev / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right;">${(masterAvgInv / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; color: #0284c7;">${masterRatio}% (${masterMonths} th)</td>
+                    <td style="text-align: right;">\${(masterPlan / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; color: #b91c1c;">\${(masterActual / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; color: \${masterPct <= 100 ? '#15803d' : '#b91c1c'};">\${masterPct}%</td>
+                    <td style="text-align: right; color: #15803d;">\${(masterNormal / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; color: #1d4ed8;">\${(masterProject / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; color: #c2410c;">\${(masterSlowMach / 1e9).toFixed(2)} (\${totals.slowMachinesQty})</td>
+                    <td style="text-align: right; color: #c2410c;">\${(masterSlowPart / 1e9).toFixed(2)} (\${totals.slowPartsQty})</td>
+                    <td style="text-align: right;">\${(masterAvgRev / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right;">\${(masterAvgInv / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; color: #0284c7;">\${masterRatio}% (\${masterMonths} th)</td>
                     <td style="text-align: center;"><span class="badge" style="background:#dcfce7; color:#15803d; font-size:0.75rem;">Đủ 5/5 đơn vị</span></td>
                 </tr>
-            `;
+            \`;
         }
 
         // Unit Rows
@@ -575,27 +578,27 @@ window.InventoryModule = {
             const months = avgRev > 0 ? (avgInv / avgRev).toFixed(2) : 0;
             const statusText = b.weeklyStatus[week] || 'Đã cập nhật';
 
-            html += `
+            html += \`
                 <tr>
-                    <td style="text-align: center; font-weight: 600;">${b.stt}</td>
-                    <td style="font-weight: 700; color: #0f172a;">${b.companyName}</td>
-                    <td style="text-align: right; color: #475569;">${(plan / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; font-weight: 700; color: #0f172a;">${(unitActual / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; font-weight: 700; color: ${pct <= 100 ? '#16a34a' : '#dc2626'};">${pct}%</td>
-                    <td style="text-align: right; color: #16a34a; font-weight: 600;">${(normal / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; color: #2563eb; font-weight: 600;">${(project / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; color: #ea580c;">${(slowMach / 1e9).toFixed(2)} (${b.slowMachinesQty})</td>
-                    <td style="text-align: right; color: #d97706;">${(slowPart / 1e9).toFixed(2)} (${b.slowPartsQty})</td>
-                    <td style="text-align: right; color: #334155;">${(avgRev / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; color: #334155;">${(avgInv / 1e9).toFixed(2)}</td>
-                    <td style="text-align: right; font-weight: 700; color: #0284c7;">${ratio}% <span style="font-size:0.75rem; font-weight:normal; color:#64748b;">(${months} th)</span></td>
+                    <td style="text-align: center; font-weight: 600;">\${b.stt}</td>
+                    <td style="font-weight: 700; color: #0f172a;">\${b.companyName}</td>
+                    <td style="text-align: right; color: #475569;">\${(plan / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; font-weight: 700; color: #0f172a;">\${(unitActual / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; font-weight: 700; color: \${pct <= 100 ? '#16a34a' : '#dc2626'};">\${pct}%</td>
+                    <td style="text-align: right; color: #16a34a; font-weight: 600;">\${(normal / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; color: #2563eb; font-weight: 600;">\${(project / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; color: #ea580c;">\${(slowMach / 1e9).toFixed(2)} (\${b.slowMachinesQty})</td>
+                    <td style="text-align: right; color: #d97706;">\${(slowPart / 1e9).toFixed(2)} (\${b.slowPartsQty})</td>
+                    <td style="text-align: right; color: #334155;">\${(avgRev / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; color: #334155;">\${(avgInv / 1e9).toFixed(2)}</td>
+                    <td style="text-align: right; font-weight: 700; color: #0284c7;">\${ratio}% <span style="font-size:0.75rem; font-weight:normal; color:#64748b;">(\${months} th)</span></td>
                     <td style="text-align: center;">
                         <span class="badge" style="background:#e0f2fe; color:#0369a1; font-size:0.75rem; padding: 2px 8px; border-radius: 4px;">
-                            ${statusText} (T${week})
+                            \${statusText} (T\${week})
                         </span>
                     </td>
                 </tr>
-            `;
+            \`;
         });
 
         tbody.innerHTML = html;
@@ -628,98 +631,98 @@ window.InventoryModule = {
 
                     const cellBg = isProj ? '#eff6ff' : '#f0fdf4';
                     const textCol = isProj ? '#1d4ed8' : '#0369a1';
-                    brandCells += `
-                        <td style="text-align: right; color: ${textCol}; font-weight: 600; background: ${cellBg}; border-left: 1px solid #e2e8f0;">${q ? q.toLocaleString('vi-VN') : '-'}</td>
-                        <td style="text-align: right; background: ${isProj ? '#f8fafc' : '#fff'}; font-weight: ${isProj ? '700' : 'normal'}; color: ${isProj ? '#1e40af' : 'inherit'};">${v ? v.toLocaleString('vi-VN') : ''}</td>
-                    `;
+                    brandCells += \`
+                        <td style="text-align: right; color: \${textCol}; font-weight: 600; background: \${cellBg}; border-left: 1px solid #e2e8f0;">\${q ? q.toLocaleString('vi-VN') : '-'}</td>
+                        <td style="text-align: right; background: \${isProj ? '#f8fafc' : '#fff'}; font-weight: \${isProj ? '700' : 'normal'}; color: \${isProj ? '#1e40af' : 'inherit'};">\${v ? v.toLocaleString('vi-VN') : ''}</td>
+                    \`;
                 }
 
                 const rowBg = isProj ? 'background: #eff6ff;' : '';
                 const nameStyle = isProj ? 'font-weight: 800; color: #1d4ed8;' : 'font-weight: 600;';
                 const badgeProj = isProj ? '<span style="background: #2563eb; color: #fff; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px; margin-left: 6px; font-weight: 800; letter-spacing: 0.5px;">DỰ ÁN</span>' : '';
 
-                rowsHtml += `<tr style="${rowBg}">
-                    <td style="text-align: center; ${isProj ? 'background: #dbeafe; font-weight: 800; color: #1e40af;' : 'background: #fff;'}">${r.stt}</td>
-                    <td style="${nameStyle}">${r.name} ${badgeProj}</td>
-                    ${brandCells}
-                    <td style="text-align: right; font-weight: 800; color: ${isProj ? '#1d4ed8' : '#0369a1'}; background: ${isProj ? '#bfdbfe' : '#fef08a'}; border-left: 2px solid ${isProj ? '#2563eb' : '#ca8a04'};">${rowSumQty ? rowSumQty.toLocaleString('vi-VN') : '0'}</td>
-                    <td style="text-align: right; font-weight: 800; color: ${isProj ? '#1e40af' : '#b91c1c'}; background: ${isProj ? '#dbeafe' : '#fef9c3'};">${rowSumVal ? rowSumVal.toLocaleString('vi-VN') : ''}</td>
-                </tr>`;
+                rowsHtml += \`<tr style="\${rowBg}">
+                    <td style="text-align: center; \${isProj ? 'background: #dbeafe; font-weight: 800; color: #1e40af;' : 'background: #fff;'}">\${r.stt}</td>
+                    <td style="\${nameStyle}">\${r.name} \${badgeProj}</td>
+                    \${brandCells}
+                    <td style="text-align: right; font-weight: 800; color: \${isProj ? '#1d4ed8' : '#0369a1'}; background: \${isProj ? '#bfdbfe' : '#fef08a'}; border-left: 2px solid \${isProj ? '#2563eb' : '#ca8a04'};">\${rowSumQty ? rowSumQty.toLocaleString('vi-VN') : '0'}</td>
+                    <td style="text-align: right; font-weight: 800; color: \${isProj ? '#1e40af' : '#b91c1c'}; background: \${isProj ? '#dbeafe' : '#fef9c3'};">\${rowSumVal ? rowSumVal.toLocaleString('vi-VN') : ''}</td>
+                </tr>\`;
             });
 
             // Company Header Row
-            const compHeader = `
+            const compHeader = \`
                 <tr style="background: #a3e635; font-weight: bold; font-size: 0.9rem;">
-                    <td style="text-align: center; background: #a3e635;">${block.stt}</td>
-                    <td style="background: #a3e635; font-weight: 800;">${block.companyName.toUpperCase()}</td>
+                    <td style="text-align: center; background: #a3e635;">\${block.stt}</td>
+                    <td style="background: #a3e635; font-weight: 800;">\${block.companyName.toUpperCase()}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[0]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[0]}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[1]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[1]}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[2]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[2]}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[3]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[3]}</td>
                     <td style="text-align: center; background: #bef264; color: #0369a1; font-size: 0.75rem; border-left: 1px solid #84cc16;">SL</td>
-                    <td style="text-align: right; background: #a3e635;">${block.headers[4]}</td>
+                    <td style="text-align: right; background: #a3e635;">\${block.headers[4]}</td>
                     <td style="text-align: right; background: #fde047; color: #0369a1; font-weight: 800; border-left: 2px solid #ca8a04;">TỔNG SL</td>
-                    <td style="text-align: right; background: #fef08a; color: #b91c1c; font-weight: 800;">${block.headers[5] || 'CỘNG'}</td>
+                    <td style="text-align: right; background: #fef08a; color: #b91c1c; font-weight: 800;">\${block.headers[5] || 'CỘNG'}</td>
                 </tr>
-            `;
+            \`;
 
             // 1. Dòng Tách Riêng: CỘNG TỒN KHO HĐKD THƯỜNG
             let normalCells = '';
             for(let i=0; i<5; i++) {
-                normalCells += `
-                    <td style="text-align: right; font-weight: 700; color: #15803d; background: #dcfce7; border-left: 1px solid #86efac;">${block.brandNormalQty[i] ? block.brandNormalQty[i].toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; font-weight: 700; color: #166534; background: #f0fdf4;">${block.brandNormalVal[i] ? block.brandNormalVal[i].toLocaleString('vi-VN') : ''}</td>
-                `;
+                normalCells += \`
+                    <td style="text-align: right; font-weight: 700; color: #15803d; background: #dcfce7; border-left: 1px solid #86efac;">\${block.brandNormalQty[i] ? block.brandNormalQty[i].toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; font-weight: 700; color: #166534; background: #f0fdf4;">\${block.brandNormalVal[i] ? block.brandNormalVal[i].toLocaleString('vi-VN') : ''}</td>
+                \`;
             }
-            const normalRow = `
+            const normalRow = \`
                 <tr style="background: #f0fdf4; font-weight: 700; border-top: 1px solid #86efac;">
                     <td style="text-align: center; background: #dcfce7; color: #15803d; font-weight: 800;">KD</td>
                     <td style="background: #f0fdf4; color: #15803d; font-weight: 800;">🔹 TỒN KHO HĐKD THƯỜNG (Mục 1, 2, 3, 4, 6)</td>
-                    ${normalCells}
-                    <td style="text-align: right; font-weight: 800; color: #15803d; background: #bbf7d0; border-left: 2px solid #22c55e;">${block.computedNormalQty.toLocaleString('vi-VN')}</td>
-                    <td style="text-align: right; font-weight: 800; color: #15803d; background: #dcfce7;">${block.computedNormalVal.toLocaleString('vi-VN')}</td>
+                    \${normalCells}
+                    <td style="text-align: right; font-weight: 800; color: #15803d; background: #bbf7d0; border-left: 2px solid #22c55e;">\${block.computedNormalQty.toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right; font-weight: 800; color: #15803d; background: #dcfce7;">\${block.computedNormalVal.toLocaleString('vi-VN')}</td>
                 </tr>
-            `;
+            \`;
 
             // 2. Dòng Tách Riêng: CỘNG TỒN KHO DỰ ÁN
             let projectCells = '';
             for(let i=0; i<5; i++) {
-                projectCells += `
-                    <td style="text-align: right; font-weight: 700; color: #1d4ed8; background: #dbeafe; border-left: 1px solid #93c5fd;">${block.brandProjectQty[i] ? block.brandProjectQty[i].toLocaleString('vi-VN') : '-'}</td>
-                    <td style="text-align: right; font-weight: 700; color: #1e40af; background: #eff6ff;">${block.brandProjectVal[i] ? block.brandProjectVal[i].toLocaleString('vi-VN') : ''}</td>
-                `;
+                projectCells += \`
+                    <td style="text-align: right; font-weight: 700; color: #1d4ed8; background: #dbeafe; border-left: 1px solid #93c5fd;">\${block.brandProjectQty[i] ? block.brandProjectQty[i].toLocaleString('vi-VN') : '-'}</td>
+                    <td style="text-align: right; font-weight: 700; color: #1e40af; background: #eff6ff;">\${block.brandProjectVal[i] ? block.brandProjectVal[i].toLocaleString('vi-VN') : ''}</td>
+                \`;
             }
-            const projectRow = `
+            const projectRow = \`
                 <tr style="background: #eff6ff; font-weight: 700; border-top: 1px solid #93c5fd;">
                     <td style="text-align: center; background: #dbeafe; color: #1d4ed8; font-weight: 800;">DA</td>
                     <td style="background: #eff6ff; color: #1d4ed8; font-weight: 800;">🔹 TỒN KHO HÀNG DỰ ÁN (Mục 5)</td>
-                    ${projectCells}
-                    <td style="text-align: right; font-weight: 800; color: #1d4ed8; background: #bfdbfe; border-left: 2px solid #3b82f6;">${block.computedProjectQty.toLocaleString('vi-VN')}</td>
-                    <td style="text-align: right; font-weight: 800; color: #1d4ed8; background: #dbeafe;">${block.computedProjectVal.toLocaleString('vi-VN')}</td>
+                    \${projectCells}
+                    <td style="text-align: right; font-weight: 800; color: #1d4ed8; background: #bfdbfe; border-left: 2px solid #3b82f6;">\${block.computedProjectQty.toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right; font-weight: 800; color: #1d4ed8; background: #dbeafe;">\${block.computedProjectVal.toLocaleString('vi-VN')}</td>
                 </tr>
-            `;
+            \`;
 
             // 3. Dòng TỔNG CỘNG ĐƠN VỊ
             let blockTotalCells = '';
             for(let i=0; i<5; i++) {
-                blockTotalCells += `
-                    <td style="text-align: right; font-weight: 800; color: #0369a1; background: #bfdbfe; border-left: 1px solid #93c5fd;">${block.brandTotalQty[i] ? block.brandTotalQty[i].toLocaleString('vi-VN') : '0'}</td>
-                    <td style="text-align: right; font-weight: 800; color: #1e3a8a; background: #bae6fd;">${block.brandTotalVal[i] ? block.brandTotalVal[i].toLocaleString('vi-VN') : ''}</td>
-                `;
+                blockTotalCells += \`
+                    <td style="text-align: right; font-weight: 800; color: #0369a1; background: #bfdbfe; border-left: 1px solid #93c5fd;">\${block.brandTotalQty[i] ? block.brandTotalQty[i].toLocaleString('vi-VN') : '0'}</td>
+                    <td style="text-align: right; font-weight: 800; color: #1e3a8a; background: #bae6fd;">\${block.brandTotalVal[i] ? block.brandTotalVal[i].toLocaleString('vi-VN') : ''}</td>
+                \`;
             }
-            const grandRow = `
+            const grandRow = \`
                 <tr style="background: #bae6fd; font-weight: 800; border-top: 2px solid #0284c7;">
                     <td style="background: #93c5fd; text-align: center; font-weight: 800;">∑</td>
-                    <td style="background: #bae6fd; font-weight: 800; color: #0f172a;">TỔNG CỘNG ${block.companyName.toUpperCase()} (HĐKD + DỰ ÁN)</td>
-                    ${blockTotalCells}
-                    <td style="text-align: right; font-weight: 800; color: #0369a1; background: #93c5fd; border-left: 2px solid #0284c7;">${block.computedTotalQty.toLocaleString('vi-VN')}</td>
-                    <td style="text-align: right; font-weight: 800; color: #b91c1c; background: #bae6fd;">${block.computedTotalVal.toLocaleString('vi-VN')}</td>
+                    <td style="background: #bae6fd; font-weight: 800; color: #0f172a;">TỔNG CỘNG \${block.companyName.toUpperCase()} (HĐKD + DỰ ÁN)</td>
+                    \${blockTotalCells}
+                    <td style="text-align: right; font-weight: 800; color: #0369a1; background: #93c5fd; border-left: 2px solid #0284c7;">\${block.computedTotalQty.toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right; font-weight: 800; color: #b91c1c; background: #bae6fd;">\${block.computedTotalVal.toLocaleString('vi-VN')}</td>
                 </tr>
-            `;
+            \`;
 
             html += compHeader + rowsHtml + normalRow + projectRow + grandRow;
         });
@@ -731,49 +734,49 @@ window.InventoryModule = {
             let masterProjectCells = '';
 
             for(let i=0; i<5; i++) {
-                masterTotalCells += `
-                    <td style="text-align: right; background: #fef08a; color: #0369a1; font-weight: 800; border-left: 1px solid #eab308;">${totals.totalBrandsQty[i] ? totals.totalBrandsQty[i].toLocaleString('vi-VN') : '0'}</td>
-                    <td style="text-align: right; background: #fef9c3; color: #1e3a8a; font-weight: 800;">${totals.totalBrandsVal[i] ? totals.totalBrandsVal[i].toLocaleString('vi-VN') : ''}</td>
-                `;
-                masterNormalCells += `
-                    <td style="text-align: right; background: #dcfce7; color: #15803d; font-weight: 700; border-left: 1px solid #86efac;">${totals.totalBrandNormalQty[i] ? totals.totalBrandNormalQty[i].toLocaleString('vi-VN') : '0'}</td>
-                    <td style="text-align: right; background: #f0fdf4; color: #166534; font-weight: 700;">${totals.totalBrandNormalVal[i] ? totals.totalBrandNormalVal[i].toLocaleString('vi-VN') : ''}</td>
-                `;
-                masterProjectCells += `
-                    <td style="text-align: right; background: #dbeafe; color: #1d4ed8; font-weight: 700; border-left: 1px solid #93c5fd;">${totals.totalBrandProjectQty[i] ? totals.totalBrandProjectQty[i].toLocaleString('vi-VN') : '0'}</td>
-                    <td style="text-align: right; background: #eff6ff; color: #1e40af; font-weight: 700;">${totals.totalBrandProjectVal[i] ? totals.totalBrandProjectVal[i].toLocaleString('vi-VN') : ''}</td>
-                `;
+                masterTotalCells += \`
+                    <td style="text-align: right; background: #fef08a; color: #0369a1; font-weight: 800; border-left: 1px solid #eab308;">\${totals.totalBrandsQty[i] ? totals.totalBrandsQty[i].toLocaleString('vi-VN') : '0'}</td>
+                    <td style="text-align: right; background: #fef9c3; color: #1e3a8a; font-weight: 800;">\${totals.totalBrandsVal[i] ? totals.totalBrandsVal[i].toLocaleString('vi-VN') : ''}</td>
+                \`;
+                masterNormalCells += \`
+                    <td style="text-align: right; background: #dcfce7; color: #15803d; font-weight: 700; border-left: 1px solid #86efac;">\${totals.totalBrandNormalQty[i] ? totals.totalBrandNormalQty[i].toLocaleString('vi-VN') : '0'}</td>
+                    <td style="text-align: right; background: #f0fdf4; color: #166534; font-weight: 700;">\${totals.totalBrandNormalVal[i] ? totals.totalBrandNormalVal[i].toLocaleString('vi-VN') : ''}</td>
+                \`;
+                masterProjectCells += \`
+                    <td style="text-align: right; background: #dbeafe; color: #1d4ed8; font-weight: 700; border-left: 1px solid #93c5fd;">\${totals.totalBrandProjectQty[i] ? totals.totalBrandProjectQty[i].toLocaleString('vi-VN') : '0'}</td>
+                    <td style="text-align: right; background: #eff6ff; color: #1e40af; font-weight: 700;">\${totals.totalBrandProjectVal[i] ? totals.totalBrandProjectVal[i].toLocaleString('vi-VN') : ''}</td>
+                \`;
             }
 
             const normalPctAll = totals.actualVal > 0 ? ((totals.normalVal / totals.actualVal) * 100).toFixed(1) : 0;
             const projectPctAll = totals.actualVal > 0 ? ((totals.projectVal / totals.actualVal) * 100).toFixed(1) : 0;
 
-            const masterBlock = `
+            const masterBlock = \`
                 <!-- Master 1: Tổng Toàn Tập Đoàn -->
                 <tr style="background: #fde047; font-weight: bold; font-size: 0.95rem; border-bottom: 2px solid #ca8a04;">
                     <td style="text-align: center; background: #fde047; font-weight: 800;">A</td>
                     <td style="background: #fde047; font-weight: 800; color: #0f172a;">TỔNG TOÀN TẬP ĐOÀN (HĐKD + DỰ ÁN)</td>
-                    ${masterTotalCells}
-                    <td style="text-align: right; background: #fef08a; color: #0369a1; font-weight: 800; border-left: 2px solid #ca8a04; font-size: 1rem;">${totals.actualQty.toLocaleString('vi-VN')}</td>
-                    <td style="text-align: right; background: #fef9c3; color: #b91c1c; font-weight: 800; font-size: 1rem;">${totals.actualVal.toLocaleString('vi-VN')}</td>
+                    \${masterTotalCells}
+                    <td style="text-align: right; background: #fef08a; color: #0369a1; font-weight: 800; border-left: 2px solid #ca8a04; font-size: 1rem;">\${totals.actualQty.toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right; background: #fef9c3; color: #b91c1c; font-weight: 800; font-size: 1rem;">\${totals.actualVal.toLocaleString('vi-VN')}</td>
                 </tr>
                 <!-- Master 2: Tách HĐKD Thường Toàn Tập Đoàn -->
                 <tr style="background: #ecfdf5; font-weight: 700; font-size: 0.88rem; border-bottom: 1px solid #a7f3d0;">
                     <td style="text-align: center; background: #d1fae5; color: #047857; font-weight: 800;">A1</td>
-                    <td style="background: #ecfdf5; color: #047857; font-weight: 800;">🔹 TỒN KHO HĐKD THƯỜNG TOÀN TẬP ĐOÀN (${normalPctAll}%)</td>
-                    ${masterNormalCells}
-                    <td style="text-align: right; background: #bbf7d0; color: #047857; font-weight: 800; border-left: 2px solid #10b981;">${totals.normalQty.toLocaleString('vi-VN')}</td>
-                    <td style="text-align: right; background: #dcfce7; color: #047857; font-weight: 800;">${totals.normalVal.toLocaleString('vi-VN')}</td>
+                    <td style="background: #ecfdf5; color: #047857; font-weight: 800;">🔹 TỒN KHO HĐKD THƯỜNG TOÀN TẬP ĐOÀN (\${normalPctAll}%)</td>
+                    \${masterNormalCells}
+                    <td style="text-align: right; background: #bbf7d0; color: #047857; font-weight: 800; border-left: 2px solid #10b981;">\${totals.normalQty.toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right; background: #dcfce7; color: #047857; font-weight: 800;">\${totals.normalVal.toLocaleString('vi-VN')}</td>
                 </tr>
                 <!-- Master 3: Tách Hàng Dự Án Toàn Tập Đoàn -->
                 <tr style="background: #eff6ff; font-weight: 700; font-size: 0.88rem; border-bottom: 2px solid #60a5fa;">
                     <td style="text-align: center; background: #dbeafe; color: #1d4ed8; font-weight: 800;">A2</td>
-                    <td style="background: #eff6ff; color: #1d4ed8; font-weight: 800;">🔹 TỒN KHO HÀNG DỰ ÁN TOÀN TẬP ĐOÀN (${projectPctAll}%)</td>
-                    ${masterProjectCells}
-                    <td style="text-align: right; background: #bfdbfe; color: #1d4ed8; font-weight: 800; border-left: 2px solid #3b82f6;">${totals.projectQty.toLocaleString('vi-VN')}</td>
-                    <td style="text-align: right; background: #dbeafe; color: #1d4ed8; font-weight: 800;">${totals.projectVal.toLocaleString('vi-VN')}</td>
+                    <td style="background: #eff6ff; color: #1d4ed8; font-weight: 800;">🔹 TỒN KHO HÀNG DỰ ÁN TOÀN TẬP ĐOÀN (\${projectPctAll}%)</td>
+                    \${masterProjectCells}
+                    <td style="text-align: right; background: #bfdbfe; color: #1d4ed8; font-weight: 800; border-left: 2px solid #3b82f6;">\${totals.projectQty.toLocaleString('vi-VN')}</td>
+                    <td style="text-align: right; background: #dbeafe; color: #1d4ed8; font-weight: 800;">\${totals.projectVal.toLocaleString('vi-VN')}</td>
                 </tr>
-            `;
+            \`;
             html = masterBlock + html;
         }
 
@@ -802,7 +805,7 @@ window.InventoryModule = {
 
             return [
                 b.stt,
-                `"${b.companyName}"`,
+                \`"\${b.companyName}"\`,
                 (b.planVal / 1e9).toFixed(2),
                 (unitActual / 1e9).toFixed(2),
                 pct,
@@ -821,12 +824,12 @@ window.InventoryModule = {
             ];
         });
 
-        const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');
+        const csvContent = '\\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\\r\\n');
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.setAttribute('href', url);
-        link.setAttribute('download', `Bao_Cao_Chi_Tieu_Ton_Kho_HDKD_Va_Du_An_VPS_${new Date().toISOString().slice(0,10)}.csv`);
+        link.setAttribute('download', \`Bao_Cao_Chi_Tieu_Ton_Kho_HDKD_Va_Du_An_VPS_\${new Date().toISOString().slice(0,10)}.csv\`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -839,3 +842,7 @@ if (document.readyState === 'loading') {
 } else {
     window.InventoryModule.init();
 }
+`;
+
+fs.writeFileSync(path.join(__dirname, 'js', 'inventory.js'), inventoryJsContent, 'utf8');
+console.log('[OK] js/inventory.js updated successfully!');
