@@ -1,0 +1,699 @@
+/* ==========================================================================
+   HỆ THỐNG THÔNG BÁO TỰ ĐỘNG & GIÁM SÁT BÁO CÁO GIÁM ĐỐC - VPS GROUP
+   CSS STYLING SYSTEM
+   ========================================================================== */
+
+/* --- 1. Notification Bell & Badge in Topbar --- */
+.notification-bell-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: #0f172a;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.notification-bell-btn:hover {
+    background: #1e293b;
+    color: #f8fafc;
+    border-color: #475569;
+}
+
+.notification-bell-btn.has-urgent {
+    color: #ef4444;
+    border-color: #ef4444;
+    animation: bell-shake 2.5s infinite;
+}
+
+@keyframes bell-shake {
+    0%, 100% { transform: rotate(0); }
+    10%, 30%, 50% { transform: rotate(12deg); }
+    20%, 40% { transform: rotate(-12deg); }
+    60% { transform: rotate(0); }
+}
+
+.notif-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 9px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+    border: 2px solid #0f172a;
+}
+
+.notif-badge.hidden {
+    display: none !important;
+}
+
+/* --- 2. Notification Dropdown Popover --- */
+.notification-popover {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 380px;
+    max-width: 90vw;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideDownPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.notification-popover.hidden {
+    display: none !important;
+}
+
+@keyframes slideDownPop {
+    from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.notif-pop-header {
+    padding: 12px 16px;
+    background: #0f172a;
+    border-bottom: 1px solid #334155;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.notif-pop-header h4 {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notif-pop-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notif-link-btn {
+    background: none;
+    border: none;
+    color: #38bdf8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.notif-link-btn:hover {
+    background: rgba(56, 189, 248, 0.1);
+    text-decoration: underline;
+}
+
+.notif-pop-body {
+    max-height: 380px;
+    overflow-y: auto;
+    padding: 8px 0;
+}
+
+.notif-item {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    display: flex;
+    gap: 12px;
+    transition: background 0.15s;
+    cursor: pointer;
+}
+
+.notif-item:hover {
+    background: rgba(15, 23, 42, 0.4);
+}
+
+.notif-item:last-child {
+    border-bottom: none;
+}
+
+.notif-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.notif-icon-urgent {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.notif-icon-reminder {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.notif-icon-success {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+.notif-icon-info {
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+}
+
+.notif-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notif-item-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 2px;
+    line-height: 1.3;
+}
+
+.notif-item-desc {
+    font-size: 0.74rem;
+    color: #94a3b8;
+    line-height: 1.35;
+    margin-bottom: 4px;
+    word-break: break-word;
+}
+
+.notif-item-time {
+    font-size: 0.68rem;
+    color: #64748b;
+}
+
+.notif-empty-state {
+    padding: 30px 20px;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.82rem;
+}
+
+.notif-pop-footer {
+    padding: 10px 14px;
+    background: #0f172a;
+    border-top: 1px solid #334155;
+    display: flex;
+    justify-content: center;
+}
+
+.notif-btn-full {
+    width: 100%;
+    padding: 7px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.notif-btn-full:hover {
+    background: #1d4ed8;
+}
+
+/* --- 3. Director Reminder Action Banner (Prominent on Top) --- */
+.director-action-banner {
+    margin: 14px 20px 8px 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+}
+
+.banner-pending {
+    background: linear-gradient(90deg, #1e293b 0%, #292524 100%);
+    border: 1px solid #f59e0b;
+    border-left: 6px solid #f59e0b;
+}
+
+.banner-escalated {
+    background: linear-gradient(90deg, #1e293b 0%, #3b0764 100%);
+    border: 1px solid #ef4444;
+    border-left: 6px solid #ef4444;
+    animation: alert-pulse-border 2s infinite;
+}
+
+@keyframes alert-pulse-border {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 0 12px 3px rgba(239, 68, 68, 0.6); }
+}
+
+.banner-read {
+    background: linear-gradient(90deg, #1e293b 0%, #064e3b 100%);
+    border: 1px solid #10b981;
+    border-left: 6px solid #10b981;
+}
+
+.director-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.director-banner-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.director-banner-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 3px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.director-banner-sub {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    margin: 0;
+}
+
+.director-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.btn-confirm-read {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    background: #059669;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.4);
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-confirm-read:hover {
+    background: #047857;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(5, 150, 105, 0.6);
+}
+
+/* --- 4. CEO Escalation Alert Banner --- */
+.ceo-escalation-banner {
+    margin: 14px 20px 8px 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #450a0a 0%, #1e1b4b 100%);
+    border: 1px solid #ef4444;
+    border-left: 6px solid #ef4444;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35);
+    animation: alert-pulse-border 2.5s infinite;
+}
+
+.ceo-escalation-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.ceo-escalation-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #fecaca;
+    margin: 0 0 3px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ceo-escalation-sub {
+    font-size: 0.8rem;
+    color: #e2e8f0;
+    margin: 0;
+}
+
+.btn-view-violations {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.btn-view-violations:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+}
+
+/* --- 5. Main Report Monitor View (#view-report-monitor) --- */
+.monitor-container {
+    padding: 15px 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Top Stat Cards */
+.monitor-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.monitor-stat-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.monitor-stat-info h5 {
+    margin: 0 0 6px 0;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.monitor-stat-value {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0;
+    line-height: 1;
+}
+
+.monitor-stat-sub {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin: 4px 0 0 0;
+}
+
+.monitor-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Live Table Card */
+.monitor-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.monitor-card-header {
+    padding: 16px 20px;
+    background: #0f172a;
+    border-bottom: 1px solid #334155;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.monitor-card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.monitor-card-title h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #f8fafc;
+}
+
+.monitor-card-title p {
+    margin: 2px 0 0 0;
+    font-size: 0.78rem;
+    color: #94a3b8;
+}
+
+.monitor-card-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.monitor-btn-tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: #334155;
+    color: #f1f5f9;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.monitor-btn-tool:hover {
+    background: #475569;
+}
+
+.monitor-btn-primary {
+    background: #2563eb;
+    border-color: #3b82f6;
+    color: #ffffff;
+}
+
+.monitor-btn-primary:hover {
+    background: #1d4ed8;
+}
+
+/* Table */
+.monitor-table-wrap {
+    overflow-x: auto;
+}
+
+.monitor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.monitor-table th {
+    background: rgba(15, 23, 42, 0.6);
+    color: #94a3b8;
+    padding: 12px 16px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #334155;
+}
+
+.monitor-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+    color: #cbd5e1;
+    vertical-align: middle;
+}
+
+.monitor-table tr:hover td {
+    background: rgba(15, 23, 42, 0.25);
+}
+
+/* Status Badges */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pill-read {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.pill-pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.pill-escalated {
+    background: rgba(239, 68, 68, 0.18);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    animation: alert-pulse-border 2s infinite;
+}
+
+/* Settings Form */
+.monitor-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 20px;
+}
+
+.monitor-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.monitor-form-group label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #cbd5e1;
+}
+
+.monitor-form-group input,
+.monitor-form-group select {
+    padding: 9px 12px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    color: #f8fafc;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.monitor-form-group input:focus,
+.monitor-form-group select:focus {
+    border-color: #38bdf8;
+}
+
+.monitor-toggle-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 23, 42, 0.5);
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+}
+
+.monitor-toggle-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #2563eb;
+    cursor: pointer;
+}
+
+/* Modal Popup Confirm Read */
+.confirm-read-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 100000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.confirm-read-box {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    animation: slideDownPop 0.2s ease;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .director-action-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 10px 12px;
+        gap: 12px;
+    }
+    .director-banner-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .ceo-escalation-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 10px 12px;
+        gap: 12px;
+    }
+    .monitor-container {
+        padding: 10px;
+    }
+}

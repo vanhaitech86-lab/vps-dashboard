@@ -1,0 +1,272 @@
+{
+  "scannedAt": "2026-10-04T03:14:43.098Z",
+  "formattedTime": "10:14:43 4/10/2026",
+  "totalUnits": 6,
+  "completedCount": 6,
+  "partialCount": 0,
+  "missingCount": 0,
+  "completedUnits": [
+    "Tân Hồng Hà",
+    "Việt",
+    "Xem Sơn",
+    "VPS M",
+    "ITSS",
+    "Văn phòng VPS"
+  ],
+  "partialUnits": [],
+  "missingUnits": [],
+  "details": {
+    "THH": {
+      "code": "THH",
+      "name": "Tân Hồng Hà",
+      "sheetId": "1TP2ISnfspKYLuN7U9eETeggBMWkQbaRl_G1X8juCePY",
+      "status": "COMPLETED",
+      "modules": {
+        "DOANH SỐ VÀ LÃI GỘP": {
+          "status": "ENTERED",
+          "rows": 18
+        },
+        "Công nợ": {
+          "status": "ENTERED",
+          "rows": 5
+        },
+        "Khách hàng": {
+          "status": "ENTERED",
+          "rows": 7
+        },
+        "Tồn kho": {
+          "status": "ENTERED",
+          "rows": 1375
+        },
+        "Nhân sự": {
+          "status": "ENTERED",
+          "rows": 7
+        },
+        "Chi Phí": {
+          "status": "ENTERED",
+          "rows": 13
+        }
+      },
+      "missingModules": [],
+      "enteredModules": [
+        "DOANH SỐ VÀ LÃI GỘP",
+        "Công nợ",
+        "Khách hàng",
+        "Tồn kho",
+        "Nhân sự",
+        "Chi Phí"
+      ],
+      "summary": "Đã nhập đầy đủ các phân hệ chính"
+    },
+    "Viet": {
+      "code": "Viet",
+      "name": "Việt",
+      "sheetId": "1Pp7HC4cgUVAM69DDOGTvRct0kRiJ8hqNRj5K339xH4o",
+      "status": "COMPLETED",
+      "modules": {
+        "DOANH SỐ VÀ LÃI GỘP": {
+          "status": "ENTERED",
+          "rows": 17
+        },
+        "Công nợ": {
+          "status": "ENTERED",
+          "rows": 6
+        },
+        "Khách hàng": {
+          "status": "ENTERED",
+          "rows": 10
+        },
+        "Tồn kho": {
+          "status": "ENTERED",
+          "rows": 5
+        },
+        "Nhân sự": {
+          "status": "ENTERED",
+          "rows": 9
+        },
+        "Chi Phí": {
+          "status": "ENTERED",
+          "rows": 12
+        }
+      },
+      "missingModules": [],
+      "enteredModules": [
+        "DOANH SỐ VÀ LÃI GỘP",
+        "Công nợ",
+        "Khách hàng",
+        "Tồn kho",
+        "Nhân sự",
+        "Chi Phí"
+      ],
+      "summary": "Đã nhập đầy đủ các phân hệ chính"
+    },
+    "XemSon": {
+      "code": "XemSon",
+      "name": "Xem Sơn",
+      "sheetId": "1yXyzTKccGWQSn0mCNFmxPkHyx5auTwQw2SZcngPNIFg",
+      "status": "COMPLETED",
+      "modules": {
+        "DOANH SỐ VÀ LÃI GỘP": {
+          "status": "ENTERED",
+          "rows": 18
+        },
+        "Công nợ": {
+          "status": "ENTERED",
+          "rows": 6
+        },
+        "Khách hàng": {
+          "status": "ENTERED",
+          "rows": 10
+        },
+        "Tồn kho": {
+          "status": "ENTERED",
+          "rows": 5
+        },
+        "Nhân sự": {
+          "status": "ENTERED",
+          "rows": 9
+        },
+        "Chi Phí": {
+          "status": "ENTERED",
+          "rows": 12
+        }
+      },
+      "missingModules": [],
+      "enteredModules": [
+        "DOANH SỐ VÀ LÃI GỘP",
+        "Công nợ",
+        "Khách hàng",
+        "Tồn kho",
+        "Nhân sự",
+        "Chi Phí"
+      ],
+      "summary": "Đã nhập đầy đủ các phân hệ chính"
+    },
+    "VPSM": {
+      "code": "VPSM",
+      "name": "VPS M",
+      "sheetId": "13o7mqOd_30DbYqRhF18qn_yTqno3FzAWeqZDJ6nVTFA",
+      "status": "COMPLETED",
+      "modules": {
+        "DOANH SỐ VÀ LÃI GỘP": {
+          "status": "ENTERED",
+          "rows": 18
+        },
+        "Công nợ": {
+          "status": "ENTERED",
+          "rows": 6
+        },
+        "Khách hàng": {
+          "status": "ENTERED",
+          "rows": 10
+        },
+        "Tồn kho": {
+          "status": "ENTERED",
+          "rows": 18
+        },
+        "Nhân sự": {
+          "status": "ENTERED",
+          "rows": 9
+        },
+        "Chi Phí": {
+          "status": "ENTERED",
+          "rows": 12
+        }
+      },
+      "missingModules": [],
+      "enteredModules": [
+        "DOANH SỐ VÀ LÃI GỘP",
+        "Công nợ",
+        "Khách hàng",
+        "Tồn kho",
+        "Nhân sự",
+        "Chi Phí"
+      ],
+      "summary": "Đã nhập đầy đủ các phân hệ chính"
+    },
+    "ITSS": {
+      "code": "ITSS",
+      "name": "ITSS",
+      "sheetId": "1JHGl2WSw8zezqWXSIJrKHWYpnW8nIatedn4UbzPilVM",
+      "status": "COMPLETED",
+      "modules": {
+        "DOANH SỐ VÀ LÃI GỘP": {
+          "status": "ENTERED",
+          "rows": 16
+        },
+        "Công nợ": {
+          "status": "ENTERED",
+          "rows": 7
+        },
+        "Khách hàng": {
+          "status": "ENTERED",
+          "rows": 10
+        },
+        "Tồn kho": {
+          "status": "ENTERED",
+          "rows": 5
+        },
+        "Nhân sự": {
+          "status": "ENTERED",
+          "rows": 9
+        },
+        "Chi Phí": {
+          "status": "ENTERED",
+          "rows": 12
+        }
+      },
+      "missingModules": [],
+      "enteredModules": [
+        "DOANH SỐ VÀ LÃI GỘP",
+        "Công nợ",
+        "Khách hàng",
+        "Tồn kho",
+        "Nhân sự",
+        "Chi Phí"
+      ],
+      "summary": "Đã nhập đầy đủ các phân hệ chính"
+    },
+    "VPVPS": {
+      "code": "VPVPS",
+      "name": "Văn phòng VPS",
+      "sheetId": "1pHdTs3sM3RMF1ST6eWenuo947hG66V_kLU6FupNJZcE",
+      "status": "COMPLETED",
+      "modules": {
+        "DOANH SỐ VÀ LÃI GỘP": {
+          "status": "ENTERED",
+          "rows": 16
+        },
+        "Công nợ": {
+          "status": "ENTERED",
+          "rows": 7
+        },
+        "Khách hàng": {
+          "status": "ENTERED",
+          "rows": 10
+        },
+        "Tồn kho": {
+          "status": "ENTERED",
+          "rows": 17
+        },
+        "Nhân sự": {
+          "status": "ENTERED",
+          "rows": 8
+        },
+        "Chi Phí": {
+          "status": "ENTERED",
+          "rows": 12
+        }
+      },
+      "missingModules": [],
+      "enteredModules": [
+        "DOANH SỐ VÀ LÃI GỘP",
+        "Công nợ",
+        "Khách hàng",
+        "Tồn kho",
+        "Nhân sự",
+        "Chi Phí"
+      ],
+      "summary": "Đã nhập đầy đủ các phân hệ chính"
+    }
+  }
+}

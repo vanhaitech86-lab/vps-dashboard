@@ -11,3 +11,10 @@ scratch/
 parsed_months_1_4.json
 user_sheet.xlsx
 .vercel
+*.txt
+all_scanned_google_sheets_data.json
+scanned_*.json
+inventory_scanned_raw.json
+unit_data_status_audit.json
+new_sheet_gids.json
+

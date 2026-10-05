@@ -1,0 +1,94 @@
+{
+  "general": {
+    "enabled": true,
+    "defaultTime": "08:30",
+    "gracePeriodMinutes": 30,
+    "activeDays": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "soundAlert": true,
+    "webPushEnabled": true,
+    "channels": {
+      "inApp": true,
+      "email": {
+        "enabled": true,
+        "recipientEmails": "ceo@vpsgroup.vn",
+        "smtpType": "gmail",
+        "smtpHost": "smtp.gmail.com",
+        "smtpPort": 465,
+        "smtpSecure": true,
+        "smtpUser": "ADMIN",
+        "smtpPass": "Admin123a@",
+        "fromName": "Hệ Thống Báo Cáo VPS",
+        "notifyOnWeeklyScan": true,
+        "notifyOnEscalation": true
+      },
+      "zalo": {
+        "enabled": true,
+        "mode": "webhook",
+        "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+        "ceoPhone": "0988739896",
+        "notifyOnWeeklyScan": true,
+        "notifyOnEscalation": true
+      },
+      "telegram": {
+        "enabled": false,
+        "botToken": "",
+        "ceoChatId": ""
+      },
+      "customWebhook": {
+        "enabled": false,
+        "url": ""
+      }
+    }
+  },
+  "directors": [
+    {
+      "id": "THH",
+      "name": "Giám Đốc Tân Hồng Hà",
+      "company": "Tân Hồng Hà",
+      "scheduledTime": "08:30",
+      "enabled": true
+    },
+    {
+      "id": "VIET",
+      "name": "Giám Đốc Việt",
+      "company": "Việt",
+      "scheduledTime": "08:30",
+      "enabled": true
+    },
+    {
+      "id": "XESCO",
+      "name": "Giám Đốc Xem Sơn",
+      "company": "Xem Sơn",
+      "scheduledTime": "08:30",
+      "enabled": true
+    },
+    {
+      "id": "VPSM",
+      "name": "Giám Đốc VPS Miền Trung",
+      "company": "VPS M",
+      "scheduledTime": "08:30",
+      "enabled": true
+    },
+    {
+      "id": "ITSS",
+      "name": "Giám Đốc ITSS",
+      "company": "ITSS",
+      "scheduledTime": "08:30",
+      "enabled": true
+    },
+    {
+      "id": "VPVPS",
+      "name": "Giám Đốc VP VPS",
+      "company": "Văn phòng VPS",
+      "scheduledTime": "08:30",
+      "enabled": true
+    }
+  ]
+}

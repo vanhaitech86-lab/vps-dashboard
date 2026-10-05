@@ -1,0 +1,76 @@
+{
+  "version": "1.0",
+  "updatedAt": "2026-09-26",
+  "companies": [
+    { "code": "THH", "name": "Tân Hồng Hà", "sheetId": "1TP2ISnfspKYLuN7U9eETeggBMWkQbaRl_G1X8juCePY" },
+    { "code": "Viet", "name": "Việt", "sheetId": "1Pp7HC4cgUVAM69DDOGTvRct0kRiJ8hqNRj5K339xH4o" },
+    { "code": "XemSon", "name": "Xem Sơn", "sheetId": "1yXyzTKccGWQSn0mCNFmxPkHyx5auTwQw2SZcngPNIFg" },
+    { "code": "VPSM", "name": "VPS M", "sheetId": "13o7mqOd_30DbYqRhF18qn_yTqno3FzAWeqZDJ6nVTFA" },
+    { "code": "ITSS", "name": "ITSS", "sheetId": "1JHGl2WSw8zezqWXSIJrKHWYpnW8nIatedn4UbzPilVM" },
+    { "code": "VPVPS", "name": "Văn phòng VPS", "sheetId": "1pHdTs3sM3RMF1ST6eWenuo947hG66V_kLU6FupNJZcE" }
+  ],
+  "sheets": [
+    {
+      "name": "00_Huong_Dan",
+      "headers": ["NỘI DUNG HƯỚNG DẪN QUY ĐỊNH NHẬP LIỆU BÁO CÁO VPS"],
+      "sample": [
+        ["1. Vui lòng nhập liệu vào các Sheet tương ứng bên dưới."],
+        ["2. Định dạng tháng: MM/YYYY (Ví dụ: 08/2026, 09/2026)."],
+        ["3. Định dạng số tiền: Nhập số nguyên dương (đơn vị VNĐ), không gõ chữ đ hay vnd."],
+        ["4. Không xóa hoặc thay đổi thứ tự các cột tiêu đề để đảm bảo Dashboard tự động đồng bộ."]
+      ]
+    },
+    {
+      "name": "Doanh thu",
+      "headers": ["Tháng/Năm", "Đơn vị", "Doanh số Kế hoạch (VNĐ)", "Doanh số Thực tế (VNĐ)", "Tỷ lệ gộp (%)", "Chi phí (VNĐ)", "Lợi nhuận TT (VNĐ)"]
+    },
+    {
+      "name": "Công nợ",
+      "headers": ["Tháng/Năm", "Đơn vị", "Nợ trong hạn (VNĐ)", "Nợ quá hạn (VNĐ)", "Nợ khó đòi (VNĐ)", "Tỷ lệ nợ quá hạn (%)", "Ghi chú"]
+    },
+    {
+      "name": "Khách hàng",
+      "headers": ["Tháng/Năm", "Mảng kinh doanh", "Nhóm phân loại", "Đầu kỳ (Máy)", "Đầu kỳ (KH)", "Tăng trong kỳ (Máy)", "Tăng trong kỳ (KH)", "Giảm trong kỳ (Máy)", "Giảm trong kỳ (KH)", "Cuối kỳ (Máy)", "Cuối kỳ (KH)"]
+    },
+    {
+      "name": "Tồn kho",
+      "headers": ["Tháng/Năm", "Mã vật tư/thiết bị", "Tên sản phẩm", "Đơn vị tính", "Nhóm hàng", "Số lượng tồn", "Giá trị tồn kho (VNĐ)", "Tình trạng"]
+    },
+    {
+      "name": "Nhân sự",
+      "headers": ["Tháng/Năm", "STT", "Phòng ban / Bộ phận", "Định biên được giao", "Tuyển mới trong kỳ", "Nghỉ việc trong kỳ", "Đang thử việc", "Tổng nhân sự cuối kỳ"]
+    },
+    {
+      "name": "Sản Phẩm",
+      "headers": ["Tháng/Năm", "Hãng / Nhóm sản phẩm", "Doanh số Kế hoạch (VNĐ)", "Doanh số Thực tế (VNĐ)", "Tỷ lệ hoàn thành (%)", "Lãi gộp (VNĐ)"]
+    },
+    {
+      "name": "Chi Phí",
+      "headers": ["Tháng/Năm", "Mã chi phí", "Tên khoản mục chi phí", "Phân loại (Cố định/Biến đổi)", "Kế hoạch (VNĐ)", "Thực tế phát sinh (VNĐ)", "Bộ phận sử dụng"]
+    },
+    {
+      "name": "ISO",
+      "headers": ["STT", "Mã quy trình", "Tên quy trình / Quy định", "Phiên bản", "Ngày ban hành", "Phạm vi áp dụng", "Tình trạng áp dụng"]
+    },
+    {
+      "name": "Đào tạo",
+      "headers": ["Tháng/Năm", "Nội dung đào tạo", "Đối tượng tham gia", "Kế hoạch số người", "Thực tế hoàn thành", "Tỷ lệ đạt (%)", "Đánh giá kết quả"]
+    },
+    {
+      "name": "Dịch vụ tận tâm",
+      "headers": ["Tháng/Năm", "Mã NV", "Họ và tên Kỹ thuật viên", "Chức danh", "Đơn vị", "Tổng lượt việc", "Lượt đúng hẹn", "Lượt bảo hành lại", "Điểm CSAT trung bình"]
+    },
+    {
+      "name": "Văn hóa doanh nghiệp",
+      "headers": ["Tháng/Năm", "Mã NV", "Họ và tên", "Phòng ban / Bộ phận", "Đã Quy Y (Có/Chưa)", "Nơi / Ngày Quy Y", "Tín chỉ văn hóa (0-3)", "Ghi chú"]
+    },
+    {
+      "name": "Thương hiệu",
+      "headers": ["Tháng/Năm", "STT", "Chỉ tiêu thương hiệu / Marketing", "Kế hoạch", "Thực hiện", "Tỷ lệ hoàn thành (%)", "Đánh giá"]
+    },
+    {
+      "name": "Dự án & KH Dự án",
+      "headers": ["Tháng/Năm", "Tên Dự án / Gói thầu", "Tên Khách hàng / Chi nhánh", "Quy mô thiết bị (Máy)", "Doanh số dự kiến (VNĐ)", "Tiến độ thực hiện", "Ghi chú"]
+    }
+  ]
+}

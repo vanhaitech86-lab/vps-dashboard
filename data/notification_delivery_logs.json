@@ -1,0 +1,99 @@
+[
+  {
+    "id": "deliv_1791087784716_gg3a",
+    "timestamp": "2026-10-04T04:23:04.716Z",
+    "formattedTime": "11:23:04 4/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "ceo@vpsgroup.vn",
+    "subject": "🔔 [TEST] Thử Nghiệm Kết Nối Email Báo Cáo VPS Group",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3a75aaccca7sm2697499a91.4 - gsmtp"
+  },
+  {
+    "id": "deliv_1791087784598_2vh4",
+    "timestamp": "2026-10-04T04:23:04.598Z",
+    "formattedTime": "11:23:04 4/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "ceo@vpsgroup.vn",
+    "subject": "🔔 [TEST] Thử Nghiệm Kết Nối Email Báo Cáo VPS Group",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3a7ad87874esm1657793a91.0 - gsmtp"
+  },
+  {
+    "id": "deliv_1791087721218_a9t0",
+    "timestamp": "2026-10-04T04:22:01.219Z",
+    "formattedTime": "11:22:01 4/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0988739896",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0988739896. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 THỬ NGHIỆM KẾT NỐI ZALO VPS GROUP\n━━━━━━━━━━━━━━━━━━━━\nHệ thống thông báo điều hành VPS Dashboard đã kết nối thành công tới Zalo của bạn! Bạn sẽ nhận được bá"
+  },
+  {
+    "id": "deliv_1791085081671_btuv",
+    "timestamp": "2026-10-04T03:38:01.672Z",
+    "formattedTime": "10:38:01 4/10/2026",
+    "channel": "EMAIL",
+    "status": "SPOOLED_READY",
+    "recipient": "ceo@vpsgroup.vn",
+    "subject": "🔔 [TEST] Thử Nghiệm Kết Nối Email Báo Cáo VPS Group",
+    "summary": "Đã tạo nội dung Email hoàn chỉnh. Sẵn sàng truyền tin ngay khi nhập Mật khẩu ứng dụng SMTP/Gmail.",
+    "contentPreview": "Hệ thống thông báo điều hành VPS đã kết nối thành công tới Email của bạn!"
+  },
+  {
+    "id": "deliv_1791085069332_v2kg",
+    "timestamp": "2026-10-04T03:37:49.340Z",
+    "formattedTime": "10:37:49 4/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0988739896",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0988739896. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 THỬ NGHIỆM KẾT NỐI ZALO VPS GROUP\n━━━━━━━━━━━━━━━━━━━━\nHệ thống thông báo điều hành VPS Dashboard đã kết nối thành công tới Zalo của bạn! Bạn sẽ nhận được bá"
+  },
+  {
+    "id": "deliv_1791083683103_1vf0",
+    "timestamp": "2026-10-04T03:14:43.103Z",
+    "formattedTime": "10:14:43 4/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0988739896",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0988739896. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 [VPS Group] ✅ 6/6 Đơn Vị Đã Hoàn Thành Báo Cáo Tuần (11h Thứ 2)\n━━━━━━━━━━━━━━━━━━━━\n📊 [VPS DASHBOARD] BÁO CÁO TIẾN ĐỘ GOOGLE SHEETS 11H THỨ 2\n⏰ Giờ quét: 1"
+  },
+  {
+    "id": "deliv_1791083683100_pekn",
+    "timestamp": "2026-10-04T03:14:43.100Z",
+    "formattedTime": "10:14:43 4/10/2026",
+    "channel": "EMAIL",
+    "status": "SPOOLED_READY",
+    "recipient": "ceo@vpsgroup.vn",
+    "subject": "[VPS Group] ✅ 6/6 Đơn Vị Đã Hoàn Thành Báo Cáo Tuần (11h Thứ 2)",
+    "summary": "Đã tạo nội dung Email hoàn chỉnh. Sẵn sàng truyền tin ngay khi nhập Mật khẩu ứng dụng SMTP/Gmail.",
+    "contentPreview": "Báo cáo tình hình nhập liệu 11h Thứ 2. Đã hoàn thành: 6/6. Xem chi tiết tại http://localhost:3000"
+  },
+  {
+    "id": "deliv_1791083655339_0dgg",
+    "timestamp": "2026-10-04T03:14:15.339Z",
+    "formattedTime": "10:14:15 4/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0988739896",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0988739896. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 THỬ NGHIỆM KẾT NỐI ZALO VPS GROUP\n━━━━━━━━━━━━━━━━━━━━\nHệ thống thông báo điều hành VPS Dashboard đã kết nối thành công tới Zalo của bạn! Bạn sẽ nhận được bá"
+  },
+  {
+    "id": "deliv_1791083655308_r2pq",
+    "timestamp": "2026-10-04T03:14:15.309Z",
+    "formattedTime": "10:14:15 4/10/2026",
+    "channel": "EMAIL",
+    "status": "SPOOLED_READY",
+    "recipient": "ceo@vpsgroup.vn",
+    "subject": "🔔 [TEST] Thử Nghiệm Kết Nối Email Báo Cáo VPS Group",
+    "summary": "Đã tạo nội dung Email hoàn chỉnh. Sẵn sàng truyền tin ngay khi nhập Mật khẩu ứng dụng SMTP/Gmail.",
+    "contentPreview": "Hệ thống thông báo điều hành VPS đã kết nối thành công tới Email của bạn!"
+  }
+]

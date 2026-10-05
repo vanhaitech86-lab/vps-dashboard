@@ -139,6 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
             window.FilterManager.init();
             window.FilterManager.updateCompanyFilterVisibility(user);
             
+            const isCeoOrAdmin = (user.name === 'ADMIN' || (user.id && user.id.toUpperCase() === 'ADMIN')) || (window.AuthService && window.AuthService.canViewAll());
+
             // Show Admin link only for ADMIN user
             const adminNav = document.getElementById('nav-admin');
             if (adminNav) {
@@ -147,6 +149,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     adminNav.classList.add('hidden');
                 }
+            }
+
+            // RBAC: Chỉ CEO và ADMIN mới được xem "13. Kết Quả KD" và "14. Kế Hoạch Dòng Tiền"
+            const kqkdNav = document.getElementById('nav-kqkd') || document.querySelector('.sidebar-nav .nav-item[data-target="kqkd"]');
+            if (kqkdNav) {
+                if (isCeoOrAdmin) {
+                    kqkdNav.classList.remove('hidden');
+                } else {
+                    kqkdNav.classList.add('hidden');
+                }
+            }
+
+            const cashflowNav = document.getElementById('nav-cashflow') || document.querySelector('.sidebar-nav .nav-item[data-target="cashflow"]');
+            if (cashflowNav) {
+                if (isCeoOrAdmin) {
+                    cashflowNav.classList.remove('hidden');
+                } else {
+                    cashflowNav.classList.add('hidden');
+                }
+            }
+
+            // RBAC: Chỉ CEO và ADMIN mới được xem "15. TÀI SẢN"
+            const assetsNav = document.getElementById('nav-assets') || document.querySelector('.sidebar-nav .nav-item[data-target="assets"]');
+            if (assetsNav) {
+                if (isCeoOrAdmin) {
+                    assetsNav.classList.remove('hidden');
+                } else {
+                    assetsNav.classList.add('hidden');
+                }
+            }
+
+            // Show Report Monitor link
+            const monNav = document.getElementById('nav-report-monitor');
+            if (monNav) {
+                monNav.classList.remove('hidden');
             }
             
             // Initialize Dashboard Modules
@@ -170,6 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if(window.BrandModule) window.BrandModule.init();
             if(window.KqkdModule) window.KqkdModule.init();
             if(window.CashflowModule) window.CashflowModule.init();
+            if(window.AssetsValuationModule) window.AssetsValuationModule.init();
+            
+            // Refresh Notification Status
+            if(window.NotificationManager) window.NotificationManager.fetchStatus();
             
             // Trigger CRM API Backend Test
             if(window.CrmConnector) window.CrmConnector.fetchDashboardData(new Date().getMonth() + 1, user.company);
@@ -286,6 +327,23 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         showView(viewId) {
+            // RBAC Guard: Báo cáo Kết Quả KD, Kế Hoạch Dòng Tiền & Tài Sản CHỈ dành riêng cho CEO và ADMIN
+            if (viewId === 'kqkd' || viewId === 'cashflow' || viewId === 'assets') {
+                const user = window.AuthService ? window.AuthService.getCurrentUser() : null;
+                const isCeoOrAdmin = user && (
+                    (user.name === 'ADMIN' || (user.id && user.id.toUpperCase() === 'ADMIN')) ||
+                    (window.AuthService && window.AuthService.canViewAll())
+                );
+                if (!isCeoOrAdmin) {
+                    alert('🔒 BẢO MẬT HỆ THỐNG: Báo cáo Kết quả Kinh doanh, Kế hoạch Dòng tiền và Xác định Giá trị Tài sản chỉ dành riêng cho Chủ tịch/CEO và Quản trị viên (ADMIN). Đơn vị thành viên không được phép truy cập.');
+                    viewId = 'overview';
+                    document.querySelectorAll('.sidebar-nav .nav-item').forEach(nav => {
+                        if (nav.dataset.target === 'overview') nav.classList.add('active');
+                        else nav.classList.remove('active');
+                    });
+                }
+            }
+
             // Update title
             const titles = {
                 'overview': 'DASHBOARD',
@@ -305,6 +363,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 'brand': '12. Marketing',
                 'kqkd': '13. Báo Cáo Kết Quả Kinh Doanh',
                 'cashflow': '14. Báo Cáo Kế Hoạch Dòng Tiền',
+                'assets': '15. Báo Cáo Xác Định Giá Trị Tài Sản Tập Đoàn',
+                'report-monitor': '16. Lịch & Giám Sát Báo Cáo',
                 'admin': 'Quản trị Hệ thống'
             };
             document.getElementById('page-title').textContent = titles[viewId] || 'Dashboard';
@@ -354,6 +414,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (viewId === 'cashflow' && window.CashflowModule) {
                 window.CashflowModule.render();
             }
+            if (viewId === 'assets' && window.AssetsValuationModule) {
+                window.AssetsValuationModule.render();
+            }
             if (viewId === 'training' && window.TrainingModule) {
                 window.TrainingModule.render();
             }
@@ -362,6 +425,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (viewId === 'iso' && window.IsoModule) {
                 window.IsoModule.renderAll();
+            }
+            if (viewId === 'report-monitor' && window.NotificationManager) {
+                window.NotificationManager.renderAll();
+                window.NotificationManager.fetchStatus();
             }
             if (window.FilterManager) {
                 window.FilterManager.triggerFilterChange();

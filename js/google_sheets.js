@@ -13,7 +13,7 @@ const COMPANY_SHEETS = {
 };
 
 const SHEET_NAMES = [
-    'Doanh thu', 'Công nợ', 'Khách hàng', 'Tồn kho', 'Nhân sự', 'Sản Phẩm', 'Chi Phí', 'ISO',
+    'Công nợ', 'Khách hàng', 'Tồn kho', 'Nhân sự', 'Sản Phẩm', 'Chi Phí', 'ISO',
     'Đào tạo', 'Dịch vụ tận tâm', 'Văn hóa doanh nghiệp', 'Thương hiệu', 'Kết quả kinh doanh'
 ];
 
@@ -291,12 +291,12 @@ function parseRevenue(csv, cId) {
     return result;
 }
 
-// 1b. DOANH SỐ VÀ LÃI GỘP 7 PHÒNG BAN
+// 1b. DOANH SỐ VÀ LÃI GỘP 8 PHÒNG BAN
 function parse7Departments(csv, cId) {
     if (!csv || csv.length < 2) return [];
     const deptNumMap = {
         '1': 'phan_phoi', '2': 'thue_may', '3': 'dich_vu',
-        '4': 'online', '5': 'du_an', '6': 'kdth', '7': 'khac'
+        '4': 'online', '5': 'du_an', '6': 'kdth', '7': 'ban_le', '8': 'khac'
     };
     let currDeptId = null;
     const subItems = [];
@@ -308,6 +308,9 @@ function parse7Departments(csv, cId) {
         if (!name || name.toUpperCase().includes('PHÒNG BAN') || name.toUpperCase().includes('TỔNG CỘNG')) continue;
         if (deptNumMap[stt]) {
             currDeptId = deptNumMap[stt];
+            if (stt === '7' && (name.toLowerCase().includes('khác') || name.toLowerCase().includes('khac'))) {
+                currDeptId = 'khac';
+            }
             continue;
         }
         if (currDeptId && (name.startsWith('-') || name.startsWith('[') || !stt)) {
@@ -1224,36 +1227,49 @@ window.GoogleSheetsService = {
             companyIds.forEach((cId, ci) => {
                 const compName = COMPANY_SHEETS[cId].name;
                 const [sheetList, dept7Csv] = allResults[ci];
-                const [revCsv, debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv, trainingCsv, serviceCsv, cultureCsv, brandCsv] = sheetList;
+                const [debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv, trainingCsv, serviceCsv, cultureCsv, brandCsv] = sheetList;
 
-                // 0. BÁO CÁO 7 PHÒNG BAN
+                // 0. BÁO CÁO 8 PHÒNG BAN (DOANH SỐ VÀ LÃI GỘP) - NGUỒN CHUẨN THỰC TẾ
                 const comp7Items = parse7Departments(dept7Csv, cId);
                 if (comp7Items && comp7Items.length > 0) {
                     liveDept7SubItems.push(...comp7Items);
                 }
 
-                // 1. DOANH THU
-                const revByM = parseRevenue(revCsv, cId);
-                revenueByMonth[cId] = revByM;
-                const months = Object.keys(revByM).sort();
-                const latestM = months[months.length - 1];
-                if (latestM && revByM[latestM]) {
-                    const r = revByM[latestM];
-                    // Chuyển đổi sang TỶ VNĐ cho charts
-                    const actualTy = r.actual > 1e6 ? r.actual / 1e9 : r.actual;
-                    const planTy   = r.plan > 1e6 ? r.plan / 1e9 : r.plan;
-                    revenueByCompany[cId] = {
-                        actual: parseFloat(actualTy.toFixed(3)),
-                        plan:   parseFloat(planTy.toFixed(3)),
-                        actualRaw: r.actual,
-                        planRaw:   r.plan,
-                        lg_pct:    r.lg_pct,
-                        cp:        r.cp,
-                        lntt:      r.lntt
-                    };
-                    totalRevVND += r.actual;
-                    months.forEach(m => availableMonths.add(m));
+                // 1. TỔNG HỢP DOANH SỐ VÀ LÃI GỘP CÔNG TY TỪ 8 PHÒNG BAN (ĐÃ BỎ SHEET DOANH THU)
+                let compActualTrieu = 0, compPlanTrieu = 0, compLgActualTrieu = 0, compLgPlanTrieu = 0;
+                if (comp7Items && comp7Items.length > 0) {
+                    comp7Items.forEach(item => {
+                        compActualTrieu   += (item.m8_ds || 0);
+                        compPlanTrieu     += (item.plan_m_ds || 0);
+                        compLgActualTrieu += (item.m8_lg || 0);
+                        compLgPlanTrieu   += (item.plan_m_lg || 0);
+                    });
                 }
+                const actualTy = compActualTrieu / 1000;
+                const planTy   = compPlanTrieu / 1000;
+                const lgPct    = compActualTrieu > 0 ? (compLgActualTrieu / compActualTrieu * 100) : 0;
+
+                revenueByCompany[cId] = {
+                    actual: parseFloat(actualTy.toFixed(3)),
+                    plan:   parseFloat(planTy.toFixed(3)),
+                    actualRaw: compActualTrieu * 1e6,
+                    planRaw:   compPlanTrieu * 1e6,
+                    lg_pct:    parseFloat(lgPct.toFixed(1)),
+                    cp:        0,
+                    lntt:      0
+                };
+                totalRevVND += compActualTrieu * 1e6;
+                revenueByMonth[cId] = {
+                    '08/2026': {
+                        plan: compPlanTrieu * 1e6,
+                        actual: compActualTrieu * 1e6,
+                        ttlg: compLgActualTrieu * 1e6,
+                        lg_pct: parseFloat(lgPct.toFixed(1)),
+                        cp: 0,
+                        lntt: 0
+                    }
+                };
+                availableMonths.add('08/2026');
 
                 // 2. CÔNG NỢ
                 const debtByM = parseDebt(debtCsv, cId);
