@@ -32,6 +32,7 @@ window.OverviewModule = {
         try { this.buildMatrix(d); } catch (e) { console.error('[Overview] Error in buildMatrix:', e); }
         try { this.renderCharts(d); } catch (e) { console.error('[Overview] Error in renderCharts:', e); }
         try { this.renderYoYChart(d); } catch (e) { console.error('[Overview] Error in renderYoYChart:', e); }
+        try { if (window.SliceMatrixModule) window.SliceMatrixModule.render(); } catch (e) {}
     },
 
     // ======= 1. Update 6 KPI Summary Cards =======
@@ -118,14 +119,39 @@ window.OverviewModule = {
             profitVal = allRev.actual_ttlg || allRev.ttlg || 0;
             profitPct = allRev.actual_lg_pct || allRev.lg_pct || 0;
         }
-        const revPct = revPlan > 0 ? ((revActual / revPlan) * 100).toFixed(1) : 0;
-        this.setEl('sc-rev-value', `${this.fmtNum(revActual)} Tr`);
-        this.setEl('sc-rev-sub', `KH: ${this.fmtNum(revPlan)} Tr | Đạt ${revPct}%`);
+        // --- Revenue & Profit Period Scaling ---
+        const period = window.FilterManager ? window.FilterManager.currentPeriod : 'month';
+        let periodMultiplier = 1;
+        let periodLabel = 'Tháng';
+        if (period === 'day') {
+            periodMultiplier = 1 / 26;
+            periodLabel = 'Ngày (BQ)';
+        } else if (period === 'week') {
+            periodMultiplier = 1 / 4;
+            periodLabel = 'Tuần (BQ)';
+        } else if (period === 'year') {
+            periodMultiplier = 12;
+            periodLabel = 'Cả năm';
+        }
+
+        const displayRevActual = revActual * periodMultiplier;
+        const displayRevPlan = revPlan * periodMultiplier;
+        const displayProfitVal = profitVal * periodMultiplier;
+
+        const revLabelEl = document.querySelector('.kpi-revenue .sc-kpi-label');
+        if (revLabelEl) revLabelEl.textContent = `2. Doanh Số (${periodLabel})`;
+
+        const profitLabelEl = document.querySelector('.kpi-profit .sc-kpi-label');
+        if (profitLabelEl) profitLabelEl.textContent = `3. Lãi Gộp (${periodLabel})`;
+
+        const revPct = displayRevPlan > 0 ? ((displayRevActual / displayRevPlan) * 100).toFixed(1) : 0;
+        this.setEl('sc-rev-value', `${this.fmtNum(displayRevActual)} Tr`);
+        this.setEl('sc-rev-sub', `KH ${periodLabel}: ${this.fmtNum(displayRevPlan)} Tr | Đạt ${revPct}%`);
         this.setBadge('sc-rev-badge', revPct, '%');
         this.setBar('sc-rev-bar', Math.min(revPct, 100), '#10b981');
 
         // --- Profit ---
-        this.setEl('sc-profit-value', `${this.fmtNum(profitVal)} Tr`);
+        this.setEl('sc-profit-value', `${this.fmtNum(displayProfitVal)} Tr`);
         this.setEl('sc-profit-sub', `Tỷ lệ LG: ${profitPct}%`);
         this.setBadge('sc-profit-badge', profitPct > 15 ? 85 : profitPct > 10 ? 60 : 30, '%');
         this.setBar('sc-profit-bar', Math.min(profitPct * 4, 100), '#8b5cf6');

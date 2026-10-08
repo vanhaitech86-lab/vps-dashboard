@@ -103,7 +103,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "cp": 1250000000.0,
         "lntt": -1250000000.0
       }
-    }
+    },
+    "_CONSOLIDATED": {}
   },
   "revenue_by_company": {
     "THH": {
@@ -165,6 +166,16 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "lg_pct": 0.0,
       "cp": 1250000000.0,
       "lntt": -1250000000.0
+    },
+    "_CONSOLIDATED": {
+      "actual": 0,
+      "plan": 0,
+      "actualRaw": 0,
+      "planRaw": 0,
+      "ttlg": 0,
+      "lg_pct": 0,
+      "cp": 0,
+      "lntt": 0
     }
   },
   "plan2026": {
@@ -265,6 +276,20 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "actual_cp": 1250,
       "lntt": -1250,
       "actual_lntt": -1250
+    },
+    "_CONSOLIDATED": {
+      "ds": 0,
+      "actual": 0,
+      "ttlg": 0,
+      "actual_ttlg": 0,
+      "lg_pct": 0.0,
+      "actual_lg_pct": 0.0,
+      "cp_lg_pct": 60.0,
+      "actual_cp_lg_pct": 0.0,
+      "cp": 0,
+      "actual_cp": 0,
+      "lntt": 0,
+      "actual_lntt": 0
     }
   },
   "debt_by_company": {
@@ -287,12 +312,12 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "rawBad": 10933092.0
     },
     "XemSon": {
-      "current": 5.72,
-      "overdue": 0.69,
+      "current": 11.51,
+      "overdue": 0.97,
       "bad": 0.0,
-      "total": 6.41,
-      "rawCurrent": 5722750831.0,
-      "rawOverdue": 687812250.0,
+      "total": 12.48,
+      "rawCurrent": 11508057117.0,
+      "rawOverdue": 972242311.0,
       "rawBad": 0.0
     },
     "VPSM": {
@@ -321,6 +346,15 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "rawCurrent": 15756617033.0,
       "rawOverdue": 2029552658.0,
       "rawBad": 0.0
+    },
+    "_CONSOLIDATED": {
+      "current": 0.0,
+      "overdue": 0.0,
+      "bad": 0.0,
+      "total": 0.0,
+      "rawCurrent": 0.0,
+      "rawOverdue": 0.0,
+      "rawBad": 0.0
     }
   },
   "hr_by_company": {
@@ -330,13 +364,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "probation": 5,
       "totalEmployees": 51,
       "resigned": 1,
-      "newHires": 0,
+      "newHires": 5,
       "departments": [
         {
           "name": "Kinh doanh",
           "quota": 14,
           "official": 14,
-          "newHires": 0,
+          "newHires": 5,
           "resigned": 1,
           "probation": 0,
           "vacancy": 0
@@ -724,6 +758,21 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "B": 8,
         "C": 3,
         "D": 1
+      }
+    },
+    "_CONSOLIDATED": {
+      "quota": 0,
+      "official": 0,
+      "probation": 0,
+      "totalEmployees": 0,
+      "resigned": 0,
+      "newHires": 0,
+      "departments": [],
+      "kpi": {
+        "A": 1,
+        "B": 1,
+        "C": 0,
+        "D": 0
       }
     }
   },
@@ -1166,6 +1215,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "value": 12287401.0
         }
       ]
+    },
+    "_CONSOLIDATED": {
+      "total": 0.0,
+      "total_vnd": 0.0,
+      "totalValue": 0.0,
+      "totalItems": 25,
+      "items": []
     }
   },
   "customers_matrix": {
@@ -1176,8 +1232,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 103
         },
         "ke_hoach": {
-          "may": 0,
-          "kh": 0
+          "may": 5,
+          "kh": 5
         },
         "tang": {
           "may": 8,
@@ -1973,6 +2029,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         }
       }
     },
+    "_CONSOLIDATED": {},
     "all": {
       "thue_may": {
         "dau": {
@@ -2132,6 +2189,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "VPVPS": {
       "total_kh": 612,
       "total_may": 640
+    },
+    "_CONSOLIDATED": {
+      "total_kh": 0,
+      "total_may": 0
     }
   },
   "dept_7_sub_items": [
@@ -3016,7 +3077,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "plan_year_ds": 36000.0,
         "plan_year_lg": 4320.0
       }
-    ]
+    ],
+    "_CONSOLIDATED": []
   },
   "products_raw": [
     [
@@ -3153,7 +3215,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       {
         "item": "Chi phí biến đổi",
         "plan": 0.0,
-        "actual": 723750000.0,
+        "actual": 577750000.0,
         "rate": 0.0
       },
       {
@@ -3183,7 +3245,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       {
         "item": "chi phí khác",
         "plan": 0.0,
-        "actual": 667220000.0,
+        "actual": 521220000.0,
         "rate": 0.0
       },
       {
@@ -3538,7 +3600,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "actual": 150000000.0,
         "rate": 75.0
       }
-    ]
+    ],
+    "_CONSOLIDATED": []
   },
   "expense_structured": {
     "Tân Hồng Hà": [
@@ -3626,11 +3689,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "II",
         "name": "Chi phí biến đổi",
         "plan": 0.0,
-        "actual": 723750000.0,
+        "actual": 577750000.0,
         "depts": {
-          "DVKT": 349160000.0,
-          "KD_BB": 250560000.0,
-          "KD_BL_TH": 88930000.0,
+          "DVKT": 229160000.0,
+          "KD_BB": 237560000.0,
+          "KD_BL_TH": 75930000.0,
           "KD_DA": 35100000.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
@@ -3706,11 +3769,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "5",
         "name": "chi phí khác",
         "plan": 0.0,
-        "actual": 667220000.0,
+        "actual": 521220000.0,
         "depts": {
-          "DVKT": 320200000.0,
-          "KD_BB": 233620000.0,
-          "KD_BL_TH": 83070000.0,
+          "DVKT": 200200000.0,
+          "KD_BB": 220620000.0,
+          "KD_BL_TH": 70070000.0,
           "KD_DA": 30330000.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
@@ -4640,7 +4703,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "BP_Khac": 20000000.0
         }
       }
-    ]
+    ],
+    "_CONSOLIDATED": []
   },
   "iso_raw": [
     [

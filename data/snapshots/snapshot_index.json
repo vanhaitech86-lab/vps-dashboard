@@ -1,0 +1,18 @@
+[
+  {
+    "id": "2026-10-08_16-31-57",
+    "filename": "snapshot_2026-10-08_16-31-57.json",
+    "scannedAt": "2026-10-08T16:31:57.708232",
+    "formattedTime": "16:31:57 08/10/2026",
+    "summary": "Quét trực tiếp 6 đơn vị (THH, Viet, XemSon, VPSM, ITSS, VPVPS) + P&L + Cashflow",
+    "fileSizeBytes": 424414
+  },
+  {
+    "id": "2026-10-08_16-01-23",
+    "filename": "snapshot_2026-10-08_16-01-23.json",
+    "scannedAt": "2026-10-08T16:01:23.000000",
+    "formattedTime": "16:01:23 08/10/2026",
+    "summary": "Bản quét đồng bộ đầu giờ chiều (6 đơn vị + Hợp nhất)",
+    "fileSizeBytes": 424414
+  }
+]

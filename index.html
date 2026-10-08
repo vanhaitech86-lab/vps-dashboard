@@ -268,10 +268,20 @@
                 
                 <!-- Overview View -->
                 <section id="view-overview" class="view active">
-                    <div class="welcome-banner">
+                    <div class="welcome-banner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
                         <div class="welcome-box">
                             <h2 id="welcome-text">CEO</h2>
                             <p>Bảng Điều Hành Tổng Quan — Đo Lường Hiệu Suất Các Đơn Vị</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" onclick="window.ReconciliationModule.openModal()" class="btn" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 700; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 6px; cursor: pointer;">
+                                <i data-lucide="archive" style="width: 15px; height: 15px;"></i>
+                                <span>Lịch Sử & Đối Chiếu Dữ Liệu</span>
+                            </button>
+                            <button type="button" onclick="window.openTemplateModal()" class="btn" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); font-weight: 700; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 6px; cursor: pointer;">
+                                <i data-lucide="file-spreadsheet" style="width: 15px; height: 15px;"></i>
+                                <span>Mẫu File Báo Cáo</span>
+                            </button>
                         </div>
                     </div>
                     
@@ -352,6 +362,9 @@
                             <p class="sc-kpi-sub" id="sc-iso-sub">QT: — | QĐ: —</p>
                         </div>
                     </div>
+
+                    <!-- BẢNG MẶT CẮT ĐA CHIỀU: NGÀY - TUẦN - THÁNG (SHOW RA THEO YÊU CẦU LÃNH ĐẠO) -->
+                    <div id="slice-matrix-container"></div>
 
                     <!-- Scorecard Matrix Table -->
                     <div class="sc-matrix-wrap">
@@ -4070,6 +4083,8 @@
     <script src="js/notifications.js?v=1789960000"></script>
     <script src="js/assets.js?v=1789970000"></script>
     <script src="js/app.js?v=1789720000"></script>
+    <script src="js/slice_matrix.js?v=1791262000"></script>
+    <script src="js/reconciliation.js?v=1791262000"></script>
     
     <script>
         lucide.createIcons();
@@ -4383,6 +4398,10 @@
             <div style="padding: 16px 24px; border-top: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; background: #0f172a;">
                 <span style="font-size: 0.8rem; color: #64748b;">Trọn gói bao gồm 7 file Excel chuẩn hóa + File hướng dẫn chi tiết</span>
                 <div style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button" onclick="window.closeTemplateModal(); window.ReconciliationModule.openModal();" style="padding: 8px 16px; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i data-lucide="archive" style="width: 15px; height: 15px;"></i>
+                        <span>Đối Chiếu Dữ Liệu Các Đợt Nhập</span>
+                    </button>
                     <button onclick="window.closeTemplateModal()" style="padding: 8px 16px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer;">Đóng</button>
                     <a href="Bo_Bieu_Mau_Bao_Cao_VPS_Gui_Don_Vi.zip" download="Bo_Bieu_Mau_Bao_Cao_VPS_Gui_Don_Vi.zip" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #047857; color: #ffffff; border-radius: 6px; font-size: 0.82rem; font-weight: 700; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                         <i data-lucide="package" style="width: 16px; height: 16px;"></i>
