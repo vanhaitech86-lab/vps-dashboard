@@ -81,7 +81,7 @@ window.SliceMatrixModule = {
                 cp_actual: 2190,
                 lntt_actual: 1858.5,
                 cash_in_w: [3100, 3650, 3920, 4431.7],
-                inventory: 26.37,
+                inventory: 25.71,
                 inventory_project: 0.0,
                 debt: 6.41,
                 debt_overdue: 0.69,

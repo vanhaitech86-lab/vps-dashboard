@@ -1,6 +1,6 @@
 {
-  "scannedAt": "2026-10-08T09:01:37.313Z",
-  "formattedTime": "16:01:37 8/10/2026",
+  "scannedAt": "2026-10-08T10:02:49.295Z",
+  "formattedTime": "17:02:49 8/10/2026",
   "totalUnits": 6,
   "completedCount": 6,
   "partialCount": 0,
@@ -112,7 +112,7 @@
         },
         "Công nợ": {
           "status": "ENTERED",
-          "rows": 6
+          "rows": 5
         },
         "Khách hàng": {
           "status": "ENTERED",
@@ -250,7 +250,7 @@
         },
         "Nhân sự": {
           "status": "ENTERED",
-          "rows": 8
+          "rows": 15
         },
         "Chi Phí": {
           "status": "ENTERED",

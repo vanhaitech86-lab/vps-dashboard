@@ -778,9 +778,9 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   },
   "inventory_by_company": {
     "THH": {
-      "total": 30.34,
-      "total_vnd": 30344000000,
-      "totalValue": 30344000000,
+      "total": 36.24,
+      "total_vnd": 36244029336.15,
+      "totalValue": 36244029336.15,
       "totalItems": 101,
       "items": [
         {
@@ -961,9 +961,9 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       ]
     },
     "Viet": {
-      "total": 4.58,
-      "total_vnd": 4578274809,
-      "totalValue": 4578274809,
+      "total": 6.49,
+      "total_vnd": 6490816563.0,
+      "totalValue": 6490816563.0,
       "totalItems": 5,
       "items": [
         {
@@ -1004,9 +1004,9 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       ]
     },
     "XemSon": {
-      "total": 26.36,
-      "total_vnd": 26365000000,
-      "totalValue": 26365000000,
+      "total": 25.71,
+      "total_vnd": 25706919334.0,
+      "totalValue": 25706919334.0,
       "totalItems": 4,
       "items": [
         {
@@ -1041,8 +1041,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     },
     "VPSM": {
       "total": 5.48,
-      "total_vnd": 5476237029,
-      "totalValue": 5476237029,
+      "total_vnd": 5476237029.0,
+      "totalValue": 5476237029.0,
       "totalItems": 16,
       "items": [
         {
@@ -1168,8 +1168,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     },
     "VPVPS": {
       "total": 2.91,
-      "total_vnd": 2908751184,
-      "totalValue": 2908751184,
+      "total_vnd": 2908751184.0,
+      "totalValue": 2908751184.0,
       "totalItems": 6,
       "items": [
         {

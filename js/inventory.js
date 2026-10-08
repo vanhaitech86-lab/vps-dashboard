@@ -91,7 +91,8 @@ window.InventoryModule = {
                 ]
             },
 
-            // 3. CÔNG TY XEM SƠN (XESCO) - Quét từ Google Sheet: Máy photo (11.51 Tỷ) + Máy in (4.235 Tỷ) = 15.75 Tỷ, Vật tư (8.55 Tỷ), Linh kiện (2.07 Tỷ)
+            // 3. CÔNG TY XEM SƠN (XESCO) - Quét chính xác từ Google Sheet Tháng 09/2026:
+            // Máy (8.203.911.509) + Option/phần mềm (7.635.520.976) + Consumable (7.813.935.067) + Part (2.053.551.782) = 25.706.919.334 VNĐ
             {
                 company: "XESCO",
                 companyName: "Xem Sơn",
@@ -103,13 +104,13 @@ window.InventoryModule = {
                 slowPartsQty: 410,
                 slowPartsVal: 1120000000,
                 avgMonthlyRev: 14000000000,
-                avgMonthlyInv: 26365000000,
-                weeklyStatus: { '1': 'Đã chốt', '2': 'Đã chốt', '3': 'Đã cập nhật', '4': 'Đang kiểm' },
+                avgMonthlyInv: 25706919334,
+                weeklyStatus: { '1': 'Đã chốt', '2': 'Đã chốt', '3': 'Đã cập nhật', '4': 'Đã chốt T9' },
                 rows: [
-                    { stt: "1", name: "Máy", vals: [null, null, null, null, 15746000000], qtys: [null, null, null, null, null] },
-                    { stt: "2", name: "Option/phần mềm", vals: [null, null, null, null, null], qtys: [null, null, null, null, null] },
-                    { stt: "3", name: "Consumable", vals: [null, null, null, null, 8553000000], qtys: [null, null, null, null, null] },
-                    { stt: "4", name: "Part", vals: [null, null, null, null, 2066000000], qtys: [null, null, null, null, null] },
+                    { stt: "1", name: "Máy", vals: [null, null, null, null, 8203911509], qtys: [null, null, null, null, null] },
+                    { stt: "2", name: "Option/phần mềm", vals: [null, null, null, null, 7635520976], qtys: [null, null, null, null, null] },
+                    { stt: "3", name: "Consumable", vals: [null, null, null, null, 7813935067], qtys: [null, null, null, null, null] },
+                    { stt: "4", name: "Part", vals: [null, null, null, null, 2053551782], qtys: [null, null, null, null, null] },
                     { stt: "5", name: "Dự án", vals: [null, null, null, null, null], qtys: [null, null, null, null, null], isProject: true },
                     { stt: "6", name: "Khác", vals: [null, null, null, null, null], qtys: [null, null, null, null, null] }
                 ]
