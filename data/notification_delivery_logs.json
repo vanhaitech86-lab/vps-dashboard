@@ -1,5 +1,47 @@
 [
   {
+    "id": "deliv_1791255492926_7hkm",
+    "timestamp": "2026-10-06T02:58:12.926Z",
+    "formattedTime": "09:58:12 6/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "🔔 [TEST] Thử Nghiệm Kết Nối Email Báo Cáo VPS Group",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3a851525bffsm2370888a91.0 - gsmtp"
+  },
+  {
+    "id": "deliv_1791255487290_mz15",
+    "timestamp": "2026-10-06T02:58:07.290Z",
+    "formattedTime": "09:58:07 6/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 THỬ NGHIỆM KẾT NỐI ZALO VPS GROUP\n━━━━━━━━━━━━━━━━━━━━\nHệ thống thông báo điều hành VPS Dashboard đã kết nối thành công tới Zalo của bạn! Bạn sẽ nhận được bá"
+  },
+  {
+    "id": "deliv_1791169737647_6hjt",
+    "timestamp": "2026-10-05T03:08:57.647Z",
+    "formattedTime": "10:08:57 5/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0988739896",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0988739896. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 [VPS Group] ✅ 6/6 Đơn Vị Đã Hoàn Thành Báo Cáo Tuần (11h Thứ 2)\n━━━━━━━━━━━━━━━━━━━━\n📊 [VPS DASHBOARD] BÁO CÁO TIẾN ĐỘ GOOGLE SHEETS 11H THỨ 2\n⏰ Giờ quét: 1"
+  },
+  {
+    "id": "deliv_1791169737512_s7ff",
+    "timestamp": "2026-10-05T03:08:57.513Z",
+    "formattedTime": "10:08:57 5/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "ceo@vpsgroup.vn",
+    "subject": "[VPS Group] ✅ 6/6 Đơn Vị Đã Hoàn Thành Báo Cáo Tuần (11h Thứ 2)",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3a78e4f3911sm8957785a91.15 - gsmtp"
+  },
+  {
     "id": "deliv_1791087784716_gg3a",
     "timestamp": "2026-10-04T04:23:04.716Z",
     "formattedTime": "11:23:04 4/10/2026",

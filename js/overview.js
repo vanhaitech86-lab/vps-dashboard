@@ -37,12 +37,12 @@ window.OverviewModule = {
     // ======= 1. Update 6 KPI Summary Cards =======
     updateKPIs(d) {
         const fallbackHR = {
-            'THH': { quota: 54, official: 47 },
-            'Viet': { quota: 43, official: 39 },
-            'XemSon': { quota: 98, official: 91 },
-            'VPSM': { quota: 15, official: 10 },
-            'ITSS': { quota: 15, official: 13 },
-            'VPVPS': { quota: 25, official: 19 }
+            'THH': { quota: 47, official: 42, probation: 5, totalEmployees: 47 },
+            'Viet': { quota: 39, official: 39, probation: 0, totalEmployees: 39 },
+            'XemSon': { quota: 91, official: 91, probation: 0, totalEmployees: 91 },
+            'VPSM': { quota: 10, official: 10, probation: 0, totalEmployees: 10 },
+            'ITSS': { quota: 5, official: 4, probation: 1, totalEmployees: 5 },
+            'VPVPS': { quota: 19, official: 18, probation: 1, totalEmployees: 19 }
         };
         const fallbackPlan = {
             'all': { ds: 43989, actual: 36949, ttlg: 8605, lg_pct: 23.3, cp_lg_pct: 79.5, cp: 6843, lntt: 1872 },
@@ -216,12 +216,12 @@ window.OverviewModule = {
         if (!body) return;
 
         const fallbackHR = {
-            'THH': { quota: 54, official: 47 },
-            'Viet': { quota: 43, official: 39 },
-            'XemSon': { quota: 98, official: 91 },
-            'VPSM': { quota: 15, official: 10 },
-            'ITSS': { quota: 15, official: 13 },
-            'VPVPS': { quota: 25, official: 19 }
+            'THH': { quota: 47, official: 42, probation: 5, totalEmployees: 47 },
+            'Viet': { quota: 39, official: 39, probation: 0, totalEmployees: 39 },
+            'XemSon': { quota: 91, official: 91, probation: 0, totalEmployees: 91 },
+            'VPSM': { quota: 10, official: 10, probation: 0, totalEmployees: 10 },
+            'ITSS': { quota: 5, official: 4, probation: 1, totalEmployees: 5 },
+            'VPVPS': { quota: 19, official: 18, probation: 1, totalEmployees: 19 }
         };
         const fallbackPlan = {
             'all': { ds: 43989, actual: 36949, ttlg: 8605, lg_pct: 23.3, cp_lg_pct: 79.5, cp: 6843, lntt: 1872 },
@@ -604,13 +604,13 @@ window.OverviewModule = {
         }
 
         const fallbackHR = {
-            'THH': { quota: 54, official: 47 },
-            'Viet': { quota: 43, official: 39 },
-            'XemSon': { quota: 98, official: 91 },
-            'VPSM': { quota: 15, official: 10 },
-            'ITSS': { quota: 15, official: 13 },
-            'VPVPS': { quota: 25, official: 19 },
-            'Văn phòng VPS': { quota: 25, official: 19 }
+            'THH': { quota: 47, official: 42, probation: 5, totalEmployees: 47 },
+            'Viet': { quota: 39, official: 39, probation: 0, totalEmployees: 39 },
+            'XemSon': { quota: 91, official: 91, probation: 0, totalEmployees: 91 },
+            'VPSM': { quota: 10, official: 10, probation: 0, totalEmployees: 10 },
+            'ITSS': { quota: 5, official: 4, probation: 1, totalEmployees: 5 },
+            'VPVPS': { quota: 19, official: 18, probation: 1, totalEmployees: 19 },
+            'Văn phòng VPS': { quota: 19, official: 18, probation: 1, totalEmployees: 19 }
         };
 
         const fallbackPlan = {

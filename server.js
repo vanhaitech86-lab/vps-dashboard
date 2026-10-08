@@ -90,7 +90,7 @@ const NotificationEngine = {
                     channels: {
                         inApp: true,
                         telegram: { enabled: false, botToken: '', ceoChatId: '' },
-                        zalo: { enabled: false, webhookUrl: 'http://localhost:5000/api/zalo-webhook', ceoPhone: '0988739896' },
+                        zalo: { enabled: false, webhookUrl: 'http://localhost:5000/api/zalo-webhook', ceoPhone: '0913301459' },
                         customWebhook: { enabled: false, url: '' }
                     }
                 },

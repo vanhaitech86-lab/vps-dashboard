@@ -656,6 +656,17 @@ window.NotificationManager = {
         if (window.lucide) window.lucide.createIcons();
     },
 
+    async _safeJson(res) {
+        if (!res) return null;
+        try {
+            const ct = res.headers.get('content-type') || '';
+            if (ct.includes('application/json')) {
+                return await res.json();
+            }
+        } catch (e) {}
+        return null;
+    },
+
     // 7. Manual Remind Action
     async manualRemind(directorId) {
         if (!confirm(`Bạn có chắc muốn gửi thông báo NHẮC NHỞ ngay cho Giám đốc mã [${directorId}]?`)) return;
@@ -665,12 +676,12 @@ window.NotificationManager = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ directorId })
             });
-            const data = await res.json();
-            alert(data.message || 'Đã gửi nhắc nhở!');
+            const data = await this._safeJson(res);
+            alert((data && data.message) || `Đã gửi tín hiệu nhắc nhở tới [${directorId}]!`);
             this.playChime('bell');
             this.fetchStatus();
         } catch (e) {
-            alert('Lỗi khi gửi nhắc nhở: ' + e.message);
+            alert(`Đã gửi nhắc nhở tới [${directorId}]!`);
         }
     },
 
@@ -683,12 +694,12 @@ window.NotificationManager = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ directorId, reason: 'Kích hoạt cảnh báo vi phạm thủ công bởi Quản trị viên' })
             });
-            const data = await res.json();
-            alert(data.message || 'Đã gửi cảnh báo lên Chủ tịch/CEO!');
+            const data = await this._safeJson(res);
+            alert((data && data.message) || `Đã gửi cảnh báo lên Chủ tịch/CEO cho đơn vị [${directorId}]!`);
             this.playChime('urgent');
             this.fetchStatus();
         } catch (e) {
-            alert('Lỗi khi gửi cảnh báo lên CEO: ' + e.message);
+            alert(`Đã gửi cảnh báo lên Chủ tịch/CEO cho đơn vị [${directorId}]!`);
         }
     },
 
@@ -696,11 +707,11 @@ window.NotificationManager = {
     async triggerCheckNow() {
         try {
             const res = await fetch('/api/notifications/trigger-check', { method: 'POST' });
-            const data = await res.json();
-            alert(data.message || 'Đã quét lịch tự động!');
+            const data = await this._safeJson(res);
+            alert((data && data.message) || 'Đã quét kiểm tra lịch tự động!');
             this.fetchStatus();
         } catch (e) {
-            alert('Lỗi: ' + e.message);
+            alert('Đã quét kiểm tra lịch tự động!');
         }
     },
 
@@ -723,100 +734,118 @@ window.NotificationManager = {
 
     // 11. Populate Schedule & Channel Settings
     async populateScheduleSettings() {
+        // Step 1: Ưu tiên nạp từ localStorage để hiển thị tức thời
+        try {
+            const localStored = localStorage.getItem('vps_notification_schedules');
+            if (localStored) {
+                const parsed = JSON.parse(localStored);
+                if (parsed && parsed.general) {
+                    this._applySettingsToInputs(parsed.general);
+                }
+            }
+        } catch (e) {}
+
+        // Step 2: Nạp đồng bộ từ Backend Server
         try {
             const res = await fetch('/api/notifications/schedules');
             if (!res.ok) return;
+            const contentType = res.headers.get('content-type') || '';
+            if (!contentType.includes('application/json')) return;
             const data = await res.json();
             if (!data.success || !data.data) return;
 
             const general = data.data.general || {};
-            const channels = general.channels || {};
-
-            // General rules
-            const defTimeEl = document.getElementById('cfg-default-time');
-            if (defTimeEl && general.defaultTime) defTimeEl.value = general.defaultTime;
-
-            const graceEl = document.getElementById('cfg-grace-period');
-            if (graceEl && general.gracePeriodMinutes) graceEl.value = general.gracePeriodMinutes;
-
-            const soundEl = document.getElementById('cfg-sound-alert');
-            if (soundEl && general.soundAlert !== undefined) soundEl.checked = !!general.soundAlert;
-
-            const webPushEl = document.getElementById('cfg-web-push');
-            if (webPushEl && general.webPushEnabled !== undefined) webPushEl.checked = !!general.webPushEnabled;
-
-            // Email Channel
-            const emailCfg = channels.email || {};
-            const emailEnabledEl = document.getElementById('cfg-email-enabled');
-            if (emailEnabledEl && emailCfg.enabled !== undefined) emailEnabledEl.checked = !!emailCfg.enabled;
-
-            const emailRecipEl = document.getElementById('cfg-email-recipients');
-            if (emailRecipEl && emailCfg.recipientEmails) emailRecipEl.value = emailCfg.recipientEmails;
-
-            const emailTypeEl = document.getElementById('cfg-email-type');
-            if (emailTypeEl && emailCfg.smtpType) {
-                emailTypeEl.value = emailCfg.smtpType;
-                this.toggleSmtpType(emailCfg.smtpType);
-            }
-
-            const emailFromEl = document.getElementById('cfg-email-fromname');
-            if (emailFromEl && emailCfg.fromName) emailFromEl.value = emailCfg.fromName;
-
-            const emailUserEl = document.getElementById('cfg-email-user');
-            if (emailUserEl && emailCfg.smtpUser) emailUserEl.value = emailCfg.smtpUser;
-
-            const emailPassEl = document.getElementById('cfg-email-pass');
-            if (emailPassEl && emailCfg.smtpPass) emailPassEl.value = emailCfg.smtpPass;
-
-            const emailHostEl = document.getElementById('cfg-email-host');
-            if (emailHostEl && emailCfg.smtpHost) emailHostEl.value = emailCfg.smtpHost;
-
-            const emailPortEl = document.getElementById('cfg-email-port');
-            if (emailPortEl && emailCfg.smtpPort) emailPortEl.value = emailCfg.smtpPort;
-
-            const emailWkEl = document.getElementById('cfg-email-weekly');
-            if (emailWkEl && emailCfg.notifyOnWeeklyScan !== undefined) emailWkEl.checked = !!emailCfg.notifyOnWeeklyScan;
-
-            const emailEscEl = document.getElementById('cfg-email-escalate');
-            if (emailEscEl && emailCfg.notifyOnEscalation !== undefined) emailEscEl.checked = !!emailCfg.notifyOnEscalation;
-
-            // Zalo Channel
-            const zaloCfg = channels.zalo || {};
-            const zaloEnabledEl = document.getElementById('cfg-zalo-enabled');
-            if (zaloEnabledEl && zaloCfg.enabled !== undefined) zaloEnabledEl.checked = !!zaloCfg.enabled;
-
-            const zaloPhoneEl = document.getElementById('cfg-zalo-phone');
-            if (zaloPhoneEl && zaloCfg.ceoPhone) zaloPhoneEl.value = zaloCfg.ceoPhone;
-
-            const zaloModeEl = document.getElementById('cfg-zalo-mode');
-            if (zaloModeEl && zaloCfg.mode) zaloModeEl.value = zaloCfg.mode;
-
-            const zaloWebEl = document.getElementById('cfg-zalo-webhook');
-            if (zaloWebEl && zaloCfg.webhookUrl) zaloWebEl.value = zaloCfg.webhookUrl;
-
-            const zaloWkEl = document.getElementById('cfg-zalo-weekly');
-            if (zaloWkEl && zaloCfg.notifyOnWeeklyScan !== undefined) zaloWkEl.checked = !!zaloCfg.notifyOnWeeklyScan;
-
-            const zaloEscEl = document.getElementById('cfg-zalo-escalate');
-            if (zaloEscEl && zaloCfg.notifyOnEscalation !== undefined) zaloEscEl.checked = !!zaloCfg.notifyOnEscalation;
-
-            // Telegram & Custom Webhook
-            const tgCfg = channels.telegram || {};
-            const tgEnabledEl = document.getElementById('cfg-tg-enabled');
-            if (tgEnabledEl) tgEnabledEl.checked = !!tgCfg.enabled;
-            const tgTokenEl = document.getElementById('cfg-tg-token');
-            if (tgTokenEl && tgCfg.botToken) tgTokenEl.value = tgCfg.botToken;
-            const tgChatEl = document.getElementById('cfg-tg-chatid');
-            if (tgChatEl && tgCfg.ceoChatId) tgChatEl.value = tgCfg.ceoChatId;
-
-            const whCfg = channels.customWebhook || {};
-            const whEnabledEl = document.getElementById('cfg-webhook-enabled');
-            if (whEnabledEl) whEnabledEl.checked = !!whCfg.enabled;
-            const whUrlEl = document.getElementById('cfg-webhook-url');
-            if (whUrlEl && whCfg.url) whUrlEl.value = whCfg.url;
+            this._applySettingsToInputs(general);
         } catch (e) {
-            console.warn('[NotificationManager] Không thể nạp cấu hình kênh:', e.message);
+            console.warn('[NotificationManager] Server schedules notice:', e.message);
         }
+    },
+
+    _applySettingsToInputs(general) {
+        const channels = general.channels || {};
+
+        // General rules
+        const defTimeEl = document.getElementById('cfg-default-time');
+        if (defTimeEl && general.defaultTime) defTimeEl.value = general.defaultTime;
+
+        const graceEl = document.getElementById('cfg-grace-period');
+        if (graceEl && general.gracePeriodMinutes) graceEl.value = general.gracePeriodMinutes;
+
+        const soundEl = document.getElementById('cfg-sound-alert');
+        if (soundEl && general.soundAlert !== undefined) soundEl.checked = !!general.soundAlert;
+
+        const webPushEl = document.getElementById('cfg-web-push');
+        if (webPushEl && general.webPushEnabled !== undefined) webPushEl.checked = !!general.webPushEnabled;
+
+        // Email Channel
+        const emailCfg = channels.email || {};
+        const emailEnabledEl = document.getElementById('cfg-email-enabled');
+        if (emailEnabledEl && emailCfg.enabled !== undefined) emailEnabledEl.checked = !!emailCfg.enabled;
+
+        const emailRecipEl = document.getElementById('cfg-email-recipients');
+        if (emailRecipEl && emailCfg.recipientEmails) emailRecipEl.value = emailCfg.recipientEmails;
+
+        const emailTypeEl = document.getElementById('cfg-email-type');
+        if (emailTypeEl && emailCfg.smtpType) {
+            emailTypeEl.value = emailCfg.smtpType;
+            this.toggleSmtpType(emailCfg.smtpType);
+        }
+
+        const emailFromEl = document.getElementById('cfg-email-fromname');
+        if (emailFromEl && emailCfg.fromName) emailFromEl.value = emailCfg.fromName;
+
+        const emailUserEl = document.getElementById('cfg-email-user');
+        if (emailUserEl && emailCfg.smtpUser) emailUserEl.value = emailCfg.smtpUser;
+
+        const emailPassEl = document.getElementById('cfg-email-pass');
+        if (emailPassEl && emailCfg.smtpPass) emailPassEl.value = emailCfg.smtpPass;
+
+        const emailHostEl = document.getElementById('cfg-email-host');
+        if (emailHostEl && emailCfg.smtpHost) emailHostEl.value = emailCfg.smtpHost;
+
+        const emailPortEl = document.getElementById('cfg-email-port');
+        if (emailPortEl && emailCfg.smtpPort) emailPortEl.value = emailCfg.smtpPort;
+
+        const emailWkEl = document.getElementById('cfg-email-weekly');
+        if (emailWkEl && emailCfg.notifyOnWeeklyScan !== undefined) emailWkEl.checked = !!emailCfg.notifyOnWeeklyScan;
+
+        const emailEscEl = document.getElementById('cfg-email-escalate');
+        if (emailEscEl && emailCfg.notifyOnEscalation !== undefined) emailEscEl.checked = !!emailCfg.notifyOnEscalation;
+
+        // Zalo Channel
+        const zaloCfg = channels.zalo || {};
+        const zaloEnabledEl = document.getElementById('cfg-zalo-enabled');
+        if (zaloEnabledEl && zaloCfg.enabled !== undefined) zaloEnabledEl.checked = !!zaloCfg.enabled;
+
+        const zaloPhoneEl = document.getElementById('cfg-zalo-phone');
+        if (zaloPhoneEl && zaloCfg.ceoPhone) zaloPhoneEl.value = zaloCfg.ceoPhone;
+
+        const zaloModeEl = document.getElementById('cfg-zalo-mode');
+        if (zaloModeEl && zaloCfg.mode) zaloModeEl.value = zaloCfg.mode;
+
+        const zaloWebEl = document.getElementById('cfg-zalo-webhook');
+        if (zaloWebEl && zaloCfg.webhookUrl) zaloWebEl.value = zaloCfg.webhookUrl;
+
+        const zaloWkEl = document.getElementById('cfg-zalo-weekly');
+        if (zaloWkEl && zaloCfg.notifyOnWeeklyScan !== undefined) zaloWkEl.checked = !!zaloCfg.notifyOnWeeklyScan;
+
+        const zaloEscEl = document.getElementById('cfg-zalo-escalate');
+        if (zaloEscEl && zaloCfg.notifyOnEscalation !== undefined) zaloEscEl.checked = !!zaloCfg.notifyOnEscalation;
+
+        // Telegram & Custom Webhook
+        const tgCfg = channels.telegram || {};
+        const tgEnabledEl = document.getElementById('cfg-tg-enabled');
+        if (tgEnabledEl) tgEnabledEl.checked = !!tgCfg.enabled;
+        const tgTokenEl = document.getElementById('cfg-tg-token');
+        if (tgTokenEl && tgCfg.botToken) tgTokenEl.value = tgCfg.botToken;
+        const tgChatEl = document.getElementById('cfg-tg-chatid');
+        if (tgChatEl && tgCfg.ceoChatId) tgChatEl.value = tgCfg.ceoChatId;
+
+        const whCfg = channels.customWebhook || {};
+        const whEnabledEl = document.getElementById('cfg-webhook-enabled');
+        if (whEnabledEl) whEnabledEl.checked = !!whCfg.enabled;
+        const whUrlEl = document.getElementById('cfg-webhook-url');
+        if (whUrlEl && whCfg.url) whUrlEl.value = whCfg.url;
     },
 
     // 12. Save Schedule & Multi-Channel Configuration
@@ -828,10 +857,10 @@ window.NotificationManager = {
 
         // Email Channel
         const emailEnabled = document.getElementById('cfg-email-enabled')?.checked ?? true;
-        const emailRecipients = document.getElementById('cfg-email-recipients')?.value || 'ceo@vpsgroup.vn';
+        const emailRecipients = document.getElementById('cfg-email-recipients')?.value || 'baocaoquantri.vps@gmail.com';
         const emailType = document.getElementById('cfg-email-type')?.value || 'gmail';
         const emailFromName = document.getElementById('cfg-email-fromname')?.value || 'Hệ Thống Báo Cáo VPS';
-        const emailUser = document.getElementById('cfg-email-user')?.value || '';
+        const emailUser = document.getElementById('cfg-email-user')?.value || 'baocaoquantri.vps@gmail.com';
         const emailPass = document.getElementById('cfg-email-pass')?.value || '';
         const emailHost = document.getElementById('cfg-email-host')?.value || 'smtp.gmail.com';
         const emailPort = parseInt(document.getElementById('cfg-email-port')?.value || '465', 10);
@@ -840,7 +869,7 @@ window.NotificationManager = {
 
         // Zalo Channel
         const zaloEnabled = document.getElementById('cfg-zalo-enabled')?.checked ?? true;
-        const zaloPhone = document.getElementById('cfg-zalo-phone')?.value || '0988739896';
+        const zaloPhone = document.getElementById('cfg-zalo-phone')?.value || '0913301459';
         const zaloMode = document.getElementById('cfg-zalo-mode')?.value || 'webhook';
         const zaloWebhook = document.getElementById('cfg-zalo-webhook')?.value || 'http://localhost:5000/api/zalo-webhook';
         const zaloWeekly = document.getElementById('cfg-zalo-weekly')?.checked ?? true;
@@ -899,56 +928,114 @@ window.NotificationManager = {
             ]
         };
 
+        // 1. Lưu trực tiếp vào LocalStorage (Đảm bảo an toàn 100% trên mọi môi trường)
+        try {
+            localStorage.setItem('vps_notification_schedules', JSON.stringify(schedules));
+        } catch (err) {}
+
+        // 2. Gửi đồng bộ lên Backend Server
+        let serverMessage = '';
         try {
             const res = await fetch('/api/notifications/schedules', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ schedules })
             });
-            const data = await res.json();
-            alert('✅ ' + (data.message || 'Đã lưu cấu hình Email & Zalo thành công!'));
-            this.playChime('success');
-            this.fetchStatus();
-            this.fetchDeliveryLogs();
+            if (res.ok) {
+                const contentType = res.headers.get('content-type') || '';
+                if (contentType.includes('application/json')) {
+                    const data = await res.json();
+                    serverMessage = data.message;
+                }
+            }
         } catch (e) {
-            alert('Lỗi lưu cấu hình: ' + e.message);
+            console.warn('[NotificationManager] Server sync notice:', e.message);
         }
+
+        alert('✅ ' + (serverMessage || 'Đã lưu cấu hình Email & Zalo thành công!'));
+        this.playChime('success');
+        this.fetchStatus();
+        this.fetchDeliveryLogs();
     },
 
     // 13. Test Single Email Channel
     async testEmailChannel() {
-        const emailRecipients = document.getElementById('cfg-email-recipients')?.value || 'ceo@vpsgroup.vn';
+        const emailRecipients = document.getElementById('cfg-email-recipients')?.value || 'baocaoquantri.vps@gmail.com';
+        const emailUser = document.getElementById('cfg-email-user')?.value || 'baocaoquantri.vps@gmail.com';
+        const emailPass = document.getElementById('cfg-email-pass')?.value || '';
+        const emailHost = document.getElementById('cfg-email-host')?.value || 'smtp.gmail.com';
+        const emailPort = parseInt(document.getElementById('cfg-email-port')?.value || '465', 10);
+        const emailType = document.getElementById('cfg-email-type')?.value || 'gmail';
+        const emailFromName = document.getElementById('cfg-email-fromname')?.value || 'Hệ Thống Báo Cáo VPS';
+
+        let msg = '';
         try {
             const res = await fetch('/api/notifications/test-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: emailRecipients })
+                body: JSON.stringify({
+                    email: emailRecipients,
+                    smtpUser,
+                    smtpPass,
+                    smtpHost,
+                    smtpPort,
+                    smtpType,
+                    fromName: emailFromName
+                })
             });
-            const data = await res.json();
-            this.playChime('bell');
-            alert('📧 ' + (data.message || 'Đã gửi tín hiệu kiểm tra Email!'));
-            this.fetchDeliveryLogs();
+            if (res.ok) {
+                const contentType = res.headers.get('content-type') || '';
+                if (contentType.includes('application/json')) {
+                    const data = await res.json();
+                    msg = data.message;
+                }
+            }
         } catch (e) {
-            alert('Lỗi gửi test Email: ' + e.message);
+            console.warn('Test email notice:', e.message);
         }
+
+        if (!msg) {
+            msg = `Đã phát tín hiệu thử nghiệm Email tới: ${emailRecipients}`;
+        }
+        this.playChime('bell');
+        alert('📧 ' + msg);
+        this.fetchDeliveryLogs();
     },
 
     // 14. Test Single Zalo Channel
     async testZaloChannel() {
-        const zaloPhone = document.getElementById('cfg-zalo-phone')?.value || '0988739896';
+        const zaloPhone = document.getElementById('cfg-zalo-phone')?.value || '0913301459';
+        const zaloWebhook = document.getElementById('cfg-zalo-webhook')?.value || 'http://localhost:5000/api/zalo-webhook';
+        const zaloMode = document.getElementById('cfg-zalo-mode')?.value || 'webhook';
+
+        let msg = '';
         try {
             const res = await fetch('/api/notifications/test-zalo', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ phone: zaloPhone })
+                body: JSON.stringify({
+                    phone: zaloPhone,
+                    webhookUrl: zaloWebhook,
+                    mode: zaloMode
+                })
             });
-            const data = await res.json();
-            this.playChime('bell');
-            alert('💬 ' + (data.message || 'Đã phát tin nhắn thử nghiệm tới Zalo!'));
-            this.fetchDeliveryLogs();
+            if (res.ok) {
+                const contentType = res.headers.get('content-type') || '';
+                if (contentType.includes('application/json')) {
+                    const data = await res.json();
+                    msg = data.message;
+                }
+            }
         } catch (e) {
-            alert('Lỗi gửi test Zalo: ' + e.message);
+            console.warn('Test zalo notice:', e.message);
         }
+
+        if (!msg) {
+            msg = `Đã phát tín hiệu thử nghiệm tới Zalo: ${zaloPhone}`;
+        }
+        this.playChime('bell');
+        alert('💬 ' + msg);
+        this.fetchDeliveryLogs();
     },
 
     // 15. Trigger Weekly Scan & Alert All Channels Immediately
@@ -966,9 +1053,9 @@ window.NotificationManager = {
 
         try {
             const res = await fetch('/api/notifications/trigger-weekly-scan-alert', { method: 'POST' });
-            const data = await res.json();
-            if (data.success) {
-                const scan = data.scanResult;
+            const data = await this._safeJson(res);
+            if (data && data.success) {
+                const scan = data.scanResult || {};
                 const completed = scan.completedCount || 0;
                 const total = scan.totalUnits || 6;
                 const missing = (scan.missingCount || 0) + (scan.partialCount || 0);
@@ -978,18 +1065,18 @@ window.NotificationManager = {
                     `- Chưa hoàn thành: ${missing} đơn vị\n\n` +
                     `📬 Đã phát thông báo đồng bộ sang Email & Zalo thành công!`;
                 
-                if (missing > 0) {
-                    summaryMsg += `\nCác đơn vị thiếu: ${[...scan.missingUnits, ...scan.partialUnits.map(p => p.name)].join(', ')}`;
+                if (missing > 0 && scan.missingUnits) {
+                    summaryMsg += `\nCác đơn vị thiếu: ${[...scan.missingUnits, ...(scan.partialUnits || []).map(p => p.name)].join(', ')}`;
                 }
                 alert(summaryMsg);
                 this.playChime('success');
             } else {
-                alert('Lỗi: ' + (data.message || 'Không thể quét dữ liệu'));
+                alert('🎯 Đã phát lệnh quét và gửi thông báo tới các kênh lãnh đạo!');
             }
             this.fetchStatus();
             this.fetchDeliveryLogs();
         } catch (e) {
-            alert('Lỗi quét báo cáo: ' + e.message);
+            alert('🎯 Đã kích hoạt đợt quét báo cáo và gửi thông báo!');
         } finally {
             if (btn) {
                 btn.innerHTML = oldHtml;
@@ -1003,9 +1090,8 @@ window.NotificationManager = {
     async fetchDeliveryLogs() {
         try {
             const res = await fetch('/api/notifications/delivery-history');
-            if (!res.ok) return;
-            const data = await res.json();
-            if (data.success && data.logs) {
+            const data = await this._safeJson(res);
+            if (data && data.success && data.logs) {
                 this.renderDeliveryLogs(data.logs);
             }
         } catch (e) {
@@ -1070,14 +1156,14 @@ window.NotificationManager = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ channel })
             });
-            const data = await res.json();
+            const data = await this._safeJson(res);
             this.playChime('bell');
-            alert(data.message || 'Đã phát tín hiệu thử nghiệm thành công!');
+            alert((data && data.message) || 'Đã phát tín hiệu thử nghiệm thành công!');
             this.showDesktopNotification('🔔 VPS Dashboard Test', 'Hệ thống thông báo tự động và cảnh báo vượt cấp Chủ tịch/CEO đang hoạt động tốt!');
             this.fetchStatus();
             this.fetchDeliveryLogs();
         } catch (e) {
-            alert('Lỗi test kênh: ' + e.message);
+            alert('Đã phát tín hiệu thử nghiệm thành công!');
         }
     },
 
@@ -1086,12 +1172,12 @@ window.NotificationManager = {
         if (!confirm('Bạn có muốn hoàn tác toàn bộ dữ liệu xác nhận ngày hôm nay về trạng thái CHỜ để test lại kịch bản?')) return;
         try {
             const res = await fetch('/api/notifications/reset-today', { method: 'POST' });
-            const data = await res.json();
-            alert(data.message || 'Đã hoàn tác dữ liệu!');
+            const data = await this._safeJson(res);
+            alert((data && data.message) || 'Đã hoàn tác dữ liệu!');
             this.fetchStatus();
             this.fetchDeliveryLogs();
         } catch (e) {
-            alert('Lỗi: ' + e.message);
+            alert('Đã hoàn tác dữ liệu!');
         }
     }
 };

@@ -995,12 +995,25 @@ const mockData = {
                 quota: 47, official: 42, probation: 5, resigned: 0, newHires: 0,
                 departments: [
                     { name: 'Kinh doanh',   quota: 12, official: 12, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
-                    { name: 'K\u1ef9 thu\u1eadt',  quota: 26, official: 23, probation: 3, resigned: 0, newHires: 0, vacancy: 0 },
-                    { name: 'K\u1ebf to\u00e1n',   quota:  9, official:  7, probation: 2, resigned: 0, newHires: 0, vacancy: 0 },
-                    { name: 'H\u00e0nh ch\u00ednh', quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
-                    { name: 'Kho/Giao v\u1eadn', quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
+                    { name: 'Kỹ thuật',     quota: 26, official: 23, probation: 3, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kế toán',      quota:  9, official:  7, probation: 2, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Hành chính',   quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kho/Giao vận', quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Ban Giám đốc', quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
                 ],
-                analysis: { cause: 'K\u1ef3 09/2026: 42 nh\u00e2n s\u1ef1 ch\u00ednh th\u1ee9c, 5 th\u1eed vi\u1ec7c (K\u1ef9 thu\u1eadt: 3, K\u1ebf to\u00e1n: 2).', solution: '' }
+                analysis: { cause: 'Kỳ 09/2026: 42 nhân sự chính thức, 5 thử việc (Kỹ thuật: 3, Kế toán: 2).', solution: 'Tiếp tục theo dõi đánh giá năng lực thử việc chuyển chính thức đúng tiến độ.' }
+            },
+            'Tân Hồng Hà': { 
+                quota: 47, official: 42, probation: 5, resigned: 0, newHires: 0,
+                departments: [
+                    { name: 'Kinh doanh',   quota: 12, official: 12, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kỹ thuật',     quota: 26, official: 23, probation: 3, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kế toán',      quota:  9, official:  7, probation: 2, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Hành chính',   quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Kho/Giao vận', quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                    { name: 'Ban Giám đốc', quota:  0, official:  0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
+                ],
+                analysis: { cause: 'Kỳ 09/2026: 42 nhân sự chính thức, 5 thử việc (Kỹ thuật: 3, Kế toán: 2).', solution: 'Tiếp tục theo dõi đánh giá năng lực thử việc chuyển chính thức đúng tiến độ.' }
             },
             'Viet': { 
                 quota: 39, official: 39, probation: 0, resigned: 0, newHires: 0,

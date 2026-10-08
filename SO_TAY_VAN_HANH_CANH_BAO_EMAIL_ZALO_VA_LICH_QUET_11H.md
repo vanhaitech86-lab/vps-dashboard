@@ -72,10 +72,10 @@ Hệ thống sử dụng thư viện **Nodemailer** chuẩn doanh nghiệp, cho 
 2. Cuộn xuống phần: **CẤU HÌNH TÍCH HỢP EMAIL & ZALO NHẬN BÁO CÁO (CHỦ TỊCH / CEO)**.
 3. Tại cột bên trái (**KÊNH THÔNG BÁO EMAIL**), điền các mục sau:
    * **Kích hoạt:** Đánh dấu tích `[✓]`.
-   * **Email Nhận Thông Báo:** Nhập email của bạn (ví dụ: `ceo@vpsgroup.vn`). *Có thể nhập nhiều email cách nhau bằng dấu phẩy nếu muốn gửi cho nhiều lãnh đạo cùng lúc.*
+   * **Email Nhận Thông Báo:** Nhập email của bạn (mặc định: `baocaoquantri.vps@gmail.com`). *Có thể nhập nhiều email cách nhau bằng dấu phẩy nếu muốn gửi cho nhiều lãnh đạo cùng lúc.*
    * **Loại SMTP:** Chọn `Gmail (Khuyên Dùng)`.
    * **Tên Người Gửi:** `Hệ Thống Báo Cáo VPS`.
-   * **Email Tài Khoản Gửi:** Nhập địa chỉ Gmail gửi tin (ví dụ: `alert.vpsgroup@gmail.com`).
+   * **Email Tài Khoản Gửi:** Nhập địa chỉ Gmail gửi tin (mặc định: `baocaoquantri.vps@gmail.com`).
    * **Mật Khẩu Ứng Dụng (App Pass):** Dán 16 ký tự Google vừa cấp ở Bước 2.1 vào đây.
    * **Tùy chọn:** Bật tích `Nhận Báo Cáo Quét Google Sheets 11h Thứ 2` và `Nhận Cảnh Báo Vi Phạm Quá Hạn`.
 4. Bấm nút **"Lưu Cấu Hình Email & Zalo"** (màu xanh dương).
@@ -83,7 +83,7 @@ Hệ thống sử dụng thư viện **Nodemailer** chuẩn doanh nghiệp, cho 
 ### Bước 2.3: Bấm Gửi Email Thử Nghiệm Ngay
 1. Bấm nút: **"✉️ Gửi Email Thử Nghiệm Ngay"**.
 2. Hệ thống sẽ kết nối qua SMTP và gửi 1 email kiểm tra vào hòm thư nhận của bạn.
-3. Mở hòm thư `ceo@vpsgroup.vn` để kiểm tra. Đồng thời, bảng **Nhật Ký Chuyển Phát** phía dưới sẽ cập nhật trạng thái `● ĐÃ GỬI THÀNH CÔNG`.
+3. Mở hòm thư `baocaoquantri.vps@gmail.com` để kiểm tra. Đồng thời, bảng **Nhật Ký Chuyển Phát** phía dưới sẽ cập nhật trạng thái `● ĐÃ GỬI THÀNH CÔNG`.
 
 ---
 
@@ -92,10 +92,10 @@ Hệ thống sử dụng thư viện **Nodemailer** chuẩn doanh nghiệp, cho 
 Hệ thống hỗ trợ đẩy thông báo ngay lập tức về số điện thoại Zalo cá nhân của bạn để kịp thời chỉ đạo điều hành.
 
 ### Bước 3.1: Cấu hình Zalo trên Dashboard
-1. Truy cập mục **15. Lịch & Giám Sát Báo Cáo** (`http://localhost:3000/#report-monitor`).
+1. Truy cập mục **15. Lịch & Giám Sát Báo Cáo** (`http://localhost:3000/#report-monitor` hoặc trên Vercel).
 2. Tại cột bên phải (**KÊNH THÔNG BÁO ZALO**), điền:
    * **Kích hoạt:** Đánh dấu tích `[✓]`.
-   * **Số Điện Thoại Zalo Của Bạn:** Nhập số điện thoại cá nhân (ví dụ: `0988739896`).
+   * **Số Điện Thoại Zalo Của Bạn:** Số điện thoại nhận tin (mặc định: `0913301459`).
    * **Phương Thức Kết Nối:** Chọn `Webhook Bot / HAITECH BOT`.
    * **Webhook Gateway URL:** Giữ mặc định `http://localhost:5000/api/zalo-webhook` (hoặc đường dẫn Webhook Gateway của đơn vị nếu dùng Cloud Gateway/n8n).
 3. Bấm **"Lưu Cấu Hình Email & Zalo"**.

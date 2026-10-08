@@ -9,16 +9,27 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 const nodemailer = require('nodemailer');
+const os = require('os');
 
-const DATA_DIR = path.join(__dirname, 'data');
+const LOCAL_DATA_DIR = path.join(__dirname, 'data');
+let DATA_DIR = LOCAL_DATA_DIR;
+try {
+    if (!fs.existsSync(LOCAL_DATA_DIR)) fs.mkdirSync(LOCAL_DATA_DIR, { recursive: true });
+    fs.accessSync(LOCAL_DATA_DIR, fs.constants.W_OK);
+} catch (e) {
+    DATA_DIR = os.tmpdir();
+}
+
 const SCHEDULE_FILE = path.join(DATA_DIR, 'notification_schedules.json');
 const LOG_FILE = path.join(DATA_DIR, 'notification_delivery_logs.json');
 
 class NotificationService {
     constructor() {
-        if (!fs.existsSync(DATA_DIR)) {
-            fs.mkdirSync(DATA_DIR, { recursive: true });
-        }
+        try {
+            if (!fs.existsSync(DATA_DIR)) {
+                fs.mkdirSync(DATA_DIR, { recursive: true });
+            }
+        } catch (e) {}
     }
 
     /**
@@ -48,12 +59,12 @@ class NotificationService {
                     inApp: true,
                     email: {
                         enabled: true,
-                        recipientEmails: "ceo@vpsgroup.vn",
+                        recipientEmails: "baocaoquantri.vps@gmail.com",
                         smtpType: "gmail", // "gmail" hoặc "custom"
                         smtpHost: "smtp.gmail.com",
                         smtpPort: 465,
                         smtpSecure: true,
-                        smtpUser: "",
+                        smtpUser: "baocaoquantri.vps@gmail.com",
                         smtpPass: "",
                         fromName: "VPS Dashboard Alert System",
                         notifyOnWeeklyScan: true,
@@ -63,7 +74,7 @@ class NotificationService {
                         enabled: true,
                         mode: "webhook", // "webhook" hoặc "oa"
                         webhookUrl: "http://localhost:5000/api/zalo-webhook",
-                        ceoPhone: "0988739896",
+                        ceoPhone: "0913301459",
                         oaAccessToken: "",
                         notifyOnWeeklyScan: true,
                         notifyOnEscalation: true
@@ -141,7 +152,7 @@ class NotificationService {
     /**
      * Gửi EMAIL qua SMTP (Gmail, Outlook hoặc Mail Server công ty)
      */
-    async sendEmail({ to, subject, html, text }) {
+    async sendEmail({ to, subject, html, text, smtpUser: argUser, smtpPass: argPass, smtpHost: argHost, smtpPort: argPort, smtpType: argType, fromName: argFromName }) {
         const config = this.getConfig();
         const emailCfg = config.general?.channels?.email || {};
 
@@ -151,8 +162,12 @@ class NotificationService {
         }
 
         // Kiểm tra xem đã có thông tin tài khoản SMTP chưa
-        const smtpUser = (emailCfg.smtpUser || '').trim();
-        const smtpPass = (emailCfg.smtpPass || '').trim();
+        const smtpUser = (argUser || emailCfg.smtpUser || '').trim();
+        const smtpPass = (argPass || emailCfg.smtpPass || '').trim();
+        const smtpType = argType || emailCfg.smtpType || 'gmail';
+        const smtpHost = argHost || emailCfg.smtpHost || 'smtp.gmail.com';
+        const smtpPort = parseInt(argPort || emailCfg.smtpPort, 10) || 465;
+        const fromName = argFromName || emailCfg.fromName || 'VPS Alert System';
 
         if (!smtpUser || !smtpPass) {
             // Chế độ mô phỏng / chuẩn bị sẵn sàng (Spooled)
@@ -247,12 +262,14 @@ class NotificationService {
      * Gửi tin nhắn ZALO qua Webhook Bot (HAITECH Bot / Zalo Personal Bot / Zalo Group)
      * hoặc Zalo Official Account (OA)
      */
-    async sendZalo({ phone, message, title, data }) {
+    async sendZalo({ phone, message, title, data, webhookUrl: argWebhook, mode: argMode }) {
         const config = this.getConfig();
         const zaloCfg = config.general?.channels?.zalo || {};
 
-        const targetPhone = phone || zaloCfg.ceoPhone || '0988739896';
+        const targetPhone = phone || zaloCfg.ceoPhone || '0913301459';
         const formattedTitle = title || 'THÔNG BÁO TỪ HỆ THỐNG ĐIỀU HÀNH VPS';
+        const activeMode = argMode || zaloCfg.mode || 'webhook';
+        const activeWebhook = argWebhook || zaloCfg.webhookUrl || 'http://localhost:5000/api/zalo-webhook';
 
         const fullMessageText = `🌟 ${formattedTitle}\n` +
             `━━━━━━━━━━━━━━━━━━━━\n` +

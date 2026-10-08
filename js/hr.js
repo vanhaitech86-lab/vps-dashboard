@@ -50,11 +50,12 @@ window.HrModule = {
         const COMPANY_ORDER = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
 
         let dataKey = 'all';
-        if (company === 'Tân Hồng Hà' || (company.includes('T') && company.includes('H'))) dataKey = 'THH';
-        else if (company === 'Việt' || company.includes('Vi')) dataKey = 'Viet';
-        else if (company === 'Xem Sơn' || company.includes('Xem')) dataKey = 'XemSon';
-        else if (company === 'VPS M' || company.includes('VPS M')) dataKey = 'VPSM';
+        if (company === 'Tân Hồng Hà' || company === 'THH' || (company.includes('T') && company.includes('H'))) dataKey = 'THH';
+        else if (company === 'Việt' || company === 'Viet' || company.includes('Vi')) dataKey = 'Viet';
+        else if (company === 'Xem Sơn' || company === 'XemSon' || company.includes('Xem')) dataKey = 'XemSon';
+        else if (company === 'VPS M' || company === 'VPSM' || company.includes('VPS M')) dataKey = 'VPSM';
         else if (company === 'ITSS' || company.includes('ITSS')) dataKey = 'ITSS'; 
+        else if (company === 'VPVPS' || company === 'Văn phòng VPS' || company.includes('Văn phòng') || company.includes('VP')) dataKey = 'VPVPS';
         else if (company !== 'all') dataKey = 'VPVPS';
 
         let tQuota = 0, tOfficial = 0, tProbation = 0, tResigned = 0, tVacancy = 0;
@@ -69,6 +70,7 @@ window.HrModule = {
             COMPANY_ORDER.forEach(cId => {
                 const compData = data.byCompany[cId] || data.byCompany[companyNameMap[cId]] || { quota: 0, official: 0, probation: 0, resigned: 0 };
                 processedKeys.add(cId);
+                if (companyNameMap[cId]) processedKeys.add(companyNameMap[cId]);
                 const displayName = companyNameMap[cId] || cId;
                 const quota = compData.quota || 0;
                 const official = compData.official || 0;
@@ -109,8 +111,10 @@ window.HrModule = {
 
             // Nếu có đơn vị nào khác trong byCompany chưa nằm trong COMPANY_ORDER
             for (const [cId, compData] of Object.entries(data.byCompany)) {
-                if (processedKeys.has(cId) || cId === 'all' || cId === 'Văn phòng VPS' || cId === 'VPVPS') continue;
+                const normName = companyNameMap[cId] || cId;
+                if (processedKeys.has(cId) || processedKeys.has(normName) || cId === 'all') continue;
                 processedKeys.add(cId);
+                processedKeys.add(normName);
                 const displayName = companyNameMap[cId] || cId;
                 const quota = compData.quota || 0;
                 const official = compData.official || 0;
@@ -155,15 +159,21 @@ window.HrModule = {
 
         } else {
             // Xem đơn vị cụ thể: hiển thị chi tiết các Phòng ban của đơn vị
-            const compData = data.byCompany[dataKey] || data.byCompany[company] || data.byCompany['VPVPS'] || data.byCompany['Văn phòng VPS'];
+            const compData = data.byCompany[dataKey] || data.byCompany[company] 
+                || (dataKey === 'THH' ? data.byCompany['THH'] || data.byCompany['Tân Hồng Hà'] : null)
+                || (dataKey === 'Viet' ? data.byCompany['Viet'] || data.byCompany['Việt'] : null)
+                || (dataKey === 'XemSon' ? data.byCompany['XemSon'] || data.byCompany['Xem Sơn'] : null)
+                || (dataKey === 'VPSM' ? data.byCompany['VPSM'] || data.byCompany['VPS M'] : null)
+                || (dataKey === 'ITSS' ? data.byCompany['ITSS'] : null)
+                || data.byCompany['VPVPS'] || data.byCompany['Văn phòng VPS'];
             const compDisplayName = companyNameMap[company] || company;
 
             if (compData) {
-                tQuota = compData.quota || 0;
                 tOfficial = compData.official || 0;
                 tProbation = compData.probation || 0;
                 tResigned = compData.resigned || 0;
-                tVacancy = Math.max(0, tQuota - tOfficial);
+                tQuota = compData.quota || (tOfficial + tProbation);
+                tVacancy = Math.max(0, tQuota - (tOfficial + tProbation));
 
                 if (compData.kpi) {
                     tKpi = { ...compData.kpi };
@@ -184,12 +194,12 @@ window.HrModule = {
 
                 if (depts.length > 0) {
                     depts.forEach(dept => {
-                        const dQuota = dept.quota || 0;
                         const dOfficial = dept.official || 0;
                         const dProbation = dept.probation || 0;
+                        const dQuota = (dept.quota !== undefined && dept.quota !== null) ? dept.quota : (dept.totalEnd !== undefined ? dept.totalEnd : (dOfficial + dProbation));
                         const dResigned = dept.resigned || 0;
-                        const dVacancy = 0; // Sheet không có cột Chỉ tiêu/Định biên => Cần tuyển = 0
-                        const dFulfillment = dQuota > 0 ? Math.round((dOfficial / dQuota) * 100) : 0;
+                        const dVacancy = dept.vacancy !== undefined ? dept.vacancy : 0;
+                        const dFulfillment = dQuota > 0 ? Math.round(((dOfficial + dProbation) / dQuota) * 100) : 0;
 
                         chartLabels.push(dept.name);
                         officialData.push(dOfficial);
@@ -236,7 +246,8 @@ window.HrModule = {
         }
 
         // 1. Cập nhật 5 thẻ KPI đầu trang
-        const fulfillment = tQuota > 0 ? Math.round((tOfficial / tQuota) * 100) : 0;
+        const totalHeadcount = tOfficial + tProbation;
+        const fulfillment = tQuota > 0 ? Math.round((totalHeadcount / tQuota) * 100) : 0;
 
         const hrOfficialEl = document.getElementById('hr-official');
         if (hrOfficialEl) hrOfficialEl.textContent = tOfficial.toLocaleString();
@@ -244,7 +255,6 @@ window.HrModule = {
         const hrQuotaEl = document.getElementById('hr-quota');
         if (hrQuotaEl) hrQuotaEl.textContent = tQuota.toLocaleString();
 
-        const totalHeadcount = tOfficial + tProbation;
         const hrFulfillmentEl = document.getElementById('hr-fulfillment');
         if (hrFulfillmentEl) hrFulfillmentEl.textContent = `Tổng thực tế: ${totalHeadcount} • Đạt ${fulfillment}% định biên`;
 

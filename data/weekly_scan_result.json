@@ -1,6 +1,6 @@
 {
-  "scannedAt": "2026-10-04T03:14:43.098Z",
-  "formattedTime": "10:14:43 4/10/2026",
+  "scannedAt": "2026-10-08T09:01:37.313Z",
+  "formattedTime": "16:01:37 8/10/2026",
   "totalUnits": 6,
   "completedCount": 6,
   "partialCount": 0,
@@ -28,7 +28,7 @@
         },
         "Công nợ": {
           "status": "ENTERED",
-          "rows": 5
+          "rows": 6
         },
         "Khách hàng": {
           "status": "ENTERED",
@@ -36,11 +36,11 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 1375
+          "rows": 384
         },
         "Nhân sự": {
           "status": "ENTERED",
-          "rows": 7
+          "rows": 8
         },
         "Chi Phí": {
           "status": "ENTERED",
@@ -78,7 +78,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 5
+          "rows": 7
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -116,11 +116,11 @@
         },
         "Khách hàng": {
           "status": "ENTERED",
-          "rows": 10
+          "rows": 7
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 5
+          "rows": 7
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -128,7 +128,7 @@
         },
         "Chi Phí": {
           "status": "ENTERED",
-          "rows": 12
+          "rows": 13
         }
       },
       "missingModules": [],
@@ -204,7 +204,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 5
+          "rows": 8
         },
         "Nhân sự": {
           "status": "ENTERED",

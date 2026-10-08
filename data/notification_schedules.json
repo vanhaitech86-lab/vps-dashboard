@@ -17,12 +17,12 @@
       "inApp": true,
       "email": {
         "enabled": true,
-        "recipientEmails": "ceo@vpsgroup.vn",
+        "recipientEmails": "baocaoquantri.vps@gmail.com",
         "smtpType": "gmail",
         "smtpHost": "smtp.gmail.com",
         "smtpPort": 465,
         "smtpSecure": true,
-        "smtpUser": "ADMIN",
+        "smtpUser": "baocaoquantri.vps@gmail.com",
         "smtpPass": "Admin123a@",
         "fromName": "Hệ Thống Báo Cáo VPS",
         "notifyOnWeeklyScan": true,
@@ -32,7 +32,7 @@
         "enabled": true,
         "mode": "webhook",
         "webhookUrl": "http://localhost:5000/api/zalo-webhook",
-        "ceoPhone": "0988739896",
+        "ceoPhone": "0913301459",
         "notifyOnWeeklyScan": true,
         "notifyOnEscalation": true
       },

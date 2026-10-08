@@ -3793,88 +3793,88 @@
 
                                         <div class="monitor-form-group" style="margin: 0;">
                                             <label style="color: #cbd5e1; font-size: 0.8rem;">📧 Email Nhận Thông Báo (Chủ tịch / CEO / Lãnh đạo):</label>
-                                            <input type="text" id="cfg-email-recipients" value="ceo@vpsgroup.vn" placeholder="vd: ceo@vpsgroup.vn, banlanhdao@vpsgroup.vn" style="background: #1e293b; border-color: #475569; font-weight: 600;">
+                                            <input type="text" id="cfg-email-recipients" value="baocaoquantri.vps@gmail.com" placeholder="vd: baocaoquantri.vps@gmail.com, banlanhdao@vpsgroup.vn" style="background: #1e293b; border-color: #475569; font-weight: 600;">
                                             <span style="font-size: 0.7rem; color: #64748b;">Hỗ trợ nhập nhiều email cách nhau bởi dấu phẩy</span>
                                         </div>
 
                                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                                             <div class="monitor-form-group" style="margin: 0;">
-                                                <label style="color: #cbd5e1; font-size: 0.78rem;">Loại SMTP:</label>
-                                                <select id="cfg-email-type" style="background: #1e293b; border-color: #475569;" onchange="window.NotificationManager.toggleSmtpType(this.value)">
-                                                    <option value="gmail" selected>Gmail (Khuyên Dùng)</option>
-                                                    <option value="custom">Mail Server Doanh Nghiệp (VPS)</option>
-                                                </select>
-                                            </div>
-                                            <div class="monitor-form-group" style="margin: 0;">
-                                                <label style="color: #cbd5e1; font-size: 0.78rem;">Tên Người Gửi:</label>
-                                                <input type="text" id="cfg-email-fromname" value="Hệ Thống Báo Cáo VPS" style="background: #1e293b; border-color: #475569;">
-                                            </div>
-                                        </div>
+                                                 <label style="color: #cbd5e1; font-size: 0.78rem;">Loại SMTP:</label>
+                                                 <select id="cfg-email-type" style="background: #1e293b; border-color: #475569;" onchange="window.NotificationManager.toggleSmtpType(this.value)">
+                                                     <option value="gmail" selected>Gmail (Khuyên Dùng)</option>
+                                                     <option value="custom">Mail Server Doanh Nghiệp (VPS)</option>
+                                                 </select>
+                                             </div>
+                                             <div class="monitor-form-group" style="margin: 0;">
+                                                 <label style="color: #cbd5e1; font-size: 0.78rem;">Tên Người Gửi:</label>
+                                                 <input type="text" id="cfg-email-fromname" value="Hệ Thống Báo Cáo VPS" style="background: #1e293b; border-color: #475569;">
+                                             </div>
+                                         </div>
 
                                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                                             <div class="monitor-form-group" style="margin: 0;">
-                                                <label style="color: #cbd5e1; font-size: 0.78rem;">Email Tài Khoản Gửi:</label>
-                                                <input type="text" id="cfg-email-user" placeholder="vd: alert.vpsgroup@gmail.com" style="background: #1e293b; border-color: #475569;">
-                                            </div>
-                                            <div class="monitor-form-group" style="margin: 0;">
-                                                <label style="color: #cbd5e1; font-size: 0.78rem;">Mật Khẩu Ứng Dụng (App Pass):</label>
-                                                <input type="password" id="cfg-email-pass" placeholder="16 ký tự Gmail App Password" style="background: #1e293b; border-color: #475569;">
-                                            </div>
-                                        </div>
+                                                 <label style="color: #cbd5e1; font-size: 0.78rem;">Email Tài Khoản Gửi:</label>
+                                                 <input type="text" id="cfg-email-user" value="baocaoquantri.vps@gmail.com" placeholder="vd: baocaoquantri.vps@gmail.com" style="background: #1e293b; border-color: #475569;">
+                                             </div>
+                                             <div class="monitor-form-group" style="margin: 0;">
+                                                 <label style="color: #cbd5e1; font-size: 0.78rem;">Mật Khẩu Ứng Dụng (App Pass):</label>
+                                                 <input type="password" id="cfg-email-pass" placeholder="16 ký tự Gmail App Password" style="background: #1e293b; border-color: #475569;">
+                                             </div>
+                                         </div>
 
                                         <div id="smtp-custom-fields" style="display: none; grid-template-columns: 2fr 1fr; gap: 10px;">
                                             <div class="monitor-form-group" style="margin: 0;">
-                                                <label style="color: #cbd5e1; font-size: 0.75rem;">SMTP Host:</label>
-                                                <input type="text" id="cfg-email-host" value="smtp.gmail.com" style="background: #1e293b; border-color: #475569; font-size: 0.8rem;">
-                                            </div>
-                                            <div class="monitor-form-group" style="margin: 0;">
-                                                <label style="color: #cbd5e1; font-size: 0.75rem;">Cổng (Port):</label>
-                                                <input type="number" id="cfg-email-port" value="465" style="background: #1e293b; border-color: #475569; font-size: 0.8rem;">
-                                            </div>
-                                        </div>
+                                                 <label style="color: #cbd5e1; font-size: 0.75rem;">SMTP Host:</label>
+                                                 <input type="text" id="cfg-email-host" value="smtp.gmail.com" style="background: #1e293b; border-color: #475569; font-size: 0.8rem;">
+                                             </div>
+                                             <div class="monitor-form-group" style="margin: 0;">
+                                                 <label style="color: #cbd5e1; font-size: 0.75rem;">Cổng (Port):</label>
+                                                 <input type="number" id="cfg-email-port" value="465" style="background: #1e293b; border-color: #475569; font-size: 0.8rem;">
+                                             </div>
+                                         </div>
 
                                         <div style="display: flex; flex-direction: column; gap: 6px; padding: 10px; background: rgba(30, 41, 59, 0.5); border-radius: 8px;">
                                             <label style="display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #cbd5e1; cursor: pointer;">
-                                                <input type="checkbox" id="cfg-email-weekly" checked style="accent-color: #0284c7;">
-                                                <span>Nhận Báo Cáo Quét Google Sheets 11h Thứ 2 (Bắt buộc)</span>
-                                            </label>
-                                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #cbd5e1; cursor: pointer;">
-                                                <input type="checkbox" id="cfg-email-escalate" checked style="accent-color: #0284c7;">
-                                                <span>Nhận Cảnh Báo Vi Phạm Quá Hạn Duyệt Báo Cáo Hàng Ngày</span>
-                                            </label>
-                                        </div>
+                                                 <input type="checkbox" id="cfg-email-weekly" checked style="accent-color: #0284c7;">
+                                                 <span>Nhận Báo Cáo Quét Google Sheets 11h Thứ 2 (Bắt buộc)</span>
+                                             </label>
+                                             <label style="display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #cbd5e1; cursor: pointer;">
+                                                 <input type="checkbox" id="cfg-email-escalate" checked style="accent-color: #0284c7;">
+                                                 <span>Nhận Cảnh Báo Vi Phạm Quá Hạn Duyệt Báo Cáo Hàng Ngày</span>
+                                             </label>
+                                         </div>
 
                                         <div style="display: flex; justify-content: flex-end; margin-top: auto; padding-top: 6px;">
                                             <button type="button" class="monitor-btn-tool" style="background: rgba(2, 132, 199, 0.2); color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);" onclick="window.NotificationManager.testEmailChannel()">
-                                                <i data-lucide="send" style="width: 14px; height: 14px;"></i>
-                                                <span>Gửi Email Thử Nghiệm Ngay</span>
-                                            </button>
-                                        </div>
-                                    </div>
+                                                 <i data-lucide="send" style="width: 14px; height: 14px;"></i>
+                                                 <span>Gửi Email Thử Nghiệm Ngay</span>
+                                             </button>
+                                         </div>
+                                     </div>
 
-                                    <!-- CỘT 2: TÍCH HỢP ZALO -->
-                                    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; position: relative;">
-                                        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(52, 211, 153, 0.15); padding-bottom: 10px;">
-                                            <div style="display: flex; align-items: center; gap: 8px;">
-                                                <div style="background: rgba(16, 185, 129, 0.15); color: #34d399; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                                    <i data-lucide="message-square" style="width: 18px; height: 18px;"></i>
-                                                </div>
-                                                <div>
-                                                    <h4 style="margin: 0; color: #34d399; font-size: 0.95rem; font-weight: 700;">KÊNH THÔNG BÁO ZALO</h4>
-                                                    <span style="font-size: 0.72rem; color: #94a3b8;">Nhận tin nhắn cảnh báo tức thì về điện thoại</span>
-                                                </div>
-                                            </div>
-                                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                                <input type="checkbox" id="cfg-zalo-enabled" checked style="width: 18px; height: 18px; accent-color: #10b981;">
-                                                <span style="font-size: 0.8rem; font-weight: 700; color: #34d399;">Kích hoạt</span>
-                                            </label>
-                                        </div>
+                                     <!-- CỘT 2: TÍCH HỢP ZALO -->
+                                     <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; position: relative;">
+                                         <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(52, 211, 153, 0.15); padding-bottom: 10px;">
+                                             <div style="display: flex; align-items: center; gap: 8px;">
+                                                 <div style="background: rgba(16, 185, 129, 0.15); color: #34d399; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                                     <i data-lucide="message-square" style="width: 18px; height: 18px;"></i>
+                                                 </div>
+                                                 <div>
+                                                     <h4 style="margin: 0; color: #34d399; font-size: 0.95rem; font-weight: 700;">KÊNH THÔNG BÁO ZALO</h4>
+                                                     <span style="font-size: 0.72rem; color: #94a3b8;">Nhận tin nhắn cảnh báo tức thì về điện thoại</span>
+                                                 </div>
+                                             </div>
+                                             <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                                 <input type="checkbox" id="cfg-zalo-enabled" checked style="width: 18px; height: 18px; accent-color: #10b981;">
+                                                 <span style="font-size: 0.8rem; font-weight: 700; color: #34d399;">Kích hoạt</span>
+                                             </label>
+                                         </div>
 
-                                        <div class="monitor-form-group" style="margin: 0;">
-                                            <label style="color: #cbd5e1; font-size: 0.8rem;">📱 Số Điện Thoại Zalo Của Bạn (Chủ tịch / CEO):</label>
-                                            <input type="text" id="cfg-zalo-phone" value="0988739896" placeholder="vd: 0988739896" style="background: #1e293b; border-color: #475569; font-weight: 600; font-size: 0.95rem; color: #34d399;">
-                                            <span style="font-size: 0.7rem; color: #64748b;">Số điện thoại đã kích hoạt tài khoản Zalo cá nhân</span>
-                                        </div>
+                                         <div class="monitor-form-group" style="margin: 0;">
+                                             <label style="color: #cbd5e1; font-size: 0.8rem;">📱 Số Điện Thoại Zalo Của Bạn (Chủ tịch / CEO):</label>
+                                             <input type="text" id="cfg-zalo-phone" value="0913301459" placeholder="vd: 0913301459" style="background: #1e293b; border-color: #475569; font-weight: 600; font-size: 0.95rem; color: #34d399;">
+                                             <span style="font-size: 0.7rem; color: #64748b;">Số điện thoại đã kích hoạt tài khoản Zalo cá nhân</span>
+                                         </div>
 
                                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                                             <div class="monitor-form-group" style="margin: 0;">
@@ -4043,13 +4043,13 @@
     <!-- Scripts -->
     <script src="js/connectors.js?v=1788780000"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="js/google_sheets_live_data.js?v=1789720000"></script>
-    <script src="js/data.js?v=1789700000"></script>
-    <script src="js/google_sheets.js?v=1789720000"></script>
+    <script src="js/google_sheets_live_data.js?v=1791261000"></script>
+    <script src="js/data.js?v=1791261000"></script>
+    <script src="js/google_sheets.js?v=1791261000"></script>
     <script src="js/auth.js?v=1788780000"></script>
     <script src="js/filters.js?v=1788780000"></script>
     <script src="js/charts.js?v=1788780000"></script>
-    <script src="js/overview.js?v=1788780000"></script>
+    <script src="js/overview.js?v=1791261000"></script>
     <script src="js/customers.js?v=1788780000"></script>
     <script src="js/products.js?v=1788780000"></script>
     <script src="js/fujifilm.js?v=1788780000"></script>
@@ -4058,7 +4058,7 @@
     <script src="js/project_revenue.js?v=1789730000"></script>
     <script src="js/inventory.js?v=1789620000"></script>
     <script src="js/debt.js?v=1788780000"></script>
-    <script src="js/hr.js?v=1789700000"></script>
+    <script src="js/hr.js?v=1791261000"></script>
     <script src="js/admin.js?v=1788780000"></script>
     <script src="js/culture.js?v=1789950000"></script>
     <script src="js/iso.js?v=1788780000"></script>

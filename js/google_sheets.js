@@ -26,7 +26,105 @@ const COMPANY_SHEET_7DEPT_TABS = {
     'VPVPS': 'Doanh số lãi gộp'
 };
 
-const COMPANY_SHEET_GIDS = {};
+const COMPANY_SHEET_GIDS = {
+    "THH": {
+        "00_Huong_Dan": "1772691693",
+        "DOANH SỐ VÀ LÃI GỘP": "2069289938",
+        "Công nợ": "468590412",
+        "Tồn kho": "303019176",
+        "Khách hàng": "50851359",
+        "Nhân sự": "1243114250",
+        "Sản Phẩm": "1428011950",
+        "Chi Phí": "588067648",
+        "ISO": "1459239492",
+        "Đào tạo": "1846130080",
+        "Dịch vụ tận tâm": "1053897792",
+        "Văn hóa doanh nghiệp": "48159925",
+        "Thương hiệu": "1830439927",
+        "Dự án \x26 KH Dự án": "12722340"
+    },
+    "Viet": {
+        "00_Huong_Dan": "2121219294",
+        "Doanh Số lãi Gộp": "1364666657",
+        "Công nợ": "1151102863",
+        "Khách hàng": "289803626",
+        "Tồn kho": "1859136059",
+        "Nhân sự": "1470847872",
+        "Sản Phẩm": "64108117",
+        "Chi Phí": "1800577046",
+        "ISO": "604500495",
+        "Đào tạo": "812735039",
+        "Dịch vụ tận tâm": "419650830",
+        "Văn hóa doanh nghiệp": "842139657",
+        "Thương hiệu": "59010500",
+        "Dự án \x26 KH Dự án": "140173727"
+    },
+    "XemSon": {
+        "00_Huong_Dan": "1243886851",
+        "Doanh Số và Lãi Gộp": "1929600534",
+        "Công nợ": "1980273597",
+        "Khách hàng": "2012950156",
+        "Tồn kho": "231823416",
+        "Nhân sự": "2031989402",
+        "Sản Phẩm": "1509622302",
+        "Chi Phí": "236619670",
+        "ISO": "1341964190",
+        "Đào tạo": "1383731825",
+        "Dịch vụ tận tâm": "216348419",
+        "Văn hóa doanh nghiệp": "959246431",
+        "Thương hiệu": "950861405",
+        "Dự án \x26 KH Dự án": "1607567754"
+    },
+    "VPSM": {
+        "00_Huong_Dan": "206840100",
+        "Doanh Số và Lãi Gộp": "171363562",
+        "Công nợ": "2032878970",
+        "Khách hàng": "821676021",
+        "Tồn kho": "1532901249",
+        "Nhân sự": "1026962002",
+        "Sản Phẩm": "1896899044",
+        "Chi Phí": "1998481070",
+        "ISO": "310586124",
+        "Đào tạo": "1862782690",
+        "Dịch vụ tận tâm": "1640557606",
+        "Văn hóa doanh nghiệp": "95324144",
+        "Thương hiệu": "1319959830",
+        "Dự án \x26 KH Dự án": "1587623829"
+    },
+    "ITSS": {
+        "00_Huong_Dan": "1520985898",
+        "Doanh Số lãi gộp": "1303578768",
+        "Công nợ": "1848494682",
+        "Khách hàng": "152764531",
+        "Tồn kho": "1684827065",
+        "Nhân sự": "990988776",
+        "Sản Phẩm": "2033932014",
+        "Chi Phí": "114696651",
+        "ISO": "638217855",
+        "Đào tạo": "408778115",
+        "Dịch vụ tận tâm": "1629609250",
+        "Văn hóa doanh nghiệp": "2010148690",
+        "Thương hiệu": "1502211318",
+        "Dự án \x26 KH Dự án": "1220946877"
+    },
+    "VPVPS": {
+        "00_Huong_Dan": "144964434",
+        "Doanh thu": "1267676010",
+        "Doanh số lãi gộp": "798706215",
+        "Công nợ": "951926931",
+        "Khách hàng": "360619660",
+        "Tồn kho": "422112866",
+        "Nhân sự": "743194029",
+        "Sản Phẩm": "1851873065",
+        "Chi Phí": "254935975",
+        "ISO": "68063620",
+        "Đào tạo": "95029487",
+        "Dịch vụ tận tâm": "21621085",
+        "Văn hóa doanh nghiệp": "1379543531",
+        "Thương hiệu": "18403659",
+        "Dự án \x26 KH Dự án": "1461274181"
+    }
+};
 
 const companyIdMap = {
     'Tân Hồng Hà': 'THH', 'Tan Hong Ha': 'THH', 'tân hồng hà': 'THH', 'THH': 'THH',
@@ -465,31 +563,98 @@ function parseHR(csv, cId) {
                     probation: thuviec,
                     resigned: nghiviec,
                     newHires: tuyenmoi,
-                    vacancy: Math.max(0, cuoiky - official)
+                    vacancy: 0
                 });
             }
+        } else if (dept) {
+            result.departments.push({
+                name: dept,
+                quota: 0,
+                official: 0,
+                probation: 0,
+                resigned: 0,
+                newHires: 0,
+                vacancy: 0
+            });
         }
     }
 
     result.totalEmployees = result.quota;
     const plannedQuotaMap = {
-        'THH': 54, 'Viet': 43, 'XemSon': 98, 'VPSM': 15, 'ITSS': 15, 'VPVPS': 25
+        'THH': 47, 'Viet': 39, 'XemSon': 91, 'VPSM': 10, 'ITSS': 5, 'VPVPS': 19
     };
     if (plannedQuotaMap[cId]) {
         result.quota = Math.max(plannedQuotaMap[cId], result.quota);
     }
 
-    // Fallback cho ITSS nếu file sheet chưa nhập dữ liệu
-    if (result.quota === 0 && (cId === 'ITSS' || cId === 'itss')) {
-        result.quota = 8;
-        result.official = 3;
-        result.probation = 1;
-        result.resigned = 0;
-        result.newHires = 1;
-        result.departments = [
-            { name: 'Kỹ thuật / Lập trình', quota: 5, official: 2, probation: 1, resigned: 0, newHires: 1, vacancy: 3 },
-            { name: 'Hỗ trợ CRM', quota: 3, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 2 }
-        ];
+    // Fallback an toàn cho tất cả đơn vị nếu file sheet chưa tải được hoặc rỗng
+    const MASTER_HR_DEFAULTS = {
+        'THH': {
+            quota: 47, official: 42, probation: 5, resigned: 0, newHires: 0, totalEmployees: 47,
+            departments: [
+                { name: 'Kinh doanh', quota: 12, official: 12, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kỹ thuật', quota: 26, official: 23, probation: 3, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kế toán', quota: 9, official: 7, probation: 2, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Hành chính', quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kho/Giao vận', quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Ban Giám đốc', quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
+            ],
+            analysis: { cause: 'Kỳ 09/2026: 42 nhân sự chính thức, 5 thử việc (Kỹ thuật: 3, Kế toán: 2).', solution: '' }
+        },
+        'Viet': {
+            quota: 39, official: 39, probation: 0, resigned: 0, newHires: 0, totalEmployees: 39,
+            departments: [
+                { name: 'Kinh doanh', quota: 15, official: 15, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kỹ thuật', quota: 16, official: 16, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kế toán', quota: 7, official: 7, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Hành chính', quota: 0, official: 0, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kho/Giao vận', quota: 1, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
+            ],
+            analysis: { cause: 'Kỳ 09/2026: 39 nhân sự chính thức.', solution: '' }
+        },
+        'XemSon': {
+            quota: 91, official: 91, probation: 0, resigned: 0, newHires: 0, totalEmployees: 91,
+            departments: [
+                { name: 'Kinh doanh', quota: 30, official: 30, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kỹ thuật', quota: 44, official: 44, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kế toán', quota: 5, official: 5, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Hành chính', quota: 7, official: 7, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kho/Giao vận', quota: 5, official: 5, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
+            ],
+            analysis: { cause: 'Kỳ 08/2026: 91 nhân sự chính thức.', solution: '' }
+        },
+        'VPSM': {
+            quota: 10, official: 10, probation: 0, resigned: 0, newHires: 0, totalEmployees: 10,
+            departments: [
+                { name: 'Kinh doanh', quota: 3, official: 3, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kỹ thuật', quota: 6, official: 6, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kế toán', quota: 1, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
+            ],
+            analysis: { cause: 'Kỳ 08/2026: 10 nhân sự chính thức.', solution: '' }
+        },
+        'ITSS': {
+            quota: 5, official: 4, probation: 1, resigned: 0, newHires: 0, totalEmployees: 5,
+            departments: [
+                { name: 'Kinh doanh', quota: 3, official: 2, probation: 1, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kỹ thuật', quota: 1, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kế toán', quota: 1, official: 1, probation: 0, resigned: 0, newHires: 0, vacancy: 0 }
+            ],
+            analysis: { cause: 'Kỳ 08/2026: 4 chính thức, 1 thử việc.', solution: '' }
+        },
+        'VPVPS': {
+            quota: 19, official: 18, probation: 1, resigned: 0, newHires: 1, totalEmployees: 19,
+            departments: [
+                { name: 'Ban Lãnh đạo', quota: 2, official: 2, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kế toán / Tài chính', quota: 5, official: 5, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Nhân sự / Hành chính', quota: 4, official: 4, probation: 0, resigned: 0, newHires: 0, vacancy: 0 },
+                { name: 'Kinh doanh / Dự án', quota: 8, official: 7, probation: 1, resigned: 0, newHires: 1, vacancy: 0 }
+            ],
+            analysis: { cause: 'Kỳ 08/2026: 18 chính thức, 1 thử việc.', solution: '' }
+        }
+    };
+
+    if (result.official === 0 && MASTER_HR_DEFAULTS[cId]) {
+        Object.assign(result, JSON.parse(JSON.stringify(MASTER_HR_DEFAULTS[cId])));
     }
 
     // Thiết lập phân bổ xếp loại KPI A, B, C, D dựa trên số lượng nhân sự chính thức
@@ -944,7 +1109,7 @@ window.GoogleSheetsService = {
                 return true;
             }
 
-            const raw = localStorage.getItem('vps_dashboard_cache_v3');
+            const raw = localStorage.getItem('vps_dashboard_cache_v4');
             if (raw) {
                 const cached = JSON.parse(raw);
                 if (cached && cached.mockData) {
@@ -1016,6 +1181,20 @@ window.GoogleSheetsService = {
                 }
             });
         }
+        const hrByComp = { ...(liveData.hr_by_company || {}) };
+        const hrAliases = {
+            'THH': 'Tân Hồng Hà',
+            'Viet': 'Việt',
+            'XemSon': 'Xem Sơn',
+            'VPSM': 'VPS M',
+            'ITSS': 'ITSS',
+            'VPVPS': 'Văn phòng VPS'
+        };
+        Object.entries(hrAliases).forEach(([code, fullName]) => {
+            if (hrByComp[code]) hrByComp[fullName] = hrByComp[code];
+            else if (hrByComp[fullName]) hrByComp[code] = hrByComp[fullName];
+        });
+
         window.mockData.hr = {
             totalEmployees: totalEmp,
             newHires: totalNew,
@@ -1023,7 +1202,7 @@ window.GoogleSheetsService = {
             probation: totalProb,
             kpi: totalKpi,
             byDepartment: {},
-            byCompany: liveData.hr_by_company || {}
+            byCompany: hrByComp
         };
 
         // 4. TỒN KHO
@@ -1166,7 +1345,7 @@ window.GoogleSheetsService = {
                     customers: window.mockData.customers
                 }
             };
-            localStorage.setItem('vps_dashboard_cache_v3', JSON.stringify(payload));
+            localStorage.setItem('vps_dashboard_cache_v4', JSON.stringify(payload));
             this._lastSyncTime = payload.timestamp;
         } catch(e) {
             console.warn('[GS] Error saving cache:', e);
@@ -1520,12 +1699,19 @@ window.GoogleSheetsService = {
             const totalResign = Object.values(hrByCompany).reduce((s, h) => s + (h.resigned || 0), 0);
             const totalNew = Object.values(hrByCompany).reduce((s, h) => s + (h.newHires || 0), 0);
 
-            // Đảm bảo cả hai key 'VPVPS' và 'Văn phòng VPS' đều trỏ về dữ liệu nhân sự thực
-            if (hrByCompany['VPVPS']) {
-                hrByCompany['Văn phòng VPS'] = hrByCompany['VPVPS'];
-            } else if (hrByCompany['Văn phòng VPS']) {
-                hrByCompany['VPVPS'] = hrByCompany['Văn phòng VPS'];
-            }
+            // Đảm bảo cả mã đơn vị và tên đầy đủ đều trỏ về dữ liệu nhân sự chính xác
+            const hrAliases = {
+                'THH': 'Tân Hồng Hà',
+                'Viet': 'Việt',
+                'XemSon': 'Xem Sơn',
+                'VPSM': 'VPS M',
+                'ITSS': 'ITSS',
+                'VPVPS': 'Văn phòng VPS'
+            };
+            Object.entries(hrAliases).forEach(([code, fullName]) => {
+                if (hrByCompany[code]) hrByCompany[fullName] = hrByCompany[code];
+                else if (hrByCompany[fullName]) hrByCompany[code] = hrByCompany[fullName];
+            });
 
             const totalKpi = { A: 0, B: 0, C: 0, D: 0 };
             const standardKeys = ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'];
