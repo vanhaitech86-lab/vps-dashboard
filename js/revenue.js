@@ -8,7 +8,7 @@
 window.RevenueModule = {
     currentTab: 'company', // 'company' | 'department'
     currentDeptCompany: 'all',
-    currentDeptMonth: '8', // Mặc định tháng 8 chốt sổ
+    currentDeptMonth: '9', // Mặc định tháng 9/2026
     currentDeptMode: 'month', // 'month' | 'year'
     expandedRows: new Set(),
     deptCharts: {},

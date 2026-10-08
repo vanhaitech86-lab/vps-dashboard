@@ -158,18 +158,18 @@ window.OverviewModule = {
 
         // --- Inventory (Quét chính xác từ Google Sheet của đơn vị, không thêm bịa số) ---
         const invBreakdown = {
-            'all':    { normal: 73.48, project: 0.00, total: 73.48 },
-            'THH':    { normal: 30.34, project: 0.00, total: 30.34 },
-            'Viet':   { normal: 8.85,  project: 0.00, total: 8.85 },
+            'all':    { normal: 72.02, project: 4.97, total: 76.99 },
+            'THH':    { normal: 31.24, project: 4.97, total: 36.21 },
+            'Viet':   { normal: 6.49,  project: 0.00, total: 6.49 },
             'XemSon': { normal: 25.71, project: 0.00, total: 25.71 },
             'VPSM':   { normal: 5.48,  project: 0.00, total: 5.48 },
             'ITSS':   { normal: 0.19,  project: 0.00, total: 0.19 },
             'VPVPS':  { normal: 2.91,  project: 0.00, total: 2.91 }
         };
 
-        let normalInvDisplay = 73.48;
-        let projectInvDisplay = 0.00;
-        let totalInvDisplay = 73.48;
+        let normalInvDisplay = 72.02;
+        let projectInvDisplay = 4.97;
+        let totalInvDisplay = 76.99;
 
         if (isFiltered && cKey) {
             const compData = invBreakdown[cKey.inv] || invBreakdown['THH'];

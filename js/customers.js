@@ -10,10 +10,2044 @@
 window.CustomersModule = {
     currentPeriod: 'month',
     currentCompany: 'all',
-    selectedMonth: '08/2026',
+    selectedMonth: '09/2026',
 
-    monthlyData: {
-        '08/2026': null, // Uses default mockData.customers which matches user screenshot
+        monthlyData: {
+        '09/2026': {
+            "all": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 2012,
+                                                "kh": 624
+                                    },
+                                    "ke_hoach": {
+                                                "may": 826,
+                                                "kh": 266
+                                    },
+                                    "tang": {
+                                                "may": 28,
+                                                "kh": 3
+                                    },
+                                    "giam": {
+                                                "may": 18,
+                                                "kh": 7
+                                    },
+                                    "cuoi": {
+                                                "may": 2022,
+                                                "kh": 620
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 387,
+                                                "kh": 204
+                                    },
+                                    "ke_hoach": {
+                                                "may": 110,
+                                                "kh": 40
+                                    },
+                                    "tang": {
+                                                "may": 1,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 388,
+                                                "kh": 204
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 1989,
+                                                "kh": 1105
+                                    },
+                                    "ke_hoach": {
+                                                "may": 1,
+                                                "kh": 390
+                                    },
+                                    "tang": {
+                                                "may": 49,
+                                                "kh": 10
+                                    },
+                                    "giam": {
+                                                "may": 23,
+                                                "kh": 12
+                                    },
+                                    "cuoi": {
+                                                "may": 1993,
+                                                "kh": 1103
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 1961,
+                                                "kh": 291
+                                    },
+                                    "ke_hoach": {
+                                                "may": 450,
+                                                "kh": 100
+                                    },
+                                    "tang": {
+                                                "may": 2,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 1,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 1962,
+                                                "kh": 291
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 2
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 4
+                                    },
+                                    "tang": {
+                                                "may": 1,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 3
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 1880
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 546
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 14
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 1894
+                                    }
+                        },
+                        "kh_duoi_3_thang": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 1360
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 385
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 11
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 1371
+                                    }
+                        }
+            },
+            "THH": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 349,
+                                                "kh": 103
+                                    },
+                                    "ke_hoach": {
+                                                "may": 5,
+                                                "kh": 5
+                                    },
+                                    "tang": {
+                                                "may": 8,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 355,
+                                                "kh": 103
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 238,
+                                                "kh": 164
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 238,
+                                                "kh": 164
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 1771,
+                                                "kh": 624
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 4,
+                                                "kh": 4
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 1775,
+                                                "kh": 628
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 1148,
+                                                "kh": 50
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 1148,
+                                                "kh": 50
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 371
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 6
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 3
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 374
+                                    }
+                        },
+                        "kh_duoi_3_thang": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 260
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 5
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 2
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 262
+                                    }
+                        }
+            },
+            "Viet": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 815,
+                                                "kh": 246
+                                    },
+                                    "ke_hoach": {
+                                                "may": 20,
+                                                "kh": 10
+                                    },
+                                    "tang": {
+                                                "may": 8,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 7,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 816,
+                                                "kh": 246
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 950
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 40
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 5
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 955
+                                    }
+                        },
+                        "kh_duoi_3_thang": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 710
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 30
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 4
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 714
+                                    }
+                        }
+            },
+            "XemSon": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 794,
+                                                "kh": 250
+                                    },
+                                    "ke_hoach": {
+                                                "may": 800,
+                                                "kh": 250
+                                    },
+                                    "tang": {
+                                                "may": 9,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 9,
+                                                "kh": 5
+                                    },
+                                    "cuoi": {
+                                                "may": 794,
+                                                "kh": 245
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 102,
+                                                "kh": 38
+                                    },
+                                    "ke_hoach": {
+                                                "may": 110,
+                                                "kh": 40
+                                    },
+                                    "tang": {
+                                                "may": 1,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 103,
+                                                "kh": 38
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 1,
+                                                "kh": 383
+                                    },
+                                    "ke_hoach": {
+                                                "may": 1,
+                                                "kh": 390
+                                    },
+                                    "tang": {
+                                                "may": 45,
+                                                "kh": 6
+                                    },
+                                    "giam": {
+                                                "may": 23,
+                                                "kh": 12
+                                    },
+                                    "cuoi": {
+                                                "may": 1,
+                                                "kh": 377
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 450,
+                                                "kh": 98
+                                    },
+                                    "ke_hoach": {
+                                                "may": 450,
+                                                "kh": 100
+                                    },
+                                    "tang": {
+                                                "may": 2,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 1,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 451,
+                                                "kh": 98
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 1,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 489
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 500
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 6
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 495
+                                    }
+                        },
+                        "kh_duoi_3_thang": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 340
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 350
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 5
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 345
+                                    }
+                        }
+            },
+            "VPSM": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 53,
+                                                "kh": 24
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 3,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 56,
+                                                "kh": 25
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 47,
+                                                "kh": 2
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 47,
+                                                "kh": 2
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 217,
+                                                "kh": 98
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 217,
+                                                "kh": 98
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 363,
+                                                "kh": 143
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 363,
+                                                "kh": 143
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 70
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 70
+                                    }
+                        },
+                        "kh_duoi_3_thang": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 50
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 50
+                                    }
+                        }
+            },
+            "ITSS": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 1,
+                                                "kh": 1
+                                    },
+                                    "ke_hoach": {
+                                                "may": 1,
+                                                "kh": 1
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 1,
+                                                "kh": 1
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 2
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 4
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 3
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "kh_duoi_3_thang": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        }
+            },
+            "VPVPS": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "kh_duoi_3_thang": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        }
+            }
+},
+        '08/2026': {
+            "THH": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 349,
+                                                "kh": 103
+                                    },
+                                    "ke_hoach": {
+                                                "may": 5,
+                                                "kh": 5
+                                    },
+                                    "tang": {
+                                                "may": 8,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 355,
+                                                "kh": 103
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 238,
+                                                "kh": 164
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 238,
+                                                "kh": 164
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 1771,
+                                                "kh": 624
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 4,
+                                                "kh": 4
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 1775,
+                                                "kh": 628
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 1148,
+                                                "kh": 50
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 1148,
+                                                "kh": 50
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 371
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 6
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 3
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 374
+                                    }
+                        }
+            },
+            "Viet": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 815,
+                                                "kh": 246
+                                    },
+                                    "ke_hoach": {
+                                                "may": 20,
+                                                "kh": 10
+                                    },
+                                    "tang": {
+                                                "may": 8,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 7,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 816,
+                                                "kh": 246
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 950
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 40
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 5
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 955
+                                    }
+                        }
+            },
+            "XemSon": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 794,
+                                                "kh": 250
+                                    },
+                                    "ke_hoach": {
+                                                "may": 800,
+                                                "kh": 250
+                                    },
+                                    "tang": {
+                                                "may": 9,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 9,
+                                                "kh": 5
+                                    },
+                                    "cuoi": {
+                                                "may": 794,
+                                                "kh": 245
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 102,
+                                                "kh": 38
+                                    },
+                                    "ke_hoach": {
+                                                "may": 110,
+                                                "kh": 40
+                                    },
+                                    "tang": {
+                                                "may": 1,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 103,
+                                                "kh": 38
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 1340,
+                                                "kh": 383
+                                    },
+                                    "ke_hoach": {
+                                                "may": 1,
+                                                "kh": 390
+                                    },
+                                    "tang": {
+                                                "may": 45,
+                                                "kh": 6
+                                    },
+                                    "giam": {
+                                                "may": 23,
+                                                "kh": 12
+                                    },
+                                    "cuoi": {
+                                                "may": 1349,
+                                                "kh": 377
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 450,
+                                                "kh": 98
+                                    },
+                                    "ke_hoach": {
+                                                "may": 450,
+                                                "kh": 100
+                                    },
+                                    "tang": {
+                                                "may": 2,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 1,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 451,
+                                                "kh": 98
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 1,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 1,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 489
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 500
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 6
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 495
+                                    }
+                        }
+            },
+            "VPSM": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 53,
+                                                "kh": 24
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 3,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 56,
+                                                "kh": 25
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 47,
+                                                "kh": 2
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 47,
+                                                "kh": 2
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 217,
+                                                "kh": 98
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 217,
+                                                "kh": 98
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 363,
+                                                "kh": 143
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 363,
+                                                "kh": 143
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 70
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 70
+                                    }
+                        }
+            },
+            "ITSS": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 1,
+                                                "kh": 1
+                                    },
+                                    "ke_hoach": {
+                                                "may": 1,
+                                                "kh": 1
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 1,
+                                                "kh": 1
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 2
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 4
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 1
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 3
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 0
+                                    }
+                        }
+            },
+            "VPVPS": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 120,
+                                                "kh": 95
+                                    },
+                                    "ke_hoach": {
+                                                "may": 15,
+                                                "kh": 12
+                                    },
+                                    "tang": {
+                                                "may": 10,
+                                                "kh": 8
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 128,
+                                                "kh": 102
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 120,
+                                                "kh": 95
+                                    },
+                                    "ke_hoach": {
+                                                "may": 15,
+                                                "kh": 12
+                                    },
+                                    "tang": {
+                                                "may": 10,
+                                                "kh": 8
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 128,
+                                                "kh": 102
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 120,
+                                                "kh": 95
+                                    },
+                                    "ke_hoach": {
+                                                "may": 15,
+                                                "kh": 12
+                                    },
+                                    "tang": {
+                                                "may": 10,
+                                                "kh": 8
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 128,
+                                                "kh": 102
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 120,
+                                                "kh": 95
+                                    },
+                                    "ke_hoach": {
+                                                "may": 15,
+                                                "kh": 12
+                                    },
+                                    "tang": {
+                                                "may": 10,
+                                                "kh": 8
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 128,
+                                                "kh": 102
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 120,
+                                                "kh": 95
+                                    },
+                                    "ke_hoach": {
+                                                "may": 15,
+                                                "kh": 12
+                                    },
+                                    "tang": {
+                                                "may": 10,
+                                                "kh": 8
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 128,
+                                                "kh": 102
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 95
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 12
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 8
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 102
+                                    }
+                        }
+            },
+            "_CONSOLIDATED": {},
+            "all": {
+                        "thue_may": {
+                                    "dau": {
+                                                "may": 2132,
+                                                "kh": 719
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 38,
+                                                "kh": 11
+                                    },
+                                    "giam": {
+                                                "may": 20,
+                                                "kh": 8
+                                    },
+                                    "cuoi": {
+                                                "may": 2150,
+                                                "kh": 722
+                                    }
+                        },
+                        "mc": {
+                                    "dau": {
+                                                "may": 507,
+                                                "kh": 299
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 11,
+                                                "kh": 8
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 516,
+                                                "kh": 306
+                                    }
+                        },
+                        "dv_photo": {
+                                    "dau": {
+                                                "may": 3448,
+                                                "kh": 1200
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 59,
+                                                "kh": 18
+                                    },
+                                    "giam": {
+                                                "may": 25,
+                                                "kh": 13
+                                    },
+                                    "cuoi": {
+                                                "may": 3469,
+                                                "kh": 1205
+                                    }
+                        },
+                        "dv_may_in": {
+                                    "dau": {
+                                                "may": 2081,
+                                                "kh": 386
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 12,
+                                                "kh": 8
+                                    },
+                                    "giam": {
+                                                "may": 3,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 2090,
+                                                "kh": 393
+                                    }
+                        },
+                        "dv_khac": {
+                                    "dau": {
+                                                "may": 120,
+                                                "kh": 97
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 11,
+                                                "kh": 9
+                                    },
+                                    "giam": {
+                                                "may": 2,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 129,
+                                                "kh": 105
+                                    }
+                        },
+                        "phan_phoi": {
+                                    "dau": {
+                                                "may": 0,
+                                                "kh": 1975
+                                    },
+                                    "ke_hoach": {
+                                                "may": 0,
+                                                "kh": 0
+                                    },
+                                    "tang": {
+                                                "may": 0,
+                                                "kh": 22
+                                    },
+                                    "giam": {
+                                                "may": 0,
+                                                "kh": 1
+                                    },
+                                    "cuoi": {
+                                                "may": 0,
+                                                "kh": 1996
+                                    }
+                        }
+            }
+},
         '07/2026': {
             thue_may: { dau: { may: 1960, kh: 602 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 18, kh: 7 }, giam: { may: 5, kh: 3 }, cuoi: { may: 1973, kh: 606 } },
             mc: { dau: { may: 386, kh: 205 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 0 }, giam: { may: 0, kh: 0 }, cuoi: { may: 386, kh: 205 } },
@@ -45,7 +2079,7 @@ window.CustomersModule = {
         // Initialize Month Dropdown in table header
         const monthFilter = document.getElementById('customers-month-filter');
         if (monthFilter) {
-            const months = ['08/2026', '07/2026', '06/2026'];
+            const months = ['09/2026', '08/2026', '07/2026', '06/2026'];
             monthFilter.innerHTML = '';
             months.forEach(m => {
                 const opt = document.createElement('option');
@@ -86,9 +2120,20 @@ window.CustomersModule = {
         else if (company === 'Văn phòng VPS' || company.includes('VPVPS') || company.includes('Văn phòng')) matrixKey = 'VPVPS';
         else if (company !== 'all') matrixKey = 'all';
 
-        let cData = (this.monthlyData && this.monthlyData[this.selectedMonth] && matrixKey === 'all')
-            ? this.monthlyData[this.selectedMonth]
-            : (data.matrix[matrixKey] || data.matrix['all']);
+        let cData = null;
+        if (this.monthlyData && this.monthlyData[this.selectedMonth]) {
+            const mData = this.monthlyData[this.selectedMonth];
+            if (mData[matrixKey]) {
+                cData = mData[matrixKey];
+            } else if (matrixKey === 'all') {
+                cData = mData.all || mData;
+            } else {
+                cData = mData[matrixKey] || (data.matrix && data.matrix[matrixKey]) || mData.all || mData;
+            }
+        }
+        if (!cData && data && data.matrix) {
+            cData = data.matrix[matrixKey] || data.matrix['all'];
+        }
 
         // Helper to safely get a category's values
         const getCat = (catId) => {

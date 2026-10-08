@@ -43,8 +43,8 @@ window.SliceMatrixModule = {
                 cp_actual: 1392,
                 lntt_actual: 525.1,
                 cash_in_w: [3450, 3210, 3890, 4647], // W1..W4
-                inventory: 30.34, // Tỷ VNĐ
-                inventory_project: 0.0,
+                inventory: 31.24, // Tỷ VNĐ (HĐKD thường)
+                inventory_project: 4.97, // Tỷ VNĐ (Dự án)
                 debt: 18.71, // Tỷ VNĐ
                 debt_overdue: 1.66,
                 hr_official: 46,
@@ -62,9 +62,9 @@ window.SliceMatrixModule = {
                 cp_actual: 1264.6,
                 lntt_actual: 732.9,
                 cash_in_w: [1250, 1100, 1340, 1351],
-                inventory: 8.85,
+                inventory: 6.49,
                 inventory_project: 0.0,
-                debt: 5.34,
+                debt: 5.35,
                 debt_overdue: 1.07,
                 hr_official: 39,
                 hr_quota: 43,
@@ -83,8 +83,8 @@ window.SliceMatrixModule = {
                 cash_in_w: [3100, 3650, 3920, 4431.7],
                 inventory: 25.71,
                 inventory_project: 0.0,
-                debt: 6.41,
-                debt_overdue: 0.69,
+                debt: 12.48,
+                debt_overdue: 0.97,
                 hr_official: 91,
                 hr_quota: 98,
                 hr_probation: 0

@@ -5,7 +5,7 @@
  */
 
 window.ProjectCustomersModule = {
-    currentMonth: 3, // Mặc định Tháng 3/2026
+    currentMonth: 9, // Mặc định Tháng 9/2026
     currentCompany: 'all',
     currentProject: 'all',
     searchQuery: '',
