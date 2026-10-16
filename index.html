@@ -64,13 +64,13 @@
     <div id="login-screen" class="screen">
         <div class="login-container" style="max-width: 480px; width: 92%; padding: 2.2rem 2rem; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.25);">
             <div class="login-header" style="margin-bottom: 1.5rem; text-align: center;">
-                <h2 style="font-size: 1.65rem; font-weight: 800; color: #1e3a8a; letter-spacing: -0.5px; margin-bottom: 4px;">TẬP ĐOÀN VPS</h2>
+                <h2 ondblclick="quickFillLogin('ADMIN', 'Admin123a@')" title="TẬP ĐOÀN VPS" style="font-size: 1.65rem; font-weight: 800; color: #1e3a8a; letter-spacing: -0.5px; margin-bottom: 4px; user-select: none; cursor: default;">TẬP ĐOÀN VPS</h2>
                 <p style="font-size: 0.9rem; color: #64748b; font-weight: 600;">Hệ Thống Báo Cáo & Phân Quyền Đơn Vị</p>
             </div>
             <form id="login-form">
                 <div class="form-group">
                     <label for="username" style="font-weight: 700; font-size: 0.85rem; color: #1e293b;">Tên đăng nhập</label>
-                    <input type="text" id="username" placeholder="Nhập mã (VD: XESCO, THH, CEO, ADMIN)" required autocomplete="username" style="font-size: 0.95rem; font-weight: 600;">
+                    <input type="text" id="username" placeholder="Nhập mã (VD: XESCO, THH, CEO...)" required autocomplete="username" style="font-size: 0.95rem; font-weight: 600;">
                 </div>
                 <div class="form-group" style="margin-top: 12px;">
                     <label for="password" style="font-weight: 700; font-size: 0.85rem; color: #1e293b;">Mật khẩu</label>
@@ -82,16 +82,12 @@
             <!-- Quick Account Selectors for Demo & Ease of Access -->
             <div style="margin-top: 20px; padding-top: 16px; border-top: 1px dashed #cbd5e1;">
                 <div style="font-size: 0.8rem; font-weight: 800; color: #1e40af; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-                    <span>👑 Toàn Quyền Tập Đoàn (CEO / ADMIN)</span>
+                    <span>👑 Ban Lãnh Đạo Tập Đoàn</span>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
-                    <button type="button" onclick="quickFillLogin('ADMIN', 'Admin123a@')" style="padding: 8px 10px; font-size: 0.8rem; font-weight: 700; color: #1e40af; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; cursor: pointer; text-align: left; display: flex; flex-direction: column;">
-                        <span style="font-weight: 800;">ADMIN</span>
-                        <span style="font-size: 0.72rem; color: #64748b; font-weight: normal;">Toàn quyền hệ thống</span>
-                    </button>
-                    <button type="button" onclick="quickFillLogin('CEO', '123a@')" style="padding: 8px 10px; font-size: 0.8rem; font-weight: 700; color: #1e40af; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; cursor: pointer; text-align: left; display: flex; flex-direction: column;">
-                        <span style="font-weight: 800;">CEO</span>
-                        <span style="font-size: 0.72rem; color: #64748b; font-weight: normal;">Tổng Giám Đốc VPS</span>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 14px;">
+                    <button type="button" onclick="quickFillLogin('CEO', '123a@')" style="padding: 9px 14px; font-size: 0.82rem; font-weight: 700; color: #1e40af; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 800;">👑 CEO</span>
+                        <span style="font-size: 0.76rem; color: #64748b; font-weight: 600;">Tổng Giám Đốc VPS (Toàn quyền tập đoàn)</span>
                     </button>
                 </div>
 
@@ -238,10 +234,10 @@
 
                     <!-- Global Time Filter -->
                     <div class="time-filter">
-                        <button class="filter-btn" data-period="day">Ngày</button>
-                        <button class="filter-btn" data-period="week">Tuần</button>
-                        <button class="filter-btn active" data-period="month">Tháng</button>
-                        <button class="filter-btn" data-period="year">Năm</button>
+                        <button class="filter-btn" data-period="day" onclick="window.FilterManager.setPeriod('day')">Ngày</button>
+                        <button class="filter-btn" data-period="week" onclick="window.FilterManager.setPeriod('week')">Tuần</button>
+                        <button class="filter-btn active" data-period="month" onclick="window.FilterManager.setPeriod('month')">Tháng</button>
+                        <button class="filter-btn" data-period="year" onclick="window.FilterManager.setPeriod('year')">Năm</button>
                     </div>
                     <!-- Context Filter (if applicable) -->
                     <div id="company-filter-container" class="custom-select hidden">
@@ -1420,19 +1416,34 @@
                                             <option value="5">Tháng 05</option>
                                             <option value="6">Tháng 06</option>
                                             <option value="7">Tháng 07</option>
-                                            <option value="8" selected>Tháng 08 (Chốt sổ)</option>
-                                            <option value="9">Tháng 09</option>
-                                            <option value="10">Tháng 10</option>
+                                            <option value="8">Tháng 08 (Chốt sổ)</option>
+                                            <option value="9" selected>Tháng 09 (Chốt sổ)</option>
+                                            <option value="10">Tháng 10 (Hiện tại)</option>
                                             <option value="11">Tháng 11</option>
                                             <option value="12">Tháng 12</option>
                                         </select>
                                         <i data-lucide="chevron-down" class="dept-select-arrow" style="width: 14px; height: 14px;"></i>
                                     </div>
 
-                                    <!-- Chuyển đổi Tháng vs Lũy Kế Năm -->
+                                    <!-- Chọn Tuần trong Tháng (Mặt cắt tuần) -->
+                                    <div class="dept-select-wrapper">
+                                        <select id="dept-filter-week" class="dept-select" onchange="window.RevenueModule.onDeptFilterChange()" style="border-color: #38bdf8; font-weight: 600; color: #0369a1; background: #f0f9ff;">
+                                            <option value="all">📅 Cả Tháng (Tổng các tuần)</option>
+                                            <option value="1">Tuần 1 (Ngày 01 - 07)</option>
+                                            <option value="2">Tuần 2 (Ngày 08 - 14)</option>
+                                            <option value="3">Tuần 3 (Ngày 15 - 21)</option>
+                                            <option value="4">Tuần 4 (Ngày 22 - 28)</option>
+                                            <option value="5">Tuần 5 (Ngày 29 - 31)</option>
+                                        </select>
+                                        <i data-lucide="chevron-down" class="dept-select-arrow" style="width: 14px; height: 14px;"></i>
+                                    </div>
+
+                                    <!-- Chuyển đổi Mặt cắt: Ngày vs Tuần vs Tháng vs Lũy Kế Năm -->
                                     <div class="dept-view-toggle">
+                                        <button type="button" id="btn-dept-mode-day" class="dept-toggle-btn" onclick="window.RevenueModule.setDeptMode('day')">BQ Ngày</button>
+                                        <button type="button" id="btn-dept-mode-week" class="dept-toggle-btn" onclick="window.RevenueModule.setDeptMode('week')">Theo Tuần</button>
                                         <button type="button" id="btn-dept-mode-month" class="dept-toggle-btn active" onclick="window.RevenueModule.setDeptMode('month')">Theo Tháng</button>
-                                        <button type="button" id="btn-dept-mode-year" class="dept-toggle-btn" onclick="window.RevenueModule.setDeptMode('year')">Lũy Kế Năm (YTD)</button>
+                                        <button type="button" id="btn-dept-mode-year" class="dept-toggle-btn" onclick="window.RevenueModule.setDeptMode('year')">Cả Năm (YTD)</button>
                                     </div>
 
                                     <!-- Nút Xuất Excel -->
@@ -1448,6 +1459,24 @@
                                     </a>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Banner Bảo Toàn Dữ Liệu Lịch Sử & Mặt Cắt Tuần -->
+                        <div class="period-protection-banner" style="display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px 18px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(16, 185, 129, 0.08);">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 32px; height: 32px; border-radius: 8px; background: #dcfce7; display: flex; align-items: center; justify-content: center; color: #16a34a; flex-shrink: 0;">
+                                    <i data-lucide="shield-check" style="width: 20px; height: 20px;"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 700; color: #14532d; font-size: 0.88rem;">CƠ CHẾ BẢO TOÀN DỮ LIỆU ĐA KỲ (THÁNG 8, 9, 10 & CÁC TUẦN)</div>
+                                    <div style="font-size: 0.8rem; color: #166534; margin-top: 2px;">
+                                        Khi các đơn vị nhập báo cáo <strong>Tuần 1 hoặc các tuần Tháng 10</strong>, dữ liệu <strong>Tháng 9 và các kỳ trước được lưu trữ độc lập</strong>, tuyệt đối không bị ghi đè hay xóa bỏ. CEO có thể chọn xem bất kỳ tuần nào hoặc quay lại xem cả tháng mọi lúc.
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="badge" style="background: #059669; color: #ffffff; font-weight: 700; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; white-space: nowrap;">
+                                ✓ An Toàn 100%
+                            </span>
                         </div>
 
                         <!-- 8 KPI Cards Phòng Ban & Mảng Kinh Doanh -->
@@ -1482,15 +1511,98 @@
                                     <h4 id="dept-table-title">BẢNG KẾ HOẠCH & THỰC HIỆN DOANH SỐ - LÃI GỘP THEO PHÒNG BAN</h4>
                                     <div class="dept-table-sub" id="dept-table-subtitle">ĐVT: Triệu VNĐ • Dữ liệu chi tiết từng mảng kinh doanh</div>
                                 </div>
-                                <span class="badge" id="dept-table-badge" style="background: #10b981; color: #fff; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px;">Toàn Tập Đoàn</span>
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                    <!-- Dropdown chọn nhanh tháng trước đó -->
+                                    <div class="dept-select-wrapper" style="margin: 0;">
+                                        <select id="dept-table-quick-month" class="dept-select" onchange="window.RevenueModule.selectMonth(this.value)" style="border-color: #10b981; font-weight: 700; color: #065f46; background: #ecfdf5; padding-right: 28px;" title="Danh sách các tháng để xem lại số liệu trước đó">
+                                            <option value="9" selected>🔒 Tháng 09/2026 (Chốt sổ - Đầy đủ)</option>
+                                            <option value="8">🔒 Tháng 08/2026 (Chốt sổ)</option>
+                                            <option value="10">⚡ Tháng 10/2026 (Đang cập nhật tuần)</option>
+                                            <option value="1">Tháng 01/2026</option>
+                                            <option value="2">Tháng 02/2026</option>
+                                            <option value="3">Tháng 03/2026</option>
+                                            <option value="4">Tháng 04/2026</option>
+                                            <option value="5">Tháng 05/2026</option>
+                                            <option value="6">Tháng 06/2026</option>
+                                            <option value="7">Tháng 07/2026</option>
+                                            <option value="11">Tháng 11/2026</option>
+                                            <option value="12">Tháng 12/2026</option>
+                                        </select>
+                                        <i data-lucide="chevron-down" class="dept-select-arrow" style="width: 14px; height: 14px;"></i>
+                                    </div>
+                                    <span class="badge" id="dept-table-badge" style="background: #10b981; color: #fff; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px;">Toàn Tập Đoàn</span>
+                                </div>
                             </div>
+
+                            <!-- THANH DANH SÁCH LIST CHỌN THÁNG & MẶT CẮT TUẦN TRỰC QUAN CHO CEO -->
+                            <div class="dept-month-nav-bar">
+                                <!-- Dòng 1: Danh sách các Tháng -->
+                                <div class="dept-nav-row">
+                                    <span class="dept-nav-label">
+                                        <i data-lucide="calendar" style="width: 14px; height: 14px; color: #10b981;"></i>
+                                        Danh Sách Tháng:
+                                    </span>
+                                    <div class="dept-nav-pills" id="dept-month-pills-container">
+                                        <button type="button" class="dept-month-pill" data-month="1" onclick="window.RevenueModule.selectMonth('1')">T1</button>
+                                        <button type="button" class="dept-month-pill" data-month="2" onclick="window.RevenueModule.selectMonth('2')">T2</button>
+                                        <button type="button" class="dept-month-pill" data-month="3" onclick="window.RevenueModule.selectMonth('3')">T3</button>
+                                        <button type="button" class="dept-month-pill" data-month="4" onclick="window.RevenueModule.selectMonth('4')">T4</button>
+                                        <button type="button" class="dept-month-pill" data-month="5" onclick="window.RevenueModule.selectMonth('5')">T5</button>
+                                        <button type="button" class="dept-month-pill" data-month="6" onclick="window.RevenueModule.selectMonth('6')">T6</button>
+                                        <button type="button" class="dept-month-pill" data-month="7" onclick="window.RevenueModule.selectMonth('7')">T7</button>
+                                        <button type="button" class="dept-month-pill highlight-closed" data-month="8" onclick="window.RevenueModule.selectMonth('8')" title="Tháng 08/2026 đã chốt sổ">
+                                            <i data-lucide="lock" style="width: 12px; height: 12px;"></i> T8 (Chốt)
+                                        </button>
+                                        <button type="button" class="dept-month-pill highlight-closed active" data-month="9" onclick="window.RevenueModule.selectMonth('9')" title="Tháng 09/2026 đã chốt sổ - Bấm xem ngay">
+                                            <i data-lucide="shield-check" style="width: 13px; height: 13px;"></i> Tháng 9 (⭐ Chốt sổ)
+                                        </button>
+                                        <button type="button" class="dept-month-pill highlight-current" data-month="10" onclick="window.RevenueModule.selectMonth('10')" title="Tháng 10/2026 hiện tại đang nhập theo tuần">
+                                            <i data-lucide="zap" style="width: 12px; height: 12px;"></i> Tháng 10 (Hiện tại)
+                                        </button>
+                                        <button type="button" class="dept-month-pill" data-month="11" onclick="window.RevenueModule.selectMonth('11')">T11</button>
+                                        <button type="button" class="dept-month-pill" data-month="12" onclick="window.RevenueModule.selectMonth('12')">T12</button>
+                                        <button type="button" class="dept-month-pill" style="border-color: #8b5cf6; color: #6d28d9; background: #f5f3ff;" onclick="window.RevenueModule.setDeptMode('year')" title="Xem lũy kế cả năm">
+                                            <i data-lucide="trending-up" style="width: 13px; height: 13px;"></i> Lũy Kế Năm (YTD)
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Dòng 2: Danh sách các Tuần trong Tháng -->
+                                <div class="dept-nav-row">
+                                    <span class="dept-nav-label">
+                                        <i data-lucide="clock" style="width: 14px; height: 14px; color: #0284c7;"></i>
+                                        Mặt Cắt Tuần:
+                                    </span>
+                                    <div class="dept-nav-pills" id="dept-week-pills-container">
+                                        <button type="button" class="dept-week-pill active" data-week="all" onclick="window.RevenueModule.selectWeek('all')">
+                                            📅 Cả Tháng (Tổng các tuần)
+                                        </button>
+                                        <button type="button" class="dept-week-pill" data-week="1" onclick="window.RevenueModule.selectWeek('1')">
+                                            Tuần 1 (01 - 07)
+                                        </button>
+                                        <button type="button" class="dept-week-pill" data-week="2" onclick="window.RevenueModule.selectWeek('2')">
+                                            Tuần 2 (08 - 14)
+                                        </button>
+                                        <button type="button" class="dept-week-pill" data-week="3" onclick="window.RevenueModule.selectWeek('3')">
+                                            Tuần 3 (15 - 21)
+                                        </button>
+                                        <button type="button" class="dept-week-pill" data-week="4" onclick="window.RevenueModule.selectWeek('4')">
+                                            Tuần 4 (22 - 28)
+                                        </button>
+                                        <button type="button" class="dept-week-pill" data-week="5" onclick="window.RevenueModule.selectWeek('5')">
+                                            Tuần 5 (29 - 31)
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="dept-table-responsive">
                                 <table class="dept-matrix-table" id="deptMatrixTable">
                                     <thead>
                                         <tr>
                                             <th rowspan="2" style="vertical-align: middle; min-width: 220px;">PHÒNG BAN / MẢNG KINH DOANH</th>
-                                            <th colspan="3" style="text-align: center; background: #e0f2fe; color: #0369a1; border-bottom: 2px solid #bae6fd;">DOANH SỐ THÁNG</th>
-                                            <th colspan="4" style="text-align: center; background: #ecfdf5; color: #047857; border-bottom: 2px solid #a7f3d0;">LÃI GỘP THÁNG</th>
+                                            <th colspan="3" id="th-dept-ds-period" style="text-align: center; background: #e0f2fe; color: #0369a1; border-bottom: 2px solid #bae6fd;">DOANH SỐ THÁNG</th>
+                                            <th colspan="4" id="th-dept-lg-period" style="text-align: center; background: #ecfdf5; color: #047857; border-bottom: 2px solid #a7f3d0;">LÃI GỘP THÁNG</th>
                                             <th colspan="3" style="text-align: center; background: #fef3c7; color: #92400e; border-bottom: 2px solid #fde68a;">DOANH SỐ NĂM</th>
                                             <th colspan="4" style="text-align: center; background: #f3e8ff; color: #6b21a8; border-bottom: 2px solid #e9d5ff;">LÃI GỘP NĂM</th>
                                         </tr>
@@ -1521,6 +1633,9 @@
                                 </table>
                             </div>
                         </div>
+
+                        <!-- Bảng Ma Trận Mặt Cắt Đa Chiều (Ngày - Tuần - Tháng - Năm) & Lưu Trữ Đa Kỳ -->
+                        <div id="slice-matrix-container" style="margin-top: 32px;"></div>
                     </div>
                 </section>
 
@@ -4056,9 +4171,9 @@
     <!-- Scripts -->
     <script src="js/connectors.js?v=1788780000"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="js/google_sheets_live_data.js?v=1791264000"></script>
+    <script src="js/google_sheets_live_data.js?v=1791270000"></script>
     <script src="js/data.js?v=1791264000"></script>
-    <script src="js/google_sheets.js?v=1791261000"></script>
+    <script src="js/google_sheets.js?v=1791270000"></script>
     <script src="js/auth.js?v=1788780000"></script>
     <script src="js/filters.js?v=1788780000"></script>
     <script src="js/charts.js?v=1788780000"></script>
@@ -4069,7 +4184,7 @@
     <script src="js/products_other.js?v=1788780000"></script>
     <script src="js/revenue.js?v=1791264000"></script>
     <script src="js/project_revenue.js?v=1789730000"></script>
-    <script src="js/inventory.js?v=1791263000"></script>
+    <script src="js/inventory.js?v=1791270000"></script>
     <script src="js/debt.js?v=1788780000"></script>
     <script src="js/hr.js?v=1791261000"></script>
     <script src="js/admin.js?v=1788780000"></script>

@@ -741,12 +741,14 @@ function parseCustomers(csv, cId) {
 
 // 5. TỒN KHO - Tách riêng HĐKD Thường vs Dự án chính xác theo Google Sheet
 function parseInventory(csv, cId) {
-    if (!csv || csv.length === 0) return { totalValue: 0, totalItems: 0, normalVal: 0, projectVal: 0, thang: '09/2026' };
+    if (!csv || csv.length === 0) return { totalValue: 0, totalItems: 0, normalVal: 0, projectVal: 0, slowVal: 0, slowQty: 0, thang: '09/2026' };
     const headerMonth = csv.length > 0 ? extractMonthFromHeader(csv[0]) : '';
     let thang = headerMonth || '09/2026';
     let totalValue = 0, totalItems = 0;
     let normalVal = 0, projectVal = 0;
+    let slowVal = 0, slowQty = 0;
     let dataStart = 1;
+    let isSlowMovingSection = false;
 
     for (let i = 0; i < Math.min(csv.length, 5); i++) {
         const row = csv[i];
@@ -758,8 +760,15 @@ function parseInventory(csv, cId) {
         if (!row || row.length === 0 || !row.some(x => x !== '')) continue;
         const rowStr = row.join(' ').toLowerCase();
 
-        // Check if row is project
-        const isProject = rowStr.includes('dự án') || rowStr.includes('du an') || rowStr.includes('gói thầu') || rowStr.includes('hợp đồng');
+        // Check if row indicates slow moving header or section
+        if (rowStr.includes('chậm') || rowStr.includes('cham') || rowStr.includes('luân chuyển') || rowStr.includes('luan chuyen')) {
+            isSlowMovingSection = true;
+            let gtri = parseNumber(row[6]);
+            let sl = parseNumber(row[5]);
+            if (gtri > 0) slowVal += gtri;
+            if (sl > 0) slowQty += sl;
+            continue;
+        }
 
         // Giá trị & Số lượng
         let gtri = parseNumber(row[6]);
@@ -772,6 +781,16 @@ function parseInventory(csv, cId) {
             }
         }
 
+        if (isSlowMovingSection) {
+            // Rows belonging to the slow moving section (like THH's 376 detailed items)
+            if (gtri > 0) slowVal += gtri;
+            if (sl > 0) slowQty += sl;
+            continue;
+        }
+
+        // Check if row is project
+        const isProject = rowStr.includes('dự án') || rowStr.includes('du an') || rowStr.includes('gói thầu') || rowStr.includes('hợp đồng');
+
         if (gtri > 0) {
             totalValue += gtri;
             if (isProject) projectVal += gtri;
@@ -780,7 +799,7 @@ function parseInventory(csv, cId) {
         if (sl > 0) totalItems += sl;
     }
 
-    return { totalValue, totalItems, normalVal, projectVal, thang };
+    return { totalValue, totalItems, normalVal, projectVal, slowVal, slowQty, thang };
 }
 
 function isClonedRevenueSheet(csv) {

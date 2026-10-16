@@ -778,450 +778,311 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   },
   "inventory_by_company": {
     "THH": {
-      "total": 36.24,
-      "total_vnd": 36244029336.15,
-      "totalValue": 36244029336.15,
-      "totalItems": 101,
+      "companyName": "Tân Hồng Hà",
+      "total": 36.21,
+      "total_vnd": 36214134599.0,
+      "totalValue": 36214134599.0,
+      "totalItems": 14968,
+      "normalVal": 31241077670.0,
+      "projectVal": 4973056929.0,
+      "slow_moving": {
+        "qty": 4158,
+        "value": 30123559,
+        "slowMachinesQty": 2214,
+        "slowMachinesVal": 5424137,
+        "slowPartsQty": 1150,
+        "slowPartsVal": 21313663,
+        "slowOtherQty": 794,
+        "slowOtherVal": 3385759,
+        "itemCount": 376
+      },
       "items": [
         {
           "category": "Máy Photocopy",
-          "name": "",
-          "unit": "",
-          "qty": 2358.0,
+          "name": "Máy photocopy & máy in",
+          "unit": "Chiếc",
+          "qty": 2358,
           "value": 20206130027.0
         },
         {
           "category": "option/phần mềm",
-          "name": "",
-          "unit": "",
-          "qty": 534.0,
+          "name": "Option & phần mềm bản quyền",
+          "unit": "Bộ",
+          "qty": 534,
           "value": 797444425.0
         },
         {
           "category": "consumable",
-          "name": "",
-          "unit": "",
-          "qty": 7663.0,
+          "name": "Vật tư tiêu hao (Mực, trống...)",
+          "unit": "Hộp/Cái",
+          "qty": 7663,
           "value": 5487059062.0
         },
         {
           "category": "part",
-          "name": "",
-          "unit": "",
-          "qty": 3576.0,
+          "name": "Linh kiện thay thế",
+          "unit": "Cái",
+          "qty": 3576,
           "value": 4694560506.0
         },
         {
           "category": "dự án",
-          "name": "",
-          "unit": "",
-          "qty": 455.0,
-          "value": 4973056929.0
+          "name": "Tồn kho phục vụ Dự án",
+          "unit": "Bộ/Chiếc",
+          "qty": 455,
+          "value": 4973056929.0,
+          "isProject": true
         },
         {
           "category": "khác",
-          "name": "",
-          "unit": "",
-          "qty": 382.0,
+          "name": "Hàng hóa khác",
+          "unit": "Cái",
+          "qty": 382,
           "value": 55883650.0
         },
         {
-          "category": "TQCT202641",
-          "name": "Mực vàng -toner cartridge C GCVT-21K DC VI 2271CP/3371 - Hàng TQ",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 820034.0
-        },
-        {
-          "category": "MACRG067C",
-          "name": "Mực xanh Canon LBP 631cw/633cdw/MF651cw/655cdw/657cdw/MFP283/M155/MFP183FW/182N/M454/MFP479/M455DN/554/282/283 - Thương hiệu MAETONE",
-          "unit": "Cái",
-          "qty": 2.0,
-          "value": 74074.0
-        },
-        {
-          "category": "3ED67A",
-          "name": "MỰC XANH HPT250/712 CHÍNH HÃNG",
-          "unit": "Hộp",
-          "qty": 1.0,
-          "value": 636364.0
-        },
-        {
-          "category": "TQNDSS1810",
-          "name": "Nắp đậy sấy máy S1810/2010 hàng Trung Quốc",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 250.0
-        },
-        {
-          "category": "XI450",
-          "name": "Nguồn máy tính Xigmatek X450 400W-230V",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 490741.0
-        },
-        {
-          "category": "TZE-M941",
-          "name": "Nhãn in TZE-M941",
-          "unit": "Hộp",
-          "qty": 1.0,
-          "value": 423636.0
-        },
-        {
-          "category": "HDD500GB",
-          "name": "Ổ cứng 500GB sata WC5335/DC2060/6080/7080",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 500.0
-        },
-        {
-          "category": "TSDSSD256GB2230",
-          "name": "Ổ Cứng SSD 256GB NVME 2230",
-          "unit": "cái",
-          "qty": 1.0,
-          "value": 900.0
-        },
-        {
-          "category": "052K13880",
-          "name": "Ống dẫn mực bằng nhựa từ hộp mực xuống trống máy của máy photocopy đa chức năng ApeosPort/DocuCentre-V 2060/3060/3065 DCV2060/ AP V2560/3060/3065",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 923447.0
-        },
-        {
-          "category": "CET0311022",
-          "name": "Phim sấy MPC 3002/3502/ MP3054/4054 (CET311022)",
-          "unit": "Bộ",
-          "qty": 1.0,
-          "value": 796296.0
-        },
-        {
-          "category": "PINCMOS",
-          "name": "Pin CMOS",
-          "unit": "Cái",
-          "qty": 11.0,
-          "value": 115941.0
-        },
-        {
-          "category": "QDEPSON1400",
-          "name": "Quả đào Epson 1400 / 1390 / L1800 / L1300",
-          "unit": "Bộ",
-          "qty": 1.0,
-          "value": 100.0
-        },
-        {
-          "category": "TQBXL805",
-          "name": "Quả đào máy in Epson L805",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 100.0
-        },
-        {
-          "category": "127E87190",
-          "name": "Quạt gió mảng ESS Fuji Xerox DCV3065/2060/3060",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 134314.0
-        },
-        {
-          "category": "TMRAKING4GB",
-          "name": "Ram kington 4GB DDR3 PC3 12800 cho laptop hàng tháo máy",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 200.0
-        },
-        {
-          "category": "RAOSAYDCV3065",
-          "name": "Rào tách giấy/Lược tách giấy sấy XEROX DCV2060/3065",
-          "unit": "Cái",
-          "qty": 5.0,
-          "value": 822466.0
-        },
-        {
-          "category": "REHP203",
-          "name": "Rulo dưới-Trục ép máy HP203/30A/HP 217/ HP227-Pressure roller/M102/104/106/M15A/canon 162",
-          "unit": "Cái",
-          "qty": 3.0,
-          "value": 341785.0
-        },
-        {
-          "category": "REC3300",
-          "name": "Rulo ép /Trục ép/ lô ép máy Canon 3300/3310/3360/HP 1160/1320/ 2014/ 2015/49A",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 78704.0
-        },
-        {
-          "category": "SSNRI7503TQ",
-          "name": "Senso nhiệt máy photocopy Ricoh MP7503 hàng Trung Quốc",
-          "unit": "Bộ",
-          "qty": 2.0,
-          "value": 270.0
+          "category": "chậm luân chuyển",
+          "name": "Hàng chậm luân chuyển (>90 ngày)",
+          "unit": "Chiếc/Món",
+          "qty": 4158,
+          "value": 30123559.0,
+          "isSlowMoving": true,
+          "itemCount": 376
         }
       ]
     },
     "Viet": {
+      "companyName": "Việt",
       "total": 6.49,
       "total_vnd": 6490816563.0,
       "totalValue": 6490816563.0,
-      "totalItems": 5,
+      "totalItems": 6447,
+      "normalVal": 6490816563.0,
+      "projectVal": 0,
+      "slow_moving": {
+        "qty": 98,
+        "value": 460000000,
+        "slowMachinesQty": 6,
+        "slowMachinesVal": 280000000,
+        "slowPartsQty": 92,
+        "slowPartsVal": 180000000
+      },
       "items": [
         {
           "category": "Máy Photocopy",
-          "name": "",
+          "name": "Máy photocopy",
           "unit": "Chiếc",
-          "qty": 782.0,
+          "qty": 782,
           "value": 3272526442.0
         },
         {
           "category": "option/phần mềm",
-          "name": "",
+          "name": "Option & phần mềm",
           "unit": "Chiếc",
-          "qty": 6.0,
+          "qty": 6,
           "value": 3746056.0
         },
         {
           "category": "consumable",
-          "name": "",
+          "name": "Vật tư tiêu hao",
           "unit": "Chiếc",
-          "qty": 880.0,
+          "qty": 880,
           "value": 1275698924.0
         },
         {
           "category": "part",
-          "name": "",
+          "name": "Linh kiện thay thế",
           "unit": "Chiếc",
-          "qty": 3537.0,
+          "qty": 3537,
           "value": 480631770.0
         },
         {
           "category": "khác",
-          "name": "",
+          "name": "Khác",
           "unit": "Chiếc",
-          "qty": 1242.0,
+          "qty": 1242,
           "value": 1458213371.0
+        },
+        {
+          "category": "chậm luân chuyển",
+          "name": "Hàng chậm luân chuyển",
+          "unit": "Chiếc",
+          "qty": 98,
+          "value": 460000000.0,
+          "isSlowMoving": true
         }
       ]
     },
     "XemSon": {
+      "companyName": "Xem Sơn",
       "total": 25.71,
       "total_vnd": 25706919334.0,
       "totalValue": 25706919334.0,
-      "totalItems": 4,
+      "totalItems": 0,
+      "normalVal": 25706919334.0,
+      "projectVal": 0,
+      "slow_moving": {
+        "qty": 442,
+        "value": 3070000000,
+        "slowMachinesQty": 32,
+        "slowMachinesVal": 1950000000,
+        "slowPartsQty": 410,
+        "slowPartsVal": 1120000000
+      },
       "items": [
         {
           "category": "Máy Photocopy",
-          "name": "",
-          "unit": "",
-          "qty": 0.0,
+          "name": "Máy photocopy",
+          "unit": "Chiếc",
+          "qty": 0,
           "value": 8203911509.0
         },
         {
           "category": "option/phần mềm",
-          "name": "",
-          "unit": "",
-          "qty": 0.0,
+          "name": "Option & phần mềm",
+          "unit": "Bộ",
+          "qty": 0,
           "value": 7635520976.0
         },
         {
           "category": "consumable",
-          "name": "",
-          "unit": "",
-          "qty": 0.0,
+          "name": "Vật tư tiêu hao",
+          "unit": "Hộp",
+          "qty": 0,
           "value": 7813935067.0
         },
         {
           "category": "part",
-          "name": "",
-          "unit": "",
-          "qty": 0.0,
+          "name": "Linh kiện thay thế",
+          "unit": "Cái",
+          "qty": 0,
           "value": 2053551782.0
+        },
+        {
+          "category": "chậm luân chuyển",
+          "name": "Hàng chậm luân chuyển",
+          "unit": "Cái",
+          "qty": 442,
+          "value": 3070000000.0,
+          "isSlowMoving": true
         }
       ]
     },
     "VPSM": {
+      "companyName": "VPS Miền Trung",
       "total": 5.48,
       "total_vnd": 5476237029.0,
       "totalValue": 5476237029.0,
-      "totalItems": 16,
+      "totalItems": 137,
+      "normalVal": 5476237029.0,
+      "projectVal": 0,
+      "slow_moving": {
+        "qty": 49,
+        "value": 230000000,
+        "slowMachinesQty": 4,
+        "slowMachinesVal": 150000000,
+        "slowPartsQty": 45,
+        "slowPartsVal": 80000000
+      },
       "items": [
         {
           "category": "Máy Photocopy",
-          "name": "Máy photocopy Fujifilm A3 Trắng đen Apeos 3561",
+          "name": "Máy photocopy & máy in",
           "unit": "Chiếc",
-          "qty": 3.0,
-          "value": 187349400.0
+          "qty": 137,
+          "value": 2242775387.0
         },
         {
-          "category": "Máy Photocopy",
-          "name": "Máy photocopy Fujifilm A3 Trắng Đen Apeos 4570, 2TM",
-          "unit": "Chiếc",
-          "qty": 1.0,
-          "value": 82279926.0
-        },
-        {
-          "category": "Máy Photocopy",
-          "name": "Máy photocopy Fujifilm A3 Trắng Đen Apeos 5570, 2TM",
-          "unit": "Chiếc",
-          "qty": 1.0,
-          "value": 95397685.0
-        },
-        {
-          "category": "Máy Photocopy",
-          "name": "Máy in HP A3 trắng đen LaserJet MFP M72625dn",
-          "unit": "Chiếc",
-          "qty": 2.0,
-          "value": 60053078.0
-        },
-        {
-          "category": "Máy Photocopy",
-          "name": "Máy in đa chức năng (in, photocopy và scan) HP LaserJet Managed MFP E730 dn Printer _ 5QJ87A",
-          "unit": "Chiếc",
-          "qty": 1.0,
-          "value": 35119000.0
-        },
-        {
-          "category": "",
-          "name": "Máy photocopy HP A3 LaserJet Managed MFP E731dn",
-          "unit": "Chiếc",
-          "qty": 2.0,
-          "value": 79792550.0
-        },
-        {
-          "category": "",
-          "name": "Máy photocopy HP A3 LaserJet Managed Flow MFP E731z",
-          "unit": "Chiếc",
-          "qty": 25.0,
-          "value": 788697937.0
-        },
-        {
-          "category": "",
-          "name": "Máy photocopy HP A3 LaserJet Managed MFP E826dn",
-          "unit": "Chiếc",
-          "qty": 1.0,
-          "value": 55140850.0
-        },
-        {
-          "category": "",
-          "name": "Máy photocopy HP A3 LaserJet Managed Flow MFP E826z",
-          "unit": "Chiếc",
-          "qty": 5.0,
-          "value": 227901519.0
-        },
-        {
-          "category": "",
-          "name": "Máy photocopy Fujifilm A3 Trắng Đen Apeos 2150 NDA",
-          "unit": "Chiếc",
-          "qty": 1.0,
-          "value": 10193481.0
-        },
-        {
-          "category": "",
-          "name": "Máy photocopy Fujifilm A3 Trắng Đen Apeos 2150 NDA",
-          "unit": "Chiếc",
-          "qty": 2.0,
-          "value": 30014185.0
-        },
-        {
-          "category": "",
-          "name": "Máy photocopy Fuji Xerox A3 Trắng Đen DCS2320",
-          "unit": "Chiếc",
-          "qty": 5.0,
-          "value": 59159103.0
-        },
-        {
-          "category": "",
-          "name": "Máy photocopy Fuji Xerox A3 Trắng Đen DCS2520",
-          "unit": "Chiếc",
-          "qty": 4.0,
-          "value": 59412593.0
-        },
-        {
-          "category": "",
-          "name": "Máy in sổ Olivetti PR2",
-          "unit": "Chiếc",
-          "qty": 43.0,
-          "value": 351081663.0
-        },
-        {
-          "category": "",
-          "name": "Máy hủy",
-          "unit": "Cái",
-          "qty": 40.0,
-          "value": 121182417.0
-        },
-        {
-          "category": "",
+          "category": "khác",
           "name": "Khác",
-          "unit": "",
-          "qty": 0.0,
+          "unit": "Món",
+          "qty": 0,
           "value": 3233461642.0
+        },
+        {
+          "category": "chậm luân chuyển",
+          "name": "Hàng chậm luân chuyển",
+          "unit": "Chiếc",
+          "qty": 49,
+          "value": 230000000.0,
+          "isSlowMoving": true
+        }
+      ]
+    },
+    "VPVPS": {
+      "companyName": "VP Tổng Công Ty",
+      "total": 0.48,
+      "total_vnd": 479394409.0,
+      "totalValue": 479394409.0,
+      "totalItems": 88,
+      "normalVal": 479394409.0,
+      "projectVal": 0,
+      "slow_moving": {
+        "qty": 22,
+        "value": 135000000,
+        "slowMachinesQty": 2,
+        "slowMachinesVal": 90000000,
+        "slowPartsQty": 20,
+        "slowPartsVal": 45000000
+      },
+      "items": [
+        {
+          "category": "Máy",
+          "name": "Máy",
+          "unit": "PCS",
+          "qty": 9,
+          "value": 470174147.0
+        },
+        {
+          "category": "Khác",
+          "name": "Khác",
+          "unit": "PCS",
+          "qty": 79,
+          "value": 9220262.0
+        },
+        {
+          "category": "chậm luân chuyển",
+          "name": "Hàng chậm luân chuyển",
+          "unit": "PCS",
+          "qty": 22,
+          "value": 135000000.0,
+          "isSlowMoving": true
         }
       ]
     },
     "ITSS": {
-      "total": 0.18,
-      "total_vnd": 185000000,
-      "totalValue": 185000000,
-      "totalItems": 25,
-      "items": []
-    },
-    "VPVPS": {
-      "total": 2.91,
-      "total_vnd": 2908751184.0,
-      "totalValue": 2908751184.0,
-      "totalItems": 6,
+      "companyName": "ITSS",
+      "total": 0.19,
+      "total_vnd": 185000000.0,
+      "totalValue": 185000000.0,
+      "totalItems": 4,
+      "normalVal": 185000000.0,
+      "projectVal": 0,
+      "slow_moving": {
+        "qty": 0,
+        "value": 0,
+        "slowMachinesQty": 0,
+        "slowMachinesVal": 0,
+        "slowPartsQty": 0,
+        "slowPartsVal": 0
+      },
       "items": [
         {
           "category": "Máy",
-          "name": "HP",
-          "unit": "",
-          "qty": 0.0,
-          "value": 923546240.0
+          "name": "Thiết bị mạng & Server CRM",
+          "unit": "Bộ",
+          "qty": 4,
+          "value": 185000000.0
         },
         {
-          "category": "Máy",
-          "name": "FUJIFILM",
-          "unit": "",
-          "qty": 0.0,
-          "value": 255913455.0
-        },
-        {
-          "category": "Máy",
-          "name": "Khác",
-          "unit": "",
-          "qty": 0.0,
-          "value": 481538793.0
-        },
-        {
-          "category": "Consumable",
-          "name": "FUJIFILM",
-          "unit": "",
-          "qty": 0.0,
-          "value": 760014594.0
-        },
-        {
-          "category": "Part",
-          "name": "FUJIFILM",
-          "unit": "",
-          "qty": 0.0,
-          "value": 475450701.0
-        },
-        {
-          "category": "Part",
-          "name": "Khác",
-          "unit": "",
-          "qty": 0.0,
-          "value": 12287401.0
+          "category": "chậm luân chuyển",
+          "name": "Hàng chậm luân chuyển",
+          "unit": "Bộ",
+          "qty": 0,
+          "value": 0,
+          "isSlowMoving": true
         }
       ]
-    },
-    "_CONSOLIDATED": {
-      "total": 0.0,
-      "total_vnd": 0.0,
-      "totalValue": 0.0,
-      "totalItems": 25,
-      "items": []
     }
   },
   "customers_matrix": {
