@@ -4,6 +4,14 @@ const path = require('path');
 const https = require('https');
 const NotificationService = require('./notification_service');
 
+process.on('uncaughtException', (err) => {
+    console.error('[Process Uncaught Exception]:', err && err.message ? err.message : err);
+});
+process.on('unhandledRejection', (reason) => {
+    console.error('[Process Unhandled Rejection]:', reason && reason.message ? reason.message : reason);
+});
+
+
 const PORT = 3000;
 const PUBLIC_DIR = __dirname;
 const DATA_DIR = path.join(__dirname, 'data');
@@ -716,6 +724,16 @@ const server = http.createServer(async (req, res) => {
 });
 
 // Dual-stack listening on all interfaces (IPv4 and IPv6)
+server.on('error', (err) => {
+    console.error('[Server Error]:', err.message);
+});
+server.on('clientError', (err, socket) => {
+    console.error('[Client Socket Error]:', err.message);
+    if (socket && socket.writable) {
+        socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+    }
+});
+
 server.listen(PORT, () => {
     console.log(`================================================================`);
     console.log(`🚀 VPS Group Dashboard & Notification Server running at:`);

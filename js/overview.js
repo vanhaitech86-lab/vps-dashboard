@@ -8,9 +8,7 @@ window.OverviewModule = {
 
     init() {
         document.addEventListener('vps_filter_changed', (e) => {
-            if (!document.getElementById('view-overview').classList.contains('hidden')) {
-                this.loadData();
-            }
+            this.loadData();
         });
 
         const navItems = document.querySelectorAll('.nav-item');
@@ -306,26 +304,46 @@ window.OverviewModule = {
         rows.push(hrRow2);
 
         // Category: DOANH SỐ
-        rows.push({ category: '💰 DOANH SỐ - LÃI GỘP' });
+        const curPeriod = window.FilterManager ? window.FilterManager.currentPeriod : 'month';
+        let pMult = 1;
+        let pText = 'Tháng';
+        if (curPeriod === 'day') {
+            pMult = 1 / 26;
+            pText = 'BQ Ngày';
+        } else if (curPeriod === 'week') {
+            pMult = 1 / 4;
+            pText = 'BQ Tuần';
+        } else if (curPeriod === 'year') {
+            pMult = 12;
+            pText = 'Cả Năm';
+        }
+
+        rows.push({ category: `💰 DOANH SỐ - LÃI GỘP (${pText.toUpperCase()})` });
 
         // Row: DS Kế hoạch
-        const revRow1 = { label: 'Doanh Số KH (Tr đ)', values: [], total: '' };
+        const revRow1 = { label: `Doanh Số KH (${pText} - Tr đ)`, values: [], total: '' };
         let sumDS = 0;
         revKeys.forEach(k => {
             const c = rev[k];
-            if (c) { revRow1.values.push(fN(c.ds)); sumDS += c.ds; }
-            else revRow1.values.push('—');
+            if (c) { 
+                const vScaled = Math.round((c.ds || 0) * pMult);
+                revRow1.values.push(fN(vScaled)); 
+                sumDS += vScaled; 
+            } else revRow1.values.push('—');
         });
         revRow1.total = fN(sumDS);
         rows.push(revRow1);
 
         // Row: DS Thực tế
-        const revRow2 = { label: 'Doanh Số TT (Tr đ)', values: [], total: '' };
+        const revRow2 = { label: `Doanh Số TT (${pText} - Tr đ)`, values: [], total: '' };
         let sumActual = 0;
         revKeys.forEach(k => {
             const c = rev[k];
-            if (c) { revRow2.values.push(fN(c.actual)); sumActual += c.actual; }
-            else revRow2.values.push('—');
+            if (c) { 
+                const vScaled = Math.round((c.actual || 0) * pMult);
+                revRow2.values.push(fN(vScaled)); 
+                sumActual += vScaled; 
+            } else revRow2.values.push('—');
         });
         revRow2.total = fN(sumActual);
         rows.push(revRow2);
@@ -341,25 +359,29 @@ window.OverviewModule = {
         rows.push(revRow3);
 
         // Row: Lãi Gộp KH
-        const lgKhRow = { label: 'Lãi Gộp KH (Tr đ)', values: [], total: '' };
+        const lgKhRow = { label: `Lãi Gộp KH (${pText} - Tr đ)`, values: [], total: '' };
         let sumLGKH = 0;
         revKeys.forEach(k => {
             const c = rev[k];
-            if (c) { lgKhRow.values.push(fN(c.ttlg)); sumLGKH += c.ttlg; }
-            else lgKhRow.values.push('—');
+            if (c) { 
+                const vScaled = Math.round((c.ttlg || 0) * pMult);
+                lgKhRow.values.push(fN(vScaled)); 
+                sumLGKH += vScaled; 
+            } else lgKhRow.values.push('—');
         });
         lgKhRow.total = fN(sumLGKH);
         rows.push(lgKhRow);
 
         // Row: Lãi Gộp TT
-        const lgRow = { label: 'Lãi Gộp TT (Tr đ)', values: [], total: '' };
+        const lgRow = { label: `Lãi Gộp TT (${pText} - Tr đ)`, values: [], total: '' };
         let sumLG = 0;
         revKeys.forEach(k => {
             const c = rev[k];
             if (c) {
                 const val = c.actual_ttlg !== undefined ? c.actual_ttlg : c.ttlg;
-                lgRow.values.push(fN(val));
-                sumLG += val;
+                const vScaled = Math.round((val || 0) * pMult);
+                lgRow.values.push(fN(vScaled));
+                sumLG += vScaled;
             } else lgRow.values.push('—');
         });
         lgRow.total = fN(sumLG);
@@ -378,28 +400,30 @@ window.OverviewModule = {
         rows.push(lgPctRow);
 
         // Row: Chi phí
-        const cpRow = { label: 'Chi Phí (Tr đ)', values: [], total: '' };
+        const cpRow = { label: `Chi Phí (${pText} - Tr đ)`, values: [], total: '' };
         let sumCP = 0;
         revKeys.forEach(k => {
             const c = rev[k];
             if (c) {
                 const val = c.actual_cp !== undefined ? c.actual_cp : c.cp;
-                cpRow.values.push(fN(val));
-                sumCP += val;
+                const vScaled = Math.round((val || 0) * pMult);
+                cpRow.values.push(fN(vScaled));
+                sumCP += vScaled;
             } else cpRow.values.push('—');
         });
         cpRow.total = fN(sumCP);
         rows.push(cpRow);
 
         // Row: Lợi nhuận TT
-        const lnRow = { label: 'Lợi Nhuận TT (Tr đ)', values: [], total: '' };
+        const lnRow = { label: `Lợi Nhuận TT (${pText} - Tr đ)`, values: [], total: '' };
         let sumLN = 0;
         revKeys.forEach(k => {
             const c = rev[k];
             if (c) {
                 const val = c.actual_lntt !== undefined ? c.actual_lntt : c.lntt;
-                lnRow.values.push(fN(val));
-                sumLN += val;
+                const vScaled = Math.round((val || 0) * pMult);
+                lnRow.values.push(fN(vScaled));
+                sumLN += vScaled;
             } else lnRow.values.push('—');
         });
         lnRow.total = fN(sumLN);
@@ -725,12 +749,26 @@ window.OverviewModule = {
 
         // Chart 2: Revenue — Grouped bar (KH vs TT)
         try {
+            const curPeriod = window.FilterManager ? window.FilterManager.currentPeriod : 'month';
+            let pMult = 1;
+            let pText = 'Tháng';
+            if (curPeriod === 'day') { pMult = 1 / 26; pText = 'BQ Ngày'; }
+            else if (curPeriod === 'week') { pMult = 1 / 4; pText = 'BQ Tuần'; }
+            else if (curPeriod === 'year') { pMult = 12; pText = 'Cả Năm'; }
+
+            if (revTitle) {
+                revTitle.innerHTML = `<i data-lucide="bar-chart-2" style="width:16px;height:16px;margin-right:6px;color:#10b981;"></i> Doanh Số KH vs Thực Tế (${pText})`;
+            }
+            if (profitTitle) {
+                profitTitle.innerHTML = `<i data-lucide="trending-up" style="width:16px;height:16px;margin-right:6px;color:#8b5cf6;"></i> Lãi Gộp & Chi Phí (${pText})`;
+            }
+
             const revPlan = [], revActual = [];
             revKeys.forEach(k => {
                 const c = rev[k] || (k === 'VPVPS' ? rev['Văn phòng VPS'] : null) || fallbackPlan[k];
                 if (c) {
-                    revPlan.push(Number(c.ds) || 0);
-                    revActual.push(Number(c.actual) || 0);
+                    revPlan.push(Math.round((Number(c.ds) || 0) * pMult));
+                    revActual.push(Math.round((Number(c.actual) || 0) * pMult));
                 } else {
                     revPlan.push(0); revActual.push(0);
                 }
@@ -738,8 +776,8 @@ window.OverviewModule = {
             this.createChart('scChartRevenue', 'bar', {
                 labels,
                 datasets: [
-                    { label: 'Kế Hoạch', data: revPlan, backgroundColor: '#94a3b8', borderRadius: 4 },
-                    { label: 'Thực Tế', data: revActual, backgroundColor: '#10b981', borderRadius: 4 }
+                    { label: `Kế Hoạch (${pText})`, data: revPlan, backgroundColor: '#94a3b8', borderRadius: 4 },
+                    { label: `Thực Tế (${pText})`, data: revActual, backgroundColor: '#10b981', borderRadius: 4 }
                 ]
             }, {
                 responsive: true, maintainAspectRatio: false,
@@ -758,12 +796,19 @@ window.OverviewModule = {
 
         // Chart 3: Profit — Horizontal bar (Lãi Gộp vs Chi Phí)
         try {
+            const curPeriod = window.FilterManager ? window.FilterManager.currentPeriod : 'month';
+            let pMult = 1;
+            let pText = 'Tháng';
+            if (curPeriod === 'day') { pMult = 1 / 26; pText = 'BQ Ngày'; }
+            else if (curPeriod === 'week') { pMult = 1 / 4; pText = 'BQ Tuần'; }
+            else if (curPeriod === 'year') { pMult = 12; pText = 'Cả Năm'; }
+
             const profitLG = [], profitCP = [];
             revKeys.forEach(k => {
                 const c = rev[k] || (k === 'VPVPS' ? rev['Văn phòng VPS'] : null) || fallbackPlan[k];
                 if (c) {
-                    profitLG.push(Number(c.ttlg) || 0);
-                    profitCP.push(Number(c.cp) || 0);
+                    profitLG.push(Math.round((Number(c.ttlg) || 0) * pMult));
+                    profitCP.push(Math.round((Number(c.cp) || 0) * pMult));
                 } else {
                     profitLG.push(0); profitCP.push(0);
                 }
@@ -771,8 +816,8 @@ window.OverviewModule = {
             this.createChart('scChartProfit', 'bar', {
                 labels,
                 datasets: [
-                    { label: 'Lãi Gộp', data: profitLG, backgroundColor: '#8b5cf6', borderRadius: 4 },
-                    { label: 'Chi Phí', data: profitCP, backgroundColor: '#f97316', borderRadius: 4 }
+                    { label: `Lãi Gộp (${pText})`, data: profitLG, backgroundColor: '#8b5cf6', borderRadius: 4 },
+                    { label: `Chi Phí (${pText})`, data: profitCP, backgroundColor: '#f97316', borderRadius: 4 }
                 ]
             }, {
                 indexAxis: 'y',

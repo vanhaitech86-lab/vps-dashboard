@@ -1,0 +1,354 @@
+{
+  "THH": [
+    {
+      "name": "00_Huong_Dan",
+      "gid": ""
+    },
+    {
+      "name": "DOANH SỐ VÀ LÃI GỘP",
+      "gid": ""
+    },
+    {
+      "name": "Công nợ",
+      "gid": ""
+    },
+    {
+      "name": "Tồn kho",
+      "gid": ""
+    },
+    {
+      "name": "Khách hàng",
+      "gid": ""
+    },
+    {
+      "name": "Nhân sự",
+      "gid": ""
+    },
+    {
+      "name": "Sản Phẩm",
+      "gid": ""
+    },
+    {
+      "name": "Chi Phí",
+      "gid": ""
+    },
+    {
+      "name": "ISO",
+      "gid": ""
+    },
+    {
+      "name": "Đào tạo",
+      "gid": ""
+    },
+    {
+      "name": "Dịch vụ tận tâm",
+      "gid": ""
+    },
+    {
+      "name": "Văn hóa doanh nghiệp",
+      "gid": ""
+    },
+    {
+      "name": "Thương hiệu",
+      "gid": ""
+    },
+    {
+      "name": "Dự án \\x26 KH Dự án",
+      "gid": ""
+    }
+  ],
+  "Viet": [
+    {
+      "name": "00_Huong_Dan",
+      "gid": ""
+    },
+    {
+      "name": "Doanh Số lãi Gộp",
+      "gid": ""
+    },
+    {
+      "name": "Công nợ",
+      "gid": ""
+    },
+    {
+      "name": "Khách hàng",
+      "gid": ""
+    },
+    {
+      "name": "Tồn kho",
+      "gid": ""
+    },
+    {
+      "name": "Nhân sự",
+      "gid": ""
+    },
+    {
+      "name": "Sản Phẩm",
+      "gid": ""
+    },
+    {
+      "name": "Chi Phí",
+      "gid": ""
+    },
+    {
+      "name": "ISO",
+      "gid": ""
+    },
+    {
+      "name": "Đào tạo",
+      "gid": ""
+    },
+    {
+      "name": "Dịch vụ tận tâm",
+      "gid": ""
+    },
+    {
+      "name": "Văn hóa doanh nghiệp",
+      "gid": ""
+    },
+    {
+      "name": "Thương hiệu",
+      "gid": ""
+    },
+    {
+      "name": "Dự án \\x26 KH Dự án",
+      "gid": ""
+    }
+  ],
+  "XemSon": [
+    {
+      "name": "00_Huong_Dan",
+      "gid": ""
+    },
+    {
+      "name": "Doanh Số và Lãi Gộp",
+      "gid": ""
+    },
+    {
+      "name": "Công nợ",
+      "gid": ""
+    },
+    {
+      "name": "Khách hàng",
+      "gid": ""
+    },
+    {
+      "name": "Tồn kho",
+      "gid": ""
+    },
+    {
+      "name": "Nhân sự",
+      "gid": ""
+    },
+    {
+      "name": "Sản Phẩm",
+      "gid": ""
+    },
+    {
+      "name": "Chi Phí",
+      "gid": ""
+    },
+    {
+      "name": "ISO",
+      "gid": ""
+    },
+    {
+      "name": "Đào tạo",
+      "gid": ""
+    },
+    {
+      "name": "Dịch vụ tận tâm",
+      "gid": ""
+    },
+    {
+      "name": "Văn hóa doanh nghiệp",
+      "gid": ""
+    },
+    {
+      "name": "Thương hiệu",
+      "gid": ""
+    },
+    {
+      "name": "Dự án \\x26 KH Dự án",
+      "gid": ""
+    }
+  ],
+  "VPSM": [
+    {
+      "name": "00_Huong_Dan",
+      "gid": ""
+    },
+    {
+      "name": "Doanh Số và Lãi Gộp",
+      "gid": ""
+    },
+    {
+      "name": "Công nợ",
+      "gid": ""
+    },
+    {
+      "name": "Khách hàng",
+      "gid": ""
+    },
+    {
+      "name": "Tồn kho",
+      "gid": ""
+    },
+    {
+      "name": "Nhân sự",
+      "gid": ""
+    },
+    {
+      "name": "Sản Phẩm",
+      "gid": ""
+    },
+    {
+      "name": "Chi Phí",
+      "gid": ""
+    },
+    {
+      "name": "ISO",
+      "gid": ""
+    },
+    {
+      "name": "Đào tạo",
+      "gid": ""
+    },
+    {
+      "name": "Dịch vụ tận tâm",
+      "gid": ""
+    },
+    {
+      "name": "Văn hóa doanh nghiệp",
+      "gid": ""
+    },
+    {
+      "name": "Thương hiệu",
+      "gid": ""
+    },
+    {
+      "name": "Dự án \\x26 KH Dự án",
+      "gid": ""
+    }
+  ],
+  "ITSS": [
+    {
+      "name": "00_Huong_Dan",
+      "gid": ""
+    },
+    {
+      "name": "Doanh Số lãi gộp ",
+      "gid": ""
+    },
+    {
+      "name": "Công nợ",
+      "gid": ""
+    },
+    {
+      "name": "Khách hàng",
+      "gid": ""
+    },
+    {
+      "name": "Tồn kho",
+      "gid": ""
+    },
+    {
+      "name": "Nhân sự",
+      "gid": ""
+    },
+    {
+      "name": "Sản Phẩm",
+      "gid": ""
+    },
+    {
+      "name": "Chi Phí",
+      "gid": ""
+    },
+    {
+      "name": "ISO",
+      "gid": ""
+    },
+    {
+      "name": "Đào tạo",
+      "gid": ""
+    },
+    {
+      "name": "Dịch vụ tận tâm",
+      "gid": ""
+    },
+    {
+      "name": "Văn hóa doanh nghiệp",
+      "gid": ""
+    },
+    {
+      "name": "Thương hiệu",
+      "gid": ""
+    },
+    {
+      "name": "Dự án \\x26 KH Dự án",
+      "gid": ""
+    }
+  ],
+  "VPVPS": [
+    {
+      "name": "00_Huong_Dan",
+      "gid": ""
+    },
+    {
+      "name": "Doanh thu",
+      "gid": ""
+    },
+    {
+      "name": "Doanh số lãi gộp",
+      "gid": ""
+    },
+    {
+      "name": "Công nợ",
+      "gid": ""
+    },
+    {
+      "name": "Khách hàng",
+      "gid": ""
+    },
+    {
+      "name": "Tồn kho",
+      "gid": ""
+    },
+    {
+      "name": "Nhân sự",
+      "gid": ""
+    },
+    {
+      "name": "Sản Phẩm",
+      "gid": ""
+    },
+    {
+      "name": "Chi Phí",
+      "gid": ""
+    },
+    {
+      "name": "ISO",
+      "gid": ""
+    },
+    {
+      "name": "Đào tạo",
+      "gid": ""
+    },
+    {
+      "name": "Dịch vụ tận tâm",
+      "gid": ""
+    },
+    {
+      "name": "Văn hóa doanh nghiệp",
+      "gid": ""
+    },
+    {
+      "name": "Thương hiệu",
+      "gid": ""
+    },
+    {
+      "name": "Dự án \\x26 KH Dự án",
+      "gid": ""
+    }
+  ]
+}

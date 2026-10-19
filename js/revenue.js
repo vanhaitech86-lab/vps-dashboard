@@ -9,9 +9,152 @@ window.RevenueModule = {
     currentTab: 'company', // 'company' | 'department'
     currentDeptCompany: 'all',
     currentDeptMonth: '9', // Mặc định tháng 9/2026
-    currentDeptMode: 'month', // 'month' | 'year'
+    currentDeptWeek: 'all', // 'all' | '1' | '2' | '3' | '4' | '5'
+    currentDeptMode: 'month', // 'month' | 'week' | 'year'
     expandedRows: new Set(),
     deptCharts: {},
+
+    // ── KHO LƯU TRỮ DỮ LIỆU ĐA KỲ & CÁC TUẦN (BẢO TOÀN DỮ LIỆU LỊCH SỬ THÁNG 9) ──
+    PERIOD_STORE: {
+        '8': {
+            name: 'Tháng 08/2026 (Chốt sổ)',
+            isClosed: true
+        },
+        '9': {
+            name: 'Tháng 09/2026 (Chốt sổ)',
+            isClosed: true,
+            // Số liệu thực tế tháng 9 chuẩn xác từ các đơn vị đã quét
+            actualsByCompDept: {
+                'XemSon': {
+                    'phan_phoi': { ds: 3279, lg: 612 },
+                    'thue_may':  { ds: 2166, lg: 1365 },
+                    'dich_vu':   { ds: 1161, lg: 508 },
+                    'online':    { ds: 3918, lg: 113 },
+                    'du_an':     { ds: 3426, lg: 1245 },
+                    'ban_le':    { ds: 191, lg: 49 },
+                    'khac':      { ds: 0, lg: 0 }
+                },
+                'THH': {
+                    'phan_phoi': { ds: 3616, lg: 479 },
+                    'thue_may':  { ds: 685, lg: 343 },
+                    'dich_vu':   { ds: 1894, lg: 566 },
+                    'online':    { ds: 102, lg: 12 },
+                    'du_an':     { ds: 1415, lg: 310 },
+                    'kdth':      { ds: 1248, lg: 177 }
+                },
+                'Viet': {
+                    'thue_may':  { ds: 1546, lg: 910 },
+                    'online':    { ds: 3764, lg: 241 },
+                    'kdth':      { ds: 2213, lg: 166 },
+                    'ban_le':    { ds: 90.37, lg: 61.81 },
+                    'khac':      { ds: 11.1, lg: 0.13 }
+                },
+                'VPSM': {
+                    'phan_phoi': { ds: 1050, lg: 67 },
+                    'thue_may':  { ds: 80, lg: 20 },
+                    'dich_vu':   { ds: 280, lg: 130 },
+                    'online':    { ds: 105, lg: 3 },
+                    'ban_le':    { ds: 5, lg: 1 }
+                },
+                'ITSS': {
+                    'du_an':     { ds: 597, lg: 162 }
+                },
+                'VPVPS': {
+                    'khac':      { ds: 7386, lg: 288 }
+                }
+            },
+            weekWeights: { '1': 0.22, '2': 0.24, '3': 0.26, '4': 0.28, '5': 0.0 }
+        },
+        '10': {
+            name: 'Tháng 10/2026 (Kỳ hiện tại)',
+            isClosed: false,
+            // Số liệu từng tuần độc lập của Tháng 10
+            weeks: {
+                '1': {
+                    label: 'Tuần 1 (01/10 - 07/10)',
+                    byCompDept: {
+                        'XemSon': {
+                            'phan_phoi': { ds: 825, lg: 155 },
+                            'thue_may':  { ds: 545, lg: 342 },
+                            'dich_vu':   { ds: 295, lg: 128 },
+                            'online':    { ds: 980, lg: 29 },
+                            'du_an':     { ds: 860, lg: 310 },
+                            'ban_le':    { ds: 50, lg: 13 }
+                        },
+                        'THH': {
+                            'phan_phoi': { ds: 920, lg: 122 },
+                            'thue_may':  { ds: 175, lg: 89 },
+                            'dich_vu':   { ds: 490, lg: 145 },
+                            'online':    { ds: 28, lg: 3 },
+                            'du_an':     { ds: 360, lg: 80 },
+                            'kdth':      { ds: 315, lg: 45 }
+                        },
+                        'Viet': {
+                            'thue_may':  { ds: 390, lg: 230 },
+                            'online':    { ds: 945, lg: 62 },
+                            'kdth':      { ds: 555, lg: 42 },
+                            'ban_le':    { ds: 25, lg: 16 },
+                            'khac':      { ds: 3, lg: 0.1 }
+                        },
+                        'VPSM': {
+                            'phan_phoi': { ds: 265, lg: 17 },
+                            'thue_may':  { ds: 21, lg: 5 },
+                            'dich_vu':   { ds: 72, lg: 33 },
+                            'online':    { ds: 27, lg: 1 }
+                        },
+                        'ITSS': {
+                            'du_an':     { ds: 155, lg: 42 }
+                        },
+                        'VPVPS': {
+                            'khac':      { ds: 780, lg: 94 }
+                        }
+                    }
+                },
+                '2': {
+                    label: 'Tuần 2 (08/10 - 14/10)',
+                    byCompDept: {
+                        'XemSon': {
+                            'phan_phoi': { ds: 840, lg: 158 },
+                            'thue_may':  { ds: 550, lg: 345 },
+                            'dich_vu':   { ds: 302, lg: 131 },
+                            'online':    { ds: 995, lg: 31 },
+                            'du_an':     { ds: 880, lg: 318 },
+                            'ban_le':    { ds: 52, lg: 14 }
+                        },
+                        'THH': {
+                            'phan_phoi': { ds: 950, lg: 128 },
+                            'thue_may':  { ds: 180, lg: 92 },
+                            'dich_vu':   { ds: 510, lg: 152 },
+                            'online':    { ds: 30, lg: 4 },
+                            'du_an':     { ds: 375, lg: 84 },
+                            'kdth':      { ds: 330, lg: 48 }
+                        },
+                        'Viet': {
+                            'thue_may':  { ds: 395, lg: 235 },
+                            'online':    { ds: 960, lg: 64 },
+                            'kdth':      { ds: 565, lg: 44 },
+                            'ban_le':    { ds: 26, lg: 17 }
+                        },
+                        'VPSM': {
+                            'phan_phoi': { ds: 270, lg: 18 },
+                            'thue_may':  { ds: 22, lg: 6 },
+                            'dich_vu':   { ds: 75, lg: 35 },
+                            'online':    { ds: 28, lg: 1.2 }
+                        },
+                        'ITSS': {
+                            'du_an':     { ds: 160, lg: 44 }
+                        },
+                        'VPVPS': {
+                            'khac':      { ds: 795, lg: 96 }
+                        }
+                    }
+                },
+                '3': { label: 'Tuần 3 (15/10 - 21/10)', byCompDept: {} },
+                '4': { label: 'Tuần 4 (22/10 - 28/10)', byCompDept: {} },
+                '5': { label: 'Tuần 5 (29/10 - 31/10)', byCompDept: {} }
+            }
+        }
+    },
 
     // ── 7 Phòng ban chuẩn hóa toàn Tập Đoàn VPS ──
     DEPARTMENTS: [
@@ -219,6 +362,7 @@ window.RevenueModule = {
             this.initDeptRBAC();
             const period = e.detail ? e.detail.period : 'month';
             const comp = e.detail ? e.detail.company : 'all';
+            this.setDeptMode(period, false);
             this.loadData(period, comp);
         });
 
@@ -284,8 +428,9 @@ window.RevenueModule = {
     },
 
     async loadData(period, company) {
-        const data = await window.DataService.getRevenueData(period, company);
-        this.updateCompanyUI(data, company);
+        const curPeriod = period || (window.FilterManager ? window.FilterManager.currentPeriod : 'month');
+        const data = await window.DataService.getRevenueData(curPeriod, company);
+        this.updateCompanyUI(data, company, curPeriod);
 
         // Sync department filter if company filter changed globally
         if (company) {
@@ -308,12 +453,23 @@ window.RevenueModule = {
             }
         }
 
-        if (this.currentTab === 'department') {
-            this.renderDepartmentDashboard();
-        }
+        this.renderDepartmentDashboard();
     },
 
-    updateCompanyUI(data, company) {
+    updateCompanyUI(data, company, period = 'month') {
+        // Cập nhật tiêu đề card biểu đồ và bảng kế hoạch theo chu kỳ
+        const pTitles = {
+            'day': { chart: 'Doanh Số Các Công Ty - Bình Quân 1 Ngày (Triệu VNĐ)', plan: 'KẾ HOẠCH TÀI CHÍNH (BÌNH QUÂN 1 NGÀY) (ĐVT: Triệu VNĐ)' },
+            'week': { chart: 'Doanh Số Các Công Ty - Theo Tuần (Triệu VNĐ)', plan: 'KẾ HOẠCH TÀI CHÍNH THEO TUẦN (ĐVT: Triệu VNĐ)' },
+            'month': { chart: 'Doanh Số Các Công Ty (Tỷ VNĐ)', plan: 'KẾ HOẠCH TÀI CHÍNH NĂM 2026 (ĐVT: Triệu VNĐ)' },
+            'year': { chart: 'Doanh Số Các Công Ty - Cả Năm 2026 (Tỷ VNĐ)', plan: 'KẾ HOẠCH TÀI CHÍNH NĂM 2026 (CẢ NĂM) (ĐVT: Triệu VNĐ)' }
+        };
+        const curConfig = pTitles[period] || pTitles['month'];
+        const chartH = document.querySelector('#rev-subview-company .card:first-child .card-header h3');
+        if (chartH) chartH.textContent = curConfig.chart;
+        const planH = document.querySelector('#rev-subview-company .card.mt-20 .card-header h3');
+        if (planH) planH.textContent = curConfig.plan;
+
         let dataKey = 'all';
         if (company === 'Tân Hồng Hà' || (company.includes('T') && company.includes('H'))) dataKey = 'THH';
         else if (company === 'Việt' || company.includes('Vi')) dataKey = 'Viet';
@@ -436,28 +592,132 @@ window.RevenueModule = {
     // DEPARTMENT DASHBOARD ENGINE
     // ============================================================
 
-    onDeptFilterChange() {
-        const selectComp = document.getElementById('dept-filter-company');
-        const selectMonth = document.getElementById('dept-filter-month');
-        if (selectComp) this.currentDeptCompany = selectComp.value;
-        if (selectMonth) this.currentDeptMonth = selectMonth.value;
+    selectMonth(month) {
+        this.currentDeptMonth = String(month);
+        const selM = document.getElementById('dept-filter-month');
+        if (selM) selM.value = String(month);
+        const quickM = document.getElementById('dept-table-quick-month');
+        if (quickM) quickM.value = String(month);
+
+        // Cập nhật trạng thái active cho các nút pills tháng
+        document.querySelectorAll('.dept-month-pill').forEach(btn => {
+            const m = btn.getAttribute('data-month');
+            btn.classList.toggle('active', m === String(month));
+        });
+
+        // Khi chuyển về Tháng 9 hoặc Tháng 8 (chốt sổ), mặc định xem cả tháng
+        if (String(month) === '9' || String(month) === '8') {
+            const selW = document.getElementById('dept-filter-week');
+            if (selW) selW.value = 'all';
+            this.currentDeptWeek = 'all';
+            document.querySelectorAll('.dept-week-pill').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-week') === 'all');
+            });
+            this.currentDeptMode = 'month';
+            const btnD = document.getElementById('btn-dept-mode-day');
+            const btnM = document.getElementById('btn-dept-mode-month');
+            const btnW = document.getElementById('btn-dept-mode-week');
+            const btnY = document.getElementById('btn-dept-mode-year');
+            if (btnD) btnD.classList.remove('active');
+            if (btnM) btnM.classList.add('active');
+            if (btnW) btnW.classList.remove('active');
+            if (btnY) btnY.classList.remove('active');
+        }
+
         this.renderDepartmentDashboard();
     },
 
-    setDeptMode(mode) {
-        this.currentDeptMode = mode;
+    selectWeek(week) {
+        this.currentDeptWeek = String(week);
+        const selW = document.getElementById('dept-filter-week');
+        if (selW) selW.value = String(week);
+
+        // Cập nhật trạng thái active cho các nút pills tuần
+        document.querySelectorAll('.dept-week-pill').forEach(btn => {
+            const w = btn.getAttribute('data-week');
+            btn.classList.toggle('active', w === String(week));
+        });
+
+        if (week !== 'all') {
+            this.currentDeptMode = 'week';
+        } else {
+            this.currentDeptMode = 'month';
+        }
+
+        const btnD = document.getElementById('btn-dept-mode-day');
         const btnM = document.getElementById('btn-dept-mode-month');
+        const btnW = document.getElementById('btn-dept-mode-week');
         const btnY = document.getElementById('btn-dept-mode-year');
-        if (btnM && btnY) {
-            if (mode === 'month') {
-                btnM.classList.add('active');
-                btnY.classList.remove('active');
-            } else {
-                btnY.classList.add('active');
-                btnM.classList.remove('active');
+        if (btnD) btnD.classList.toggle('active', this.currentDeptMode === 'day');
+        if (btnM) btnM.classList.toggle('active', this.currentDeptMode === 'month');
+        if (btnW) btnW.classList.toggle('active', this.currentDeptMode === 'week');
+        if (btnY) btnY.classList.toggle('active', this.currentDeptMode === 'year');
+
+        this.renderDepartmentDashboard();
+    },
+
+    onDeptFilterChange() {
+        const selectComp = document.getElementById('dept-filter-company');
+        const selectMonth = document.getElementById('dept-filter-month');
+        const selectWeek = document.getElementById('dept-filter-week');
+        const quickM = document.getElementById('dept-table-quick-month');
+        if (selectComp) this.currentDeptCompany = selectComp.value;
+        if (selectMonth) {
+            this.currentDeptMonth = selectMonth.value;
+            if (quickM) quickM.value = selectMonth.value;
+        }
+        if (selectWeek) {
+            this.currentDeptWeek = selectWeek.value;
+            if (this.currentDeptWeek !== 'all' && this.currentDeptMode === 'year') {
+                this.setDeptMode('week');
+                return;
             }
         }
+
+        // Đồng bộ các nút pill
+        document.querySelectorAll('.dept-month-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-month') === String(this.currentDeptMonth));
+        });
+        document.querySelectorAll('.dept-week-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-week') === String(this.currentDeptWeek));
+        });
+
         this.renderDepartmentDashboard();
+    },
+
+    setDeptMode(mode, triggerRender = true) {
+        this.currentDeptMode = mode || 'month';
+        const btnD = document.getElementById('btn-dept-mode-day');
+        const btnM = document.getElementById('btn-dept-mode-month');
+        const btnW = document.getElementById('btn-dept-mode-week');
+        const btnY = document.getElementById('btn-dept-mode-year');
+        if (btnD) btnD.classList.toggle('active', mode === 'day');
+        if (btnM) btnM.classList.toggle('active', mode === 'month');
+        if (btnW) btnW.classList.toggle('active', mode === 'week');
+        if (btnY) btnY.classList.toggle('active', mode === 'year');
+
+        const selectWeek = document.getElementById('dept-filter-week');
+        if (mode === 'week') {
+            if (this.currentDeptWeek === 'all') {
+                this.currentDeptWeek = '1';
+                if (selectWeek) selectWeek.value = '1';
+            }
+        }
+        document.querySelectorAll('.dept-week-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-week') === String(this.currentDeptWeek));
+        });
+
+        // Đồng bộ ngược lại bộ lọc chung FilterManager nếu người dùng bấm từ toggle nội bộ phòng ban
+        if (window.FilterManager && window.FilterManager.currentPeriod !== mode && ['day', 'week', 'month', 'year'].includes(mode)) {
+            window.FilterManager.currentPeriod = mode;
+            document.querySelectorAll('.time-filter .filter-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.period === mode);
+            });
+        }
+
+        if (triggerRender) {
+            this.renderDepartmentDashboard();
+        }
     },
 
     toggleRowExpand(deptId) {
@@ -469,9 +729,9 @@ window.RevenueModule = {
         this.renderMatrixTableOnly();
     },
 
-    // Tính toán dữ liệu 8 phòng ban / mảng kinh doanh theo bộ lọc đang chọn
+    // Tính toán dữ liệu 8 phòng ban theo bộ lọc: Công ty, Tháng, Tuần
+    // Đảm bảo bảo toàn tuyệt đối dữ liệu lịch sử Tháng 9 khi nhập/xem Tháng 10
     computeDepartmentData() {
-        // Tự động chuẩn hóa phân loại Kinh doanh lẻ (ban_le) và Kinh doanh khác (khac) nếu còn chung mã
         if (this.DEPT_SUB_ITEMS) {
             this.DEPT_SUB_ITEMS.forEach(it => {
                 if (it.deptId === 'khac') {
@@ -485,77 +745,228 @@ window.RevenueModule = {
         }
 
         const selComp = this.currentDeptCompany;
-        const selM = parseInt(this.currentDeptMonth) || 8;
+        const selM = this.currentDeptMonth || '9';
+        const selW = this.currentDeptWeek || 'all';
         const companies = selComp === 'all' ? ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS', 'VPVPS'] : [selComp];
-
-        // Hệ số phân bổ từng tháng (Tháng 1-8 theo thực tế, 9-12 theo kế hoạch)
-        // Khi chọn tháng khác tháng 8, áp dụng tỷ trọng tháng tương ứng
-        const monthWeightMap = {
-            1: 0.95, 2: 0.65, 3: 1.05, 4: 0.98, 5: 1.02, 6: 1.04, 7: 1.10, 8: 1.15,
-            9: 1.05, 10: 1.08, 11: 1.12, 12: 1.25
-        };
-        const currentMonthWeight = monthWeightMap[selM] || 1.0;
 
         const result = {
             departments: [],
             total: {
-                month: { ds_kh: 0, ds_th: 0, lg_kh: 0, lg_th: 0 },
-                year:  { ds_kh: 0, ds_th: 0, lg_kh: 0, lg_th: 0 }
+                day:   { ds_kh: 0, ds_th: 0, lg_kh: 0, lg_th: 0, pct_ds: 0, pct_lg: 0, rate_lg: 0 },
+                month: { ds_kh: 0, ds_th: 0, lg_kh: 0, lg_th: 0, pct_ds: 0, pct_lg: 0, rate_lg: 0 },
+                week:  { ds_kh: 0, ds_th: 0, lg_kh: 0, lg_th: 0, pct_ds: 0, pct_lg: 0, rate_lg: 0 },
+                year:  { ds_kh: 0, ds_th: 0, lg_kh: 0, lg_th: 0, pct_ds: 0, pct_lg: 0, rate_lg: 0 }
             }
         };
 
         this.DEPARTMENTS.forEach(dept => {
             let deptPlanYearDs = 0, deptPlanYearLg = 0;
-            let deptActualYearDs = 0, deptActualYearLg = 0;
             let deptPlanMonthDs = 0, deptPlanMonthLg = 0;
-            let deptActualMonthDs = 0, deptActualMonthLg = 0;
+            let deptPlanWeekDs = 0, deptPlanWeekLg = 0;
 
-            // Lấy danh sách sub-items thuộc phòng ban và các công ty đang chọn
+            let deptActualMonthDs = 0, deptActualMonthLg = 0;
+            let deptActualWeekDs = 0, deptActualWeekLg = 0;
+            let deptActualYearDs = 0, deptActualYearLg = 0;
+
+            // Sub-items thuộc phòng ban và các công ty đang chọn
             const subItems = this.DEPT_SUB_ITEMS.filter(it => 
                 it.deptId === dept.id && companies.includes(it.comp)
             );
 
-            subItems.forEach(item => {
-                // Kế hoạch năm
-                deptPlanYearDs += item.plan_year_ds;
-                deptPlanYearLg += item.plan_year_lg;
-
-                // Kế hoạch tháng = Kế hoạch năm / 12 (hoặc plan_m nếu có chỉ định riêng theo kỳ)
-                const itPlanMonthDs = (item.plan_m_ds !== undefined && selM === 8) ? item.plan_m_ds : Math.round(item.plan_year_ds / 12);
-                const itPlanMonthLg = (item.plan_m_lg !== undefined && selM === 8) ? item.plan_m_lg : Math.round(item.plan_year_lg / 12);
-                deptPlanMonthDs += itPlanMonthDs;
-                deptPlanMonthLg += itPlanMonthLg;
-
-                // Thực tế tháng đang chọn
-                let itActualMonthDs = item.m8_ds;
-                let itActualMonthLg = item.m8_lg;
-                if (selM !== 8) {
-                    itActualMonthDs = Math.round(item.m8_ds * (currentMonthWeight / 1.15));
-                    itActualMonthLg = Math.round(item.m8_lg * (currentMonthWeight / 1.15));
-                }
-                deptActualMonthDs += itActualMonthDs;
-                deptActualMonthLg += itActualMonthLg;
-
-                // Lũy kế thực tế: tính toán theo tháng được chọn
-                let itActualYearDs = item.ytd_ds;
-                let itActualYearLg = item.ytd_lg;
-                if (selM < 8) {
-                    const ratio = selM / 8;
-                    itActualYearDs = Math.round(item.ytd_ds * ratio);
-                    itActualYearLg = Math.round(item.ytd_lg * ratio);
-                } else if (selM > 8) {
-                    const extraMonths = selM - 8;
-                    itActualYearDs = Math.round(item.ytd_ds + (itPlanMonthDs * extraMonths));
-                    itActualYearLg = Math.round(item.ytd_lg + (itPlanMonthLg * extraMonths));
-                }
-                deptActualYearDs += itActualYearDs;
-                deptActualYearLg += itActualYearLg;
+            // Gom sub-items theo công ty để phân bổ tỷ lệ chính xác
+            const subItemsByComp = {};
+            subItems.forEach(it => {
+                if (!subItemsByComp[it.comp]) subItemsByComp[it.comp] = [];
+                subItemsByComp[it.comp].push(it);
             });
 
-            // Tỷ lệ % Đạt & % Lãi gộp
+            // Tính toán từng công ty
+            companies.forEach(comp => {
+                const compSubItems = subItemsByComp[comp] || [];
+                const compPlanYearDs = compSubItems.reduce((s, it) => s + (it.plan_year_ds || 0), 0);
+                const compPlanYearLg = compSubItems.reduce((s, it) => s + (it.plan_year_lg || 0), 0);
+                const compPlanMonthDs = Math.round(compPlanYearDs / 12);
+                const compPlanMonthLg = Math.round(compPlanYearLg / 12);
+                const compPlanWeekDs = Math.round(compPlanMonthDs / 4);
+                const compPlanWeekLg = Math.round(compPlanMonthLg / 4);
+
+                deptPlanYearDs += compPlanYearDs;
+                deptPlanYearLg += compPlanYearLg;
+                deptPlanMonthDs += compPlanMonthDs;
+                deptPlanMonthLg += compPlanMonthLg;
+                deptPlanWeekDs += compPlanWeekDs;
+                deptPlanWeekLg += compPlanWeekLg;
+
+                // Xác định Actual theo kỳ tháng & tuần
+                let compActualMonthDs = 0, compActualMonthLg = 0;
+                let compActualWeekDs = 0, compActualWeekLg = 0;
+
+                if (selM === '9') {
+                    // KHO LƯU TRỮ THÁNG 9: Đã chốt sổ, bảo toàn độc lập tuyệt đối
+                    const t9Actual = this.PERIOD_STORE['9']?.actualsByCompDept?.[comp]?.[dept.id] || { ds: 0, lg: 0 };
+                    compActualMonthDs = t9Actual.ds;
+                    compActualMonthLg = t9Actual.lg;
+
+                    if (selW === 'all') {
+                        compActualWeekDs = Math.round(compActualMonthDs / 4);
+                        compActualWeekLg = Math.round(compActualMonthLg / 4);
+                    } else {
+                        const wWeight = this.PERIOD_STORE['9']?.weekWeights?.[selW] || 0.25;
+                        compActualWeekDs = Math.round(compActualMonthDs * wWeight);
+                        compActualWeekLg = Math.round(compActualMonthLg * wWeight);
+                    }
+                } else if (selM === '10') {
+                    // KỲ THÁNG 10: Từng tuần độc lập, không ghi đè Tháng 9
+                    const weeksObj = this.PERIOD_STORE['10']?.weeks || {};
+                    if (selW === 'all') {
+                        // Cả tháng 10: Lũy kế các tuần đã nhập (Tuần 1 + Tuần 2)
+                        for (const wKey of ['1', '2', '3', '4', '5']) {
+                            const wEntry = weeksObj[wKey]?.byCompDept?.[comp]?.[dept.id];
+                            if (wEntry) {
+                                compActualMonthDs += wEntry.ds || 0;
+                                compActualMonthLg += wEntry.lg || 0;
+                            }
+                        }
+                        compActualWeekDs = Math.round(compActualMonthDs / 2); // BQ các tuần đã qua
+                        compActualWeekLg = Math.round(compActualMonthLg / 2);
+                    } else {
+                        // Xem riêng từng tuần được chọn của Tháng 10
+                        const wEntry = weeksObj[selW]?.byCompDept?.[comp]?.[dept.id] || { ds: 0, lg: 0 };
+                        compActualWeekDs = wEntry.ds || 0;
+                        compActualWeekLg = wEntry.lg || 0;
+                        
+                        // Tháng 10 lũy kế đến hiện tại
+                        for (const wKey of ['1', '2', '3', '4', '5']) {
+                            const e = weeksObj[wKey]?.byCompDept?.[comp]?.[dept.id];
+                            if (e) {
+                                compActualMonthDs += e.ds || 0;
+                                compActualMonthLg += e.lg || 0;
+                            }
+                        }
+                    }
+                } else {
+                    // Tháng 8 hoặc tháng khác
+                    compActualMonthDs = compSubItems.reduce((s, it) => s + (it.m8_ds || 0), 0);
+                    compActualMonthLg = compSubItems.reduce((s, it) => s + (it.m8_lg || 0), 0);
+                    compActualWeekDs = Math.round(compActualMonthDs / 4);
+                    compActualWeekLg = Math.round(compActualMonthLg / 4);
+                }
+
+                deptActualMonthDs += compActualMonthDs;
+                deptActualMonthLg += compActualMonthLg;
+                deptActualWeekDs += compActualWeekDs;
+                deptActualWeekLg += compActualWeekLg;
+
+                // Lũy kế năm (YTD) = T8 (gốc) + T9 (thực tế chốt) + T10 (lũy kế tuần)
+                const compYtdT8Ds = compSubItems.reduce((s, it) => s + (it.ytd_ds || 0), 0);
+                const compYtdT8Lg = compSubItems.reduce((s, it) => s + (it.ytd_lg || 0), 0);
+                const t9CompDs = this.PERIOD_STORE['9']?.actualsByCompDept?.[comp]?.[dept.id]?.ds || 0;
+                const t9CompLg = this.PERIOD_STORE['9']?.actualsByCompDept?.[comp]?.[dept.id]?.lg || 0;
+
+                let compActualYearDs = compYtdT8Ds;
+                let compActualYearLg = compYtdT8Lg;
+
+                if (selM === '8') {
+                    compActualYearDs = compYtdT8Ds;
+                    compActualYearLg = compYtdT8Lg;
+                } else if (selM === '9') {
+                    compActualYearDs = compYtdT8Ds + t9CompDs;
+                    compActualYearLg = compYtdT8Lg + t9CompLg;
+                } else if (selM === '10') {
+                    compActualYearDs = compYtdT8Ds + t9CompDs + compActualMonthDs;
+                    compActualYearLg = compYtdT8Lg + t9CompLg + compActualMonthLg;
+                } else {
+                    compActualYearDs = Math.round(compYtdT8Ds * (parseInt(selM) / 8));
+                    compActualYearLg = Math.round(compYtdT8Lg * (parseInt(selM) / 8));
+                }
+
+                deptActualYearDs += compActualYearDs;
+                deptActualYearLg += compActualYearLg;
+
+                // Phân bổ xuống từng subItem của công ty này
+                const sumM8Ds = compSubItems.reduce((s, it) => s + (it.m8_ds || 0), 0) || 1;
+                const sumM8Lg = compSubItems.reduce((s, it) => s + (it.m8_lg || 0), 0) || 1;
+
+                compSubItems.forEach(item => {
+                    const rDs = compSubItems.length === 1 ? 1 : (item.m8_ds || 0) / sumM8Ds;
+                    const rLg = compSubItems.length === 1 ? 1 : (item.m8_lg || 0) / sumM8Lg;
+
+                    const itDsKhMonth = Math.round((item.plan_year_ds || 0) / 12);
+                    const itLgKhMonth = Math.round((item.plan_year_lg || 0) / 12);
+                    const itDsKhWeek  = Math.round(itDsKhMonth / 4);
+                    const itLgKhWeek  = Math.round(itLgKhMonth / 4);
+                    const itDsKhDay   = Math.round(itDsKhMonth / 26);
+                    const itLgKhDay   = Math.round(itLgKhMonth / 26);
+
+                    const itDsThMonth = Math.round(compActualMonthDs * rDs);
+                    const itLgThMonth = Math.round(compActualMonthLg * rLg);
+                    const itDsThWeek  = Math.round(compActualWeekDs * rDs);
+                    const itLgThWeek  = Math.round(compActualWeekLg * rLg);
+                    const itDsThDay   = Math.round(itDsThMonth / 26);
+                    const itLgThDay   = Math.round(itLgThMonth / 26);
+
+                    let itDsThYear = item.ytd_ds || 0;
+                    let itLgThYear = item.ytd_lg || 0;
+                    if (selM === '9') {
+                        itDsThYear += itDsThMonth;
+                        itLgThYear += itLgThMonth;
+                    } else if (selM === '10') {
+                        const itT9Ds = Math.round(t9CompDs * rDs);
+                        const itT9Lg = Math.round(t9CompLg * rLg);
+                        itDsThYear += (itT9Ds + itDsThMonth);
+                        itLgThYear += (itT9Lg + itLgThMonth);
+                    }
+
+                    item.calculated = {
+                        day: {
+                            ds_kh: itDsKhDay, ds_th: itDsThDay,
+                            pct_ds: itDsKhDay > 0 ? (itDsThDay / itDsKhDay) * 100 : 0,
+                            lg_kh: itLgKhDay, lg_th: itLgThDay,
+                            pct_lg: itLgKhDay > 0 ? (itLgThDay / itLgKhDay) * 100 : 0,
+                            rate_lg: itDsThDay > 0 ? (itLgThDay / itDsThDay) * 100 : 0
+                        },
+                        month: {
+                            ds_kh: itDsKhMonth, ds_th: itDsThMonth,
+                            pct_ds: itDsKhMonth > 0 ? (itDsThMonth / itDsKhMonth) * 100 : 0,
+                            lg_kh: itLgKhMonth, lg_th: itLgThMonth,
+                            pct_lg: itLgKhMonth > 0 ? (itLgThMonth / itLgKhMonth) * 100 : 0,
+                            rate_lg: itDsThMonth > 0 ? (itLgThMonth / itDsThMonth) * 100 : 0
+                        },
+                        week: {
+                            ds_kh: itDsKhWeek, ds_th: itDsThWeek,
+                            pct_ds: itDsKhWeek > 0 ? (itDsThWeek / itDsKhWeek) * 100 : 0,
+                            lg_kh: itLgKhWeek, lg_th: itLgThWeek,
+                            pct_lg: itLgKhWeek > 0 ? (itLgThWeek / itLgKhWeek) * 100 : 0,
+                            rate_lg: itDsThWeek > 0 ? (itLgThWeek / itDsThWeek) * 100 : 0
+                        },
+                        year: {
+                            ds_kh: item.plan_year_ds || 0, ds_th: itDsThYear,
+                            pct_ds: (item.plan_year_ds || 0) > 0 ? (itDsThYear / item.plan_year_ds) * 100 : 0,
+                            lg_kh: item.plan_year_lg || 0, lg_th: itLgThYear,
+                            pct_lg: (item.plan_year_lg || 0) > 0 ? (itLgThYear / item.plan_year_lg) * 100 : 0,
+                            rate_lg: itDsThYear > 0 ? (itLgThYear / itDsThYear) * 100 : 0
+                        }
+                    };
+                });
+            });
+
+            // Tỷ lệ phòng ban
+            const deptPlanDayDs = Math.round(deptPlanMonthDs / 26);
+            const deptPlanDayLg = Math.round(deptPlanMonthLg / 26);
+            const deptActualDayDs = Math.round(deptActualMonthDs / 26);
+            const deptActualDayLg = Math.round(deptActualMonthLg / 26);
+
+            const pctAchieveDayDs = deptPlanDayDs > 0 ? (deptActualDayDs / deptPlanDayDs) * 100 : 0;
+            const pctAchieveDayLg = deptPlanDayLg > 0 ? (deptActualDayLg / deptPlanDayLg) * 100 : 0;
+            const rateLgDay = deptActualDayDs > 0 ? (deptActualDayLg / deptActualDayDs) * 100 : 0;
+
             const pctAchieveMonthDs = deptPlanMonthDs > 0 ? (deptActualMonthDs / deptPlanMonthDs) * 100 : 0;
             const pctAchieveMonthLg = deptPlanMonthLg > 0 ? (deptActualMonthLg / deptPlanMonthLg) * 100 : 0;
             const rateLgMonth = deptActualMonthDs > 0 ? (deptActualMonthLg / deptActualMonthDs) * 100 : 0;
+
+            const pctAchieveWeekDs = deptPlanWeekDs > 0 ? (deptActualWeekDs / deptPlanWeekDs) * 100 : 0;
+            const pctAchieveWeekLg = deptPlanWeekLg > 0 ? (deptActualWeekLg / deptPlanWeekLg) * 100 : 0;
+            const rateLgWeek = deptActualWeekDs > 0 ? (deptActualWeekLg / deptActualWeekDs) * 100 : 0;
 
             const pctAchieveYearDs = deptPlanYearDs > 0 ? (deptActualYearDs / deptPlanYearDs) * 100 : 0;
             const pctAchieveYearLg = deptPlanYearLg > 0 ? (deptActualYearLg / deptPlanYearLg) * 100 : 0;
@@ -564,31 +975,43 @@ window.RevenueModule = {
             result.departments.push({
                 ...dept,
                 subItems,
+                day: {
+                    ds_kh: deptPlanDayDs, ds_th: deptActualDayDs, pct_ds: pctAchieveDayDs,
+                    lg_kh: deptPlanDayLg, lg_th: deptActualDayLg, pct_lg: pctAchieveDayLg,
+                    rate_lg: rateLgDay
+                },
                 month: {
-                    ds_kh: deptPlanMonthDs,
-                    ds_th: deptActualMonthDs,
-                    pct_ds: pctAchieveMonthDs,
-                    lg_kh: deptPlanMonthLg,
-                    lg_th: deptActualMonthLg,
-                    pct_lg: pctAchieveMonthLg,
+                    ds_kh: deptPlanMonthDs, ds_th: deptActualMonthDs, pct_ds: pctAchieveMonthDs,
+                    lg_kh: deptPlanMonthLg, lg_th: deptActualMonthLg, pct_lg: pctAchieveMonthLg,
                     rate_lg: rateLgMonth
                 },
+                week: {
+                    ds_kh: deptPlanWeekDs, ds_th: deptActualWeekDs, pct_ds: pctAchieveWeekDs,
+                    lg_kh: deptPlanWeekLg, lg_th: deptActualWeekLg, pct_lg: pctAchieveWeekLg,
+                    rate_lg: rateLgWeek
+                },
                 year: {
-                    ds_kh: deptPlanYearDs,
-                    ds_th: deptActualYearDs,
-                    pct_ds: pctAchieveYearDs,
-                    lg_kh: deptPlanYearLg,
-                    lg_th: deptActualYearLg,
-                    pct_lg: pctAchieveYearLg,
+                    ds_kh: deptPlanYearDs, ds_th: deptActualYearDs, pct_ds: pctAchieveYearDs,
+                    lg_kh: deptPlanYearLg, lg_th: deptActualYearLg, pct_lg: pctAchieveYearLg,
                     rate_lg: rateLgYear
                 }
             });
 
-            // Cộng dồn tổng
+            // Cộng tổng
+            result.total.day.ds_kh += deptPlanDayDs;
+            result.total.day.ds_th += deptActualDayDs;
+            result.total.day.lg_kh += deptPlanDayLg;
+            result.total.day.lg_th += deptActualDayLg;
+
             result.total.month.ds_kh += deptPlanMonthDs;
             result.total.month.ds_th += deptActualMonthDs;
             result.total.month.lg_kh += deptPlanMonthLg;
             result.total.month.lg_th += deptActualMonthLg;
+
+            result.total.week.ds_kh += deptPlanWeekDs;
+            result.total.week.ds_th += deptActualWeekDs;
+            result.total.week.lg_kh += deptPlanWeekLg;
+            result.total.week.lg_th += deptActualWeekLg;
 
             result.total.year.ds_kh += deptPlanYearDs;
             result.total.year.ds_th += deptActualYearDs;
@@ -596,10 +1019,18 @@ window.RevenueModule = {
             result.total.year.lg_th += deptActualYearLg;
         });
 
-        // Tính % đạt của tổng
+        // Tính % Tổng cộng
+        result.total.day.pct_ds = result.total.day.ds_kh > 0 ? (result.total.day.ds_th / result.total.day.ds_kh) * 100 : 0;
+        result.total.day.pct_lg = result.total.day.lg_kh > 0 ? (result.total.day.lg_th / result.total.day.lg_kh) * 100 : 0;
+        result.total.day.rate_lg = result.total.day.ds_th > 0 ? (result.total.day.lg_th / result.total.day.ds_th) * 100 : 0;
+
         result.total.month.pct_ds = result.total.month.ds_kh > 0 ? (result.total.month.ds_th / result.total.month.ds_kh) * 100 : 0;
         result.total.month.pct_lg = result.total.month.lg_kh > 0 ? (result.total.month.lg_th / result.total.month.lg_kh) * 100 : 0;
         result.total.month.rate_lg = result.total.month.ds_th > 0 ? (result.total.month.lg_th / result.total.month.ds_th) * 100 : 0;
+
+        result.total.week.pct_ds = result.total.week.ds_kh > 0 ? (result.total.week.ds_th / result.total.week.ds_kh) * 100 : 0;
+        result.total.week.pct_lg = result.total.week.lg_kh > 0 ? (result.total.week.lg_th / result.total.week.lg_kh) * 100 : 0;
+        result.total.week.rate_lg = result.total.week.ds_th > 0 ? (result.total.week.lg_th / result.total.week.ds_th) * 100 : 0;
 
         result.total.year.pct_ds = result.total.year.ds_kh > 0 ? (result.total.year.ds_th / result.total.year.ds_kh) * 100 : 0;
         result.total.year.pct_lg = result.total.year.lg_kh > 0 ? (result.total.year.lg_th / result.total.year.lg_kh) * 100 : 0;
@@ -611,21 +1042,45 @@ window.RevenueModule = {
     renderDepartmentDashboard() {
         const selectComp = document.getElementById('dept-filter-company');
         const selectMonth = document.getElementById('dept-filter-month');
-        if (selectComp && selectComp.value) {
-            this.currentDeptCompany = selectComp.value;
-        }
-        if (selectMonth && selectMonth.value) {
-            this.currentDeptMonth = selectMonth.value;
-        }
+        const selectWeek = document.getElementById('dept-filter-week');
+        if (selectComp && selectComp.value) this.currentDeptCompany = selectComp.value;
+        if (selectMonth && selectMonth.value) this.currentDeptMonth = selectMonth.value;
+        if (selectWeek && selectWeek.value) this.currentDeptWeek = selectWeek.value;
 
         const data = this.computeDepartmentData();
         this.renderKpiCards(data);
         this.renderDeptCharts(data);
         this.renderMatrixTableOnly();
 
-        // Update badge and subtitles
+        // Cập nhật tiêu đề cột bảng theo ngày / tuần / tháng
+        const isDayMode = this.currentDeptMode === 'day';
+        const isWeekMode = this.currentDeptMode === 'week' || this.currentDeptWeek !== 'all';
+        const thDs = document.getElementById('th-dept-ds-period');
+        const thLg = document.getElementById('th-dept-lg-period');
+        const wTitle = this.currentDeptWeek !== 'all' ? `TUẦN ${this.currentDeptWeek}` : 'TUẦN';
+
+        if (thDs) {
+            if (isDayMode) {
+                thDs.innerHTML = `DOANH SỐ BQ NGÀY (T${this.currentDeptMonth}) <small style="display:block;font-size:0.7rem;font-weight:400;color:#e0f2fe;">(Triệu VNĐ/Ngày)</small>`;
+            } else if (isWeekMode) {
+                thDs.innerHTML = `DOANH SỐ ${wTitle} (T${this.currentDeptMonth}) <small style="display:block;font-size:0.7rem;font-weight:400;color:#e0f2fe;">(Triệu VNĐ)</small>`;
+            } else {
+                thDs.innerHTML = `DOANH SỐ THÁNG ${this.currentDeptMonth}/2026 <small style="display:block;font-size:0.7rem;font-weight:400;color:#e0f2fe;">(Triệu VNĐ)</small>`;
+            }
+        }
+        if (thLg) {
+            if (isDayMode) {
+                thLg.innerHTML = `LÃI GỘP BQ NGÀY (T${this.currentDeptMonth}) <small style="display:block;font-size:0.7rem;font-weight:400;color:#e0f2fe;">(Triệu VNĐ/Ngày)</small>`;
+            } else if (isWeekMode) {
+                thLg.innerHTML = `LÃI GỘP ${wTitle} (T${this.currentDeptMonth}) <small style="display:block;font-size:0.7rem;font-weight:400;color:#e0f2fe;">(Triệu VNĐ)</small>`;
+            } else {
+                thLg.innerHTML = `LÃI GỘP THÁNG ${this.currentDeptMonth}/2026 <small style="display:block;font-size:0.7rem;font-weight:400;color:#e0f2fe;">(Triệu VNĐ)</small>`;
+            }
+        }
+
+        // Cập nhật badge & phụ đề
         const companyNames = {
-            'all': 'Toàn Tập Đoàn',
+            'all': 'Toàn Tập Đoàn (6 Công ty)',
             'THH': 'Tân Hồng Hà',
             'Viet': 'Việt',
             'XemSon': 'Xem Sơn',
@@ -639,24 +1094,55 @@ window.RevenueModule = {
         const subTitle = document.getElementById('dept-table-subtitle');
         if (subTitle) {
             const mText = `Tháng ${this.currentDeptMonth.padStart(2, '0')}/2026`;
-            const modeText = this.currentDeptMode === 'month' ? 'Đang xem: Theo Tháng' : 'Đang xem: Lũy kế cả năm (YTD)';
-            subTitle.textContent = `ĐVT: Triệu VNĐ • Kỳ báo cáo: ${mText} • ${modeText}`;
+            const wText = this.currentDeptWeek !== 'all' ? ` • Tuần ${this.currentDeptWeek}` : ' • Cả Tháng';
+            let modeText = 'Đang xem: Theo Tháng';
+            if (this.currentDeptMode === 'day') modeText = 'Đang xem: Bình quân Ngày (26 ngày/tháng)';
+            else if (this.currentDeptMode === 'week') modeText = `Đang xem: Theo Tuần (${wTitle})`;
+            else if (this.currentDeptMode === 'year') modeText = 'Đang xem: Lũy kế cả năm (YTD)';
+            
+            const safeBadge = this.currentDeptMonth === '9' 
+                ? '🔒 Dữ liệu Tháng 9 đã chốt sổ (bảo toàn 100%)' 
+                : (this.currentDeptMonth === '10' ? '⚡ Tháng 10 đang cập nhật theo tuần (T9 giữ nguyên)' : '');
+
+            subTitle.textContent = `ĐVT: Triệu VNĐ • Kỳ báo cáo: ${mText}${wText} • ${modeText} ${safeBadge ? '• ' + safeBadge : ''}`;
         }
 
+        // Đồng bộ dropdown chọn nhanh trên bảng và các nút pills
+        const quickM = document.getElementById('dept-table-quick-month');
+        if (quickM) quickM.value = String(this.currentDeptMonth);
+        const selM = document.getElementById('dept-filter-month');
+        if (selM) selM.value = String(this.currentDeptMonth);
+        const selW = document.getElementById('dept-filter-week');
+        if (selW) selW.value = String(this.currentDeptWeek);
+
+        document.querySelectorAll('.dept-month-pill').forEach(btn => {
+            const m = btn.getAttribute('data-month');
+            btn.classList.toggle('active', m === String(this.currentDeptMonth));
+        });
+        document.querySelectorAll('.dept-week-pill').forEach(btn => {
+            const w = btn.getAttribute('data-week');
+            btn.classList.toggle('active', w === String(this.currentDeptWeek));
+        });
+
         if (window.lucide) lucide.createIcons();
+        if (window.SliceMatrixModule && typeof window.SliceMatrixModule.render === 'function') {
+            window.SliceMatrixModule.render();
+        }
     },
 
     renderKpiCards(data) {
         const container = document.getElementById('dept-kpi-container');
         if (!container) return;
 
+        const isDayMode = this.currentDeptMode === 'day';
         const isYearMode = this.currentDeptMode === 'year';
+        const isWeekMode = this.currentDeptMode === 'week' || this.currentDeptWeek !== 'all';
         let html = '';
 
         const fmt = (num) => Math.round(num || 0).toLocaleString('vi-VN');
 
         data.departments.forEach(dept => {
-            const d = isYearMode ? dept.year : dept.month;
+            const d = isDayMode ? dept.day : (isYearMode ? dept.year : (isWeekMode ? dept.week : dept.month));
             const pct = d.pct_ds;
 
             let badgeClass = 'dept-kpi-badge-green';
@@ -665,6 +1151,8 @@ window.RevenueModule = {
 
             const progressWidth = Math.min(100, Math.max(0, pct));
             const progressColor = pct >= 100 ? '#10b981' : (pct >= 70 ? '#f59e0b' : '#ef4444');
+
+            const periodLabel = isDayMode ? 'BQ Ngày' : (isYearMode ? 'LK Năm' : (isWeekMode ? `Tuần ${this.currentDeptWeek !== 'all' ? this.currentDeptWeek : ''}` : 'Tháng'));
 
             html += `
                 <div class="dept-kpi-card" style="border-top: 4px solid ${dept.color};">
@@ -684,7 +1172,7 @@ window.RevenueModule = {
                     <div class="dept-kpi-body">
                         <!-- Hàng Doanh Số -->
                         <div class="dept-kpi-metric-row">
-                            <span class="dept-metric-label">Doanh số ${isYearMode ? 'LK' : 'Tháng'}:</span>
+                            <span class="dept-metric-label">Doanh số ${periodLabel}:</span>
                             <div class="dept-metric-value-group">
                                 <span class="dept-metric-actual">${fmt(d.ds_th)}</span>
                                 <span class="dept-metric-plan">/ ${fmt(d.ds_kh)} tr</span>
@@ -702,7 +1190,7 @@ window.RevenueModule = {
 
                     <div class="dept-kpi-footer">
                         <div class="dept-progress-info">
-                            <span class="dept-progress-label">Tiến độ đạt KH</span>
+                            <span class="dept-progress-label">Tiến độ KH ${periodLabel}</span>
                             <span class="dept-progress-pct" style="color: ${progressColor};">${pct.toFixed(1)}%</span>
                         </div>
                         <div class="dept-progress-bar-bg">
@@ -717,26 +1205,46 @@ window.RevenueModule = {
     },
 
     renderDeptCharts(data) {
+        const isDayMode = this.currentDeptMode === 'day';
         const isYearMode = this.currentDeptMode === 'year';
+        const isWeekMode = this.currentDeptMode === 'week' || this.currentDeptWeek !== 'all';
+
         const labels = data.departments.map(d => d.shortName);
-        const actualRev = data.departments.map(d => isYearMode ? Math.round(d.year.ds_th) : Math.round(d.month.ds_th));
-        const planRev   = data.departments.map(d => isYearMode ? Math.round(d.year.ds_kh) : Math.round(d.month.ds_kh));
-        const actualLg  = data.departments.map(d => isYearMode ? Math.round(d.year.lg_th) : Math.round(d.month.lg_th));
-        const rateLg    = data.departments.map(d => parseFloat((isYearMode ? d.year.rate_lg : d.month.rate_lg).toFixed(1)));
+        const actualRev = data.departments.map(d => isDayMode ? Math.round(d.day.ds_th) : (isYearMode ? Math.round(d.year.ds_th) : (isWeekMode ? Math.round(d.week.ds_th) : Math.round(d.month.ds_th))));
+        const planRev   = data.departments.map(d => isDayMode ? Math.round(d.day.ds_kh) : (isYearMode ? Math.round(d.year.ds_kh) : (isWeekMode ? Math.round(d.week.ds_kh) : Math.round(d.month.ds_kh))));
+        const actualLg  = data.departments.map(d => isDayMode ? Math.round(d.day.lg_th) : (isYearMode ? Math.round(d.year.lg_th) : (isWeekMode ? Math.round(d.week.lg_th) : Math.round(d.month.lg_th))));
+        const rateLg    = data.departments.map(d => {
+            const val = isDayMode ? d.day.rate_lg : (isYearMode ? d.year.rate_lg : (isWeekMode ? d.week.rate_lg : d.month.rate_lg));
+            return parseFloat((val || 0).toFixed(1));
+        });
 
         // Update titles
         const revTitle = document.getElementById('dept-chart-rev-title');
         if (revTitle) {
-            revTitle.textContent = isYearMode 
-                ? 'So Sánh Doanh Số Năm 2026: Kế Hoạch vs Lũy Kế TH (Triệu VNĐ)'
-                : `So Sánh Doanh Số Tháng ${this.currentDeptMonth}: Kế Hoạch vs Thực Tế (Triệu VNĐ)`;
+            if (isDayMode) {
+                revTitle.textContent = `Doanh Số Bình Quân 1 Ngày (T${this.currentDeptMonth}): Kế Hoạch vs Thực Hiện (Triệu VNĐ)`;
+            } else if (isYearMode) {
+                revTitle.textContent = 'So Sánh Doanh Số Năm 2026: Kế Hoạch vs Lũy Kế TH (Triệu VNĐ)';
+            } else if (isWeekMode) {
+                const wT = this.currentDeptWeek !== 'all' ? `Tuần ${this.currentDeptWeek} ` : '';
+                revTitle.textContent = `So Sánh Doanh Số ${wT}Tháng ${this.currentDeptMonth}: Kế Hoạch vs Thực Tế (Triệu VNĐ)`;
+            } else {
+                revTitle.textContent = `So Sánh Doanh Số Tháng ${this.currentDeptMonth}: Kế Hoạch vs Thực Tế (Triệu VNĐ)`;
+            }
         }
 
         const profitTitle = document.getElementById('dept-chart-profit-title');
         if (profitTitle) {
-            profitTitle.textContent = isYearMode
-                ? 'Lãi Gộp Lũy Kế (Cột) & Tỷ Lệ % Lãi Gộp (Đường)'
-                : `Lãi Gộp Tháng ${this.currentDeptMonth} (Cột) & Tỷ Lệ % Lãi Gộp (Đường)`;
+            if (isDayMode) {
+                profitTitle.textContent = `Lãi Gộp BQ 1 Ngày (Cột) & Tỷ Lệ % Lãi Gộp (Đường)`;
+            } else if (isYearMode) {
+                profitTitle.textContent = 'Lãi Gộp Lũy Kế (Cột) & Tỷ Lệ % Lãi Gộp (Đường)';
+            } else if (isWeekMode) {
+                const wT = this.currentDeptWeek !== 'all' ? `Tuần ${this.currentDeptWeek} ` : '';
+                profitTitle.textContent = `Lãi Gộp ${wT}Tháng ${this.currentDeptMonth} (Cột) & Tỷ Lệ % Lãi Gộp (Đường)`;
+            } else {
+                profitTitle.textContent = `Lãi Gộp Tháng ${this.currentDeptMonth} (Cột) & Tỷ Lệ % Lãi Gộp (Đường)`;
+            }
         }
 
         // 1. Chart Doanh Số (Kế hoạch vs Thực tế)
@@ -781,14 +1289,10 @@ window.RevenueModule = {
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: {
-                                callback: val => Number(val).toLocaleString('vi-VN')
-                            },
+                            ticks: { callback: val => Number(val).toLocaleString('vi-VN') },
                             grid: { color: 'rgba(0,0,0,0.05)' }
                         },
-                        x: {
-                            grid: { display: false }
-                        }
+                        x: { grid: { display: false } }
                     }
                 }
             });
@@ -843,9 +1347,7 @@ window.RevenueModule = {
                             type: 'linear',
                             position: 'left',
                             beginAtZero: true,
-                            ticks: {
-                                callback: val => Number(val).toLocaleString('vi-VN')
-                            },
+                            ticks: { callback: val => Number(val).toLocaleString('vi-VN') },
                             grid: { color: 'rgba(0,0,0,0.05)' }
                         },
                         y1: {
@@ -853,14 +1355,10 @@ window.RevenueModule = {
                             position: 'right',
                             beginAtZero: true,
                             max: 80,
-                            ticks: {
-                                callback: val => val + '%'
-                            },
+                            ticks: { callback: val => val + '%' },
                             grid: { display: false }
                         },
-                        x: {
-                            grid: { display: false }
-                        }
+                        x: { grid: { display: false } }
                     }
                 }
             });
@@ -872,6 +1370,8 @@ window.RevenueModule = {
         if (!tbody) return;
 
         const data = this.computeDepartmentData();
+        const isDayMode = this.currentDeptMode === 'day';
+        const isWeekMode = this.currentDeptMode === 'week' || this.currentDeptWeek !== 'all';
         let html = '';
 
         const fmt = (num) => Math.round(num || 0).toLocaleString('vi-VN');
@@ -884,7 +1384,8 @@ window.RevenueModule = {
         };
 
         data.departments.forEach(dept => {
-            const m = dept.month;
+            // Cột chu kỳ hiển thị: ngày, tuần hoặc tháng
+            const curP = isDayMode ? dept.day : (isWeekMode ? dept.week : dept.month);
             const y = dept.year;
             const isExpanded = this.expandedRows.has(dept.id);
             const hasSub = dept.subItems && dept.subItems.length > 0;
@@ -901,16 +1402,16 @@ window.RevenueModule = {
                         ${hasSub ? `<small style="color: #64748b; font-weight: 400; margin-left: 6px;">(${dept.subItems.length} mảng)</small>` : ''}
                     </td>
 
-                    <!-- DOANH SỐ THÁNG -->
-                    <td style="text-align: right; background: #f8fafc;">${fmt(m.ds_kh)}</td>
-                    <td style="text-align: right; font-weight: 600; color: #0284c7; background: #f8fafc;">${fmt(m.ds_th)}</td>
-                    <td style="text-align: right; font-weight: 700; color: ${getPctColor(m.pct_ds)}; background: #f8fafc;">${fmtPct(m.pct_ds)}</td>
+                    <!-- DOANH SỐ KỲ (TUẦN / THÁNG) -->
+                    <td style="text-align: right; background: #f8fafc;">${fmt(curP.ds_kh)}</td>
+                    <td style="text-align: right; font-weight: 600; color: #0284c7; background: #f8fafc;">${fmt(curP.ds_th)}</td>
+                    <td style="text-align: right; font-weight: 700; color: ${getPctColor(curP.pct_ds)}; background: #f8fafc;">${fmtPct(curP.pct_ds)}</td>
 
-                    <!-- LÃI GỘP THÁNG -->
-                    <td style="text-align: right; background: #f8fafc;">${fmt(m.lg_kh)}</td>
-                    <td style="text-align: right; font-weight: 600; color: #16a34a; background: #f8fafc;">${fmt(m.lg_th)}</td>
-                    <td style="text-align: right; font-weight: 700; color: ${getPctColor(m.pct_lg)}; background: #f8fafc;">${fmtPct(m.pct_lg)}</td>
-                    <td style="text-align: right; font-weight: 700; color: #047857; background: #f0fdf4;">${fmtPct(m.rate_lg)}</td>
+                    <!-- LÃI GỘP KỲ (TUẦN / THÁNG) -->
+                    <td style="text-align: right; background: #f8fafc;">${fmt(curP.lg_kh)}</td>
+                    <td style="text-align: right; font-weight: 600; color: #16a34a; background: #f8fafc;">${fmt(curP.lg_th)}</td>
+                    <td style="text-align: right; font-weight: 700; color: ${getPctColor(curP.pct_lg)}; background: #f8fafc;">${fmtPct(curP.pct_lg)}</td>
+                    <td style="text-align: right; font-weight: 700; color: #047857; background: #f0fdf4;">${fmtPct(curP.rate_lg)}</td>
 
                     <!-- DOANH SỐ NĂM -->
                     <td style="text-align: right; background: #f8fafc;">${fmt(y.ds_kh)}</td>
@@ -925,38 +1426,17 @@ window.RevenueModule = {
                 </tr>
             `;
 
-            // Hàng con (Sub-items) nếu đang mở rộng
+            // Hàng con (Sub-items)
             if (isExpanded && hasSub) {
-                const selM = parseInt(this.currentDeptMonth) || 8;
-                dept.subItems.forEach((item, idx) => {
-                    const itDsKhMonth = (item.plan_m_ds !== undefined && selM === 8) ? item.plan_m_ds : Math.round(item.plan_year_ds / 12);
-                    const itLgKhMonth = (item.plan_m_lg !== undefined && selM === 8) ? item.plan_m_lg : Math.round(item.plan_year_lg / 12);
-
-                    let itDsThMonth = item.m8_ds;
-                    let itLgThMonth = item.m8_lg;
-                    if (selM !== 8) {
-                        const w = [0.95, 0.65, 1.05, 0.98, 1.02, 1.04, 1.10, 1.15, 1.05, 1.08, 1.12, 1.25][selM - 1] || 1.0;
-                        itDsThMonth = Math.round(item.m8_ds * (w / 1.15));
-                        itLgThMonth = Math.round(item.m8_lg * (w / 1.15));
-                    }
-
-                    let itDsThYear = item.ytd_ds;
-                    let itLgThYear = item.ytd_lg;
-                    if (selM < 8) {
-                        itDsThYear = Math.round(item.ytd_ds * (selM / 8));
-                        itLgThYear = Math.round(item.ytd_lg * (selM / 8));
-                    } else if (selM > 8) {
-                        itDsThYear = Math.round(item.ytd_ds + (itDsKhMonth * (selM - 8)));
-                        itLgThYear = Math.round(item.ytd_lg + (itLgKhMonth * (selM - 8)));
-                    }
-
-                    const itPctDsMonth = itDsKhMonth > 0 ? (itDsThMonth / itDsKhMonth) * 100 : 0;
-                    const itPctLgMonth = itLgKhMonth > 0 ? (itLgThMonth / itLgKhMonth) * 100 : 0;
-                    const itRateLgMonth = itDsThMonth > 0 ? (itLgThMonth / itDsThMonth) * 100 : 0;
-
-                    const itPctDsYear = item.plan_year_ds > 0 ? (itDsThYear / item.plan_year_ds) * 100 : 0;
-                    const itPctLgYear = item.plan_year_lg > 0 ? (itLgThYear / item.plan_year_lg) * 100 : 0;
-                    const itRateLgYear = itDsThYear > 0 ? (itLgThYear / itDsThYear) * 100 : 0;
+                dept.subItems.forEach((item) => {
+                    const c = item.calculated || {
+                        day:   { ds_kh: 0, ds_th: 0, pct_ds: 0, lg_kh: 0, lg_th: 0, pct_lg: 0, rate_lg: 0 },
+                        month: { ds_kh: 0, ds_th: 0, pct_ds: 0, lg_kh: 0, lg_th: 0, pct_lg: 0, rate_lg: 0 },
+                        week:  { ds_kh: 0, ds_th: 0, pct_ds: 0, lg_kh: 0, lg_th: 0, pct_lg: 0, rate_lg: 0 },
+                        year:  { ds_kh: 0, ds_th: 0, pct_ds: 0, lg_kh: 0, lg_th: 0, pct_lg: 0, rate_lg: 0 }
+                    };
+                    const itP = isDayMode ? c.day : (isWeekMode ? c.week : c.month);
+                    const itY = c.year;
 
                     html += `
                         <tr class="dept-row-child">
@@ -965,27 +1445,27 @@ window.RevenueModule = {
                                 <small style="display: block; color: #94a3b8; font-size: 0.72rem;">[${item.comp}] ${item.note}</small>
                             </td>
 
-                            <!-- DS Tháng -->
-                            <td style="text-align: right; color: #64748b;">${fmt(itDsKhMonth)}</td>
-                            <td style="text-align: right; color: #0284c7;">${fmt(itDsThMonth)}</td>
-                            <td style="text-align: right; color: ${getPctColor(itPctDsMonth)};">${fmtPct(itPctDsMonth)}</td>
+                            <!-- DS Kỳ -->
+                            <td style="text-align: right; color: #64748b;">${fmt(itP.ds_kh)}</td>
+                            <td style="text-align: right; color: #0284c7;">${fmt(itP.ds_th)}</td>
+                            <td style="text-align: right; color: ${getPctColor(itP.pct_ds)};">${fmtPct(itP.pct_ds)}</td>
 
-                            <!-- LG Tháng -->
-                            <td style="text-align: right; color: #64748b;">${fmt(itLgKhMonth)}</td>
-                            <td style="text-align: right; color: #16a34a;">${fmt(itLgThMonth)}</td>
-                            <td style="text-align: right; color: ${getPctColor(itPctLgMonth)};">${fmtPct(itPctLgMonth)}</td>
-                            <td style="text-align: right; color: #047857;">${fmtPct(itRateLgMonth)}</td>
+                            <!-- LG Kỳ -->
+                            <td style="text-align: right; color: #64748b;">${fmt(itP.lg_kh)}</td>
+                            <td style="text-align: right; color: #16a34a;">${fmt(itP.lg_th)}</td>
+                            <td style="text-align: right; color: ${getPctColor(itP.pct_lg)};">${fmtPct(itP.pct_lg)}</td>
+                            <td style="text-align: right; color: #047857;">${fmtPct(itP.rate_lg)}</td>
 
                             <!-- DS Năm -->
-                            <td style="text-align: right; color: #64748b;">${fmt(item.plan_year_ds)}</td>
-                            <td style="text-align: right; color: #b45309;">${fmt(itDsThYear)}</td>
-                            <td style="text-align: right; color: ${getPctColor(itPctDsYear)};">${fmtPct(itPctDsYear)}</td>
+                            <td style="text-align: right; color: #64748b;">${fmt(itY.ds_kh)}</td>
+                            <td style="text-align: right; color: #b45309;">${fmt(itY.ds_th)}</td>
+                            <td style="text-align: right; color: ${getPctColor(itY.pct_ds)};">${fmtPct(itY.pct_ds)}</td>
 
                             <!-- LG Năm -->
-                            <td style="text-align: right; color: #64748b;">${fmt(item.plan_year_lg)}</td>
-                            <td style="text-align: right; color: #7c3aed;">${fmt(itLgThYear)}</td>
-                            <td style="text-align: right; color: ${getPctColor(itPctLgYear)};">${fmtPct(itPctLgYear)}</td>
-                            <td style="text-align: right; color: #6b21a8;">${fmtPct(itRateLgYear)}</td>
+                            <td style="text-align: right; color: #64748b;">${fmt(itY.lg_kh)}</td>
+                            <td style="text-align: right; color: #7c3aed;">${fmt(itY.lg_th)}</td>
+                            <td style="text-align: right; color: ${getPctColor(itY.pct_lg)};">${fmtPct(itY.pct_lg)}</td>
+                            <td style="text-align: right; color: #6b21a8;">${fmtPct(itY.rate_lg)}</td>
                         </tr>
                     `;
                 });
@@ -994,31 +1474,34 @@ window.RevenueModule = {
 
         // Dòng TỔNG CỘNG
         const tot = data.total;
+        const totP = isDayMode ? tot.day : (isWeekMode ? tot.week : tot.month);
+        const totY = tot.year;
+
         html += `
             <tr class="dept-row-total">
                 <td style="font-weight: 800; color: #0f172a; text-transform: uppercase;">TỔNG CỘNG</td>
 
-                <!-- DS Tháng -->
-                <td style="text-align: right;">${fmt(tot.month.ds_kh)}</td>
-                <td style="text-align: right; color: #0284c7;">${fmt(tot.month.ds_th)}</td>
-                <td style="text-align: right; color: ${getPctColor(tot.month.pct_ds)};">${fmtPct(tot.month.pct_ds)}</td>
+                <!-- DS Kỳ -->
+                <td style="text-align: right;">${fmt(totP.ds_kh)}</td>
+                <td style="text-align: right; color: #0284c7;">${fmt(totP.ds_th)}</td>
+                <td style="text-align: right; color: ${getPctColor(totP.pct_ds)};">${fmtPct(totP.pct_ds)}</td>
 
-                <!-- LG Tháng -->
-                <td style="text-align: right;">${fmt(tot.month.lg_kh)}</td>
-                <td style="text-align: right; color: #16a34a;">${fmt(tot.month.lg_th)}</td>
-                <td style="text-align: right; color: ${getPctColor(tot.month.pct_lg)};">${fmtPct(tot.month.pct_lg)}</td>
-                <td style="text-align: right; color: #047857;">${fmtPct(tot.month.rate_lg)}</td>
+                <!-- LG Kỳ -->
+                <td style="text-align: right;">${fmt(totP.lg_kh)}</td>
+                <td style="text-align: right; color: #16a34a;">${fmt(totP.lg_th)}</td>
+                <td style="text-align: right; color: ${getPctColor(totP.pct_lg)};">${fmtPct(totP.pct_lg)}</td>
+                <td style="text-align: right; color: #047857;">${fmtPct(totP.rate_lg)}</td>
 
                 <!-- DS Năm -->
-                <td style="text-align: right;">${fmt(tot.year.ds_kh)}</td>
-                <td style="text-align: right; color: #b45309;">${fmt(tot.year.ds_th)}</td>
-                <td style="text-align: right; color: ${getPctColor(tot.year.pct_ds)};">${fmtPct(tot.year.pct_ds)}</td>
+                <td style="text-align: right;">${fmt(totY.ds_kh)}</td>
+                <td style="text-align: right; color: #b45309;">${fmt(totY.ds_th)}</td>
+                <td style="text-align: right; color: ${getPctColor(totY.pct_ds)};">${fmtPct(totY.pct_ds)}</td>
 
                 <!-- LG Năm -->
-                <td style="text-align: right;">${fmt(tot.year.lg_kh)}</td>
-                <td style="text-align: right; color: #7c3aed;">${fmt(tot.year.lg_th)}</td>
-                <td style="text-align: right; color: ${getPctColor(tot.year.pct_lg)};">${fmtPct(tot.year.pct_lg)}</td>
-                <td style="text-align: right; color: #6b21a8;">${fmtPct(tot.year.rate_lg)}</td>
+                <td style="text-align: right;">${fmt(totY.lg_kh)}</td>
+                <td style="text-align: right; color: #7c3aed;">${fmt(totY.lg_th)}</td>
+                <td style="text-align: right; color: ${getPctColor(totY.pct_lg)};">${fmtPct(totY.pct_lg)}</td>
+                <td style="text-align: right; color: #6b21a8;">${fmtPct(totY.rate_lg)}</td>
             </tr>
         `;
 

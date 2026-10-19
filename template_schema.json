@@ -15,9 +15,10 @@
       "headers": ["NỘI DUNG HƯỚNG DẪN QUY ĐỊNH NHẬP LIỆU BÁO CÁO VPS"],
       "sample": [
         ["1. Vui lòng nhập liệu vào các Sheet tương ứng bên dưới."],
-        ["2. Định dạng tháng: MM/YYYY (Ví dụ: 08/2026, 09/2026)."],
-        ["3. Định dạng số tiền: Nhập số nguyên dương (đơn vị VNĐ), không gõ chữ đ hay vnd."],
-        ["4. Không xóa hoặc thay đổi thứ tự các cột tiêu đề để đảm bảo Dashboard tự động đồng bộ."]
+        ["2. Định dạng kỳ báo cáo: MM/YYYY (Ví dụ: 09/2026, 10/2026) hoặc nhập theo Tuần (W1, W2, W3, W4 trong tháng)."],
+        ["3. Bảo toàn dữ liệu: Dữ liệu Tháng 09/2026 đã chốt sổ được lưu trữ độc lập. Khi nhập Tuần 1, Tuần 2... Tháng 10/2026, tuyệt đối không xóa/ghi đè dòng dữ liệu Tháng 09/2026."],
+        ["4. Định dạng số tiền: Nhập số nguyên dương (đơn vị VNĐ), không gõ chữ đ hay vnd."],
+        ["5. Không xóa hoặc thay đổi thứ tự các cột tiêu đề để đảm bảo Dashboard tự động đồng bộ."]
       ]
     },
     {

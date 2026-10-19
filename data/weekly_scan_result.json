@@ -1,6 +1,6 @@
 {
-  "scannedAt": "2026-10-08T10:02:49.295Z",
-  "formattedTime": "17:02:49 8/10/2026",
+  "scannedAt": "2026-10-19T04:00:51.536Z",
+  "formattedTime": "11:00:51 19/10/2026",
   "totalUnits": 6,
   "completedCount": 6,
   "partialCount": 0,
@@ -32,11 +32,11 @@
         },
         "Khách hàng": {
           "status": "ENTERED",
-          "rows": 7
+          "rows": 8
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 384
+          "rows": 385
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -74,11 +74,11 @@
         },
         "Khách hàng": {
           "status": "ENTERED",
-          "rows": 10
+          "rows": 19
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 7
+          "rows": 8
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -116,11 +116,11 @@
         },
         "Khách hàng": {
           "status": "ENTERED",
-          "rows": 7
+          "rows": 8
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 7
+          "rows": 8
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -162,7 +162,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 18
+          "rows": 19
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -204,7 +204,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 8
+          "rows": 9
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -246,7 +246,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 17
+          "rows": 7
         },
         "Nhân sự": {
           "status": "ENTERED",

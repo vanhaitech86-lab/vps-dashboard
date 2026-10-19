@@ -11,10 +11,12 @@ window.FilterManager = {
         const periodBtns = document.querySelectorAll('.filter-btn');
         periodBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                periodBtns.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                this.currentPeriod = e.target.dataset.period;
-                this.triggerFilterChange();
+                const targetBtn = e.target.closest('.filter-btn');
+                if (!targetBtn) return;
+                const p = targetBtn.dataset.period || 'month';
+                if (this.currentPeriod !== p) {
+                    this.setPeriod(p);
+                }
             });
         });
 
@@ -32,6 +34,15 @@ window.FilterManager = {
                 this.triggerFilterChange();
             });
         }
+    },
+
+    setPeriod(period) {
+        this.currentPeriod = period;
+        const periodBtns = document.querySelectorAll('.filter-btn');
+        periodBtns.forEach(b => {
+            b.classList.toggle('active', b.dataset.period === period);
+        });
+        this.triggerFilterChange();
     },
 
     updateCompanyFilterVisibility(user) {
@@ -116,5 +127,31 @@ window.FilterManager = {
             detail: { period: this.currentPeriod, company: this.currentCompany }
         });
         document.dispatchEvent(event);
+
+        // Hiển thị thông báo phản hồi nhanh trực quan
+        const labelMap = {
+            'day': 'Ngày (Bình quân 1 ngày làm việc)',
+            'week': 'Tuần (Mặt cắt tiến độ theo tuần)',
+            'month': 'Tháng (Kỳ báo cáo cả tháng)',
+            'year': 'Năm (Lũy kế cả năm YTD)'
+        };
+        const periodText = labelMap[this.currentPeriod] || this.currentPeriod;
+        this.showToast(`⏱️ Đang xem dữ liệu theo: ${periodText}`);
+    },
+
+    showToast(msg) {
+        let toast = document.getElementById('vps-filter-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'vps-filter-toast';
+            toast.style.cssText = 'position: fixed; bottom: 24px; right: 24px; z-index: 99999; background: #0f172a; color: #ffffff; padding: 10px 18px; border-radius: 8px; font-size: 0.84rem; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,0.25); border: 1px solid #334155; transition: opacity 0.3s ease; opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 8px;';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        clearTimeout(this._toastTimer);
+        this._toastTimer = setTimeout(() => {
+            if (toast) toast.style.opacity = '0';
+        }, 2200);
     }
 };
