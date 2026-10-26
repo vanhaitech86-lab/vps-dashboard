@@ -1,6 +1,6 @@
 {
-  "scannedAt": "2026-10-19T04:00:51.536Z",
-  "formattedTime": "11:00:51 19/10/2026",
+  "scannedAt": "2026-10-26T08:54:06.023Z",
+  "formattedTime": "15:54:06 26/10/2026",
   "totalUnits": 6,
   "completedCount": 6,
   "partialCount": 0,
@@ -36,7 +36,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 385
+          "rows": 387
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -74,11 +74,11 @@
         },
         "Khách hàng": {
           "status": "ENTERED",
-          "rows": 19
+          "rows": 10
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 8
+          "rows": 9
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -120,7 +120,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 8
+          "rows": 9
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -162,7 +162,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 19
+          "rows": 28
         },
         "Nhân sự": {
           "status": "ENTERED",
@@ -246,11 +246,11 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 7
+          "rows": 28
         },
         "Nhân sự": {
           "status": "ENTERED",
-          "rows": 15
+          "rows": 8
         },
         "Chi Phí": {
           "status": "ENTERED",

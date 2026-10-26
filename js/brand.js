@@ -507,6 +507,9 @@ window.BrandModule = {
     initRadarChart(d) {
         const ctx = document.getElementById('brandRadarChart');
         if (!ctx) return;
+        if (this.charts['radar']) {
+            try { this.charts['radar'].destroy(); } catch(e) {}
+        }
         const mktR = this.getRate(d.marketShareActual, d.marketSharePlan);
         const revR = this.getRate(d.revenueContribActual, d.revenueContribPlan);
         const brandR = this.getRate(d.brandAwarenessActual, d.brandAwarenessPlan);
@@ -548,6 +551,9 @@ window.BrandModule = {
     initBarChart() {
         const ctx = document.getElementById('brandBarChart');
         if (!ctx) return;
+        if (this.charts['bar']) {
+            try { this.charts['bar'].destroy(); } catch(e) {}
+        }
 
         const labels = this.companies;
         const datasets = [

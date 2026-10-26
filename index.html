@@ -71,7 +71,7 @@
                 <h2 ondblclick="quickFillLogin('ADMIN', 'Admin123a@')" title="TẬP ĐOÀN VPS" style="font-size: 1.65rem; font-weight: 800; color: #1e3a8a; letter-spacing: -0.5px; margin-bottom: 4px; user-select: none; cursor: default;">TẬP ĐOÀN VPS</h2>
                 <p style="font-size: 0.9rem; color: #64748b; font-weight: 600;">Hệ Thống Báo Cáo & Phân Quyền Đơn Vị</p>
             </div>
-            <form id="login-form">
+            <form id="login-form" onsubmit="event.preventDefault(); return (window.handleManualLogin ? window.handleManualLogin(event) : false);">
                 <div class="form-group">
                     <label for="username" style="font-weight: 700; font-size: 0.85rem; color: #1e293b;">Tên đăng nhập</label>
                     <input type="text" id="username" placeholder="Nhập mã (VD: XESCO, THH, CEO...)" required autocomplete="username" style="font-size: 0.95rem; font-weight: 600;">
@@ -88,10 +88,14 @@
                 <div style="font-size: 0.8rem; font-weight: 800; color: #1e40af; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
                     <span>👑 Ban Lãnh Đạo Tập Đoàn</span>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 14px;">
-                    <button type="button" onclick="quickFillLogin('CEO', '123a@')" style="padding: 9px 14px; font-size: 0.82rem; font-weight: 700; color: #1e40af; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+                    <button type="button" onclick="quickFillLogin('ADMIN', 'Admin123a@')" style="padding: 9px 12px; font-size: 0.82rem; font-weight: 700; color: #991b1b; background: #fef2f2; border: 1.5px solid #f87171; border-radius: 6px; cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-weight: 800;">🛡️ ADMIN</span>
+                        <span style="font-size: 0.72rem; color: #b91c1c; font-weight: 600;">Quản Trị Viên</span>
+                    </button>
+                    <button type="button" onclick="quickFillLogin('CEO', '123a@')" style="padding: 9px 12px; font-size: 0.82rem; font-weight: 700; color: #1e40af; background: #eff6ff; border: 1.5px solid #60a5fa; border-radius: 6px; cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between;">
                         <span style="font-weight: 800;">👑 CEO</span>
-                        <span style="font-size: 0.76rem; color: #64748b; font-weight: 600;">Tổng Giám Đốc VPS (Toàn quyền tập đoàn)</span>
+                        <span style="font-size: 0.72rem; color: #2563eb; font-weight: 600;">Tổng Giám Đốc</span>
                     </button>
                 </div>
 

@@ -35,12 +35,12 @@ window.RevenueModule = {
                     'khac':      { ds: 0, lg: 0 }
                 },
                 'THH': {
-                    'phan_phoi': { ds: 3616, lg: 479 },
-                    'thue_may':  { ds: 685, lg: 343 },
-                    'dich_vu':   { ds: 1894, lg: 566 },
-                    'online':    { ds: 102, lg: 12 },
-                    'du_an':     { ds: 1415, lg: 310 },
-                    'kdth':      { ds: 1248, lg: 177 }
+                    'phan_phoi': { ds: 8883, lg: 888.3 },
+                    'thue_may':  { ds: 0, lg: 0 },
+                    'dich_vu':   { ds: 1071, lg: 420 },
+                    'online':    { ds: 49, lg: 1.8 },
+                    'du_an':     { ds: 931, lg: 470 },
+                    'kdth':      { ds: 7044, lg: 240 }
                 },
                 'Viet': {
                     'thue_may':  { ds: 1546, lg: 910 },
@@ -169,7 +169,7 @@ window.RevenueModule = {
             desc: 'Bán buôn máy, linh kiện, KD sỉ',
             // Phân bổ tỷ trọng kế hoạch năm (Triệu VNĐ)
             plans: {
-                'THH':    { ds: 45000, lg: 4500, lg_pct: 10 },
+                'THH':    { ds: 100000, lg: 8000, lg_pct: 8 },
                 'Viet':   { ds: 0, lg: 0, lg_pct: 0 },
                 'XemSon': { ds: 66000, lg: 6300, lg_pct: 10 },
                 'VPSM':   { ds: 13500, lg: 1350, lg_pct: 10 },
@@ -187,7 +187,7 @@ window.RevenueModule = {
             bgColor: 'rgba(16, 185, 129, 0.1)',
             desc: 'Thuê máy kỹ thuật & KD thuê máy',
             plans: {
-                'THH':    { ds: 7000, lg: 2450, lg_pct: 35 },
+                'THH':    { ds: 8000, lg: 4800, lg_pct: 60 },
                 'Viet':   { ds: 18500, lg: 10730, lg_pct: 58 },
                 'XemSon': { ds: 42000, lg: 25480, lg_pct: 61 },
                 'VPSM':   { ds: 1200, lg: 780, lg_pct: 65 },
@@ -205,7 +205,7 @@ window.RevenueModule = {
             bgColor: 'rgba(245, 158, 11, 0.1)',
             desc: 'DVKT, Tổ dịch vụ, mực in, metercharge',
             plans: {
-                'THH':    { ds: 20000, lg: 7600, lg_pct: 38 },
+                'THH':    { ds: 31000, lg: 13400, lg_pct: 43.2 },
                 'Viet':   { ds: 0, lg: 0, lg_pct: 0 },
                 'XemSon': { ds: 26000, lg: 8580, lg_pct: 33 },
                 'VPSM':   { ds: 3500, lg: 1820, lg_pct: 52 },
@@ -223,7 +223,7 @@ window.RevenueModule = {
             bgColor: 'rgba(139, 92, 246, 0.1)',
             desc: 'E-commerce, Shopee-Online, trực tuyến',
             plans: {
-                'THH':    { ds: 1500, lg: 75, lg_pct: 5 },
+                'THH':    { ds: 11000, lg: 890, lg_pct: 8.1 },
                 'Viet':   { ds: 30500, lg: 1830, lg_pct: 6 },
                 'XemSon': { ds: 24000, lg: 1200, lg_pct: 5 },
                 'VPSM':   { ds: 1400, lg: 84, lg_pct: 6 },
@@ -241,7 +241,7 @@ window.RevenueModule = {
             bgColor: 'rgba(236, 72, 153, 0.1)',
             desc: 'Dự án văn phòng, CNTT, thiết bị',
             plans: {
-                'THH':    { ds: 22000, lg: 8800, lg_pct: 40 },
+                'THH':    { ds: 100000, lg: 10000, lg_pct: 10 },
                 'Viet':   { ds: 0, lg: 0, lg_pct: 0 },
                 'XemSon': { ds: 0, lg: 0, lg_pct: 0 },
                 'VPSM':   { ds: 0, lg: 0, lg_pct: 0 },
@@ -259,7 +259,7 @@ window.RevenueModule = {
             bgColor: 'rgba(6, 182, 212, 0.1)',
             desc: 'Kinh doanh tổng hợp thương mại',
             plans: {
-                'THH':    { ds: 22500, lg: 2250, lg_pct: 10 },
+                'THH':    { ds: 30000, lg: 6000, lg_pct: 20 },
                 'Viet':   { ds: 23000, lg: 1840, lg_pct: 8 },
                 'XemSon': { ds: 0, lg: 0, lg_pct: 0 },
                 'VPSM':   { ds: 0, lg: 0, lg_pct: 0 },
@@ -310,21 +310,21 @@ window.RevenueModule = {
         ? window.LIVE_GOOGLE_SHEETS_DATA.dept_7_sub_items
         : [
         // 1. Phân phối
-        { deptId: 'phan_phoi', comp: 'THH', name: 'Kinh doanh bán buôn', note: 'Phân phối đại lý miền Bắc', ytd_ds: 30362.0, ytd_lg: 2847.1, m8_ds: 5135.0, m8_lg: 572.0, plan_year_ds: 45000, plan_year_lg: 4500 },
+        { deptId: 'phan_phoi', comp: 'THH', name: 'Kinh doanh bán buôn', note: 'Phân phối đại lý miền Bắc', ytd_ds: 33978.0, ytd_lg: 3605.0, m8_ds: 8883.0, m8_lg: 888.3, plan_m_ds: 10834.0, plan_m_lg: 867.0, plan_year_ds: 100000.0, plan_year_lg: 8000.0 },
         { deptId: 'phan_phoi', comp: 'XemSon', name: 'Kinh doanh bán buôn', note: 'Phân phối đại lý miền Nam', ytd_ds: 27002.0, ytd_lg: 4410.0, m8_ds: 4168.0, m8_lg: 682.0, plan_m_ds: 5500, plan_m_lg: 525, plan_year_ds: 66000, plan_year_lg: 6300 },
         { deptId: 'phan_phoi', comp: 'VPSM', name: 'Kinh doanh máy - bán buôn', note: 'Bán buôn máy VPS Miền Trung', ytd_ds: 6698.0, ytd_lg: 575.0, m8_ds: 810.0, m8_lg: 45.0, plan_year_ds: 10000, plan_year_lg: 900 },
         { deptId: 'phan_phoi', comp: 'VPSM', name: 'Kinh doanh linh kiện - bán buôn', note: 'Bán buôn linh kiện mực in', ytd_ds: 2028.0, ytd_lg: 312.0, m8_ds: 240.0, m8_lg: 22.0, plan_year_ds: 3500, plan_year_lg: 450 },
 
         // 2. Thuê máy
-        { deptId: 'thue_may', comp: 'THH', name: 'Thuê máy Tân Hồng Hà', note: 'Cho thuê máy photocopy miền Bắc', ytd_ds: 4304.0, ytd_lg: 1424.8, m8_ds: 650.0, m8_lg: 233.0, plan_year_ds: 7000, plan_year_lg: 2450 },
+        { deptId: 'thue_may', comp: 'THH', name: 'Thuê máy Tân Hồng Hà', note: 'Cho thuê máy photocopy miền Bắc', ytd_ds: 4990.0, ytd_lg: 1767.0, m8_ds: 0.0, m8_lg: 0.0, plan_m_ds: 733.0, plan_m_lg: 440.0, plan_year_ds: 8000.0, plan_year_lg: 4800.0 },
         { deptId: 'thue_may', comp: 'Viet', name: 'Thuê máy Công ty Việt', note: 'Cho thuê máy Công ty Việt', ytd_ds: 12422.0, ytd_lg: 7195.0, m8_ds: 1546.0, m8_lg: 910.0, plan_year_ds: 18500, plan_year_lg: 10730 },
         { deptId: 'thue_may', comp: 'XemSon', name: 'Thuê máy Xem Sơn', note: 'Cho thuê máy photocopy miền Nam', ytd_ds: 16958.0, ytd_lg: 11264.0, m8_ds: 2078.0, m8_lg: 1337.0, plan_m_ds: 3500, plan_m_lg: 2123, plan_year_ds: 42000, plan_year_lg: 25480 },
         { deptId: 'thue_may', comp: 'VPSM', name: 'Thuê máy Miền Trung', note: 'Thuê máy khu vực miền Trung', ytd_ds: 743.0, ytd_lg: 496.0, m8_ds: 80.0, m8_lg: 20.0, plan_year_ds: 1200, plan_year_lg: 780 },
 
         // 3. Dịch vụ
-        { deptId: 'dich_vu', comp: 'THH', name: 'Tổ Dịch vụ THH', note: 'Bảo trì bảo dưỡng sửa chữa', ytd_ds: 9304.0, ytd_lg: 3103.0, m8_ds: 959.0, m8_lg: 281.0, plan_year_ds: 14000, plan_year_lg: 5320 },
-        { deptId: 'dich_vu', comp: 'THH', name: 'Tổ mực in THH', note: 'Cung cấp thay thế mực in', ytd_ds: 2319.0, ytd_lg: 1181.7, m8_ds: 354.0, m8_lg: 196.0, plan_year_ds: 3500, plan_year_lg: 1470 },
-        { deptId: 'dich_vu', comp: 'THH', name: 'Metercharge THH', note: 'Dịch vụ thu phí bản in chụp', ytd_ds: 1684.0, ytd_lg: 873.0, m8_ds: 233.0, m8_lg: 141.0, plan_year_ds: 2500, plan_year_lg: 1250 },
+        { deptId: 'dich_vu', comp: 'THH', name: 'Tổ Dịch vụ THH', note: 'Bảo trì bảo dưỡng sửa chữa', ytd_ds: 10305.0, ytd_lg: 3425.0, m8_ds: 867.0, m8_lg: 317.0, plan_m_ds: 1833.0, plan_m_lg: 733.0, plan_year_ds: 20000.0, plan_year_lg: 8000.0 },
+        { deptId: 'dich_vu', comp: 'THH', name: 'Tổ mực in THH', note: 'Cung cấp thay thế mực in', ytd_ds: 2527.0, ytd_lg: 1292.0, m8_ds: 204.0, m8_lg: 103.0, plan_m_ds: 550.0, plan_m_lg: 220.0, plan_year_ds: 6000.0, plan_year_lg: 2400.0 },
+        { deptId: 'dich_vu', comp: 'THH', name: 'Metercharge THH', note: 'Dịch vụ thu phí bản in chụp', ytd_ds: 1916.0, ytd_lg: 1060.0, m8_ds: 0.0, m8_lg: 0.0, plan_m_ds: 458.0, plan_m_lg: 274.0, plan_year_ds: 5000.0, plan_year_lg: 3000.0 },
         { deptId: 'dich_vu', comp: 'XemSon', name: 'Tổ Dịch vụ Xem Sơn', note: 'Kỹ thuật dịch vụ máy VP', ytd_ds: 9931.0, ytd_lg: 4063.0, m8_ds: 1295.0, m8_lg: 597.0, plan_m_ds: 2137, plan_m_lg: 715, plan_year_ds: 26000, plan_year_lg: 8580 },
         { deptId: 'dich_vu', comp: 'XemSon', name: 'Tổ mực In', note: 'Cung cấp thay thế mực in', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
         { deptId: 'dich_vu', comp: 'XemSon', name: 'Metercharge', note: 'Dịch vụ thu phí bản in chụp', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
@@ -332,18 +332,18 @@ window.RevenueModule = {
         { deptId: 'dich_vu', comp: 'VPSM', name: 'Dịch vụ toàn phần VPSM', note: 'Hợp đồng bảo trì trọn gói', ytd_ds: 478.0, ytd_lg: 324.0, m8_ds: 60.0, m8_lg: 35.0, plan_year_ds: 800, plan_year_lg: 470 },
 
         // 4. Online
-        { deptId: 'online', comp: 'THH', name: 'Kinh doanh Online THH', note: 'Bán hàng trực tuyến', ytd_ds: 772.0, ytd_lg: 15.1, m8_ds: 102.0, m8_lg: 0.0, plan_year_ds: 1500, plan_year_lg: 75 },
+        { deptId: 'online', comp: 'THH', name: 'Kinh doanh Online THH', note: 'Bán hàng trực tuyến', ytd_ds: 811.0, ytd_lg: 18.0, m8_ds: 49.0, m8_lg: 1.8, plan_m_ds: 275.0, plan_m_lg: 8.3, plan_year_ds: 11000.0, plan_year_lg: 890.0 },
         { deptId: 'online', comp: 'Viet', name: 'KD Online Việt', note: 'Kênh online sàn TMĐT', ytd_ds: 19902.0, ytd_lg: 1239.0, m8_ds: 3764.0, m8_lg: 241.0, plan_year_ds: 30500, plan_year_lg: 1830 },
         { deptId: 'online', comp: 'XemSon', name: 'Kinh doanh Online', note: 'Bán hàng trực tuyến', ytd_ds: 23597.0, ytd_lg: 882.0, m8_ds: 3918.0, m8_lg: 113.0, plan_m_ds: 2000, plan_m_lg: 100, plan_year_ds: 24000, plan_year_lg: 1200 },
         { deptId: 'online', comp: 'VPSM', name: 'Shopee-Online VPSM', note: 'Gian hàng Shopee Miền Trung', ytd_ds: 898.0, ytd_lg: 48.0, m8_ds: 105.0, m8_lg: 3.0, plan_year_ds: 1400, plan_year_lg: 84 },
 
         // 5. Dự án
-        { deptId: 'du_an', comp: 'THH', name: 'Dự án Tân Hồng Hà', note: 'Dự án thầu thiết bị miền Bắc', ytd_ds: 14503.0, ytd_lg: 5690.3, m8_ds: 1415.0, m8_lg: 310.0, plan_year_ds: 22000, plan_year_lg: 8800 },
+        { deptId: 'du_an', comp: 'THH', name: 'Dự án Tân Hồng Hà', note: 'Dự án thầu thiết bị miền Bắc', ytd_ds: 18170.0, ytd_lg: 7304.0, m8_ds: 931.0, m8_lg: 470.0, plan_m_ds: 30000.0, plan_m_lg: 3000.0, plan_year_ds: 100000.0, plan_year_lg: 10000.0 },
         { deptId: 'du_an', comp: 'XemSon', name: 'Dự án Xem Sơn', note: 'Dự án thầu thiết bị miền Nam', ytd_ds: 4182.0, ytd_lg: 1351.0, m8_ds: 3426.0, m8_lg: 1245.0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
         { deptId: 'du_an', comp: 'ITSS', name: 'Dự án CNTT ITSS', note: 'Giải pháp phần mềm và mạng', ytd_ds: 3555.0, ytd_lg: 1309.0, m8_ds: 640.0, m8_lg: 210.0, plan_year_ds: 5500, plan_year_lg: 2035 },
 
         // 6. Kinh doanh tổng hợp (KDTH)
-        { deptId: 'kdth', comp: 'THH', name: 'Kinh doanh tổng hợp THH', note: 'Thương mại tổng hợp', ytd_ds: 14949.0, ytd_lg: 1212.1, m8_ds: 1248.0, m8_lg: 177.0, plan_year_ds: 22500, plan_year_lg: 2250 },
+        { deptId: 'kdth', comp: 'THH', name: 'Kinh doanh tổng hợp THH', note: 'Thương mại tổng hợp', ytd_ds: 20246.0, ytd_lg: 1429.0, m8_ds: 7044.0, m8_lg: 240.0, plan_m_ds: 4300.0, plan_m_lg: 860.0, plan_year_ds: 30000.0, plan_year_lg: 6000.0 },
         { deptId: 'kdth', comp: 'Viet', name: 'KDTH Công ty Việt', note: 'Kinh doanh tổng hợp', ytd_ds: 14838.0, ytd_lg: 1135.0, m8_ds: 2213.0, m8_lg: 166.0, plan_year_ds: 23000, plan_year_lg: 1840 },
         { deptId: 'kdth', comp: 'XemSon', name: 'Kinh doanh tổng hợp', note: 'Thương mại tổng hợp', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
 
@@ -785,8 +785,8 @@ window.RevenueModule = {
                 const compSubItems = subItemsByComp[comp] || [];
                 const compPlanYearDs = compSubItems.reduce((s, it) => s + (it.plan_year_ds || 0), 0);
                 const compPlanYearLg = compSubItems.reduce((s, it) => s + (it.plan_year_lg || 0), 0);
-                const compPlanMonthDs = Math.round(compPlanYearDs / 12);
-                const compPlanMonthLg = Math.round(compPlanYearLg / 12);
+                const compPlanMonthDs = compSubItems.reduce((s, it) => s + (it.plan_m_ds || 0), 0) || Math.round(compPlanYearDs / 12);
+                const compPlanMonthLg = compSubItems.reduce((s, it) => s + (it.plan_m_lg || 0), 0) || Math.round(compPlanYearLg / 12);
                 const compPlanWeekDs = Math.round(compPlanMonthDs / 4);
                 const compPlanWeekLg = Math.round(compPlanMonthLg / 4);
 
@@ -801,7 +801,13 @@ window.RevenueModule = {
                 let compActualMonthDs = 0, compActualMonthLg = 0;
                 let compActualWeekDs = 0, compActualWeekLg = 0;
 
-                if (selM === '9') {
+                if (comp === 'THH') {
+                    // Dữ liệu Tân Hồng Hà lấy chuẩn xác 100% từ bảng tính Google Sheets kỳ báo cáo
+                    compActualMonthDs = compSubItems.reduce((s, it) => s + (it.m8_ds || 0), 0);
+                    compActualMonthLg = compSubItems.reduce((s, it) => s + (it.m8_lg || 0), 0);
+                    compActualWeekDs = Math.round(compActualMonthDs / 4);
+                    compActualWeekLg = Math.round(compActualMonthLg / 4);
+                } else if (selM === '9') {
                     // KHO LƯU TRỮ THÁNG 9: Đã chốt sổ, bảo toàn độc lập tuyệt đối
                     const t9Actual = this.PERIOD_STORE['9']?.actualsByCompDept?.[comp]?.[dept.id] || { ds: 0, lg: 0 };
                     compActualMonthDs = t9Actual.ds;
@@ -866,7 +872,11 @@ window.RevenueModule = {
                 let compActualYearDs = compYtdT8Ds;
                 let compActualYearLg = compYtdT8Lg;
 
-                if (selM === '8') {
+                if (comp === 'THH') {
+                    // Tân Hồng Hà: Lũy kế cả năm đã được tổng hợp chính xác trên Google Sheet
+                    compActualYearDs = compYtdT8Ds;
+                    compActualYearLg = compYtdT8Lg;
+                } else if (selM === '8') {
                     compActualYearDs = compYtdT8Ds;
                     compActualYearLg = compYtdT8Lg;
                 } else if (selM === '9') {
@@ -891,30 +901,32 @@ window.RevenueModule = {
                     const rDs = compSubItems.length === 1 ? 1 : (item.m8_ds || 0) / sumM8Ds;
                     const rLg = compSubItems.length === 1 ? 1 : (item.m8_lg || 0) / sumM8Lg;
 
-                    const itDsKhMonth = Math.round((item.plan_year_ds || 0) / 12);
-                    const itLgKhMonth = Math.round((item.plan_year_lg || 0) / 12);
+                    const itDsKhMonth = item.plan_m_ds !== undefined ? item.plan_m_ds : Math.round((item.plan_year_ds || 0) / 12);
+                    const itLgKhMonth = item.plan_m_lg !== undefined ? item.plan_m_lg : Math.round((item.plan_year_lg || 0) / 12);
                     const itDsKhWeek  = Math.round(itDsKhMonth / 4);
                     const itLgKhWeek  = Math.round(itLgKhMonth / 4);
                     const itDsKhDay   = Math.round(itDsKhMonth / 26);
                     const itLgKhDay   = Math.round(itLgKhMonth / 26);
 
-                    const itDsThMonth = Math.round(compActualMonthDs * rDs);
-                    const itLgThMonth = Math.round(compActualMonthLg * rLg);
-                    const itDsThWeek  = Math.round(compActualWeekDs * rDs);
-                    const itLgThWeek  = Math.round(compActualWeekLg * rLg);
-                    const itDsThDay   = Math.round(itDsThMonth / 26);
-                    const itLgThDay   = Math.round(itLgThMonth / 26);
+                    let itDsThMonth = item.m8_ds !== undefined ? item.m8_ds : Math.round(compActualMonthDs * rDs);
+                    let itLgThMonth = item.m8_lg !== undefined ? item.m8_lg : Math.round(compActualMonthLg * rLg);
+                    let itDsThWeek  = Math.round(itDsThMonth / 4);
+                    let itLgThWeek  = Math.round(itLgThMonth / 4);
+                    let itDsThDay   = Math.round(itDsThMonth / 26);
+                    let itLgThDay   = Math.round(itLgThMonth / 26);
 
-                    let itDsThYear = item.ytd_ds || 0;
-                    let itLgThYear = item.ytd_lg || 0;
-                    if (selM === '9') {
-                        itDsThYear += itDsThMonth;
-                        itLgThYear += itLgThMonth;
-                    } else if (selM === '10') {
-                        const itT9Ds = Math.round(t9CompDs * rDs);
-                        const itT9Lg = Math.round(t9CompLg * rLg);
-                        itDsThYear += (itT9Ds + itDsThMonth);
-                        itLgThYear += (itT9Lg + itLgThMonth);
+                    let itDsThYear = item.ytd_ds !== undefined ? item.ytd_ds : 0;
+                    let itLgThYear = item.ytd_lg !== undefined ? item.ytd_lg : 0;
+                    if (comp !== 'THH') {
+                        if (selM === '9') {
+                            itDsThYear += itDsThMonth;
+                            itLgThYear += itLgThMonth;
+                        } else if (selM === '10') {
+                            const itT9Ds = Math.round(t9CompDs * rDs);
+                            const itT9Lg = Math.round(t9CompLg * rLg);
+                            itDsThYear += (itT9Ds + itDsThMonth);
+                            itLgThYear += (itT9Lg + itLgThMonth);
+                        }
                     }
 
                     item.calculated = {
@@ -1139,7 +1151,13 @@ window.RevenueModule = {
         const isWeekMode = this.currentDeptMode === 'week' || this.currentDeptWeek !== 'all';
         let html = '';
 
-        const fmt = (num) => Math.round(num || 0).toLocaleString('vi-VN');
+        const fmt = (num) => {
+            if (num == null || isNaN(num)) return '0';
+            if (Math.abs(num % 1) > 0.001) {
+                return Number(num).toLocaleString('vi-VN', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+            }
+            return Math.round(num).toLocaleString('vi-VN');
+        };
 
         data.departments.forEach(dept => {
             const d = isDayMode ? dept.day : (isYearMode ? dept.year : (isWeekMode ? dept.week : dept.month));
@@ -1374,7 +1392,13 @@ window.RevenueModule = {
         const isWeekMode = this.currentDeptMode === 'week' || this.currentDeptWeek !== 'all';
         let html = '';
 
-        const fmt = (num) => Math.round(num || 0).toLocaleString('vi-VN');
+        const fmt = (num) => {
+            if (num == null || isNaN(num)) return '0';
+            if (Math.abs(num % 1) > 0.001) {
+                return Number(num).toLocaleString('vi-VN', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+            }
+            return Math.round(num).toLocaleString('vi-VN');
+        };
         const fmtPct = (num) => (num || 0).toFixed(1) + '%';
 
         const getPctColor = (pct) => {
@@ -1527,8 +1551,8 @@ window.RevenueModule = {
 
             if (dept.subItems) {
                 dept.subItems.forEach(item => {
-                    const itDsKhMonth = (item.plan_m_ds !== undefined && selM === 8) ? item.plan_m_ds : Math.round(item.plan_year_ds / 12);
-                    const itLgKhMonth = (item.plan_m_lg !== undefined && selM === 8) ? item.plan_m_lg : Math.round(item.plan_year_lg / 12);
+                    const itDsKhMonth = item.plan_m_ds !== undefined ? item.plan_m_ds : Math.round(item.plan_year_ds / 12);
+                    const itLgKhMonth = item.plan_m_lg !== undefined ? item.plan_m_lg : Math.round(item.plan_year_lg / 12);
                     csvContent += `"","  - [${item.comp}] ${item.name}","${itDsKhMonth}","${item.m8_ds}","-","${itLgKhMonth}","${item.m8_lg}","-","-","${item.plan_year_ds}","${item.ytd_ds}","-","${item.plan_year_lg}","${item.ytd_lg}","-","-"\n`;
                 });
             }

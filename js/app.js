@@ -21,24 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         bindEvents() {
-            window.quickFillLogin = (u, p) => {
+            window.App = this;
+            window.handleManualLogin = (e) => {
+                if (e && e.preventDefault) e.preventDefault();
                 const userIn = document.getElementById('username');
                 const passIn = document.getElementById('password');
-                if (userIn && passIn) {
-                    userIn.value = u;
-                    passIn.value = p;
-                    document.getElementById('login-form').dispatchEvent(new Event('submit', { cancelable: true }));
-                }
-            };
-
-            // Login Form (Đăng nhập tức thì 0ms, không chờ mạng)
-            document.getElementById('login-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const user = document.getElementById('username').value;
-                const pass = document.getElementById('password').value;
-                
+                const user = userIn ? userIn.value : '';
+                const pass = passIn ? passIn.value : '';
                 try {
-                    if (window.AuthService.login(user, pass)) {
+                    if (window.AuthService && window.AuthService.login(user, pass)) {
                         this.showApp();
                     } else {
                         alert('Đăng nhập thất bại. Kiểm tra lại thông tin.');
@@ -46,7 +37,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch(error) {
                     alert('Lỗi khởi tạo: ' + error.message);
                 }
-            });
+                return false;
+            };
+
+            window.quickFillLogin = (u, p) => {
+                const userIn = document.getElementById('username');
+                const passIn = document.getElementById('password');
+                if (userIn && passIn) {
+                    userIn.value = u;
+                    passIn.value = p;
+                }
+                if (window.AuthService && window.AuthService.login(u, p)) {
+                    this.showApp();
+                } else {
+                    document.getElementById('login-form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+                }
+            };
+
+            // Login Form (Đăng nhập tức thì 0ms, không chờ mạng)
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    window.handleManualLogin(e);
+                });
+            }
 
             // Logout
             document.getElementById('btn-logout').addEventListener('click', () => {

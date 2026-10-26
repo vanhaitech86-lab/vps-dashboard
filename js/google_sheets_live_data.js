@@ -7,9 +7,9 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "THH": {
       "08/2026": {
         "plan": 17010000000.0,
-        "actual": 13005000000.0,
-        "ttlg": 1297400000.0,
-        "lg_pct": 9.98,
+        "actual": 17978000000.0,
+        "ttlg": 2020100000.0,
+        "lg_pct": 11.24,
         "cp": 1392000000.0,
         "lntt": 525100000.0
       },
@@ -107,12 +107,12 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   },
   "revenue_by_company": {
     "THH": {
-      "actual": 13.005,
+      "actual": 17.978,
       "plan": 17.01,
-      "actualRaw": 13005000000.0,
+      "actualRaw": 17978000000.0,
       "planRaw": 17010000000.0,
-      "ttlg": 1297400000.0,
-      "lg_pct": 9.98,
+      "ttlg": 2020100000.0,
+      "lg_pct": 11.24,
       "cp": 1392000000.0,
       "lntt": 525100000.0
     },
@@ -170,13 +170,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   "plan2026": {
     "all": {
       "ds": 43570,
-      "actual": 38105,
+      "actual": 43078,
       "ttlg": 9749,
-      "actual_ttlg": 7556,
+      "actual_ttlg": 8279,
       "lg_pct": 22.4,
-      "actual_lg_pct": 19.8,
+      "actual_lg_pct": 19.2,
       "cp_lg_pct": 69.2,
-      "actual_cp_lg_pct": 90.0,
+      "actual_cp_lg_pct": 82.1,
       "cp": 6748,
       "actual_cp": 6798,
       "lntt": 1872,
@@ -184,13 +184,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     },
     "THH": {
       "ds": 17010,
-      "actual": 13005,
+      "actual": 17978,
       "ttlg": 3215,
-      "actual_ttlg": 1297,
+      "actual_ttlg": 2020,
       "lg_pct": 18.9,
-      "actual_lg_pct": 9.98,
+      "actual_lg_pct": 11.24,
       "cp_lg_pct": 43.3,
-      "actual_cp_lg_pct": 107.3,
+      "actual_cp_lg_pct": 68.9,
       "cp": 1392,
       "actual_cp": 1392,
       "lntt": 525,
@@ -269,48 +269,48 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   },
   "debt_by_company": {
     "THH": {
-      "current": 23.74,
-      "overdue": 1.13,
+      "current": 26.97,
+      "overdue": 0.79,
       "bad": 0.0,
-      "total": 24.88,
-      "rawCurrent": 23743000000.0,
-      "rawOverdue": 1134000000.0,
+      "total": 27.75,
+      "rawCurrent": 26966000000.0,
+      "rawOverdue": 789000000.0,
       "rawBad": 0.0
     },
     "Viet": {
       "current": 4.26,
       "overdue": 1.07,
       "bad": 0.01,
-      "total": 5.35,
-      "rawCurrent": 4264743817.0,
+      "total": 5.34,
+      "rawCurrent": 4261743817.0,
       "rawOverdue": 1069808022.0,
       "rawBad": 10933092.0
     },
     "XemSon": {
-      "current": 11.51,
+      "current": 9.88,
       "overdue": 0.97,
       "bad": 0.0,
-      "total": 12.48,
-      "rawCurrent": 11508057117.0,
-      "rawOverdue": 972242311.0,
+      "total": 10.84,
+      "rawCurrent": 9876781676.0,
+      "rawOverdue": 965346374.0,
       "rawBad": 0.0
     },
     "VPSM": {
-      "current": 1.65,
-      "overdue": 0.0,
+      "current": 2.02,
+      "overdue": 0.48,
       "bad": 0.0,
-      "total": 1.65,
-      "rawCurrent": 1648229466.0,
-      "rawOverdue": 0.0,
+      "total": 2.5,
+      "rawCurrent": 2024972243.0,
+      "rawOverdue": 475180404.0,
       "rawBad": 0.0
     },
     "ITSS": {
-      "current": 1.36,
-      "overdue": 0.15,
+      "current": 0.78,
+      "overdue": 0.0,
       "bad": 0.0,
-      "total": 1.51,
-      "rawCurrent": 1355716586.0,
-      "rawOverdue": 150000000.0,
+      "total": 0.78,
+      "rawCurrent": 777149758.0,
+      "rawOverdue": 0.0,
       "rawBad": 0.0
     },
     "VPVPS": {
@@ -406,8 +406,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "Viet": {
       "quota": 43,
       "official": 39,
-      "probation": 0,
-      "totalEmployees": 39,
+      "probation": 1,
+      "totalEmployees": 40,
       "resigned": 0,
       "newHires": 0,
       "departments": [
@@ -431,12 +431,12 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         {
           "name": "Kế toán",
-          "quota": 7,
+          "quota": 8,
           "official": 7,
           "newHires": 0,
           "resigned": 0,
-          "probation": 0,
-          "vacancy": 0
+          "probation": 1,
+          "vacancy": 1
         },
         {
           "name": "Hành chính",
@@ -466,10 +466,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     },
     "XemSon": {
       "quota": 98,
-      "official": 91,
+      "official": 90,
       "probation": 0,
-      "totalEmployees": 91,
-      "resigned": 0,
+      "totalEmployees": 90,
+      "resigned": 1,
       "newHires": 0,
       "departments": [
         {
@@ -483,10 +483,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         {
           "name": "Kỹ thuật",
-          "quota": 44,
-          "official": 44,
+          "quota": 43,
+          "official": 43,
           "newHires": 0,
-          "resigned": 0,
+          "resigned": 1,
           "probation": 0,
           "vacancy": 0
         },
@@ -519,10 +519,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         }
       ],
       "kpi": {
-        "A": 32,
-        "B": 41,
+        "A": 31,
+        "B": 40,
         "C": 14,
-        "D": 4
+        "D": 5
       }
     },
     "VPSM": {
@@ -653,7 +653,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "probation": 1,
       "totalEmployees": 19,
       "resigned": 0,
-      "newHires": 1,
+      "newHires": 0,
       "departments": [
         {
           "name": "Ban Lãnh đạo",
@@ -686,7 +686,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "name": "Kế toán",
           "quota": 2,
           "official": 1,
-          "newHires": 1,
+          "newHires": 0,
           "resigned": 0,
           "probation": 1,
           "vacancy": 1
@@ -729,10 +729,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   },
   "inventory_by_company": {
     "THH": {
-      "total": 36.24,
-      "total_vnd": 36244029336.15,
-      "totalValue": 36244029336.15,
-      "totalItems": 101,
+      "total": 37.27,
+      "total_vnd": 37272007784.15,
+      "totalValue": 37272007784.15,
+      "totalItems": 105,
       "items": [
         {
           "category": "Máy Photocopy",
@@ -775,6 +775,34 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "unit": "",
           "qty": 382.0,
           "value": 55883650.0
+        },
+        {
+          "category": "chậm luân chuyển",
+          "name": "Máy",
+          "unit": "PCS",
+          "qty": 41.0,
+          "value": 482375800.0
+        },
+        {
+          "category": "chậm luân chuyển",
+          "name": "Comsumable",
+          "unit": "PCS",
+          "qty": 74.0,
+          "value": 214356533.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Part",
+          "unit": "PCS",
+          "qty": 93.0,
+          "value": 75468727.0
+        },
+        {
+          "category": "CHậm luân chuyển",
+          "name": "Khác",
+          "unit": "PCS",
+          "qty": 110.0,
+          "value": 255777388.0
         },
         {
           "category": "TQCT202641",
@@ -880,55 +908,27 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "unit": "Cái",
           "qty": 1.0,
           "value": 200.0
-        },
-        {
-          "category": "RAOSAYDCV3065",
-          "name": "Rào tách giấy/Lược tách giấy sấy XEROX DCV2060/3065",
-          "unit": "Cái",
-          "qty": 5.0,
-          "value": 822466.0
-        },
-        {
-          "category": "REHP203",
-          "name": "Rulo dưới-Trục ép máy HP203/30A/HP 217/ HP227-Pressure roller/M102/104/106/M15A/canon 162",
-          "unit": "Cái",
-          "qty": 3.0,
-          "value": 341785.0
-        },
-        {
-          "category": "REC3300",
-          "name": "Rulo ép /Trục ép/ lô ép máy Canon 3300/3310/3360/HP 1160/1320/ 2014/ 2015/49A",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 78704.0
-        },
-        {
-          "category": "SSNRI7503TQ",
-          "name": "Senso nhiệt máy photocopy Ricoh MP7503 hàng Trung Quốc",
-          "unit": "Bộ",
-          "qty": 2.0,
-          "value": 270.0
         }
       ]
     },
     "Viet": {
-      "total": 6.49,
-      "total_vnd": 6490816563.0,
-      "totalValue": 6490816563.0,
+      "total": 6.55,
+      "total_vnd": 6552205970.0,
+      "totalValue": 6552205970.0,
       "totalItems": 5,
       "items": [
         {
           "category": "Máy Photocopy",
           "name": "",
           "unit": "Chiếc",
-          "qty": 782.0,
-          "value": 3272526442.0
+          "qty": 780.0,
+          "value": 3601616525.0
         },
         {
           "category": "option/phần mềm",
           "name": "",
           "unit": "Chiếc",
-          "qty": 6.0,
+          "qty": 9.0,
           "value": 3746056.0
         },
         {
@@ -936,21 +936,21 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "name": "",
           "unit": "Chiếc",
           "qty": 880.0,
-          "value": 1275698924.0
+          "value": 2540940805.0
         },
         {
           "category": "part",
           "name": "",
           "unit": "Chiếc",
-          "qty": 3537.0,
-          "value": 480631770.0
+          "qty": 3668.0,
+          "value": 40902584.0
         },
         {
           "category": "khác",
           "name": "",
           "unit": "Chiếc",
           "qty": 1242.0,
-          "value": 1458213371.0
+          "value": 365000000.0
         }
       ]
     },
@@ -998,24 +998,17 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       ]
     },
     "VPSM": {
-      "total": 8.0,
-      "total_vnd": 8003955053.0,
-      "totalValue": 8003955053.0,
-      "totalItems": 6,
+      "total": 7.16,
+      "total_vnd": 7163973110.0,
+      "totalValue": 7163973110.0,
+      "totalItems": 5,
       "items": [
-        {
-          "category": "Máy Photocopy",
-          "name": "Máy photocopy Fujifilm A3 Trắng đen Apeos 2561",
-          "unit": "Chiếc",
-          "qty": 1.0,
-          "value": 49403019.0
-        },
         {
           "category": "",
           "name": "Khác",
           "unit": "",
           "qty": 0.0,
-          "value": 5476237029.0
+          "value": 4685658105.0
         },
         {
           "category": "Máy",
@@ -1236,24 +1229,24 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "Viet": {
       "thue_may": {
         "dau": {
-          "may": 818,
-          "kh": 245
+          "may": 817,
+          "kh": 246
         },
         "ke_hoach": {
           "may": 20,
-          "kh": 2
+          "kh": 10
         },
         "tang": {
-          "may": 8,
-          "kh": 2
+          "may": 13,
+          "kh": 0
         },
         "giam": {
-          "may": 9,
+          "may": 8,
           "kh": 1
         },
         "cuoi": {
-          "may": 817,
-          "kh": 246
+          "may": 822,
+          "kh": 245
         }
       },
       "mc": {
@@ -1347,7 +1340,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "phan_phoi": {
         "dau": {
           "may": 0,
-          "kh": 951
+          "kh": 963
         },
         "ke_hoach": {
           "may": 0,
@@ -1355,7 +1348,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "tang": {
           "may": 0,
-          "kh": 12
+          "kh": 8
         },
         "giam": {
           "may": 0,
@@ -1363,7 +1356,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "cuoi": {
           "may": 0,
-          "kh": 963
+          "kh": 971
         }
       }
     },
@@ -1727,7 +1720,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "dv_khac": {
         "dau": {
           "may": 0,
-          "kh": 2
+          "kh": 3
         },
         "ke_hoach": {
           "may": 0,
@@ -1743,7 +1736,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "cuoi": {
           "may": 0,
-          "kh": 3
+          "kh": 4
         }
       },
       "phan_phoi": {
@@ -1906,24 +1899,24 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "all": {
       "thue_may": {
         "dau": {
-          "may": 4799,
-          "kh": 1483
+          "may": 4000,
+          "kh": 1240
         },
         "ke_hoach": {
           "may": 0,
           "kh": 0
         },
         "tang": {
-          "may": 95,
-          "kh": 16
+          "may": 75,
+          "kh": 12
         },
         "giam": {
-          "may": 38,
-          "kh": 10
+          "may": 32,
+          "kh": 9
         },
         "cuoi": {
-          "may": 4856,
-          "kh": 1489
+          "may": 4043,
+          "kh": 1243
         }
       },
       "mc": {
@@ -1995,7 +1988,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "dv_khac": {
         "dau": {
           "may": 0,
-          "kh": 2
+          "kh": 3
         },
         "ke_hoach": {
           "may": 0,
@@ -2011,13 +2004,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "cuoi": {
           "may": 1,
-          "kh": 3
+          "kh": 4
         }
       },
       "phan_phoi": {
         "dau": {
           "may": 0,
-          "kh": 2820
+          "kh": 1893
         },
         "ke_hoach": {
           "may": 0,
@@ -2025,7 +2018,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "tang": {
           "may": 0,
-          "kh": 33
+          "kh": 17
         },
         "giam": {
           "may": 0,
@@ -2033,7 +2026,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "cuoi": {
           "may": 0,
-          "kh": 2853
+          "kh": 1910
         }
       }
     }
@@ -2044,8 +2037,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "total_may": 3516
     },
     "Viet": {
-      "total_kh": 2405,
-      "total_may": 1635
+      "total_kh": 1216,
+      "total_may": 822
     },
     "XemSon": {
       "total_kh": 1253,
@@ -2056,7 +2049,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "total_may": 683
     },
     "ITSS": {
-      "total_kh": 4,
+      "total_kh": 5,
       "total_may": 1
     },
     "VPVPS": {
@@ -2072,8 +2065,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Phân phối đại lý miền Bắc",
       "ytd_ds": 33978.0,
       "ytd_lg": 3605.0,
-      "m8_ds": 4419.0,
-      "m8_lg": 353.0,
+      "m8_ds": 8883.0,
+      "m8_lg": 888.3,
       "plan_m_ds": 10834.0,
       "plan_m_lg": 867.0,
       "plan_year_ds": 100000.0,
@@ -2100,8 +2093,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bảo trì bảo dưỡng sửa chữa",
       "ytd_ds": 10305.0,
       "ytd_lg": 3425.0,
-      "m8_ds": 610.0,
-      "m8_lg": 207.0,
+      "m8_ds": 867.0,
+      "m8_lg": 317.0,
       "plan_m_ds": 1833.0,
       "plan_m_lg": 733.0,
       "plan_year_ds": 20000.0,
@@ -2114,8 +2107,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Cung cấp thay thế mực in",
       "ytd_ds": 2527.0,
       "ytd_lg": 1292.0,
-      "m8_ds": 158.0,
-      "m8_lg": 75.0,
+      "m8_ds": 204.0,
+      "m8_lg": 103.0,
       "plan_m_ds": 550.0,
       "plan_m_lg": 220.0,
       "plan_year_ds": 6000.0,
@@ -2142,8 +2135,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bán hàng trực tuyến",
       "ytd_ds": 811.0,
       "ytd_lg": 18000.0,
-      "m8_ds": 34.0,
-      "m8_lg": 1.4,
+      "m8_ds": 49.0,
+      "m8_lg": 1.8,
       "plan_m_ds": 275.0,
       "plan_m_lg": 8.3,
       "plan_year_ds": 11000.0,
@@ -2156,8 +2149,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Dự án thầu thiết bị miền Bắc",
       "ytd_ds": 18170.0,
       "ytd_lg": 7304.0,
-      "m8_ds": 871.0,
-      "m8_lg": 447.0,
+      "m8_ds": 931.0,
+      "m8_lg": 470.0,
       "plan_m_ds": 30000.0,
       "plan_m_lg": 3000.0,
       "plan_year_ds": 100000.0,
@@ -2170,8 +2163,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Thương mại tổng hợp",
       "ytd_ds": 20246.0,
       "ytd_lg": 1429.0,
-      "m8_ds": 6913.0,
-      "m8_lg": 214.0,
+      "m8_ds": 7044.0,
+      "m8_lg": 240.0,
       "plan_m_ds": 4300.0,
       "plan_m_lg": 860.0,
       "plan_year_ds": 30000.0,
@@ -2184,10 +2177,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Cho thuê máy Công ty Việt",
       "ytd_ds": 14002.4,
       "ytd_lg": 8123.49,
-      "m8_ds": 1580.25,
-      "m8_lg": 928.01,
-      "plan_m_ds": 2451.0,
-      "plan_m_lg": 1519.6,
+      "m8_ds": 401.18,
+      "m8_lg": 215.4,
+      "plan_m_ds": 2498.0,
+      "plan_m_lg": 1548.8,
       "plan_year_ds": 28000.0,
       "plan_year_lg": 17360.0
     },
@@ -2198,8 +2191,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Kênh online sàn TMĐT",
       "ytd_ds": 23093.17,
       "ytd_lg": 1490.44,
-      "m8_ds": 3191.12,
-      "m8_lg": 251.65,
+      "m8_ds": 2200.93,
+      "m8_lg": 119.96,
       "plan_m_ds": 3300.0,
       "plan_m_lg": 264.0,
       "plan_year_ds": 36000.0,
@@ -2212,8 +2205,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Kinh doanh tổng hợp",
       "ytd_ds": 16952.77,
       "ytd_lg": 1316.59,
-      "m8_ds": 2115.11,
-      "m8_lg": 181.33,
+      "m8_ds": 1307.88,
+      "m8_lg": 171.52,
       "plan_m_ds": 3450.0,
       "plan_m_lg": 310.5,
       "plan_year_ds": 36000.0,
@@ -2226,8 +2219,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bán lẻ tại điểm bán",
       "ytd_ds": 945.12,
       "ytd_lg": 428.51,
-      "m8_ds": 109.85,
-      "m8_lg": 72.73,
+      "m8_ds": 74.11,
+      "m8_lg": 46.88,
       "plan_m_ds": 550.0,
       "plan_m_lg": 82.5,
       "plan_year_ds": 6000.0,
@@ -2240,8 +2233,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Hoạt động nội bộ",
       "ytd_ds": 684.9,
       "ytd_lg": 87.24,
-      "m8_ds": 76.9,
-      "m8_lg": 8.27,
+      "m8_ds": 19.57,
+      "m8_lg": 14.35,
       "plan_m_ds": 10000.0,
       "plan_m_lg": 1.0,
       "plan_year_ds": 600.0,
@@ -2252,11 +2245,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Kinh doanh sỉ (KD sỉ)",
       "note": "Phân phối thiết bị Xesco",
-      "ytd_ds": 30281.0,
-      "ytd_lg": 5022.0,
-      "m8_ds": 3279.0,
-      "m8_lg": 612.0,
-      "plan_m_ds": 5500.0,
+      "ytd_ds": 0.0,
+      "ytd_lg": 0.0,
+      "m8_ds": 2492.0,
+      "m8_lg": 374.0,
+      "plan_m_ds": 5775.0,
       "plan_m_lg": 525.0,
       "plan_year_ds": 66000.0,
       "plan_year_lg": 6300.0
@@ -2266,11 +2259,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Kỹ thuật thuê máy (KT)",
       "note": "Máy thuê kỹ thuật Xesco",
-      "ytd_ds": 15634.0,
-      "ytd_lg": 10211.0,
-      "m8_ds": 1710.0,
-      "m8_lg": 1051.0,
-      "plan_m_ds": 2833.0,
+      "ytd_ds": 0.0,
+      "ytd_lg": 0.0,
+      "m8_ds": 824.0,
+      "m8_lg": 495.0,
+      "plan_m_ds": 2975.0,
       "plan_m_lg": 1756.0,
       "plan_year_ds": 34000.0,
       "plan_year_lg": 21080.0
@@ -2280,11 +2273,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "KD Thuê máy (Thương mại)",
       "note": "Hợp đồng thuê máy mới",
-      "ytd_ds": 3490.0,
-      "ytd_lg": 2418.0,
-      "m8_ds": 456.0,
-      "m8_lg": 314.0,
-      "plan_m_ds": 667.0,
+      "ytd_ds": 0.0,
+      "ytd_lg": 0.0,
+      "m8_ds": 176.0,
+      "m8_lg": 115.0,
+      "plan_m_ds": 700.0,
       "plan_m_lg": 367.0,
       "plan_year_ds": 8000.0,
       "plan_year_lg": 4400.0
@@ -2294,11 +2287,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Dịch vụ kỹ thuật Xem Sơn",
       "note": "Kỹ thuật dịch vụ máy VP",
-      "ytd_ds": 11091.0,
-      "ytd_lg": 4571.0,
-      "m8_ds": 1161.0,
-      "m8_lg": 508.0,
-      "plan_m_ds": 2167.0,
+      "ytd_ds": 0.0,
+      "ytd_lg": 0.0,
+      "m8_ds": 1011.0,
+      "m8_lg": 353.0,
+      "plan_m_ds": 2275.0,
       "plan_m_lg": 715.0,
       "plan_year_ds": 26000.0,
       "plan_year_lg": 8580.0
@@ -2322,11 +2315,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "KD Online Xem Sơn",
       "note": "Thương mại điện tử Xesco",
-      "ytd_ds": 26630.0,
-      "ytd_lg": 945.0,
-      "m8_ds": 3033.0,
-      "m8_lg": 62.0,
-      "plan_m_ds": 2000.0,
+      "ytd_ds": 0.0,
+      "ytd_lg": 0.0,
+      "m8_ds": 2406.0,
+      "m8_lg": 72.0,
+      "plan_m_ds": 2100.0,
       "plan_m_lg": 100.0,
       "plan_year_ds": 24000.0,
       "plan_year_lg": 1200.0
@@ -2336,10 +2329,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Dự án Xesco",
       "note": "Gói thầu thiết bị miền Nam",
-      "ytd_ds": 9438.0,
-      "ytd_lg": 3090.0,
-      "m8_ds": 5256.0,
-      "m8_lg": 1740.0,
+      "ytd_ds": 0.0,
+      "ytd_lg": 0.0,
+      "m8_ds": 1045.0,
+      "m8_lg": 313.0,
       "plan_m_ds": 0.0,
       "plan_m_lg": 0.0,
       "plan_year_ds": 0.0,
@@ -2350,11 +2343,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Bán máy lẻ Xem Sơn",
       "note": "Bán lẻ thiết bị văn phòng",
-      "ytd_ds": 3473.0,
-      "ytd_lg": 868.0,
-      "m8_ds": 614.0,
-      "m8_lg": 151.0,
-      "plan_m_ds": 833.0,
+      "ytd_ds": 0.0,
+      "ytd_lg": 0.0,
+      "m8_ds": 264.0,
+      "m8_lg": 53.0,
+      "plan_m_ds": 875.0,
       "plan_m_lg": 125.0,
       "plan_year_ds": 10000.0,
       "plan_year_lg": 1500.0
@@ -2366,7 +2359,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bán buôn máy VPS Miền Trung",
       "ytd_ds": 6667.0,
       "ytd_lg": 600.0,
-      "m8_ds": 0.0,
+      "m8_ds": 1530.0,
       "m8_lg": 45.0,
       "plan_m_ds": 0.0,
       "plan_m_lg": 75.0,
@@ -2380,7 +2373,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bán buôn linh kiện mực in",
       "ytd_ds": 2333.0,
       "ytd_lg": 300.0,
-      "m8_ds": 0.0,
+      "m8_ds": 50.0,
       "m8_lg": 22.0,
       "plan_m_ds": 0.0,
       "plan_m_lg": 38.0,
@@ -2394,7 +2387,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Thuê máy khu vực miền Trung",
       "ytd_ds": 800.0,
       "ytd_lg": 520.0,
-      "m8_ds": 0.0,
+      "m8_ds": 55.0,
       "m8_lg": 20.0,
       "plan_m_ds": 197.0,
       "plan_m_lg": 65.0,
@@ -2408,7 +2401,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bảo trì sửa chữa máy",
       "ytd_ds": 1800.0,
       "ytd_lg": 900.0,
-      "m8_ds": 0.0,
+      "m8_ds": 200.0,
       "m8_lg": 95.0,
       "plan_m_ds": 350.0,
       "plan_m_lg": 112.0,
@@ -2422,7 +2415,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Hợp đồng bảo trì trọn gói",
       "ytd_ds": 533.0,
       "ytd_lg": 313.0,
-      "m8_ds": 59.0,
+      "m8_ds": 30.0,
       "m8_lg": 35.0,
       "plan_m_ds": 67.0,
       "plan_m_lg": 39.0,
@@ -2436,7 +2429,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Gian hàng Shopee Miền Trung",
       "ytd_ds": 933.0,
       "ytd_lg": 56.0,
-      "m8_ds": 152.0,
+      "m8_ds": 30.0,
       "m8_lg": 3.0,
       "plan_m_ds": 158.0,
       "plan_m_lg": 7.0,
@@ -2450,7 +2443,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bán lẻ tại showroom",
       "ytd_ds": 400.0,
       "ytd_lg": 72.0,
-      "m8_ds": 216.0,
+      "m8_ds": 0.0,
       "m8_lg": 1.0,
       "plan_m_ds": 103.0,
       "plan_m_lg": 9.0,
@@ -2462,14 +2455,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "ITSS",
       "name": "Outsourcing",
       "note": "",
-      "ytd_ds": 0.0,
-      "ytd_lg": 0.0,
-      "m8_ds": 597.0,
-      "m8_lg": 162.0,
-      "plan_m_ds": 437.0,
+      "ytd_ds": 4498.0,
+      "ytd_lg": 1052.0,
+      "m8_ds": 533.0,
+      "m8_lg": 183.0,
+      "plan_m_ds": 600.0,
       "plan_m_lg": 175.0,
       "plan_year_ds": 5400.0,
-      "plan_year_lg": 0.0
+      "plan_year_lg": 1500.0
     },
     {
       "deptId": "du_an",
@@ -2509,8 +2502,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Phân phối đại lý miền Bắc",
         "ytd_ds": 33978.0,
         "ytd_lg": 3605.0,
-        "m8_ds": 4419.0,
-        "m8_lg": 353.0,
+        "m8_ds": 8883.0,
+        "m8_lg": 888.3,
         "plan_m_ds": 10834.0,
         "plan_m_lg": 867.0,
         "plan_year_ds": 100000.0,
@@ -2537,8 +2530,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bảo trì bảo dưỡng sửa chữa",
         "ytd_ds": 10305.0,
         "ytd_lg": 3425.0,
-        "m8_ds": 610.0,
-        "m8_lg": 207.0,
+        "m8_ds": 867.0,
+        "m8_lg": 317.0,
         "plan_m_ds": 1833.0,
         "plan_m_lg": 733.0,
         "plan_year_ds": 20000.0,
@@ -2551,8 +2544,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Cung cấp thay thế mực in",
         "ytd_ds": 2527.0,
         "ytd_lg": 1292.0,
-        "m8_ds": 158.0,
-        "m8_lg": 75.0,
+        "m8_ds": 204.0,
+        "m8_lg": 103.0,
         "plan_m_ds": 550.0,
         "plan_m_lg": 220.0,
         "plan_year_ds": 6000.0,
@@ -2579,8 +2572,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bán hàng trực tuyến",
         "ytd_ds": 811.0,
         "ytd_lg": 18000.0,
-        "m8_ds": 34.0,
-        "m8_lg": 1.4,
+        "m8_ds": 49.0,
+        "m8_lg": 1.8,
         "plan_m_ds": 275.0,
         "plan_m_lg": 8.3,
         "plan_year_ds": 11000.0,
@@ -2593,8 +2586,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Dự án thầu thiết bị miền Bắc",
         "ytd_ds": 18170.0,
         "ytd_lg": 7304.0,
-        "m8_ds": 871.0,
-        "m8_lg": 447.0,
+        "m8_ds": 931.0,
+        "m8_lg": 470.0,
         "plan_m_ds": 30000.0,
         "plan_m_lg": 3000.0,
         "plan_year_ds": 100000.0,
@@ -2607,8 +2600,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Thương mại tổng hợp",
         "ytd_ds": 20246.0,
         "ytd_lg": 1429.0,
-        "m8_ds": 6913.0,
-        "m8_lg": 214.0,
+        "m8_ds": 7044.0,
+        "m8_lg": 240.0,
         "plan_m_ds": 4300.0,
         "plan_m_lg": 860.0,
         "plan_year_ds": 30000.0,
@@ -2623,10 +2616,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Cho thuê máy Công ty Việt",
         "ytd_ds": 14002.4,
         "ytd_lg": 8123.49,
-        "m8_ds": 1580.25,
-        "m8_lg": 928.01,
-        "plan_m_ds": 2451.0,
-        "plan_m_lg": 1519.6,
+        "m8_ds": 401.18,
+        "m8_lg": 215.4,
+        "plan_m_ds": 2498.0,
+        "plan_m_lg": 1548.8,
         "plan_year_ds": 28000.0,
         "plan_year_lg": 17360.0
       },
@@ -2637,8 +2630,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Kênh online sàn TMĐT",
         "ytd_ds": 23093.17,
         "ytd_lg": 1490.44,
-        "m8_ds": 3191.12,
-        "m8_lg": 251.65,
+        "m8_ds": 2200.93,
+        "m8_lg": 119.96,
         "plan_m_ds": 3300.0,
         "plan_m_lg": 264.0,
         "plan_year_ds": 36000.0,
@@ -2651,8 +2644,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Kinh doanh tổng hợp",
         "ytd_ds": 16952.77,
         "ytd_lg": 1316.59,
-        "m8_ds": 2115.11,
-        "m8_lg": 181.33,
+        "m8_ds": 1307.88,
+        "m8_lg": 171.52,
         "plan_m_ds": 3450.0,
         "plan_m_lg": 310.5,
         "plan_year_ds": 36000.0,
@@ -2665,8 +2658,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bán lẻ tại điểm bán",
         "ytd_ds": 945.12,
         "ytd_lg": 428.51,
-        "m8_ds": 109.85,
-        "m8_lg": 72.73,
+        "m8_ds": 74.11,
+        "m8_lg": 46.88,
         "plan_m_ds": 550.0,
         "plan_m_lg": 82.5,
         "plan_year_ds": 6000.0,
@@ -2679,8 +2672,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Hoạt động nội bộ",
         "ytd_ds": 684.9,
         "ytd_lg": 87.24,
-        "m8_ds": 76.9,
-        "m8_lg": 8.27,
+        "m8_ds": 19.57,
+        "m8_lg": 14.35,
         "plan_m_ds": 10000.0,
         "plan_m_lg": 1.0,
         "plan_year_ds": 600.0,
@@ -2693,11 +2686,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Kinh doanh sỉ (KD sỉ)",
         "note": "Phân phối thiết bị Xesco",
-        "ytd_ds": 30281.0,
-        "ytd_lg": 5022.0,
-        "m8_ds": 3279.0,
-        "m8_lg": 612.0,
-        "plan_m_ds": 5500.0,
+        "ytd_ds": 0.0,
+        "ytd_lg": 0.0,
+        "m8_ds": 2492.0,
+        "m8_lg": 374.0,
+        "plan_m_ds": 5775.0,
         "plan_m_lg": 525.0,
         "plan_year_ds": 66000.0,
         "plan_year_lg": 6300.0
@@ -2707,11 +2700,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Kỹ thuật thuê máy (KT)",
         "note": "Máy thuê kỹ thuật Xesco",
-        "ytd_ds": 15634.0,
-        "ytd_lg": 10211.0,
-        "m8_ds": 1710.0,
-        "m8_lg": 1051.0,
-        "plan_m_ds": 2833.0,
+        "ytd_ds": 0.0,
+        "ytd_lg": 0.0,
+        "m8_ds": 824.0,
+        "m8_lg": 495.0,
+        "plan_m_ds": 2975.0,
         "plan_m_lg": 1756.0,
         "plan_year_ds": 34000.0,
         "plan_year_lg": 21080.0
@@ -2721,11 +2714,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "KD Thuê máy (Thương mại)",
         "note": "Hợp đồng thuê máy mới",
-        "ytd_ds": 3490.0,
-        "ytd_lg": 2418.0,
-        "m8_ds": 456.0,
-        "m8_lg": 314.0,
-        "plan_m_ds": 667.0,
+        "ytd_ds": 0.0,
+        "ytd_lg": 0.0,
+        "m8_ds": 176.0,
+        "m8_lg": 115.0,
+        "plan_m_ds": 700.0,
         "plan_m_lg": 367.0,
         "plan_year_ds": 8000.0,
         "plan_year_lg": 4400.0
@@ -2735,11 +2728,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Dịch vụ kỹ thuật Xem Sơn",
         "note": "Kỹ thuật dịch vụ máy VP",
-        "ytd_ds": 11091.0,
-        "ytd_lg": 4571.0,
-        "m8_ds": 1161.0,
-        "m8_lg": 508.0,
-        "plan_m_ds": 2167.0,
+        "ytd_ds": 0.0,
+        "ytd_lg": 0.0,
+        "m8_ds": 1011.0,
+        "m8_lg": 353.0,
+        "plan_m_ds": 2275.0,
         "plan_m_lg": 715.0,
         "plan_year_ds": 26000.0,
         "plan_year_lg": 8580.0
@@ -2763,11 +2756,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "KD Online Xem Sơn",
         "note": "Thương mại điện tử Xesco",
-        "ytd_ds": 26630.0,
-        "ytd_lg": 945.0,
-        "m8_ds": 3033.0,
-        "m8_lg": 62.0,
-        "plan_m_ds": 2000.0,
+        "ytd_ds": 0.0,
+        "ytd_lg": 0.0,
+        "m8_ds": 2406.0,
+        "m8_lg": 72.0,
+        "plan_m_ds": 2100.0,
         "plan_m_lg": 100.0,
         "plan_year_ds": 24000.0,
         "plan_year_lg": 1200.0
@@ -2777,10 +2770,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Dự án Xesco",
         "note": "Gói thầu thiết bị miền Nam",
-        "ytd_ds": 9438.0,
-        "ytd_lg": 3090.0,
-        "m8_ds": 5256.0,
-        "m8_lg": 1740.0,
+        "ytd_ds": 0.0,
+        "ytd_lg": 0.0,
+        "m8_ds": 1045.0,
+        "m8_lg": 313.0,
         "plan_m_ds": 0.0,
         "plan_m_lg": 0.0,
         "plan_year_ds": 0.0,
@@ -2791,11 +2784,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Bán máy lẻ Xem Sơn",
         "note": "Bán lẻ thiết bị văn phòng",
-        "ytd_ds": 3473.0,
-        "ytd_lg": 868.0,
-        "m8_ds": 614.0,
-        "m8_lg": 151.0,
-        "plan_m_ds": 833.0,
+        "ytd_ds": 0.0,
+        "ytd_lg": 0.0,
+        "m8_ds": 264.0,
+        "m8_lg": 53.0,
+        "plan_m_ds": 875.0,
         "plan_m_lg": 125.0,
         "plan_year_ds": 10000.0,
         "plan_year_lg": 1500.0
@@ -2809,7 +2802,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bán buôn máy VPS Miền Trung",
         "ytd_ds": 6667.0,
         "ytd_lg": 600.0,
-        "m8_ds": 0.0,
+        "m8_ds": 1530.0,
         "m8_lg": 45.0,
         "plan_m_ds": 0.0,
         "plan_m_lg": 75.0,
@@ -2823,7 +2816,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bán buôn linh kiện mực in",
         "ytd_ds": 2333.0,
         "ytd_lg": 300.0,
-        "m8_ds": 0.0,
+        "m8_ds": 50.0,
         "m8_lg": 22.0,
         "plan_m_ds": 0.0,
         "plan_m_lg": 38.0,
@@ -2837,7 +2830,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Thuê máy khu vực miền Trung",
         "ytd_ds": 800.0,
         "ytd_lg": 520.0,
-        "m8_ds": 0.0,
+        "m8_ds": 55.0,
         "m8_lg": 20.0,
         "plan_m_ds": 197.0,
         "plan_m_lg": 65.0,
@@ -2851,7 +2844,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bảo trì sửa chữa máy",
         "ytd_ds": 1800.0,
         "ytd_lg": 900.0,
-        "m8_ds": 0.0,
+        "m8_ds": 200.0,
         "m8_lg": 95.0,
         "plan_m_ds": 350.0,
         "plan_m_lg": 112.0,
@@ -2865,7 +2858,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Hợp đồng bảo trì trọn gói",
         "ytd_ds": 533.0,
         "ytd_lg": 313.0,
-        "m8_ds": 59.0,
+        "m8_ds": 30.0,
         "m8_lg": 35.0,
         "plan_m_ds": 67.0,
         "plan_m_lg": 39.0,
@@ -2879,7 +2872,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Gian hàng Shopee Miền Trung",
         "ytd_ds": 933.0,
         "ytd_lg": 56.0,
-        "m8_ds": 152.0,
+        "m8_ds": 30.0,
         "m8_lg": 3.0,
         "plan_m_ds": 158.0,
         "plan_m_lg": 7.0,
@@ -2893,7 +2886,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bán lẻ tại showroom",
         "ytd_ds": 400.0,
         "ytd_lg": 72.0,
-        "m8_ds": 216.0,
+        "m8_ds": 0.0,
         "m8_lg": 1.0,
         "plan_m_ds": 103.0,
         "plan_m_lg": 9.0,
@@ -2907,14 +2900,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "ITSS",
         "name": "Outsourcing",
         "note": "",
-        "ytd_ds": 0.0,
-        "ytd_lg": 0.0,
-        "m8_ds": 597.0,
-        "m8_lg": 162.0,
-        "plan_m_ds": 437.0,
+        "ytd_ds": 4498.0,
+        "ytd_lg": 1052.0,
+        "m8_ds": 533.0,
+        "m8_lg": 183.0,
+        "plan_m_ds": 600.0,
         "plan_m_lg": 175.0,
         "plan_year_ds": 5400.0,
-        "plan_year_lg": 0.0
+        "plan_year_lg": 1500.0
       },
       {
         "deptId": "du_an",
@@ -4766,6 +4759,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "target": "Kỹ thuật, Điều phối",
       "participants": 25,
       "score": 25.0
+    },
+    {
+      "company": "ITSS",
+      "companyName": "ITSS",
+      "topic": "Nội dung đào tạo",
+      "target": "Đối tượng đào tạo",
+      "participants": 0,
+      "score": 0.0
     },
     {
       "company": "VPVPS",
