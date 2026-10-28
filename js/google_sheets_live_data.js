@@ -998,45 +998,17 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       ]
     },
     "VPSM": {
-      "total": 7.16,
-      "total_vnd": 7163973110.0,
-      "totalValue": 7163973110.0,
-      "totalItems": 5,
+      "total": 3.23,
+      "total_vnd": 3225574534.0,
+      "totalValue": 3225574534.0,
+      "totalItems": 1,
       "items": [
         {
           "category": "",
           "name": "Khác",
           "unit": "",
           "qty": 0.0,
-          "value": 4685658105.0
-        },
-        {
-          "category": "Máy",
-          "name": "HP",
-          "unit": "PCS",
-          "qty": 0.0,
-          "value": 969739967.0
-        },
-        {
-          "category": "Máy",
-          "name": "Fujifilm",
-          "unit": "PCS",
-          "qty": 0.0,
-          "value": 1155685926.0
-        },
-        {
-          "category": "Máy",
-          "name": "Olivetti",
-          "unit": "PCS",
-          "qty": 0.0,
-          "value": 244940693.0
-        },
-        {
-          "category": "Máy",
-          "name": "Bonsen",
-          "unit": "PCS",
-          "qty": 0.0,
-          "value": 107948419.0
+          "value": 3225574534.0
         }
       ]
     },
@@ -3010,21 +2982,21 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "8",
       "Fujifilm",
       "Máy Photocopy",
-      "133000000.0"
+      "948098821.0"
     ],
     [
       "VPS M",
       "",
       "HP",
       "Máy Photocopy",
-      "250000000.0"
+      "419392982.0"
     ],
     [
       "VPS M",
       "",
       "Khác",
       "Khác",
-      "715500000.0"
+      "3559816757.0"
     ],
     [
       "ITSS",

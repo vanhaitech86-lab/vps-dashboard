@@ -1,6 +1,6 @@
 {
-  "scannedAt": "2026-10-26T08:54:06.023Z",
-  "formattedTime": "15:54:06 26/10/2026",
+  "scannedAt": "2026-10-28T05:03:01.763Z",
+  "formattedTime": "12:03:01 28/10/2026",
   "totalUnits": 6,
   "completedCount": 6,
   "partialCount": 0,
@@ -162,7 +162,7 @@
         },
         "Tồn kho": {
           "status": "ENTERED",
-          "rows": 28
+          "rows": 15
         },
         "Nhân sự": {
           "status": "ENTERED",

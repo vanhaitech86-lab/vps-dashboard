@@ -1,5 +1,257 @@
 [
   {
+    "id": "deliv_1792998095466_598i",
+    "timestamp": "2026-10-26T07:01:35.466Z",
+    "formattedTime": "14:01:35 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (Văn phòng VPS)",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-8a368d85e2dsm968352b3a.4 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998095461_m9tv",
+    "timestamp": "2026-10-26T07:01:35.461Z",
+    "formattedTime": "14:01:35 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (ITSS)",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-8a368d85e5csm1027973b3a.3 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094926_r334",
+    "timestamp": "2026-10-26T07:01:34.926Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] 🚨 CẢNH BÁO VI PHẠM: Giám Đốc VP VPS chưa xem báo cáo!",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2ea9af34511sm12606005ad.1 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094880_k8fj",
+    "timestamp": "2026-10-26T07:01:34.880Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (VPS M)",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2ea9b1df01csm12372155ad.58 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094872_c3en",
+    "timestamp": "2026-10-26T07:01:34.872Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (Việt)",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2ea9af332d9sm12274475ad.11 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094854_uze9",
+    "timestamp": "2026-10-26T07:01:34.854Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] 🚨 CẢNH BÁO VI PHẠM: Giám Đốc Xem Sơn chưa xem báo cáo!",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3adebb24a83sm7068459a91.17 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094850_786f",
+    "timestamp": "2026-10-26T07:01:34.850Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] 🚨 CẢNH BÁO VI PHẠM: Giám Đốc VPS Miền Trung chưa xem báo cáo!",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3adebe6af0dsm7156982a91.5 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094846_7e87",
+    "timestamp": "2026-10-26T07:01:34.846Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] 🚨 CẢNH BÁO VI PHẠM: Giám Đốc Tân Hồng Hà chưa xem báo cáo!",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3adebb0667asm7235299a91.14 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094842_gt6k",
+    "timestamp": "2026-10-26T07:01:34.842Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] 🚨 CẢNH BÁO VI PHẠM: Giám Đốc Việt chưa xem báo cáo!",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3adebb387e1sm4310979a91.3 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094837_87zj",
+    "timestamp": "2026-10-26T07:01:34.837Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (Tân Hồng Hà)",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3adeba47266sm4312422a91.1 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094829_8o0f",
+    "timestamp": "2026-10-26T07:01:34.829Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (Xem Sơn)",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3adebfa3794sm7197681a91.14 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998094824_qj3m",
+    "timestamp": "2026-10-26T07:01:34.824Z",
+    "formattedTime": "14:01:34 26/10/2026",
+    "channel": "EMAIL",
+    "status": "FAILED",
+    "recipient": "baocaoquantri.vps@gmail.com",
+    "subject": "[VPS Group] 🚨 CẢNH BÁO VI PHẠM: Giám Đốc ITSS chưa xem báo cáo!",
+    "error": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3adebfa53c3sm6976076a91.13 - gsmtp"
+  },
+  {
+    "id": "deliv_1792998092359_tr7p",
+    "timestamp": "2026-10-26T07:01:32.359Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 🚨 CẢNH BÁO VI PHẠM: Giám Đốc VP VPS chưa xem báo cáo!\n━━━━━━━━━━━━━━━━━━━━\nKính báo Chủ tịch / Tổng Giám Đốc VPS: Giám Đốc VP VPS (Văn phòng VPS) CHƯA ĐỌC /"
+  },
+  {
+    "id": "deliv_1792998092356_y37u",
+    "timestamp": "2026-10-26T07:01:32.356Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (Văn phòng VPS)\n━━━━━━━━━━━━━━━━━━━━\nKính gửi Giám Đốc VP VPS: Đã đến giờ rà soát số liệu điều hành Dashboard ngày "
+  },
+  {
+    "id": "deliv_1792998092354_gzia",
+    "timestamp": "2026-10-26T07:01:32.354Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 🚨 CẢNH BÁO VI PHẠM: Giám Đốc ITSS chưa xem báo cáo!\n━━━━━━━━━━━━━━━━━━━━\nKính báo Chủ tịch / Tổng Giám Đốc VPS: Giám Đốc ITSS (ITSS) CHƯA ĐỌC / DUYỆT BÁO CÁ"
+  },
+  {
+    "id": "deliv_1792998092350_hpid",
+    "timestamp": "2026-10-26T07:01:32.350Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (ITSS)\n━━━━━━━━━━━━━━━━━━━━\nKính gửi Giám Đốc ITSS: Đã đến giờ rà soát số liệu điều hành Dashboard ngày hôm nay (08"
+  },
+  {
+    "id": "deliv_1792998092348_4y0i",
+    "timestamp": "2026-10-26T07:01:32.348Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 🚨 CẢNH BÁO VI PHẠM: Giám Đốc VPS Miền Trung chưa xem báo cáo!\n━━━━━━━━━━━━━━━━━━━━\nKính báo Chủ tịch / Tổng Giám Đốc VPS: Giám Đốc VPS Miền Trung (VPS M) CH"
+  },
+  {
+    "id": "deliv_1792998092345_mrd9",
+    "timestamp": "2026-10-26T07:01:32.345Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (VPS M)\n━━━━━━━━━━━━━━━━━━━━\nKính gửi Giám Đốc VPS Miền Trung: Đã đến giờ rà soát số liệu điều hành Dashboard ngày "
+  },
+  {
+    "id": "deliv_1792998092342_1n7p",
+    "timestamp": "2026-10-26T07:01:32.342Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 🚨 CẢNH BÁO VI PHẠM: Giám Đốc Xem Sơn chưa xem báo cáo!\n━━━━━━━━━━━━━━━━━━━━\nKính báo Chủ tịch / Tổng Giám Đốc VPS: Giám Đốc Xem Sơn (Xem Sơn) CHƯA ĐỌC / DUY"
+  },
+  {
+    "id": "deliv_1792998092339_kf7v",
+    "timestamp": "2026-10-26T07:01:32.339Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (Xem Sơn)\n━━━━━━━━━━━━━━━━━━━━\nKính gửi Giám Đốc Xem Sơn: Đã đến giờ rà soát số liệu điều hành Dashboard ngày hôm n"
+  },
+  {
+    "id": "deliv_1792998092336_97zr",
+    "timestamp": "2026-10-26T07:01:32.336Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 🚨 CẢNH BÁO VI PHẠM: Giám Đốc Việt chưa xem báo cáo!\n━━━━━━━━━━━━━━━━━━━━\nKính báo Chủ tịch / Tổng Giám Đốc VPS: Giám Đốc Việt (Việt) CHƯA ĐỌC / DUYỆT BÁO CÁ"
+  },
+  {
+    "id": "deliv_1792998092334_r881",
+    "timestamp": "2026-10-26T07:01:32.334Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (Việt)\n━━━━━━━━━━━━━━━━━━━━\nKính gửi Giám Đốc Việt: Đã đến giờ rà soát số liệu điều hành Dashboard ngày hôm nay (08"
+  },
+  {
+    "id": "deliv_1792998092331_drdj",
+    "timestamp": "2026-10-26T07:01:32.331Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 🚨 CẢNH BÁO VI PHẠM: Giám Đốc Tân Hồng Hà chưa xem báo cáo!\n━━━━━━━━━━━━━━━━━━━━\nKính báo Chủ tịch / Tổng Giám Đốc VPS: Giám Đốc Tân Hồng Hà (Tân Hồng Hà) CH"
+  },
+  {
+    "id": "deliv_1792998092327_vrha",
+    "timestamp": "2026-10-26T07:01:32.327Z",
+    "formattedTime": "14:01:32 26/10/2026",
+    "channel": "ZALO",
+    "status": "SPOOLED_READY",
+    "recipient": "0913301459",
+    "webhookUrl": "http://localhost:5000/api/zalo-webhook",
+    "summary": "Đã đóng gói tin nhắn Zalo cho số 0913301459. (Gateway: http://localhost:5000/api/zalo-webhook đang chờ kết nối)",
+    "contentPreview": "🌟 ⏰ NHẮC NHỞ: Đến giờ xem báo cáo Dashboard (Tân Hồng Hà)\n━━━━━━━━━━━━━━━━━━━━\nKính gửi Giám Đốc Tân Hồng Hà: Đã đến giờ rà soát số liệu điều hành Dashboard ng"
+  },
+  {
     "id": "deliv_1792382452834_k4ak",
     "timestamp": "2026-10-19T04:00:52.834Z",
     "formattedTime": "11:00:52 19/10/2026",

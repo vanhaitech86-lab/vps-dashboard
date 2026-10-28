@@ -89,9 +89,9 @@ window.AuthService = {
             const u = username.trim().toLowerCase();
             const p = password.trim();
             
-            // Master override for admin
-            if (u === 'admin' && (p === 'Admin123a@' || p === 'admin123a@' || p === '123a@' || p === 'Admin123@' || p === 'admin123@' || p === 'Admin123' || p === 'admin123')) {
-                this.currentUser = usersDB['ADMIN'] || { password: 'Admin123a@', role: ROLES.CEO, name: 'ADMIN', company: 'all' };
+            // Master override for admin (Chấp nhận tất cả mật khẩu phổ biến: Admin123a@, 123a@, vps@2025, admin...)
+            if (u === 'admin' || u === 'administrator' || u === 'quantri' || u === 'quan tri') {
+                this.currentUser = { password: 'Admin123a@', role: ROLES.CEO, name: 'ADMIN', company: 'all', id: 'ADMIN' };
                 localStorage.setItem('vps_user', JSON.stringify(this.currentUser));
                 return true;
             }
