@@ -301,11 +301,11 @@
       "rawBad": 0.0
     },
     "ITSS": {
-      "current": 0.78,
+      "current": 0.22,
       "overdue": 0.0,
       "bad": 0.0,
-      "total": 0.78,
-      "rawCurrent": 777149758.0,
+      "total": 0.22,
+      "rawCurrent": 215716586.0,
       "rawOverdue": 0.0,
       "rawBad": 0.0
     },
