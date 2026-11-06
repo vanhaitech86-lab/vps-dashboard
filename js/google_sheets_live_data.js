@@ -7,9 +7,9 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "THH": {
       "08/2026": {
         "plan": 17010000000.0,
-        "actual": 17978000000.0,
-        "ttlg": 2020100000.0,
-        "lg_pct": 11.24,
+        "actual": 20849100000.0,
+        "ttlg": 3312100000.0,
+        "lg_pct": 15.89,
         "cp": 1392000000.0,
         "lntt": 525100000.0
       },
@@ -23,11 +23,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "10/2026": {
         "plan": 48983000000.0,
-        "actual": 17978000000.0,
-        "ttlg": 2020100000.0,
-        "lg_pct": 11.24,
+        "actual": 20849100000.0,
+        "ttlg": 3312100000.0,
+        "lg_pct": 15.89,
         "cp": 0.0,
-        "lntt": 2020100000.0
+        "lntt": 3312100000.0
       }
     },
     "Viet": {
@@ -83,11 +83,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "10/2026": {
         "plan": 14700000000.0,
-        "actual": 8218000000.0,
-        "ttlg": 1775000000.0,
-        "lg_pct": 21.6,
+        "actual": 12250000000.0,
+        "ttlg": 3145000000.0,
+        "lg_pct": 25.67,
         "cp": 0.0,
-        "lntt": 1775000000.0
+        "lntt": 3145000000.0
       }
     },
     "VPSM": {
@@ -139,12 +139,12 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   },
   "revenue_by_company": {
     "THH": {
-      "actual": 17.978,
+      "actual": 20.849,
       "plan": 17.01,
-      "actualRaw": 17978000000.0,
+      "actualRaw": 20849100000.0,
       "planRaw": 17010000000.0,
-      "ttlg": 2020100000.0,
-      "lg_pct": 11.24,
+      "ttlg": 3312100000.0,
+      "lg_pct": 15.89,
       "cp": 1392000000.0,
       "lntt": 525100000.0
     },
@@ -202,13 +202,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   "plan2026": {
     "all": {
       "ds": 43570,
-      "actual": 43078,
+      "actual": 45949,
       "ttlg": 9749,
-      "actual_ttlg": 8279,
+      "actual_ttlg": 9571,
       "lg_pct": 22.4,
-      "actual_lg_pct": 19.2,
+      "actual_lg_pct": 20.8,
       "cp_lg_pct": 69.2,
-      "actual_cp_lg_pct": 82.1,
+      "actual_cp_lg_pct": 71.0,
       "cp": 6748,
       "actual_cp": 6798,
       "lntt": 1872,
@@ -216,13 +216,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     },
     "THH": {
       "ds": 17010,
-      "actual": 17978,
+      "actual": 20849,
       "ttlg": 3215,
-      "actual_ttlg": 2020,
+      "actual_ttlg": 3312,
       "lg_pct": 18.9,
-      "actual_lg_pct": 11.24,
+      "actual_lg_pct": 15.89,
       "cp_lg_pct": 43.3,
-      "actual_cp_lg_pct": 68.9,
+      "actual_cp_lg_pct": 42.0,
       "cp": 1392,
       "actual_cp": 1392,
       "lntt": 525,
@@ -301,30 +301,30 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   },
   "debt_by_company": {
     "THH": {
-      "current": 26.97,
-      "overdue": 0.79,
+      "current": 22.86,
+      "overdue": 2.05,
       "bad": 0.0,
-      "total": 27.75,
-      "rawCurrent": 26966000000.0,
-      "rawOverdue": 789000000.0,
+      "total": 24.91,
+      "rawCurrent": 22861000000.0,
+      "rawOverdue": 2054000000.0,
       "rawBad": 0.0
     },
     "Viet": {
-      "current": 4.26,
-      "overdue": 1.07,
-      "bad": 0.01,
-      "total": 5.34,
-      "rawCurrent": 4261743817.0,
-      "rawOverdue": 1069808022.0,
-      "rawBad": 10933092.0
+      "current": 5.4,
+      "overdue": 1.42,
+      "bad": 0.0,
+      "total": 6.83,
+      "rawCurrent": 5404005539.0,
+      "rawOverdue": 1423152255.0,
+      "rawBad": 0.0
     },
     "XemSon": {
-      "current": 9.88,
-      "overdue": 0.97,
+      "current": 7.17,
+      "overdue": 1.34,
       "bad": 0.0,
-      "total": 10.84,
-      "rawCurrent": 9876781676.0,
-      "rawOverdue": 965346374.0,
+      "total": 8.51,
+      "rawCurrent": 7170029067.0,
+      "rawOverdue": 1335825856.0,
       "rawBad": 0.0
     },
     "VPSM": {
@@ -359,33 +359,33 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "THH": {
       "quota": 54,
       "official": 48,
-      "probation": 5,
-      "totalEmployees": 53,
-      "resigned": 1,
-      "newHires": 10,
+      "probation": 3,
+      "totalEmployees": 51,
+      "resigned": 0,
+      "newHires": 2,
       "departments": [
         {
           "name": "Kinh doanh",
-          "quota": 16,
-          "official": 15,
-          "newHires": 8,
-          "resigned": 1,
-          "probation": 1,
-          "vacancy": 1
+          "quota": 14,
+          "official": 14,
+          "newHires": 0,
+          "resigned": 0,
+          "probation": 0,
+          "vacancy": 0
         },
         {
           "name": "Kỹ thuật",
           "quota": 25,
-          "official": 22,
+          "official": 23,
           "newHires": 0,
           "resigned": 0,
-          "probation": 3,
-          "vacancy": 3
+          "probation": 2,
+          "vacancy": 2
         },
         {
           "name": "Kế toán",
-          "quota": 9,
-          "official": 9,
+          "quota": 8,
+          "official": 8,
           "newHires": 0,
           "resigned": 0,
           "probation": 0,
@@ -402,8 +402,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         {
           "name": "Kho/Giao vận",
-          "quota": 0,
-          "official": 0,
+          "quota": 1,
+          "official": 1,
           "newHires": 0,
           "resigned": 0,
           "probation": 0,
@@ -761,101 +761,122 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   },
   "inventory_by_company": {
     "THH": {
-      "total": 37.27,
-      "total_vnd": 37272007784.15,
-      "totalValue": 37272007784.15,
-      "totalItems": 105,
+      "total": 30.27,
+      "total_vnd": 30271451930.0,
+      "totalValue": 30271451930.0,
+      "totalItems": 108,
       "items": [
         {
-          "category": "Máy Photocopy",
-          "name": "",
-          "unit": "",
-          "qty": 2358.0,
-          "value": 20206130027.0
-        },
-        {
-          "category": "option/phần mềm",
-          "name": "",
-          "unit": "",
-          "qty": 534.0,
-          "value": 797444425.0
-        },
-        {
-          "category": "consumable",
-          "name": "",
-          "unit": "",
-          "qty": 7663.0,
-          "value": 5487059062.0
-        },
-        {
-          "category": "part",
-          "name": "",
-          "unit": "",
-          "qty": 3576.0,
-          "value": 4694560506.0
-        },
-        {
-          "category": "dự án",
-          "name": "",
-          "unit": "",
-          "qty": 455.0,
-          "value": 4973056929.0
-        },
-        {
-          "category": "khác",
-          "name": "",
-          "unit": "",
-          "qty": 382.0,
-          "value": 55883650.0
-        },
-        {
-          "category": "chậm luân chuyển",
-          "name": "Máy",
-          "unit": "PCS",
-          "qty": 41.0,
-          "value": 482375800.0
-        },
-        {
-          "category": "chậm luân chuyển",
+          "category": "Chậm luân chuyển",
           "name": "Comsumable",
           "unit": "PCS",
-          "qty": 74.0,
-          "value": 214356533.0
+          "qty": 81.0,
+          "value": 245527294.0
         },
         {
           "category": "Chậm luân chuyển",
           "name": "Part",
           "unit": "PCS",
-          "qty": 93.0,
-          "value": 75468727.0
+          "qty": 196.0,
+          "value": 300075354.0
         },
         {
-          "category": "CHậm luân chuyển",
+          "category": "khác",
+          "name": "",
+          "unit": "",
+          "qty": 312.0,
+          "value": 33764374.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Máy mới Fujifilm",
+          "unit": "PCS",
+          "qty": 33.0,
+          "value": 374196974.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Máy tháo Fujifilm",
+          "unit": "PCS",
+          "qty": 61.0,
+          "value": 318469768.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "",
+          "unit": "",
+          "qty": 1932.0,
+          "value": 15154642486.0
+        },
+        {
+          "category": "option/phần mềm",
+          "name": "",
+          "unit": "",
+          "qty": 821.0,
+          "value": 1380506028.0
+        },
+        {
+          "category": "consumable",
+          "name": "",
+          "unit": "",
+          "qty": 6740.0,
+          "value": 4630455260.0
+        },
+        {
+          "category": "part",
+          "name": "",
+          "unit": "",
+          "qty": 3600.0,
+          "value": 4820613651.0
+        },
+        {
+          "category": "dự án",
+          "name": "",
+          "unit": "",
+          "qty": 293.0,
+          "value": 2771719344.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Consumable Fujifilm",
+          "unit": "PCS",
+          "qty": 51.0,
+          "value": 163374125.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Part Fujifilm",
+          "unit": "PCS",
+          "qty": 48.0,
+          "value": 31747391.0
+        },
+        {
+          "category": "Chậm luân chuyển",
           "name": "Khác",
           "unit": "PCS",
-          "qty": 110.0,
-          "value": 255777388.0
+          "qty": 18.0,
+          "value": 46319970.0
         },
         {
           "category": "TQCT202641",
           "name": "Mực vàng -toner cartridge C GCVT-21K DC VI 2271CP/3371 - Hàng TQ",
           "unit": "Cái",
           "qty": 1.0,
-          "value": 820034.0
+          "value": 820.0
         },
         {
           "category": "MACRG067C",
           "name": "Mực xanh Canon LBP 631cw/633cdw/MF651cw/655cdw/657cdw/MFP283/M155/MFP183FW/182N/M454/MFP479/M455DN/554/282/283 - Thương hiệu MAETONE",
           "unit": "Cái",
           "qty": 2.0,
-          "value": 74074.0
+          "value": 74.0
         },
         {
           "category": "3ED67A",
           "name": "MỰC XANH HPT250/712 CHÍNH HÃNG",
           "unit": "Hộp",
           "qty": 1.0,
-          "value": 636364.0
+          "value": 636.0
         },
         {
           "category": "TQNDSS1810",
@@ -869,14 +890,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "name": "Nguồn máy tính Xigmatek X450 400W-230V",
           "unit": "Cái",
           "qty": 1.0,
-          "value": 490741.0
+          "value": 491.0
         },
         {
           "category": "TZE-M941",
           "name": "Nhãn in TZE-M941",
           "unit": "Hộp",
           "qty": 1.0,
-          "value": 423636.0
+          "value": 424.0
         },
         {
           "category": "HDD500GB",
@@ -897,21 +918,21 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "name": "Ống dẫn mực bằng nhựa từ hộp mực xuống trống máy của máy photocopy đa chức năng ApeosPort/DocuCentre-V 2060/3060/3065 DCV2060/ AP V2560/3060/3065",
           "unit": "Cái",
           "qty": 1.0,
-          "value": 923447.0
+          "value": 923.0
         },
         {
           "category": "CET0311022",
           "name": "Phim sấy MPC 3002/3502/ MP3054/4054 (CET311022)",
           "unit": "Bộ",
           "qty": 1.0,
-          "value": 796296.0
+          "value": 796.0
         },
         {
           "category": "PINCMOS",
           "name": "Pin CMOS",
           "unit": "Cái",
           "qty": 11.0,
-          "value": 115941.0
+          "value": 116.0
         },
         {
           "category": "QDEPSON1400",
@@ -919,35 +940,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "unit": "Bộ",
           "qty": 1.0,
           "value": 100.0
-        },
-        {
-          "category": "TQBXL805",
-          "name": "Quả đào máy in Epson L805",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 100.0
-        },
-        {
-          "category": "127E87190",
-          "name": "Quạt gió mảng ESS Fuji Xerox DCV3065/2060/3060",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 134314.0
-        },
-        {
-          "category": "TMRAKING4GB",
-          "name": "Ram kington 4GB DDR3 PC3 12800 cho laptop hàng tháo máy",
-          "unit": "Cái",
-          "qty": 1.0,
-          "value": 200.0
         }
       ]
     },
     "Viet": {
-      "total": 6.55,
-      "total_vnd": 6552205970.0,
-      "totalValue": 6552205970.0,
-      "totalItems": 5,
+      "total": 6.87,
+      "total_vnd": 6866541163.0,
+      "totalValue": 6866541163.0,
+      "totalItems": 10,
       "items": [
         {
           "category": "Máy Photocopy",
@@ -983,6 +983,41 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "unit": "Chiếc",
           "qty": 1242.0,
           "value": 365000000.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Máy test Cartridge",
+          "unit": "",
+          "qty": 0.0,
+          "value": 16234611.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Hàng chuyển xuất bán",
+          "unit": "",
+          "qty": 0.0,
+          "value": 105406537.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Hàng hỏng chuyển hủy",
+          "unit": "",
+          "qty": 0.0,
+          "value": 2866284.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Tồn hàng thuê máy",
+          "unit": "",
+          "qty": 0.0,
+          "value": 181478676.0
+        },
+        {
+          "category": "Chậm luân chuyển",
+          "name": "Không có tồn kho thực tế",
+          "unit": "",
+          "qty": 0.0,
+          "value": 8349085.0
         }
       ]
     },
@@ -1030,17 +1065,136 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       ]
     },
     "VPSM": {
-      "total": 3.23,
-      "total_vnd": 3225574534.0,
-      "totalValue": 3225574534.0,
-      "totalItems": 1,
+      "total": 5.96,
+      "total_vnd": 5960252108.0,
+      "totalValue": 5960252108.0,
+      "totalItems": 18,
       "items": [
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy Fujifilm A3 Trắng đen Apeos 2561",
+          "unit": "Chiếc",
+          "qty": 1.0,
+          "value": 49403019.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy Fujifilm A3 Trắng đen Apeos 3561",
+          "unit": "Chiếc",
+          "qty": 3.0,
+          "value": 187349400.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy Fujifilm A3 Trắng Đen Apeos 4570, 2TM",
+          "unit": "Chiếc",
+          "qty": 2.0,
+          "value": 164559852.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy Fujifilm A3 Trắng Đen Apeos 5570, 2TM",
+          "unit": "Chiếc",
+          "qty": 4.0,
+          "value": 381590740.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy in HP A3 trắng đen LaserJet MFP M72625dn",
+          "unit": "Chiếc",
+          "qty": 2.0,
+          "value": 60053078.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy in đa chức năng (in, photocopy và scan) HP LaserJet Managed MFP E730 dn Printer _ 5QJ87A",
+          "unit": "Chiếc",
+          "qty": 1.0,
+          "value": 35119000.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy HP A3 LaserJet Managed MFP E731dn",
+          "unit": "Chiếc",
+          "qty": 2.0,
+          "value": 79792550.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy HP A3 LaserJet Managed Flow MFP E731z",
+          "unit": "Chiếc",
+          "qty": 6.0,
+          "value": 189287505.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy HP A3 LaserJet Managed MFP E826dn",
+          "unit": "Chiếc",
+          "qty": 1.0,
+          "value": 55140850.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy Fuji Xerox A3 Trắng Đen DCS2320",
+          "unit": "Chiếc",
+          "qty": 5.0,
+          "value": 62494598.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy photocopy Fuji Xerox A3 Trắng Đen DCS2520",
+          "unit": "Chiếc",
+          "qty": 9.0,
+          "value": 102701212.0
+        },
+        {
+          "category": "Máy Photocopy",
+          "name": "Máy in sổ Olivetti PR2",
+          "unit": "Chiếc",
+          "qty": 28.0,
+          "value": 228611313.0
+        },
+        {
+          "category": "",
+          "name": "Máy hủy",
+          "unit": "Cái",
+          "qty": 36.0,
+          "value": 105630809.0
+        },
         {
           "category": "",
           "name": "Khác",
           "unit": "",
           "qty": 0.0,
           "value": 3225574534.0
+        },
+        {
+          "category": "HP",
+          "name": "Máy 108 w",
+          "unit": "PCS",
+          "qty": 36.0,
+          "value": 89942273.0
+        },
+        {
+          "category": "Fujifilm",
+          "name": "Máy A3",
+          "unit": "PCS",
+          "qty": 12.0,
+          "value": 920878985.0
+        },
+        {
+          "category": "Fujifilm",
+          "name": "Part",
+          "unit": "PCS",
+          "qty": 1.0,
+          "value": 2532390.0
+        },
+        {
+          "category": "EBA",
+          "name": "Máy hủy giấy 1126s",
+          "unit": "PCS",
+          "qty": 3.0,
+          "value": 19590000.0
         }
       ]
     },
@@ -1099,23 +1253,23 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "THH": {
       "thue_may": {
         "dau": {
-          "may": 349,
+          "may": 355,
           "kh": 103
         },
         "ke_hoach": {
-          "may": 354,
-          "kh": 104
+          "may": 5,
+          "kh": 5
         },
         "tang": {
           "may": 8,
-          "kh": 1
+          "kh": 2
         },
         "giam": {
-          "may": 2,
-          "kh": 1
+          "may": 5,
+          "kh": 2
         },
         "cuoi": {
-          "may": 355,
+          "may": 358,
           "kh": 103
         }
       },
@@ -1125,8 +1279,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 164
         },
         "ke_hoach": {
-          "may": 239,
-          "kh": 165
+          "may": 0,
+          "kh": 0
         },
         "tang": {
           "may": 0,
@@ -1143,12 +1297,12 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "dv_photo": {
         "dau": {
-          "may": 1771,
-          "kh": 624
+          "may": 1775,
+          "kh": 628
         },
         "ke_hoach": {
-          "may": 1175,
-          "kh": 628
+          "may": 0,
+          "kh": 0
         },
         "tang": {
           "may": 4,
@@ -1159,8 +1313,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 0
         },
         "cuoi": {
-          "may": 1775,
-          "kh": 628
+          "may": 1779,
+          "kh": 632
         }
       },
       "dv_may_in": {
@@ -1210,7 +1364,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "phan_phoi": {
         "dau": {
           "may": 0,
-          "kh": 371
+          "kh": 373
         },
         "ke_hoach": {
           "may": 0,
@@ -1218,7 +1372,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "tang": {
           "may": 0,
-          "kh": 3
+          "kh": 2
         },
         "giam": {
           "may": 0,
@@ -1226,7 +1380,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "cuoi": {
           "may": 0,
-          "kh": 374
+          "kh": 375
         }
       }
     },
@@ -1903,7 +2057,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "all": {
       "thue_may": {
         "dau": {
-          "may": 4000,
+          "may": 4006,
           "kh": 1240
         },
         "ke_hoach": {
@@ -1912,14 +2066,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "tang": {
           "may": 75,
-          "kh": 12
+          "kh": 13
         },
         "giam": {
-          "may": 32,
-          "kh": 9
+          "may": 35,
+          "kh": 10
         },
         "cuoi": {
-          "may": 4043,
+          "may": 4046,
           "kh": 1243
         }
       },
@@ -1947,8 +2101,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "dv_photo": {
         "dau": {
-          "may": 6676,
-          "kh": 2207
+          "may": 6680,
+          "kh": 2211
         },
         "ke_hoach": {
           "may": 0,
@@ -1963,8 +2117,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 15
         },
         "cuoi": {
-          "may": 6760,
-          "kh": 2208
+          "may": 6764,
+          "kh": 2212
         }
       },
       "dv_may_in": {
@@ -2014,7 +2168,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "phan_phoi": {
         "dau": {
           "may": 0,
-          "kh": 1893
+          "kh": 1895
         },
         "ke_hoach": {
           "may": 0,
@@ -2022,7 +2176,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "tang": {
           "may": 0,
-          "kh": 17
+          "kh": 16
         },
         "giam": {
           "may": 0,
@@ -2030,15 +2184,15 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "cuoi": {
           "may": 0,
-          "kh": 1910
+          "kh": 1911
         }
       }
     }
   },
   "customers_by_company": {
     "THH": {
-      "total_kh": 1319,
-      "total_may": 3516
+      "total_kh": 1324,
+      "total_may": 3523
     },
     "Viet": {
       "total_kh": 1216,
@@ -2067,10 +2221,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "THH",
       "name": "Kinh doanh bán buôn",
       "note": "Phân phối đại lý miền Bắc",
-      "ytd_ds": 33978.0,
-      "ytd_lg": 3605.0,
-      "m8_ds": 8883.0,
-      "m8_lg": 888.3,
+      "ytd_ds": 44087.8,
+      "ytd_lg": 5504.2,
+      "m8_ds": 10109.6,
+      "m8_lg": 1899.1,
       "plan_m_ds": 10834.0,
       "plan_m_lg": 867.0,
       "plan_year_ds": 100000.0,
@@ -2081,10 +2235,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "THH",
       "name": "Thuê máy Tân Hồng Hà",
       "note": "Cho thuê máy photocopy miền Bắc",
-      "ytd_ds": 4990.0,
-      "ytd_lg": 1767.0,
-      "m8_ds": 0.0,
-      "m8_lg": 0.0,
+      "ytd_ds": 5709.0,
+      "ytd_lg": 2013.0,
+      "m8_ds": 719.5,
+      "m8_lg": 245.7,
       "plan_m_ds": 733.0,
       "plan_m_lg": 440.0,
       "plan_year_ds": 8000.0,
@@ -2095,10 +2249,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "THH",
       "name": "Tổ Dịch vụ THH",
       "note": "Bảo trì bảo dưỡng sửa chữa",
-      "ytd_ds": 10305.0,
-      "ytd_lg": 3425.0,
-      "m8_ds": 867.0,
-      "m8_lg": 317.0,
+      "ytd_ds": 11605.8,
+      "ytd_lg": 3856.4,
+      "m8_ds": 1301.0,
+      "m8_lg": 431.2,
       "plan_m_ds": 1833.0,
       "plan_m_lg": 733.0,
       "plan_year_ds": 20000.0,
@@ -2109,10 +2263,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "THH",
       "name": "Tổ mực in THH",
       "note": "Cung cấp thay thế mực in",
-      "ytd_ds": 2527.0,
-      "ytd_lg": 1292.0,
-      "m8_ds": 204.0,
-      "m8_lg": 103.0,
+      "ytd_ds": 2836.5,
+      "ytd_lg": 1424.0,
+      "m8_ds": 309.9,
+      "m8_lg": 131.9,
       "plan_m_ds": 550.0,
       "plan_m_lg": 220.0,
       "plan_year_ds": 6000.0,
@@ -2123,10 +2277,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "THH",
       "name": "Metercharge THH",
       "note": "Dịch vụ thu phí bản in chụp",
-      "ytd_ds": 1916.0,
-      "ytd_lg": 1060.0,
-      "m8_ds": 0.0,
-      "m8_lg": 0.0,
+      "ytd_ds": 2136.3,
+      "ytd_lg": 1110.9,
+      "m8_ds": 220.3,
+      "m8_lg": 51.2,
       "plan_m_ds": 458.0,
       "plan_m_lg": 274.0,
       "plan_year_ds": 5000.0,
@@ -2137,10 +2291,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "THH",
       "name": "Kinh doanh Online THH",
       "note": "Bán hàng trực tuyến",
-      "ytd_ds": 811.0,
-      "ytd_lg": 18000.0,
-      "m8_ds": 49.0,
-      "m8_lg": 1.8,
+      "ytd_ds": 865.8,
+      "ytd_lg": 20100.0,
+      "m8_ds": 55.4,
+      "m8_lg": 2.4,
       "plan_m_ds": 275.0,
       "plan_m_lg": 8.3,
       "plan_year_ds": 11000.0,
@@ -2151,10 +2305,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "THH",
       "name": "Dự án Tân Hồng Hà",
       "note": "Dự án thầu thiết bị miền Bắc",
-      "ytd_ds": 18170.0,
-      "ytd_lg": 7304.0,
-      "m8_ds": 931.0,
-      "m8_lg": 470.0,
+      "ytd_ds": 19199.9,
+      "ytd_lg": 7611.1,
+      "m8_ds": 1030.2,
+      "m8_lg": 306.3,
       "plan_m_ds": 30000.0,
       "plan_m_lg": 3000.0,
       "plan_year_ds": 100000.0,
@@ -2165,10 +2319,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "THH",
       "name": "Kinh doanh tổng hợp THH",
       "note": "Thương mại tổng hợp",
-      "ytd_ds": 20246.0,
-      "ytd_lg": 1429.0,
-      "m8_ds": 7044.0,
-      "m8_lg": 240.0,
+      "ytd_ds": 27348.7,
+      "ytd_lg": 1673.5,
+      "m8_ds": 7103.2,
+      "m8_lg": 244.3,
       "plan_m_ds": 4300.0,
       "plan_m_lg": 860.0,
       "plan_year_ds": 30000.0,
@@ -2181,8 +2335,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Cho thuê máy Công ty Việt",
       "ytd_ds": 14002.4,
       "ytd_lg": 8123.49,
-      "m8_ds": 401.18,
-      "m8_lg": 215.4,
+      "m8_ds": 1516.28,
+      "m8_lg": 874.54,
       "plan_m_ds": 2498.0,
       "plan_m_lg": 1548.8,
       "plan_year_ds": 28000.0,
@@ -2195,8 +2349,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Kênh online sàn TMĐT",
       "ytd_ds": 23093.17,
       "ytd_lg": 1490.44,
-      "m8_ds": 2200.93,
-      "m8_lg": 119.96,
+      "m8_ds": 2580.59,
+      "m8_lg": 249.16,
       "plan_m_ds": 3300.0,
       "plan_m_lg": 264.0,
       "plan_year_ds": 36000.0,
@@ -2209,8 +2363,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Kinh doanh tổng hợp",
       "ytd_ds": 16952.77,
       "ytd_lg": 1316.59,
-      "m8_ds": 1307.88,
-      "m8_lg": 171.52,
+      "m8_ds": 2159.62,
+      "m8_lg": 187.53,
       "plan_m_ds": 3450.0,
       "plan_m_lg": 310.5,
       "plan_year_ds": 36000.0,
@@ -2223,8 +2377,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bán lẻ tại điểm bán",
       "ytd_ds": 945.12,
       "ytd_lg": 428.51,
-      "m8_ds": 74.11,
-      "m8_lg": 46.88,
+      "m8_ds": 110.01,
+      "m8_lg": 75.86,
       "plan_m_ds": 550.0,
       "plan_m_lg": 82.5,
       "plan_year_ds": 6000.0,
@@ -2237,8 +2391,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Hoạt động nội bộ",
       "ytd_ds": 684.9,
       "ytd_lg": 87.24,
-      "m8_ds": 19.57,
-      "m8_lg": 14.35,
+      "m8_ds": 39.67,
+      "m8_lg": 3.93,
       "plan_m_ds": 10000.0,
       "plan_m_lg": 1.0,
       "plan_year_ds": 600.0,
@@ -2251,8 +2405,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Phân phối thiết bị Xesco",
       "ytd_ds": 0.0,
       "ytd_lg": 0.0,
-      "m8_ds": 2492.0,
-      "m8_lg": 374.0,
+      "m8_ds": 3500.0,
+      "m8_lg": 560.0,
       "plan_m_ds": 5775.0,
       "plan_m_lg": 525.0,
       "plan_year_ds": 66000.0,
@@ -2265,8 +2419,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Máy thuê kỹ thuật Xesco",
       "ytd_ds": 0.0,
       "ytd_lg": 0.0,
-      "m8_ds": 824.0,
-      "m8_lg": 495.0,
+      "m8_ds": 1800.0,
+      "m8_lg": 1080.0,
       "plan_m_ds": 2975.0,
       "plan_m_lg": 1756.0,
       "plan_year_ds": 34000.0,
@@ -2279,8 +2433,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Hợp đồng thuê máy mới",
       "ytd_ds": 0.0,
       "ytd_lg": 0.0,
-      "m8_ds": 176.0,
-      "m8_lg": 115.0,
+      "m8_ds": 500.0,
+      "m8_lg": 325.0,
       "plan_m_ds": 700.0,
       "plan_m_lg": 367.0,
       "plan_year_ds": 8000.0,
@@ -2293,8 +2447,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Kỹ thuật dịch vụ máy VP",
       "ytd_ds": 0.0,
       "ytd_lg": 0.0,
-      "m8_ds": 1011.0,
-      "m8_lg": 353.0,
+      "m8_ds": 1500.0,
+      "m8_lg": 525.0,
       "plan_m_ds": 2275.0,
       "plan_m_lg": 715.0,
       "plan_year_ds": 26000.0,
@@ -2321,8 +2475,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Thương mại điện tử Xesco",
       "ytd_ds": 0.0,
       "ytd_lg": 0.0,
-      "m8_ds": 2406.0,
-      "m8_lg": 72.0,
+      "m8_ds": 3000.0,
+      "m8_lg": 90.0,
       "plan_m_ds": 2100.0,
       "plan_m_lg": 100.0,
       "plan_year_ds": 24000.0,
@@ -2335,8 +2489,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Gói thầu thiết bị miền Nam",
       "ytd_ds": 0.0,
       "ytd_lg": 0.0,
-      "m8_ds": 1045.0,
-      "m8_lg": 313.0,
+      "m8_ds": 1550.0,
+      "m8_lg": 465.0,
       "plan_m_ds": 0.0,
       "plan_m_lg": 0.0,
       "plan_year_ds": 0.0,
@@ -2349,8 +2503,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "note": "Bán lẻ thiết bị văn phòng",
       "ytd_ds": 0.0,
       "ytd_lg": 0.0,
-      "m8_ds": 264.0,
-      "m8_lg": 53.0,
+      "m8_ds": 400.0,
+      "m8_lg": 100.0,
       "plan_m_ds": 875.0,
       "plan_m_lg": 125.0,
       "plan_year_ds": 10000.0,
@@ -2504,10 +2658,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "THH",
         "name": "Kinh doanh bán buôn",
         "note": "Phân phối đại lý miền Bắc",
-        "ytd_ds": 33978.0,
-        "ytd_lg": 3605.0,
-        "m8_ds": 8883.0,
-        "m8_lg": 888.3,
+        "ytd_ds": 44087.8,
+        "ytd_lg": 5504.2,
+        "m8_ds": 10109.6,
+        "m8_lg": 1899.1,
         "plan_m_ds": 10834.0,
         "plan_m_lg": 867.0,
         "plan_year_ds": 100000.0,
@@ -2518,10 +2672,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "THH",
         "name": "Thuê máy Tân Hồng Hà",
         "note": "Cho thuê máy photocopy miền Bắc",
-        "ytd_ds": 4990.0,
-        "ytd_lg": 1767.0,
-        "m8_ds": 0.0,
-        "m8_lg": 0.0,
+        "ytd_ds": 5709.0,
+        "ytd_lg": 2013.0,
+        "m8_ds": 719.5,
+        "m8_lg": 245.7,
         "plan_m_ds": 733.0,
         "plan_m_lg": 440.0,
         "plan_year_ds": 8000.0,
@@ -2532,10 +2686,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "THH",
         "name": "Tổ Dịch vụ THH",
         "note": "Bảo trì bảo dưỡng sửa chữa",
-        "ytd_ds": 10305.0,
-        "ytd_lg": 3425.0,
-        "m8_ds": 867.0,
-        "m8_lg": 317.0,
+        "ytd_ds": 11605.8,
+        "ytd_lg": 3856.4,
+        "m8_ds": 1301.0,
+        "m8_lg": 431.2,
         "plan_m_ds": 1833.0,
         "plan_m_lg": 733.0,
         "plan_year_ds": 20000.0,
@@ -2546,10 +2700,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "THH",
         "name": "Tổ mực in THH",
         "note": "Cung cấp thay thế mực in",
-        "ytd_ds": 2527.0,
-        "ytd_lg": 1292.0,
-        "m8_ds": 204.0,
-        "m8_lg": 103.0,
+        "ytd_ds": 2836.5,
+        "ytd_lg": 1424.0,
+        "m8_ds": 309.9,
+        "m8_lg": 131.9,
         "plan_m_ds": 550.0,
         "plan_m_lg": 220.0,
         "plan_year_ds": 6000.0,
@@ -2560,10 +2714,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "THH",
         "name": "Metercharge THH",
         "note": "Dịch vụ thu phí bản in chụp",
-        "ytd_ds": 1916.0,
-        "ytd_lg": 1060.0,
-        "m8_ds": 0.0,
-        "m8_lg": 0.0,
+        "ytd_ds": 2136.3,
+        "ytd_lg": 1110.9,
+        "m8_ds": 220.3,
+        "m8_lg": 51.2,
         "plan_m_ds": 458.0,
         "plan_m_lg": 274.0,
         "plan_year_ds": 5000.0,
@@ -2574,10 +2728,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "THH",
         "name": "Kinh doanh Online THH",
         "note": "Bán hàng trực tuyến",
-        "ytd_ds": 811.0,
-        "ytd_lg": 18000.0,
-        "m8_ds": 49.0,
-        "m8_lg": 1.8,
+        "ytd_ds": 865.8,
+        "ytd_lg": 20100.0,
+        "m8_ds": 55.4,
+        "m8_lg": 2.4,
         "plan_m_ds": 275.0,
         "plan_m_lg": 8.3,
         "plan_year_ds": 11000.0,
@@ -2588,10 +2742,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "THH",
         "name": "Dự án Tân Hồng Hà",
         "note": "Dự án thầu thiết bị miền Bắc",
-        "ytd_ds": 18170.0,
-        "ytd_lg": 7304.0,
-        "m8_ds": 931.0,
-        "m8_lg": 470.0,
+        "ytd_ds": 19199.9,
+        "ytd_lg": 7611.1,
+        "m8_ds": 1030.2,
+        "m8_lg": 306.3,
         "plan_m_ds": 30000.0,
         "plan_m_lg": 3000.0,
         "plan_year_ds": 100000.0,
@@ -2602,10 +2756,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "THH",
         "name": "Kinh doanh tổng hợp THH",
         "note": "Thương mại tổng hợp",
-        "ytd_ds": 20246.0,
-        "ytd_lg": 1429.0,
-        "m8_ds": 7044.0,
-        "m8_lg": 240.0,
+        "ytd_ds": 27348.7,
+        "ytd_lg": 1673.5,
+        "m8_ds": 7103.2,
+        "m8_lg": 244.3,
         "plan_m_ds": 4300.0,
         "plan_m_lg": 860.0,
         "plan_year_ds": 30000.0,
@@ -2620,8 +2774,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Cho thuê máy Công ty Việt",
         "ytd_ds": 14002.4,
         "ytd_lg": 8123.49,
-        "m8_ds": 401.18,
-        "m8_lg": 215.4,
+        "m8_ds": 1516.28,
+        "m8_lg": 874.54,
         "plan_m_ds": 2498.0,
         "plan_m_lg": 1548.8,
         "plan_year_ds": 28000.0,
@@ -2634,8 +2788,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Kênh online sàn TMĐT",
         "ytd_ds": 23093.17,
         "ytd_lg": 1490.44,
-        "m8_ds": 2200.93,
-        "m8_lg": 119.96,
+        "m8_ds": 2580.59,
+        "m8_lg": 249.16,
         "plan_m_ds": 3300.0,
         "plan_m_lg": 264.0,
         "plan_year_ds": 36000.0,
@@ -2648,8 +2802,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Kinh doanh tổng hợp",
         "ytd_ds": 16952.77,
         "ytd_lg": 1316.59,
-        "m8_ds": 1307.88,
-        "m8_lg": 171.52,
+        "m8_ds": 2159.62,
+        "m8_lg": 187.53,
         "plan_m_ds": 3450.0,
         "plan_m_lg": 310.5,
         "plan_year_ds": 36000.0,
@@ -2662,8 +2816,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bán lẻ tại điểm bán",
         "ytd_ds": 945.12,
         "ytd_lg": 428.51,
-        "m8_ds": 74.11,
-        "m8_lg": 46.88,
+        "m8_ds": 110.01,
+        "m8_lg": 75.86,
         "plan_m_ds": 550.0,
         "plan_m_lg": 82.5,
         "plan_year_ds": 6000.0,
@@ -2676,8 +2830,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Hoạt động nội bộ",
         "ytd_ds": 684.9,
         "ytd_lg": 87.24,
-        "m8_ds": 19.57,
-        "m8_lg": 14.35,
+        "m8_ds": 39.67,
+        "m8_lg": 3.93,
         "plan_m_ds": 10000.0,
         "plan_m_lg": 1.0,
         "plan_year_ds": 600.0,
@@ -2692,8 +2846,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Phân phối thiết bị Xesco",
         "ytd_ds": 0.0,
         "ytd_lg": 0.0,
-        "m8_ds": 2492.0,
-        "m8_lg": 374.0,
+        "m8_ds": 3500.0,
+        "m8_lg": 560.0,
         "plan_m_ds": 5775.0,
         "plan_m_lg": 525.0,
         "plan_year_ds": 66000.0,
@@ -2706,8 +2860,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Máy thuê kỹ thuật Xesco",
         "ytd_ds": 0.0,
         "ytd_lg": 0.0,
-        "m8_ds": 824.0,
-        "m8_lg": 495.0,
+        "m8_ds": 1800.0,
+        "m8_lg": 1080.0,
         "plan_m_ds": 2975.0,
         "plan_m_lg": 1756.0,
         "plan_year_ds": 34000.0,
@@ -2720,8 +2874,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Hợp đồng thuê máy mới",
         "ytd_ds": 0.0,
         "ytd_lg": 0.0,
-        "m8_ds": 176.0,
-        "m8_lg": 115.0,
+        "m8_ds": 500.0,
+        "m8_lg": 325.0,
         "plan_m_ds": 700.0,
         "plan_m_lg": 367.0,
         "plan_year_ds": 8000.0,
@@ -2734,8 +2888,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Kỹ thuật dịch vụ máy VP",
         "ytd_ds": 0.0,
         "ytd_lg": 0.0,
-        "m8_ds": 1011.0,
-        "m8_lg": 353.0,
+        "m8_ds": 1500.0,
+        "m8_lg": 525.0,
         "plan_m_ds": 2275.0,
         "plan_m_lg": 715.0,
         "plan_year_ds": 26000.0,
@@ -2762,8 +2916,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Thương mại điện tử Xesco",
         "ytd_ds": 0.0,
         "ytd_lg": 0.0,
-        "m8_ds": 2406.0,
-        "m8_lg": 72.0,
+        "m8_ds": 3000.0,
+        "m8_lg": 90.0,
         "plan_m_ds": 2100.0,
         "plan_m_lg": 100.0,
         "plan_year_ds": 24000.0,
@@ -2776,8 +2930,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Gói thầu thiết bị miền Nam",
         "ytd_ds": 0.0,
         "ytd_lg": 0.0,
-        "m8_ds": 1045.0,
-        "m8_lg": 313.0,
+        "m8_ds": 1550.0,
+        "m8_lg": 465.0,
         "plan_m_ds": 0.0,
         "plan_m_lg": 0.0,
         "plan_year_ds": 0.0,
@@ -2790,8 +2944,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "note": "Bán lẻ thiết bị văn phòng",
         "ytd_ds": 0.0,
         "ytd_lg": 0.0,
-        "m8_ds": 264.0,
-        "m8_lg": 53.0,
+        "m8_ds": 400.0,
+        "m8_lg": 100.0,
         "plan_m_ds": 875.0,
         "plan_m_lg": 125.0,
         "plan_year_ds": 10000.0,
@@ -2955,24 +3109,52 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     ],
     [
       "Tân Hồng Hà",
-      "9",
+      "10",
       "HP",
       "Máy in",
-      "776559035.0"
+      "390506667.0"
     ],
     [
       "Tân Hồng Hà",
-      "9",
+      "10",
       "Fujifilm",
       "Máy Photocopy",
-      "340740443.0"
+      "309999778.0"
     ],
     [
       "Tân Hồng Hà",
-      "9",
+      "10",
       "HP",
       "Mực in & Linh kiện",
-      "483846083.0"
+      "436756339.0"
+    ],
+    [
+      "Tân Hồng Hà",
+      "10",
+      "HP",
+      "Máy tính",
+      "6512764741.0"
+    ],
+    [
+      "Tân Hồng Hà",
+      "10",
+      "HP",
+      "Máy Photocopy",
+      "2703240889.0"
+    ],
+    [
+      "Tân Hồng Hà",
+      "10",
+      "HP",
+      "Máy hủy",
+      "3802543593.0"
+    ],
+    [
+      "Tân Hồng Hà",
+      "10",
+      "HP",
+      "Máy scan",
+      "701390519.0"
     ],
     [
       "Việt",
@@ -3049,27 +3231,27 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     "THH": [
       {
         "item": "TỔNG CHI PHÍ",
-        "plan": 1881000000.0,
-        "actual": 1409430000.0,
-        "rate": 0.7
+        "plan": 2291000000.0,
+        "actual": 1477620000.0,
+        "rate": 0.6
       },
       {
         "item": "Chi phí cố định",
         "plan": 1267000000.0,
-        "actual": 832158000.0,
-        "rate": 0.7
+        "actual": 805290000.0,
+        "rate": 0.6
       },
       {
         "item": "Tiền lương & phụ cấp nhân sự",
         "plan": 1070000000.0,
-        "actual": 711648000.0,
-        "rate": 0.7
+        "actual": 648260000.0,
+        "rate": 0.6
       },
       {
         "item": "Thuê văn phòng, thuê kho",
         "plan": 197000000.0,
-        "actual": 120510000.0,
-        "rate": 0.6
+        "actual": 157030000.0,
+        "rate": 0.8
       },
       {
         "item": "Khấu hao TSCĐ & phân bổ CCDC",
@@ -3079,38 +3261,38 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       {
         "item": "Chi phí biến đổi",
-        "plan": 614000000.0,
-        "actual": 577750000.0,
-        "rate": 0.9
+        "plan": 1024000000.0,
+        "actual": 382830000.0,
+        "rate": 0.4
       },
       {
         "item": "Điện, nước, internet",
         "plan": 0.0,
-        "actual": 2090000.0,
+        "actual": 300000.0,
         "rate": 0.0
       },
       {
         "item": "Vận chuyển hàng & giao nhận",
         "plan": 0.0,
-        "actual": 31830000.0,
+        "actual": 31640000.0,
         "rate": 0.0
       },
       {
         "item": "Tiếp khách & công tác phí",
         "plan": 0.0,
-        "actual": 20550000.0,
+        "actual": 37500000.0,
         "rate": 0.0
       },
       {
         "item": "Vật tư bảo hành & sửa chữa",
         "plan": 0.0,
-        "actual": 2060000.0,
+        "actual": 10700000.0,
         "rate": 0.0
       },
       {
         "item": "chi phí khác",
         "plan": 0.0,
-        "actual": 521220000.0,
+        "actual": 302690000.0,
         "rate": 0.0
       },
       {
@@ -3472,16 +3654,16 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       {
         "stt": "A",
         "name": "TỔNG CHI PHÍ",
-        "plan": 1881000000.0,
-        "actual": 1409430000.0,
+        "plan": 2291000000.0,
+        "actual": 1477620000.0,
         "depts": {
-          "DVKT": 790270000.0,
-          "KD_BB": 399280000.0,
-          "KD_BL_TH": 162380000.0,
-          "KD_DA": 57500000.0,
+          "DVKT": 730550000.0,
+          "KD_BB": 442700000.0,
+          "KD_BL_TH": 173940000.0,
+          "KD_DA": 78660000.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
-          "KeToan": 0.0,
+          "KeToan": 51780000.0,
           "BP_Khac": 0.0
         }
       },
@@ -3489,15 +3671,15 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "I",
         "name": "Chi phí cố định",
         "plan": 1267000000.0,
-        "actual": 832158000.0,
+        "actual": 805290000.0,
         "depts": {
-          "DVKT": 441110000.0,
-          "KD_BB": 148720000.0,
-          "KD_BL_TH": 73450000.0,
-          "KD_DA": 22400000.0,
+          "DVKT": 430430000.0,
+          "KD_BB": 210520000.0,
+          "KD_BL_TH": 80500000.0,
+          "KD_DA": 32060000.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
-          "KeToan": 146478000.0,
+          "KeToan": 51780000.0,
           "BP_Khac": 0.0
         }
       },
@@ -3505,15 +3687,15 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "1",
         "name": "Tiền lương & phụ cấp nhân sự",
         "plan": 1070000000.0,
-        "actual": 711648000.0,
+        "actual": 648260000.0,
         "depts": {
-          "DVKT": 358850000.0,
-          "KD_BB": 129820000.0,
-          "KD_BL_TH": 54100000.0,
-          "KD_DA": 22400000.0,
+          "DVKT": 348170000.0,
+          "KD_BB": 155100000.0,
+          "KD_BL_TH": 61150000.0,
+          "KD_DA": 32060000.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
-          "KeToan": 146478000.0,
+          "KeToan": 51780000.0,
           "BP_Khac": 0.0
         }
       },
@@ -3521,10 +3703,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "2",
         "name": "Thuê văn phòng, thuê kho",
         "plan": 197000000.0,
-        "actual": 120510000.0,
+        "actual": 157030000.0,
         "depts": {
           "DVKT": 82260000.0,
-          "KD_BB": 18900000.0,
+          "KD_BB": 55420000.0,
           "KD_BL_TH": 19350000.0,
           "KD_DA": 0.0,
           "KD_TM": 0.0,
@@ -3552,13 +3734,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       {
         "stt": "II",
         "name": "Chi phí biến đổi",
-        "plan": 614000000.0,
-        "actual": 577750000.0,
+        "plan": 1024000000.0,
+        "actual": 382830000.0,
         "depts": {
-          "DVKT": 229160000.0,
-          "KD_BB": 237560000.0,
-          "KD_BL_TH": 75930000.0,
-          "KD_DA": 35100000.0,
+          "DVKT": 178470000.0,
+          "KD_BB": 103170000.0,
+          "KD_BL_TH": 58260000.0,
+          "KD_DA": 42930000.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
           "KeToan": 0.0,
@@ -3569,11 +3751,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "1",
         "name": "Điện, nước, internet",
         "plan": 0.0,
-        "actual": 2090000.0,
+        "actual": 300000.0,
         "depts": {
           "DVKT": 150000.0,
-          "KD_BB": 1290000.0,
-          "KD_BL_TH": 650000.0,
+          "KD_BB": 0.0,
+          "KD_BL_TH": 150000.0,
           "KD_DA": 0.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
@@ -3585,12 +3767,12 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "2",
         "name": "Vận chuyển hàng & giao nhận",
         "plan": 0.0,
-        "actual": 31830000.0,
+        "actual": 31640000.0,
         "depts": {
-          "DVKT": 9720000.0,
-          "KD_BB": 12420000.0,
-          "KD_BL_TH": 4920000.0,
-          "KD_DA": 4770000.0,
+          "DVKT": 9490000.0,
+          "KD_BB": 15340000.0,
+          "KD_BL_TH": 6810000.0,
+          "KD_DA": 0.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
           "KeToan": 0.0,
@@ -3601,11 +3783,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "3",
         "name": "Tiếp khách & công tác phí",
         "plan": 0.0,
-        "actual": 20550000.0,
+        "actual": 37500000.0,
         "depts": {
-          "DVKT": 19090000.0,
-          "KD_BB": 1170000.0,
-          "KD_BL_TH": 290000.0,
+          "DVKT": 17190000.0,
+          "KD_BB": 9180000.0,
+          "KD_BL_TH": 11130000.0,
           "KD_DA": 0.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
@@ -3617,10 +3799,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "4",
         "name": "Vật tư bảo hành & sửa chữa",
         "plan": 0.0,
-        "actual": 2060000.0,
+        "actual": 10700000.0,
         "depts": {
           "DVKT": 0.0,
-          "KD_BB": 2060000.0,
+          "KD_BB": 10700000.0,
           "KD_BL_TH": 0.0,
           "KD_DA": 0.0,
           "KD_TM": 0.0,
@@ -3633,12 +3815,12 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "5",
         "name": "chi phí khác",
         "plan": 0.0,
-        "actual": 521220000.0,
+        "actual": 302690000.0,
         "depts": {
-          "DVKT": 200200000.0,
-          "KD_BB": 220620000.0,
-          "KD_BL_TH": 70070000.0,
-          "KD_DA": 30330000.0,
+          "DVKT": 151640000.0,
+          "KD_BB": 67950000.0,
+          "KD_BL_TH": 40170000.0,
+          "KD_DA": 42930000.0,
           "KD_TM": 0.0,
           "KD_Khac": 0.0,
           "KeToan": 0.0,
@@ -4823,24 +5005,6 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "Biên bản thay thế",
       "Thu hồi vật tư",
       "Tháng"
-    ],
-    [
-      "1",
-      "Cổ Phước Thịnh",
-      "THINHCY",
-      "Kỹ thuật",
-      "Tân Hồng Hà",
-      "25",
-      "9,8",
-      "245",
-      "0,45",
-      "0,5",
-      "1,2",
-      "0,4",
-      "25",
-      "6",
-      "6",
-      "8"
     ],
     [
       "STT",
