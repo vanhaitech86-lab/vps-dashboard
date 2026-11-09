@@ -527,8 +527,17 @@ function parseHR(csv, cId) {
     }
 
     const seenDepts = new Set();
-    for (let i = dataStart; i < csv.length; i++) {
-        const row = csv[i];
+    let hrRows = csv.slice(dataStart);
+    const hrMonths = hrRows.map(r => (r && r[0]) ? r[0].trim() : '').filter(m => /^\d{2}\/\d{4}$/.test(m));
+    if (hrMonths.includes('10/2026')) {
+        hrRows = hrRows.filter(r => r && r[0] && r[0].trim() === '10/2026');
+    } else if (hrMonths.length > 0) {
+        const latestHrMonth = hrMonths[hrMonths.length - 1];
+        hrRows = hrRows.filter(r => r && (!r[0] || !r[0].trim() || r[0].trim() === latestHrMonth));
+    }
+
+    for (let i = 0; i < hrRows.length; i++) {
+        const row = hrRows[i];
         if (!row) continue;
 
         const dept = row[2] ? row[2].trim() : '';
@@ -1366,8 +1375,146 @@ window.GoogleSheetsService = {
             };
             localStorage.setItem('vps_dashboard_cache_v4', JSON.stringify(payload));
             this._lastSyncTime = payload.timestamp;
+            this.recordToHistoricalVault();
         } catch(e) {
             console.warn('[GS] Error saving cache:', e);
+        }
+    },
+
+    // Tự động ghi nhận & lưu trữ lịch sử nhập liệu của 6 đơn vị để đối chiếu về sau
+    recordToHistoricalVault(forceSnapshot = false) {
+        try {
+            const VAULT_KEY = 'vps_historical_vault_v1';
+            const seedVault = (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.historical_vault)
+                ? JSON.parse(JSON.stringify(window.LIVE_GOOGLE_SHEETS_DATA.historical_vault))
+                : { created_at: new Date().toLocaleString('vi-VN'), last_updated: '', units: {}, audit_log: [] };
+
+            let vault = seedVault;
+            const rawStored = localStorage.getItem(VAULT_KEY);
+            if (rawStored) {
+                try {
+                    const parsed = JSON.parse(rawStored);
+                    if (parsed && parsed.units) {
+                        vault = parsed;
+                        // Hợp nhất audit_log từ seed nếu chưa có
+                        const existingKeys = new Set((vault.audit_log || []).map(x => `${x.timestamp}_${x.company}_${x.metric}`));
+                        (seedVault.audit_log || []).forEach(item => {
+                            const k = `${item.timestamp}_${item.company}_${item.metric}`;
+                            if (!existingKeys.has(k)) {
+                                vault.audit_log.push(item);
+                            }
+                        });
+                    }
+                } catch(err) {}
+            }
+
+            const now = new Date();
+            const pad = n => String(n).padStart(2, '0');
+            const nowStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+            const subItems = window._LIVE_DEPT_SUB_ITEMS || (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.dept_7_sub_items) || [];
+            const compNames = {
+                'THH': 'Tân Hồng Hà',
+                'Viet': 'Công ty Việt',
+                'XemSon': 'Xem Sơn',
+                'VPSM': 'VPS Miền Trung',
+                'ITSS': 'Công ty ITSS',
+                'VPVPS': 'Văn phòng VPS'
+            };
+
+            Object.keys(compNames).forEach(code => {
+                const cName = compNames[code];
+                if (!vault.units[code]) {
+                    vault.units[code] = { company: code, companyName: cName, periods: {}, latest_snapshot: {} };
+                }
+
+                const cItems = subItems.filter(x => x.comp === code);
+                const dsKh = cItems.reduce((s, x) => s + (Number(x.plan_m_ds) || 0), 0);
+                const dsTh = cItems.reduce((s, x) => s + (Number(x.m8_ds) || 0), 0);
+                const lgKh = cItems.reduce((s, x) => s + (Number(x.plan_m_lg) || 0), 0);
+                const lgTh = cItems.reduce((s, x) => s + (Number(x.m8_lg) || 0), 0);
+
+                const debtObj = window.mockData?.debt?.byCompany?.[code] || {};
+                const debtVnd = (debtObj.rawCurrent || 0) + (debtObj.rawOverdue || 0) + (debtObj.rawBad || 0);
+                const invVnd = window.mockData?.inventory?.byCompany?.[code]?.totalValue || 0;
+                const hrObj = window.mockData?.hr?.byCompany?.[code] || {};
+                const hrTotal = hrObj.totalEmployees || hrObj.official || 0;
+
+                const prev = vault.units[code].latest_snapshot || {};
+                const curr = {
+                    recorded_at: nowStr,
+                    ds_7pb_kh_trieu: Math.round(dsKh * 100) / 100,
+                    ds_7pb_th_trieu: Math.round(dsTh * 100) / 100,
+                    lg_7pb_kh_trieu: Math.round(lgKh * 100) / 100,
+                    lg_7pb_th_trieu: Math.round(lgTh * 100) / 100,
+                    debt_latest_vnd: debtVnd || prev.debt_latest_vnd || 0,
+                    debt_10_2026_vnd: prev.debt_10_2026_vnd || debtVnd || 0,
+                    inventory_vnd: invVnd || prev.inventory_vnd || 0,
+                    hr_total: hrTotal || prev.hr_total || 0,
+                    hr_official: hrObj.official || prev.hr_official || 0,
+                    hr_probation: hrObj.probation || prev.hr_probation || 0,
+                    customers_kh: prev.customers_kh || 0,
+                    customers_may: prev.customers_may || 0,
+                    products_vnd: prev.products_vnd || 0,
+                    expense_vnd: prev.expense_vnd || 0
+                };
+
+                if (prev.ds_7pb_th_trieu !== undefined && Math.abs(curr.ds_7pb_th_trieu - prev.ds_7pb_th_trieu) > 0.05) {
+                    const diff = (curr.ds_7pb_th_trieu - prev.ds_7pb_th_trieu).toFixed(2);
+                    vault.audit_log.unshift({
+                        timestamp: nowStr,
+                        company: code,
+                        companyName: cName,
+                        module: '2. 7 Phòng ban (DS & LG)',
+                        period: '10/2026',
+                        metric: 'Doanh số & Lãi gộp T10',
+                        oldValue: `DS: ${prev.ds_7pb_th_trieu.toLocaleString('vi-VN')} tr | LG: ${(prev.lg_7pb_th_trieu || 0).toLocaleString('vi-VN')} tr`,
+                        newValue: `DS: ${curr.ds_7pb_th_trieu.toLocaleString('vi-VN')} tr | LG: ${curr.lg_7pb_th_trieu.toLocaleString('vi-VN')} tr`,
+                        status: `TỰ ĐỘNG GHI NHẬN (${diff >= 0 ? '+' : ''}${diff} tr)`
+                    });
+                }
+
+                if (prev.debt_latest_vnd !== undefined && Math.abs(curr.debt_latest_vnd - prev.debt_latest_vnd) > 100000) {
+                    vault.audit_log.unshift({
+                        timestamp: nowStr,
+                        company: code,
+                        companyName: cName,
+                        module: '3. Công nợ & Tuổi nợ',
+                        period: '10/2026',
+                        metric: 'Tổng Công nợ Phải thu',
+                        oldValue: `${(prev.debt_latest_vnd / 1e9).toFixed(2)} tỷ VNĐ`,
+                        newValue: `${(curr.debt_latest_vnd / 1e9).toFixed(2)} tỷ VNĐ`,
+                        status: 'TỰ ĐỘNG GHI NHẬN'
+                    });
+                }
+
+                vault.units[code].latest_snapshot = curr;
+                if (!vault.units[code].periods) vault.units[code].periods = {};
+                vault.units[code].periods['10/2026'] = curr;
+            });
+
+            if (forceSnapshot) {
+                vault.audit_log.unshift({
+                    timestamp: nowStr,
+                    company: 'ALL',
+                    companyName: 'Toàn Tập Đoàn (6 Đơn vị)',
+                    module: 'Toàn bộ 14 Phân hệ',
+                    period: '10/2026',
+                    metric: 'Chốt bản ghi đối chiếu thủ công',
+                    oldValue: 'Bản ghi trước đó',
+                    newValue: 'Đã khóa & lưu trạng thái số liệu 6 đơn vị vào Kho lưu trữ',
+                    status: 'ĐÃ LƯU BẢN GHI'
+                });
+            }
+
+            vault.last_updated = nowStr;
+            vault.audit_log = (vault.audit_log || []).slice(0, 100);
+            localStorage.setItem(VAULT_KEY, JSON.stringify(vault));
+            window.VPS_DATA_VAULT = vault;
+            return vault;
+        } catch(e) {
+            console.warn('[GS] recordToHistoricalVault warning:', e);
+            return null;
         }
     },
 
@@ -1913,4 +2060,177 @@ window.GoogleSheetsService = {
 // Tự động nạp cache ngay lập tức khi nạp script
 if (typeof window !== 'undefined' && window.GoogleSheetsService) {
     window.GoogleSheetsService.hydrateFromCache();
+    window.GoogleSheetsService.recordToHistoricalVault(false);
 }
+
+// ============================================================
+// GIAO DIỆN KHO LƯU TRỮ & ĐỐI CHIẾU LỊCH SỬ NHẬP LIỆU 6 ĐƠN VỊ
+// ============================================================
+window.openHistoricalVaultModal = function() {
+    const vault = (window.GoogleSheetsService && window.GoogleSheetsService.recordToHistoricalVault(false))
+        || window.VPS_DATA_VAULT
+        || (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.historical_vault)
+        || { units: {}, audit_log: [], last_updated: new Date().toLocaleString('vi-VN') };
+
+    let modal = document.getElementById('historical-vault-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'historical-vault-modal';
+        modal.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,0.82);backdrop-filter:blur(4px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;';
+        document.body.appendChild(modal);
+    }
+
+    const units = vault.units || {};
+    const order = ['THH', 'XemSon', 'Viet', 'VPSM', 'ITSS', 'VPVPS'];
+    let unitRowsHtml = '';
+    let totDsKh = 0, totDsTh = 0, totLgKh = 0, totLgTh = 0, totDebt = 0, totInv = 0, totCp = 0;
+
+    order.forEach((code, idx) => {
+        const u = units[code] || {};
+        const s = u.latest_snapshot || {};
+        const dsKh = Number(s.ds_7pb_kh_trieu || 0);
+        const dsTh = Number(s.ds_7pb_th_trieu || 0);
+        const lgKh = Number(s.lg_7pb_kh_trieu || 0);
+        const lgTh = Number(s.lg_7pb_th_trieu || 0);
+        const debtTy = Number(s.debt_10_2026_vnd || s.debt_latest_vnd || 0) / 1e9;
+        const invTy = Number(s.inventory_vnd || 0) / 1e9;
+        const cpTr = Number(s.expense_vnd || 0) / 1e6;
+        const hrTot = Number(s.hr_total || 0);
+        const khTot = Number(s.customers_kh || 0);
+        const mayTot = Number(s.customers_may || 0);
+
+        totDsKh += dsKh; totDsTh += dsTh; totLgKh += lgKh; totLgTh += lgTh;
+        totDebt += debtTy; totInv += invTy; totCp += cpTr;
+
+        const pctDs = dsKh > 0 ? ((dsTh / dsKh) * 100).toFixed(1) + '%' : '—';
+        unitRowsHtml += `
+            <tr style="border-bottom:1px solid #1e293b;">
+                <td style="padding:10px 12px;font-weight:700;color:#f8fafc;">${idx + 1}. ${u.companyName || code} <span style="color:#38bdf8;font-size:0.75rem;">(${code})</span></td>
+                <td style="padding:10px 12px;text-align:right;color:#cbd5e1;">${dsKh.toLocaleString('vi-VN')} tr</td>
+                <td style="padding:10px 12px;text-align:right;font-weight:700;color:#10b981;">${dsTh.toLocaleString('vi-VN')} tr <span style="font-size:0.72rem;color:#94a3b8;">(${pctDs})</span></td>
+                <td style="padding:10px 12px;text-align:right;font-weight:700;color:#38bdf8;">${lgTh.toLocaleString('vi-VN')} tr</td>
+                <td style="padding:10px 12px;text-align:right;color:#fbbf24;font-weight:600;">${debtTy.toFixed(2)} tỷ</td>
+                <td style="padding:10px 12px;text-align:right;color:#a78bfa;font-weight:600;">${invTy.toFixed(2)} tỷ</td>
+                <td style="padding:10px 12px;text-align:right;color:#f472b6;">${cpTr > 0 ? cpTr.toLocaleString('vi-VN', {maximumFractionDigits:1}) + ' tr' : '—'}</td>
+                <td style="padding:10px 12px;text-align:center;color:#e2e8f0;">${hrTot} NV</td>
+                <td style="padding:10px 12px;text-align:center;color:#94a3b8;font-size:0.75rem;">${mayTot} máy / ${khTot} KH</td>
+                <td style="padding:10px 12px;text-align:center;"><span style="padding:3px 8px;border-radius:12px;font-size:0.7rem;font-weight:700;background:rgba(16,185,129,0.15);color:#10b981;border:1px solid rgba(16,185,129,0.35);">Đã lưu & Bảo toàn</span></td>
+            </tr>
+        `;
+    });
+
+    const logs = vault.audit_log || [];
+    let logsHtml = logs.map(item => `
+        <tr style="border-bottom:1px solid #1e293b;">
+            <td style="padding:9px 10px;color:#94a3b8;font-size:0.76rem;white-space:nowrap;">${item.timestamp || ''}</td>
+            <td style="padding:9px 10px;font-weight:700;color:#38bdf8;font-size:0.8rem;">${item.companyName || item.company}</td>
+            <td style="padding:9px 10px;color:#e2e8f0;font-size:0.78rem;">${item.module || ''} <span style="color:#fbbf24;font-weight:600;">(${item.period || '10/2026'})</span></td>
+            <td style="padding:9px 10px;color:#94a3b8;font-size:0.76rem;">${item.oldValue || '—'}</td>
+            <td style="padding:9px 10px;color:#10b981;font-weight:600;font-size:0.78rem;">${item.newValue || '—'}</td>
+            <td style="padding:9px 10px;"><span style="padding:3px 8px;border-radius:10px;font-size:0.7rem;font-weight:700;background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);white-space:nowrap;">${item.status || 'ĐÃ LƯU'}</span></td>
+        </tr>
+    `).join('');
+
+    modal.innerHTML = `
+        <div style="background:#0f172a;border:1px solid #334155;border-radius:14px;max-width:1220px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 25px 50px rgba(0,0,0,0.5);color:#f8fafc;overflow:hidden;">
+            <div style="padding:16px 22px;background:#1e293b;border-bottom:1px solid #334155;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                <div>
+                    <h3 style="margin:0;font-size:1.1rem;font-weight:800;color:#38bdf8;display:flex;align-items:center;gap:8px;">
+                        🗄️ KHO LƯU TRỮ & ĐỐI CHIẾU LỊCH SỬ NHẬP LIỆU 6 ĐƠN VỊ (DATA VAULT & AUDIT LOG)
+                    </h3>
+                    <p style="margin:4px 0 0;font-size:0.78rem;color:#94a3b8;">
+                        Tự động ghi nhận, khóa sổ & bảo toàn dữ liệu ngay khi các đơn vị nhập vào Google Sheets • Cập nhật gần nhất: <strong style="color:#10b981;">${vault.last_updated || ''}</strong>
+                    </p>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button onclick="window.takeManualVaultSnapshot()" style="padding:7px 13px;background:#059669;color:#fff;border:none;border-radius:7px;font-weight:700;font-size:0.78rem;cursor:pointer;">📸 Chốt Bản Ghi Đối Chiếu Ngay</button>
+                    <button onclick="window.exportHistoricalVaultCSV()" style="padding:7px 13px;background:#2563eb;color:#fff;border:none;border-radius:7px;font-weight:700;font-size:0.78rem;cursor:pointer;">📥 Xuất File Đối Chiếu (CSV)</button>
+                    <button onclick="document.getElementById('historical-vault-modal').style.display='none'" style="padding:7px 12px;background:#334155;color:#f8fafc;border:none;border-radius:7px;font-weight:700;font-size:0.8rem;cursor:pointer;">✕ Đóng</button>
+                </div>
+            </div>
+            <div style="padding:18px 22px;overflow-y:auto;flex:1;">
+                <div style="margin-bottom:20px;">
+                    <h4 style="margin:0 0 10px;font-size:0.92rem;color:#fbbf24;text-transform:uppercase;letter-spacing:0.3px;">1. Bảng Chốt Số Liệu Lưu Trữ & Bảo Toàn Kỳ Tháng 10/2026 (6 Đơn Vị)</h4>
+                    <div style="overflow-x:auto;border:1px solid #334155;border-radius:10px;">
+                        <table style="width:100%;border-collapse:collapse;font-size:0.82rem;background:#0b1120;">
+                            <thead>
+                                <tr style="background:#1e293b;color:#94a3b8;text-transform:uppercase;font-size:0.72rem;">
+                                    <th style="padding:10px 12px;text-align:left;">Đơn vị</th>
+                                    <th style="padding:10px 12px;text-align:right;">DS Kế hoạch T10</th>
+                                    <th style="padding:10px 12px;text-align:right;">DS Thực hiện T10</th>
+                                    <th style="padding:10px 12px;text-align:right;">Lãi gộp T10</th>
+                                    <th style="padding:10px 12px;text-align:right;">Công nợ T10</th>
+                                    <th style="padding:10px 12px;text-align:right;">Tồn kho</th>
+                                    <th style="padding:10px 12px;text-align:right;">Chi phí TH</th>
+                                    <th style="padding:10px 12px;text-align:center;">Nhân sự</th>
+                                    <th style="padding:10px 12px;text-align:center;">KH & Máy</th>
+                                    <th style="padding:10px 12px;text-align:center;">Trạng thái lưu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${unitRowsHtml}
+                                <tr style="background:#1e293b;font-weight:800;color:#f8fafc;">
+                                    <td style="padding:11px 12px;">TỔNG TOÀN TẬP ĐOÀN</td>
+                                    <td style="padding:11px 12px;text-align:right;">${totDsKh.toLocaleString('vi-VN')} tr</td>
+                                    <td style="padding:11px 12px;text-align:right;color:#10b981;">${totDsTh.toLocaleString('vi-VN')} tr</td>
+                                    <td style="padding:11px 12px;text-align:right;color:#38bdf8;">${totLgTh.toLocaleString('vi-VN')} tr</td>
+                                    <td style="padding:11px 12px;text-align:right;color:#fbbf24;">${totDebt.toFixed(2)} tỷ</td>
+                                    <td style="padding:11px 12px;text-align:right;color:#a78bfa;">${totInv.toFixed(2)} tỷ</td>
+                                    <td style="padding:11px 12px;text-align:right;color:#f472b6;">${totCp.toLocaleString('vi-VN', {maximumFractionDigits:1})} tr</td>
+                                    <td colspan="3" style="padding:11px 12px;text-align:center;color:#10b981;">Đã đồng bộ & lưu kho đối chiếu 100%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin:0 0 10px;font-size:0.92rem;color:#38bdf8;text-transform:uppercase;letter-spacing:0.3px;">2. Nhật Ký Ghi Nhận & Đối Chiếu Biến Động Số Liệu (Audit Trail)</h4>
+                    <div style="overflow-x:auto;border:1px solid #334155;border-radius:10px;max-height:320px;">
+                        <table style="width:100%;border-collapse:collapse;font-size:0.8rem;background:#0b1120;">
+                            <thead style="position:sticky;top:0;background:#1e293b;color:#94a3b8;text-transform:uppercase;font-size:0.72rem;">
+                                <tr>
+                                    <th style="padding:10px;text-align:left;">Thời điểm ghi nhận</th>
+                                    <th style="padding:10px;text-align:left;">Đơn vị</th>
+                                    <th style="padding:10px;text-align:left;">Phân hệ & Kỳ</th>
+                                    <th style="padding:10px;text-align:left;">Số liệu cũ (Trước khi sửa)</th>
+                                    <th style="padding:10px;text-align:left;">Số liệu mới (Đã lưu hệ thống)</th>
+                                    <th style="padding:10px;text-align:left;">Trạng thái đối chiếu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${logsHtml}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    modal.style.display = 'flex';
+};
+
+window.takeManualVaultSnapshot = function() {
+    if (window.GoogleSheetsService) {
+        window.GoogleSheetsService.recordToHistoricalVault(true);
+        window.openHistoricalVaultModal();
+        alert('✅ Đã chốt và lưu bản ghi số liệu của cả 6 đơn vị vào Kho lưu trữ đối chiếu thành công!');
+    }
+};
+
+window.exportHistoricalVaultCSV = function() {
+    const vault = window.VPS_DATA_VAULT || (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.historical_vault) || {};
+    const logs = vault.audit_log || [];
+    let csv = '\uFEFFThời điểm ghi nhận,Mã ĐV,Tên Đơn vị,Phân hệ,Kỳ báo cáo,Chỉ tiêu,Số liệu cũ,Số liệu mới,Trạng thái\n';
+    logs.forEach(r => {
+        const clean = v => `"${String(v || '').replace(/"/g, '""')}"`;
+        csv += [r.timestamp, r.company, r.companyName, r.module, r.period, r.metric, r.oldValue, r.newValue, r.status].map(clean).join(',') + '\n';
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Lich_Su_Doi_Chieu_So_Lieu_VPS_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+};
