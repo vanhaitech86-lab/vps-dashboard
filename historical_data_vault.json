@@ -1,13 +1,13 @@
 {
   "created_at": "2026-11-09 08:16:15",
-  "last_updated": "2026-11-09 08:16:15",
+  "last_updated": "2026-11-09 13:06:57",
   "units": {
     "THH": {
       "company": "THH",
       "companyName": "Tân Hồng Hà",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 48983.0,
           "ds_7pb_th_trieu": 20849.1,
           "lg_7pb_kh_trieu": 6402.3,
@@ -51,7 +51,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 08:16:15",
+        "recorded_at": "2026-11-09 13:06:57",
         "ds_7pb_kh_trieu": 48983.0,
         "ds_7pb_th_trieu": 20849.1,
         "lg_7pb_kh_trieu": 6402.3,
@@ -99,13 +99,13 @@
       "companyName": "Việt",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 19798.0,
           "ds_7pb_th_trieu": 6433.6,
           "lg_7pb_kh_trieu": 2206.8,
           "lg_7pb_th_trieu": 1368.06,
-          "debt_10_2026_vnd": 6827157794.0,
-          "debt_latest_vnd": 6830000000.0,
+          "debt_10_2026_vnd": 6148383973.0,
+          "debt_latest_vnd": 6150000000.0,
           "debt_by_month": {
             "08/2026": {
               "current": 3975482293.0,
@@ -120,30 +120,30 @@
               "total": 5345484931.0
             },
             "10/2026": {
-              "current": 5404005539.0,
-              "overdue": 1423152255.0,
+              "current": 5079945920.0,
+              "overdue": 1068438053.0,
               "bad": 0.0,
-              "total": 6827157794.0
+              "total": 6148383973.0
             }
           },
-          "inventory_vnd": 6552205970.0,
+          "inventory_vnd": 7159772470.0,
           "hr_total": 40,
           "hr_official": 39,
           "hr_probation": 1,
           "customers_kh": 1216,
           "customers_may": 822,
           "products_vnd": 3191000000.0,
-          "expense_vnd": 1422260000.0
+          "expense_vnd": 1356020000.0
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 08:16:15",
+        "recorded_at": "2026-11-09 13:06:57",
         "ds_7pb_kh_trieu": 19798.0,
         "ds_7pb_th_trieu": 6433.6,
         "lg_7pb_kh_trieu": 2206.8,
         "lg_7pb_th_trieu": 1368.06,
-        "debt_10_2026_vnd": 6827157794.0,
-        "debt_latest_vnd": 6830000000.0,
+        "debt_10_2026_vnd": 6148383973.0,
+        "debt_latest_vnd": 6150000000.0,
         "debt_by_month": {
           "08/2026": {
             "current": 3975482293.0,
@@ -158,20 +158,20 @@
             "total": 5345484931.0
           },
           "10/2026": {
-            "current": 5404005539.0,
-            "overdue": 1423152255.0,
+            "current": 5079945920.0,
+            "overdue": 1068438053.0,
             "bad": 0.0,
-            "total": 6827157794.0
+            "total": 6148383973.0
           }
         },
-        "inventory_vnd": 6552205970.0,
+        "inventory_vnd": 7159772470.0,
         "hr_total": 40,
         "hr_official": 39,
         "hr_probation": 1,
         "customers_kh": 1216,
         "customers_may": 822,
         "products_vnd": 3191000000.0,
-        "expense_vnd": 1422260000.0
+        "expense_vnd": 1356020000.0
       }
     },
     "XemSon": {
@@ -179,13 +179,13 @@
       "companyName": "Xem Sơn",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 14700.0,
-          "ds_7pb_th_trieu": 12250.0,
+          "ds_7pb_th_trieu": 12130.0,
           "lg_7pb_kh_trieu": 3588.0,
-          "lg_7pb_th_trieu": 3145.0,
-          "debt_10_2026_vnd": 8505854923.0,
-          "debt_latest_vnd": 8510000000.0,
+          "lg_7pb_th_trieu": 3069.0,
+          "debt_10_2026_vnd": 6410563081.0,
+          "debt_latest_vnd": 6410000000.0,
           "debt_by_month": {
             "09/2026": {
               "current": 11508057117.0,
@@ -194,30 +194,30 @@
               "total": 12480299428.0
             },
             "10/2026": {
-              "current": 7170029067.0,
-              "overdue": 1335825856.0,
+              "current": 5722750831.0,
+              "overdue": 687812250.0,
               "bad": 0.0,
-              "total": 8505854923.0
+              "total": 6410563081.0
             }
           },
-          "inventory_vnd": 23954872011.0,
-          "hr_total": 90,
-          "hr_official": 90,
+          "inventory_vnd": 27926266280.0,
+          "hr_total": 94,
+          "hr_official": 94,
           "hr_probation": 0,
           "customers_kh": 1253,
-          "customers_may": 2723,
+          "customers_may": 2722,
           "products_vnd": 0.0,
           "expense_vnd": 2190033376.0
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 08:16:15",
+        "recorded_at": "2026-11-09 13:06:57",
         "ds_7pb_kh_trieu": 14700.0,
-        "ds_7pb_th_trieu": 12250.0,
+        "ds_7pb_th_trieu": 12130.0,
         "lg_7pb_kh_trieu": 3588.0,
-        "lg_7pb_th_trieu": 3145.0,
-        "debt_10_2026_vnd": 8505854923.0,
-        "debt_latest_vnd": 8510000000.0,
+        "lg_7pb_th_trieu": 3069.0,
+        "debt_10_2026_vnd": 6410563081.0,
+        "debt_latest_vnd": 6410000000.0,
         "debt_by_month": {
           "09/2026": {
             "current": 11508057117.0,
@@ -226,18 +226,18 @@
             "total": 12480299428.0
           },
           "10/2026": {
-            "current": 7170029067.0,
-            "overdue": 1335825856.0,
+            "current": 5722750831.0,
+            "overdue": 687812250.0,
             "bad": 0.0,
-            "total": 8505854923.0
+            "total": 6410563081.0
           }
         },
-        "inventory_vnd": 23954872011.0,
-        "hr_total": 90,
-        "hr_official": 90,
+        "inventory_vnd": 27926266280.0,
+        "hr_total": 94,
+        "hr_official": 94,
         "hr_probation": 0,
         "customers_kh": 1253,
-        "customers_may": 2723,
+        "customers_may": 2722,
         "products_vnd": 0.0,
         "expense_vnd": 2190033376.0
       }
@@ -247,7 +247,7 @@
       "companyName": "VPS M",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 875.0,
           "ds_7pb_th_trieu": 1895.0,
           "lg_7pb_kh_trieu": 345.0,
@@ -279,7 +279,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 08:16:15",
+        "recorded_at": "2026-11-09 13:06:57",
         "ds_7pb_kh_trieu": 875.0,
         "ds_7pb_th_trieu": 1895.0,
         "lg_7pb_kh_trieu": 345.0,
@@ -315,7 +315,7 @@
       "companyName": "ITSS",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 705.0,
           "ds_7pb_th_trieu": 533.0,
           "lg_7pb_kh_trieu": 198.0,
@@ -353,7 +353,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 08:16:15",
+        "recorded_at": "2026-11-09 13:06:57",
         "ds_7pb_kh_trieu": 705.0,
         "ds_7pb_th_trieu": 533.0,
         "lg_7pb_kh_trieu": 198.0,
@@ -395,19 +395,31 @@
       "companyName": "Văn phòng VPS",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 3000.0,
           "ds_7pb_th_trieu": 7386.0,
           "lg_7pb_kh_trieu": 360.0,
           "lg_7pb_th_trieu": 288.0,
-          "debt_10_2026_vnd": 0.0,
-          "debt_latest_vnd": 1100000000.0,
+          "debt_10_2026_vnd": 589277208.0,
+          "debt_latest_vnd": 590000000.0,
           "debt_by_month": {
+            "08/2026": {
+              "current": 293925579.0,
+              "overdue": 0.0,
+              "bad": 0.0,
+              "total": 293925579.0
+            },
             "09/2026": {
               "current": 1097065616.0,
               "overdue": 0.0,
               "bad": 0.0,
               "total": 1097065616.0
+            },
+            "10/2026": {
+              "current": 589277208.0,
+              "overdue": 0.0,
+              "bad": 0.0,
+              "total": 589277208.0
             }
           },
           "inventory_vnd": 1955144608.0,
@@ -421,19 +433,31 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 08:16:15",
+        "recorded_at": "2026-11-09 13:06:57",
         "ds_7pb_kh_trieu": 3000.0,
         "ds_7pb_th_trieu": 7386.0,
         "lg_7pb_kh_trieu": 360.0,
         "lg_7pb_th_trieu": 288.0,
-        "debt_10_2026_vnd": 0.0,
-        "debt_latest_vnd": 1100000000.0,
+        "debt_10_2026_vnd": 589277208.0,
+        "debt_latest_vnd": 590000000.0,
         "debt_by_month": {
+          "08/2026": {
+            "current": 293925579.0,
+            "overdue": 0.0,
+            "bad": 0.0,
+            "total": 293925579.0
+          },
           "09/2026": {
             "current": 1097065616.0,
             "overdue": 0.0,
             "bad": 0.0,
             "total": 1097065616.0
+          },
+          "10/2026": {
+            "current": 589277208.0,
+            "overdue": 0.0,
+            "bad": 0.0,
+            "total": 589277208.0
           }
         },
         "inventory_vnd": 1955144608.0,
@@ -448,6 +472,39 @@
     }
   },
   "audit_log": [
+    {
+      "timestamp": "2026-11-09 13:05:59",
+      "company": "XemSon",
+      "companyName": "Xem Sơn",
+      "module": "4. Khách hàng & 6. Nhân sự",
+      "period": "10/2026",
+      "metric": "Biến động KH & Nhân sự",
+      "oldValue": "NS: 90 NV | KH: 1253",
+      "newValue": "NS: 94 NV | KH: 1253",
+      "status": "ĐỒNG BỘ KỲ 10/2026"
+    },
+    {
+      "timestamp": "2026-11-09 13:05:59",
+      "company": "XemSon",
+      "companyName": "Xem Sơn",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Doanh số & Lãi gộp T10",
+      "oldValue": "DS: 12,250.00 tr | LG: 3,145.00 tr",
+      "newValue": "DS: 12,130.00 tr | LG: 3,069.00 tr",
+      "status": "CẬP NHẬT -120.00 tr"
+    },
+    {
+      "timestamp": "2026-11-09 13:05:59",
+      "company": "Viet",
+      "companyName": "Việt",
+      "module": "8. Chi phí & Định mức",
+      "period": "10/2026",
+      "metric": "Tổng Chi phí Thực hiện",
+      "oldValue": "1,422.26 tr",
+      "newValue": "1,356.02 tr",
+      "status": "MỚI CẬP NHẬT SỐ LIỆU"
+    },
     {
       "timestamp": "2026-11-09 08:16:15",
       "company": "Viet",

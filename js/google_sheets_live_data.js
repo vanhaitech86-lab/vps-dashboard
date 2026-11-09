@@ -83,11 +83,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "10/2026": {
         "plan": 14700000000.0,
-        "actual": 12250000000.0,
-        "ttlg": 3145000000.0,
-        "lg_pct": 25.67,
+        "actual": 12130000000.0,
+        "ttlg": 3069000000.0,
+        "lg_pct": 25.3,
         "cp": 0.0,
-        "lntt": 3145000000.0
+        "lntt": 3069000000.0
       }
     },
     "VPSM": {
@@ -134,6 +134,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "lg_pct": 0.0,
         "cp": 1250000000.0,
         "lntt": -1250000000.0
+      },
+      "10/2026": {
+        "plan": 3000000000.0,
+        "actual": 7386000000.0,
+        "ttlg": 288000000.0,
+        "lg_pct": 3.9,
+        "cp": 0.0,
+        "lntt": 288000000.0
       }
     }
   },
@@ -310,21 +318,21 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "rawBad": 0.0
     },
     "Viet": {
-      "current": 5.4,
-      "overdue": 1.42,
+      "current": 5.08,
+      "overdue": 1.07,
       "bad": 0.0,
-      "total": 6.83,
-      "rawCurrent": 5404005539.0,
-      "rawOverdue": 1423152255.0,
+      "total": 6.15,
+      "rawCurrent": 5079945920.0,
+      "rawOverdue": 1068438053.0,
       "rawBad": 0.0
     },
     "XemSon": {
-      "current": 7.17,
-      "overdue": 1.34,
+      "current": 5.72,
+      "overdue": 0.69,
       "bad": 0.0,
-      "total": 8.51,
-      "rawCurrent": 7170029067.0,
-      "rawOverdue": 1335825856.0,
+      "total": 6.41,
+      "rawCurrent": 5722750831.0,
+      "rawOverdue": 687812250.0,
       "rawBad": 0.0
     },
     "VPSM": {
@@ -346,11 +354,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "rawBad": 0.0
     },
     "VPVPS": {
-      "current": 1.1,
+      "current": 0.59,
       "overdue": 0.0,
       "bad": 0.0,
-      "total": 1.1,
-      "rawCurrent": 1097065616.0,
+      "total": 0.59,
+      "rawCurrent": 589277208.0,
       "rawOverdue": 0.0,
       "rawBad": 0.0
     }
@@ -498,12 +506,21 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     },
     "XemSon": {
       "quota": 98,
-      "official": 90,
+      "official": 94,
       "probation": 0,
-      "totalEmployees": 90,
+      "totalEmployees": 94,
       "resigned": 1,
       "newHires": 0,
       "departments": [
+        {
+          "name": "BGĐ",
+          "quota": 4,
+          "official": 4,
+          "newHires": 0,
+          "resigned": 0,
+          "probation": 0,
+          "vacancy": 0
+        },
         {
           "name": "Kinh doanh",
           "quota": 30,
@@ -541,7 +558,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "vacancy": 0
         },
         {
-          "name": "Kho/Giao vận",
+          "name": "Mua hàng/Kho",
           "quota": 5,
           "official": 5,
           "newHires": 0,
@@ -551,8 +568,8 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         }
       ],
       "kpi": {
-        "A": 31,
-        "B": 40,
+        "A": 33,
+        "B": 42,
         "C": 14,
         "D": 5
       }
@@ -846,88 +863,88 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       ]
     },
     "Viet": {
-      "total": 6.55,
-      "total_vnd": 6552205970.0,
-      "totalValue": 6552205970.0,
+      "total": 7.16,
+      "total_vnd": 7159772470.0,
+      "totalValue": 7159772470.0,
       "totalItems": 5,
       "items": [
         {
-          "category": "Máy Photocopy",
+          "category": "Máy",
           "name": "",
           "unit": "Chiếc",
-          "qty": 780.0,
-          "value": 3601616525.0
+          "qty": 1112.0,
+          "value": 4405073553.0
         },
         {
           "category": "option/phần mềm",
           "name": "",
           "unit": "Chiếc",
-          "qty": 9.0,
-          "value": 3746056.0
+          "qty": 3.0,
+          "value": 2573000.0
         },
         {
           "category": "consumable",
           "name": "",
           "unit": "Chiếc",
-          "qty": 880.0,
-          "value": 2540940805.0
+          "qty": 9321.0,
+          "value": 2175918843.0
         },
         {
           "category": "part",
           "name": "",
           "unit": "Chiếc",
-          "qty": 3668.0,
-          "value": 40902584.0
+          "qty": 7693.0,
+          "value": 433630377.0
         },
         {
           "category": "khác",
           "name": "",
           "unit": "Chiếc",
-          "qty": 1242.0,
-          "value": 365000000.0
+          "qty": 1691.0,
+          "value": 142576697.0
         }
       ]
     },
     "XemSon": {
-      "total": 23.95,
-      "total_vnd": 23954872011.0,
-      "totalValue": 23954872011.0,
+      "total": 27.93,
+      "total_vnd": 27926266280.0,
+      "totalValue": 27926266280.0,
       "totalItems": 5,
       "items": [
         {
-          "category": "Máy Photocopy",
+          "category": "Máy Photocopy/in",
           "name": "",
           "unit": "",
           "qty": 0.0,
-          "value": 13831560308.0
+          "value": 15710593476.0
         },
         {
           "category": "option/phần mềm",
           "name": "",
           "unit": "",
           "qty": 0.0,
-          "value": 996009890.0
+          "value": 467519639.0
         },
         {
           "category": "consumable",
           "name": "",
           "unit": "",
           "qty": 0.0,
-          "value": 7144563293.0
+          "value": 7797635246.0
         },
         {
           "category": "part",
           "name": "",
           "unit": "",
           "qty": 0.0,
-          "value": 1957947177.0
+          "value": 2189439346.0
         },
         {
-          "category": "khác",
+          "category": "dự án",
           "name": "",
           "unit": "",
           "qty": 0.0,
-          "value": 24791343.0
+          "value": 1761078573.0
         }
       ]
     },
@@ -1389,19 +1406,19 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "thue_may": {
         "dau": {
           "may": 794,
-          "kh": 250
+          "kh": 245
         },
         "ke_hoach": {
           "may": 800,
           "kh": 250
         },
         "tang": {
-          "may": 9,
+          "may": 0,
           "kh": 0
         },
         "giam": {
-          "may": 9,
-          "kh": 5
+          "may": 0,
+          "kh": 0
         },
         "cuoi": {
           "may": 794,
@@ -1410,7 +1427,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "mc": {
         "dau": {
-          "may": 102,
+          "may": 103,
           "kh": 38
         },
         "ke_hoach": {
@@ -1418,7 +1435,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 40
         },
         "tang": {
-          "may": 1,
+          "may": 0,
           "kh": 0
         },
         "giam": {
@@ -1432,20 +1449,20 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "dv_photo": {
         "dau": {
-          "may": 1352,
-          "kh": 383
+          "may": 1374,
+          "kh": 377
         },
         "ke_hoach": {
           "may": 1400,
           "kh": 390
         },
         "tang": {
-          "may": 45,
-          "kh": 6
+          "may": 0,
+          "kh": 0
         },
         "giam": {
-          "may": 23,
-          "kh": 12
+          "may": 0,
+          "kh": 0
         },
         "cuoi": {
           "may": 1374,
@@ -1454,7 +1471,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "dv_may_in": {
         "dau": {
-          "may": 450,
+          "may": 451,
           "kh": 98
         },
         "ke_hoach": {
@@ -1462,11 +1479,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 100
         },
         "tang": {
-          "may": 2,
+          "may": 0,
           "kh": 0
         },
         "giam": {
-          "may": 1,
+          "may": 0,
           "kh": 0
         },
         "cuoi": {
@@ -1484,7 +1501,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 0
         },
         "tang": {
-          "may": 1,
+          "may": 0,
           "kh": 0
         },
         "giam": {
@@ -1492,14 +1509,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 0
         },
         "cuoi": {
-          "may": 1,
+          "may": 0,
           "kh": 0
         }
       },
       "phan_phoi": {
         "dau": {
           "may": 0,
-          "kh": 489
+          "kh": 495
         },
         "ke_hoach": {
           "may": 0,
@@ -1507,7 +1524,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "tang": {
           "may": 0,
-          "kh": 6
+          "kh": 0
         },
         "giam": {
           "may": 0,
@@ -1925,19 +1942,19 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "thue_may": {
         "dau": {
           "may": 4006,
-          "kh": 1240
+          "kh": 1235
         },
         "ke_hoach": {
           "may": 0,
           "kh": 0
         },
         "tang": {
-          "may": 75,
+          "may": 66,
           "kh": 13
         },
         "giam": {
-          "may": 35,
-          "kh": 10
+          "may": 26,
+          "kh": 5
         },
         "cuoi": {
           "may": 4046,
@@ -1946,7 +1963,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "mc": {
         "dau": {
-          "may": 775,
+          "may": 776,
           "kh": 408
         },
         "ke_hoach": {
@@ -1954,7 +1971,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 0
         },
         "tang": {
-          "may": 1,
+          "may": 0,
           "kh": 0
         },
         "giam": {
@@ -1968,20 +1985,20 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "dv_photo": {
         "dau": {
-          "may": 6680,
-          "kh": 2211
+          "may": 6702,
+          "kh": 2205
         },
         "ke_hoach": {
           "may": 0,
           "kh": 0
         },
         "tang": {
-          "may": 113,
-          "kh": 16
+          "may": 68,
+          "kh": 10
         },
         "giam": {
-          "may": 29,
-          "kh": 15
+          "may": 6,
+          "kh": 3
         },
         "cuoi": {
           "may": 6764,
@@ -1990,7 +2007,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       },
       "dv_may_in": {
         "dau": {
-          "may": 3917,
+          "may": 3918,
           "kh": 580
         },
         "ke_hoach": {
@@ -1998,11 +2015,11 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 0
         },
         "tang": {
-          "may": 7,
+          "may": 5,
           "kh": 2
         },
         "giam": {
-          "may": 1,
+          "may": 0,
           "kh": 0
         },
         "cuoi": {
@@ -2020,7 +2037,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 0
         },
         "tang": {
-          "may": 1,
+          "may": 0,
           "kh": 1
         },
         "giam": {
@@ -2028,14 +2045,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           "kh": 0
         },
         "cuoi": {
-          "may": 1,
+          "may": 0,
           "kh": 4
         }
       },
       "phan_phoi": {
         "dau": {
           "may": 0,
-          "kh": 1895
+          "kh": 1901
         },
         "ke_hoach": {
           "may": 0,
@@ -2043,7 +2060,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         },
         "tang": {
           "may": 0,
-          "kh": 16
+          "kh": 10
         },
         "giam": {
           "may": 0,
@@ -2067,7 +2084,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
     },
     "XemSon": {
       "total_kh": 1253,
-      "total_may": 2723
+      "total_may": 2722
     },
     "VPSM": {
       "total_kh": 338,
@@ -2201,7 +2218,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "name": "Thuê máy Công ty Việt",
       "note": "Cho thuê máy Công ty Việt",
       "ytd_ds": 15576.8,
-      "ytd_lg": 8123.49,
+      "ytd_lg": 9079.57,
       "m8_ds": 1574.4,
       "m8_lg": 956.08,
       "plan_m_ds": 2498.0,
@@ -2215,7 +2232,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "name": "KD Online Việt",
       "note": "Kênh online sàn TMĐT",
       "ytd_ds": 25672.93,
-      "ytd_lg": 1490.44,
+      "ytd_lg": 1629.54,
       "m8_ds": 2579.76,
       "m8_lg": 139.1,
       "plan_m_ds": 3300.0,
@@ -2229,7 +2246,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "name": "KDTH Công ty Việt",
       "note": "Kinh doanh tổng hợp",
       "ytd_ds": 19083.11,
-      "ytd_lg": 1316.59,
+      "ytd_lg": 1500.14,
       "m8_ds": 2130.34,
       "m8_lg": 183.55,
       "plan_m_ds": 3450.0,
@@ -2243,7 +2260,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "name": "Cửa hàng Việt",
       "note": "Bán lẻ tại điểm bán",
       "ytd_ds": 1055.13,
-      "ytd_lg": 428.51,
+      "ytd_lg": 502.37,
       "m8_ds": 110.01,
       "m8_lg": 73.86,
       "plan_m_ds": 550.0,
@@ -2257,7 +2274,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "name": "Bán nội bộ Việt",
       "note": "Hoạt động nội bộ",
       "ytd_ds": 723.99,
-      "ytd_lg": 87.24,
+      "ytd_lg": 102.71,
       "m8_ds": 39.09,
       "m8_lg": 15.47,
       "plan_m_ds": 10000.0,
@@ -2270,10 +2287,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Kinh doanh sỉ (KD sỉ)",
       "note": "Phân phối thiết bị Xesco",
-      "ytd_ds": 0.0,
-      "ytd_lg": 0.0,
-      "m8_ds": 3500.0,
-      "m8_lg": 560.0,
+      "ytd_ds": 33735.0,
+      "ytd_lg": 5875.0,
+      "m8_ds": 3454.0,
+      "m8_lg": 853.0,
       "plan_m_ds": 5775.0,
       "plan_m_lg": 525.0,
       "plan_year_ds": 66000.0,
@@ -2284,10 +2301,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Kỹ thuật thuê máy (KT)",
       "note": "Máy thuê kỹ thuật Xesco",
-      "ytd_ds": 0.0,
-      "ytd_lg": 0.0,
-      "m8_ds": 1800.0,
-      "m8_lg": 1080.0,
+      "ytd_ds": 17396.0,
+      "ytd_lg": 11186.0,
+      "m8_ds": 1761.0,
+      "m8_lg": 976.0,
       "plan_m_ds": 2975.0,
       "plan_m_lg": 1756.0,
       "plan_year_ds": 34000.0,
@@ -2298,10 +2315,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "KD Thuê máy (Thương mại)",
       "note": "Hợp đồng thuê máy mới",
-      "ytd_ds": 0.0,
-      "ytd_lg": 0.0,
-      "m8_ds": 500.0,
-      "m8_lg": 325.0,
+      "ytd_ds": 4006.0,
+      "ytd_lg": 2794.0,
+      "m8_ds": 518.0,
+      "m8_lg": 375.0,
       "plan_m_ds": 700.0,
       "plan_m_lg": 367.0,
       "plan_year_ds": 8000.0,
@@ -2312,10 +2329,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Dịch vụ kỹ thuật Xem Sơn",
       "note": "Kỹ thuật dịch vụ máy VP",
-      "ytd_ds": 0.0,
-      "ytd_lg": 0.0,
-      "m8_ds": 1500.0,
-      "m8_lg": 525.0,
+      "ytd_ds": 12619.0,
+      "ytd_lg": 5243.0,
+      "m8_ds": 1528.0,
+      "m8_lg": 672.0,
       "plan_m_ds": 2275.0,
       "plan_m_lg": 715.0,
       "plan_year_ds": 26000.0,
@@ -2340,10 +2357,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "KD Online Xem Sơn",
       "note": "Thương mại điện tử Xesco",
-      "ytd_ds": 0.0,
-      "ytd_lg": 0.0,
-      "m8_ds": 3000.0,
-      "m8_lg": 90.0,
+      "ytd_ds": 29560.0,
+      "ytd_lg": 995.0,
+      "m8_ds": 2929.0,
+      "m8_lg": 51.0,
       "plan_m_ds": 2100.0,
       "plan_m_lg": 100.0,
       "plan_year_ds": 24000.0,
@@ -2354,10 +2371,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Dự án Xesco",
       "note": "Gói thầu thiết bị miền Nam",
-      "ytd_ds": 0.0,
-      "ytd_lg": 0.0,
-      "m8_ds": 1550.0,
-      "m8_lg": 465.0,
+      "ytd_ds": 10980.0,
+      "ytd_lg": 3102.0,
+      "m8_ds": 1542.0,
+      "m8_lg": 12.0,
       "plan_m_ds": 0.0,
       "plan_m_lg": 0.0,
       "plan_year_ds": 0.0,
@@ -2368,10 +2385,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "comp": "XemSon",
       "name": "Bán máy lẻ Xem Sơn",
       "note": "Bán lẻ thiết bị văn phòng",
-      "ytd_ds": 0.0,
-      "ytd_lg": 0.0,
-      "m8_ds": 400.0,
-      "m8_lg": 100.0,
+      "ytd_ds": 3871.0,
+      "ytd_lg": 999.0,
+      "m8_ds": 398.0,
+      "m8_lg": 130.0,
       "plan_m_ds": 875.0,
       "plan_m_lg": 125.0,
       "plan_year_ds": 10000.0,
@@ -2640,7 +2657,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "name": "Thuê máy Công ty Việt",
         "note": "Cho thuê máy Công ty Việt",
         "ytd_ds": 15576.8,
-        "ytd_lg": 8123.49,
+        "ytd_lg": 9079.57,
         "m8_ds": 1574.4,
         "m8_lg": 956.08,
         "plan_m_ds": 2498.0,
@@ -2654,7 +2671,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "name": "KD Online Việt",
         "note": "Kênh online sàn TMĐT",
         "ytd_ds": 25672.93,
-        "ytd_lg": 1490.44,
+        "ytd_lg": 1629.54,
         "m8_ds": 2579.76,
         "m8_lg": 139.1,
         "plan_m_ds": 3300.0,
@@ -2668,7 +2685,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "name": "KDTH Công ty Việt",
         "note": "Kinh doanh tổng hợp",
         "ytd_ds": 19083.11,
-        "ytd_lg": 1316.59,
+        "ytd_lg": 1500.14,
         "m8_ds": 2130.34,
         "m8_lg": 183.55,
         "plan_m_ds": 3450.0,
@@ -2682,7 +2699,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "name": "Cửa hàng Việt",
         "note": "Bán lẻ tại điểm bán",
         "ytd_ds": 1055.13,
-        "ytd_lg": 428.51,
+        "ytd_lg": 502.37,
         "m8_ds": 110.01,
         "m8_lg": 73.86,
         "plan_m_ds": 550.0,
@@ -2696,7 +2713,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "name": "Bán nội bộ Việt",
         "note": "Hoạt động nội bộ",
         "ytd_ds": 723.99,
-        "ytd_lg": 87.24,
+        "ytd_lg": 102.71,
         "m8_ds": 39.09,
         "m8_lg": 15.47,
         "plan_m_ds": 10000.0,
@@ -2711,10 +2728,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Kinh doanh sỉ (KD sỉ)",
         "note": "Phân phối thiết bị Xesco",
-        "ytd_ds": 0.0,
-        "ytd_lg": 0.0,
-        "m8_ds": 3500.0,
-        "m8_lg": 560.0,
+        "ytd_ds": 33735.0,
+        "ytd_lg": 5875.0,
+        "m8_ds": 3454.0,
+        "m8_lg": 853.0,
         "plan_m_ds": 5775.0,
         "plan_m_lg": 525.0,
         "plan_year_ds": 66000.0,
@@ -2725,10 +2742,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Kỹ thuật thuê máy (KT)",
         "note": "Máy thuê kỹ thuật Xesco",
-        "ytd_ds": 0.0,
-        "ytd_lg": 0.0,
-        "m8_ds": 1800.0,
-        "m8_lg": 1080.0,
+        "ytd_ds": 17396.0,
+        "ytd_lg": 11186.0,
+        "m8_ds": 1761.0,
+        "m8_lg": 976.0,
         "plan_m_ds": 2975.0,
         "plan_m_lg": 1756.0,
         "plan_year_ds": 34000.0,
@@ -2739,10 +2756,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "KD Thuê máy (Thương mại)",
         "note": "Hợp đồng thuê máy mới",
-        "ytd_ds": 0.0,
-        "ytd_lg": 0.0,
-        "m8_ds": 500.0,
-        "m8_lg": 325.0,
+        "ytd_ds": 4006.0,
+        "ytd_lg": 2794.0,
+        "m8_ds": 518.0,
+        "m8_lg": 375.0,
         "plan_m_ds": 700.0,
         "plan_m_lg": 367.0,
         "plan_year_ds": 8000.0,
@@ -2753,10 +2770,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Dịch vụ kỹ thuật Xem Sơn",
         "note": "Kỹ thuật dịch vụ máy VP",
-        "ytd_ds": 0.0,
-        "ytd_lg": 0.0,
-        "m8_ds": 1500.0,
-        "m8_lg": 525.0,
+        "ytd_ds": 12619.0,
+        "ytd_lg": 5243.0,
+        "m8_ds": 1528.0,
+        "m8_lg": 672.0,
         "plan_m_ds": 2275.0,
         "plan_m_lg": 715.0,
         "plan_year_ds": 26000.0,
@@ -2781,10 +2798,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "KD Online Xem Sơn",
         "note": "Thương mại điện tử Xesco",
-        "ytd_ds": 0.0,
-        "ytd_lg": 0.0,
-        "m8_ds": 3000.0,
-        "m8_lg": 90.0,
+        "ytd_ds": 29560.0,
+        "ytd_lg": 995.0,
+        "m8_ds": 2929.0,
+        "m8_lg": 51.0,
         "plan_m_ds": 2100.0,
         "plan_m_lg": 100.0,
         "plan_year_ds": 24000.0,
@@ -2795,10 +2812,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Dự án Xesco",
         "note": "Gói thầu thiết bị miền Nam",
-        "ytd_ds": 0.0,
-        "ytd_lg": 0.0,
-        "m8_ds": 1550.0,
-        "m8_lg": 465.0,
+        "ytd_ds": 10980.0,
+        "ytd_lg": 3102.0,
+        "m8_ds": 1542.0,
+        "m8_lg": 12.0,
         "plan_m_ds": 0.0,
         "plan_m_lg": 0.0,
         "plan_year_ds": 0.0,
@@ -2809,10 +2826,10 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "comp": "XemSon",
         "name": "Bán máy lẻ Xem Sơn",
         "note": "Bán lẻ thiết bị văn phòng",
-        "ytd_ds": 0.0,
-        "ytd_lg": 0.0,
-        "m8_ds": 400.0,
-        "m8_lg": 100.0,
+        "ytd_ds": 3871.0,
+        "ytd_lg": 999.0,
+        "m8_ds": 398.0,
+        "m8_lg": 130.0,
         "plan_m_ds": 875.0,
         "plan_m_lg": 125.0,
         "plan_year_ds": 10000.0,
@@ -3173,56 +3190,56 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       {
         "item": "TỔNG CHI PHÍ",
         "plan": 1402000000.0,
-        "actual": 1422260000.0,
-        "rate": 101.45
+        "actual": 1356020000.0,
+        "rate": 96.72
       },
       {
         "item": "Chi phí cố định",
         "plan": 1291000000.0,
-        "actual": 1331530000.0,
-        "rate": 103.14
+        "actual": 1218570000.0,
+        "rate": 94.39
       },
       {
         "item": "Tiền lương & phụ cấp nhân sự",
         "plan": 700000000.0,
-        "actual": 700390000.0,
-        "rate": 100.06
+        "actual": 677450000.0,
+        "rate": 96.78
       },
       {
         "item": "Thuê văn phòng, thuê kho",
         "plan": 173000000.0,
-        "actual": 173260000.0,
-        "rate": 100.15
+        "actual": 153440000.0,
+        "rate": 88.69
       },
       {
         "item": "Khấu hao TSCĐ & phân bổ CCDC",
         "plan": 320000000.0,
-        "actual": 392000000.0,
-        "rate": 122.5
+        "actual": 337580000.0,
+        "rate": 105.49
       },
       {
         "item": "Chi phí biến đổi",
         "plan": 110000000.0,
-        "actual": 1070000000.0,
-        "rate": 972.73
+        "actual": 137450000.0,
+        "rate": 124.95
       },
       {
         "item": "Điện, nước, internet",
         "plan": 2000000.0,
-        "actual": 2070000.0,
-        "rate": 103.5
+        "actual": 1610000.0,
+        "rate": 80.5
       },
       {
         "item": "Vận chuyển hàng & giao nhận",
         "plan": 40000000.0,
-        "actual": 45180000.0,
-        "rate": 112.95
+        "actual": 12600000.0,
+        "rate": 31.5
       },
       {
         "item": "Tiếp khách & công tác phí",
         "plan": 28000000.0,
-        "actual": 31830000.0,
-        "rate": 113.68
+        "actual": 22520000.0,
+        "rate": 80.43
       },
       {
         "item": "Vật tư bảo hành & sửa chữa",
@@ -3716,15 +3733,15 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "A",
         "name": "TỔNG CHI PHÍ",
         "plan": 1402000000.0,
-        "actual": 1422260000.0,
+        "actual": 1356020000.0,
         "depts": {
           "DVKT": 0.0,
-          "KD_BB": 166740000.0,
-          "KD_BL_TH": 44210000.0,
+          "KD_BB": 153780000.0,
+          "KD_BL_TH": 43340000.0,
           "KD_DA": 0.0,
-          "KD_TM": 1038290000.0,
-          "KD_Khac": 161350000.0,
-          "KeToan": 0.0,
+          "KD_TM": 639000000.0,
+          "KD_Khac": 181760000.0,
+          "KeToan": 560000.0,
           "BP_Khac": 0.0
         }
       },
@@ -3732,14 +3749,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "I",
         "name": "Chi phí cố định",
         "plan": 1291000000.0,
-        "actual": 1331530000.0,
+        "actual": 1218570000.0,
         "depts": {
           "DVKT": 0.0,
-          "KD_BB": 156660000.0,
-          "KD_BL_TH": 43770000.0,
+          "KD_BB": 137080000.0,
+          "KD_BL_TH": 41680000.0,
           "KD_DA": 0.0,
-          "KD_TM": 978780000.0,
-          "KD_Khac": 152310000.0,
+          "KD_TM": 549940000.0,
+          "KD_Khac": 152280000.0,
           "KeToan": 0.0,
           "BP_Khac": 0.0
         }
@@ -3748,14 +3765,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "1",
         "name": "Tiền lương & phụ cấp nhân sự",
         "plan": 700000000.0,
-        "actual": 700390000.0,
+        "actual": 677450000.0,
         "depts": {
           "DVKT": 0.0,
-          "KD_BB": 127210000.0,
-          "KD_BL_TH": 38570000.0,
+          "KD_BB": 103120000.0,
+          "KD_BL_TH": 34380000.0,
           "KD_DA": 0.0,
-          "KD_TM": 477620000.0,
-          "KD_Khac": 122860000.0,
+          "KD_TM": 424680000.0,
+          "KD_Khac": 119850000.0,
           "KeToan": 0.0,
           "BP_Khac": 0.0
         }
@@ -3764,14 +3781,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "2",
         "name": "Thuê văn phòng, thuê kho",
         "plan": 173000000.0,
-        "actual": 173260000.0,
+        "actual": 153440000.0,
         "depts": {
           "DVKT": 0.0,
-          "KD_BB": 29450000.0,
-          "KD_BL_TH": 5200000.0,
+          "KD_BB": 26080000.0,
+          "KD_BL_TH": 4600000.0,
           "KD_DA": 0.0,
-          "KD_TM": 109160000.0,
-          "KD_Khac": 29450000.0,
+          "KD_TM": 96670000.0,
+          "KD_Khac": 26080000.0,
           "KeToan": 0.0,
           "BP_Khac": 0.0
         }
@@ -3780,13 +3797,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "3",
         "name": "Khấu hao TSCĐ & phân bổ CCDC",
         "plan": 320000000.0,
-        "actual": 392000000.0,
+        "actual": 337580000.0,
         "depts": {
           "DVKT": 0.0,
           "KD_BB": 0.0,
           "KD_BL_TH": 0.0,
           "KD_DA": 0.0,
-          "KD_TM": 392000000.0,
+          "KD_TM": 337580000.0,
           "KD_Khac": 0.0,
           "KeToan": 0.0,
           "BP_Khac": 0.0
@@ -3796,15 +3813,15 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "II",
         "name": "Chi phí biến đổi",
         "plan": 110000000.0,
-        "actual": 1070000000.0,
+        "actual": 137450000.0,
         "depts": {
           "DVKT": 0.0,
-          "KD_BB": 10080000.0,
-          "KD_BL_TH": 440000.0,
+          "KD_BB": 16700000.0,
+          "KD_BL_TH": 1660000.0,
           "KD_DA": 0.0,
-          "KD_TM": 59510000.0,
-          "KD_Khac": 9040000.0,
-          "KeToan": 0.0,
+          "KD_TM": 89060000.0,
+          "KD_Khac": 29480000.0,
+          "KeToan": 560000.0,
           "BP_Khac": 0.0
         }
       },
@@ -3812,14 +3829,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "1",
         "name": "Điện, nước, internet",
         "plan": 2000000.0,
-        "actual": 2070000.0,
+        "actual": 1610000.0,
         "depts": {
           "DVKT": 0.0,
           "KD_BB": 0.0,
           "KD_BL_TH": 0.0,
           "KD_DA": 0.0,
-          "KD_TM": 1400000.0,
-          "KD_Khac": 670000.0,
+          "KD_TM": 1060000.0,
+          "KD_Khac": 550000.0,
           "KeToan": 0.0,
           "BP_Khac": 0.0
         }
@@ -3828,14 +3845,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "2",
         "name": "Vận chuyển hàng & giao nhận",
         "plan": 40000000.0,
-        "actual": 45180000.0,
+        "actual": 12600000.0,
         "depts": {
           "DVKT": 0.0,
-          "KD_BB": 7530000.0,
-          "KD_BL_TH": 240000.0,
+          "KD_BB": 6710000.0,
+          "KD_BL_TH": 190000.0,
           "KD_DA": 0.0,
-          "KD_TM": 29830000.0,
-          "KD_Khac": 7570000.0,
+          "KD_TM": 4150000.0,
+          "KD_Khac": 1540000.0,
           "KeToan": 0.0,
           "BP_Khac": 0.0
         }
@@ -3844,13 +3861,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "stt": "3",
         "name": "Tiếp khách & công tác phí",
         "plan": 28000000.0,
-        "actual": 31830000.0,
+        "actual": 22520000.0,
         "depts": {
           "DVKT": 0.0,
           "KD_BB": 2550000.0,
           "KD_BL_TH": 200000.0,
           "KD_DA": 0.0,
-          "KD_TM": 28280000.0,
+          "KD_TM": 22520000.0,
           "KD_Khac": 800000.0,
           "KeToan": 0.0,
           "BP_Khac": 0.0
@@ -4714,6 +4731,12 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       "Văn phòng VPS",
       "Thông báo các đơn vị Báo cáo các chỉ tiêu tuần tháng",
       "Thông báo"
+    ],
+    [
+      "Văn phòng VPS",
+      "Văn phòng VPS",
+      "Quy định Vv hạch toán, thanh toán và đối chiếu công nợ trực tiếp giữa các đơn vị trong TĐ VPS",
+      "Quy định"
     ]
   ],
   "training_summary": [
@@ -5122,14 +5145,14 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
   ],
   "historical_vault": {
     "created_at": "2026-11-09 08:16:15",
-    "last_updated": "2026-11-09 08:16:15",
+    "last_updated": "2026-11-09 13:06:57",
     "units": {
       "THH": {
         "company": "THH",
         "companyName": "Tân Hồng Hà",
         "periods": {
           "10/2026": {
-            "recorded_at": "2026-11-09 08:16:15",
+            "recorded_at": "2026-11-09 13:06:57",
             "ds_7pb_kh_trieu": 48983.0,
             "ds_7pb_th_trieu": 20849.1,
             "lg_7pb_kh_trieu": 6402.3,
@@ -5173,7 +5196,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           }
         },
         "latest_snapshot": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 48983.0,
           "ds_7pb_th_trieu": 20849.1,
           "lg_7pb_kh_trieu": 6402.3,
@@ -5221,13 +5244,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "companyName": "Việt",
         "periods": {
           "10/2026": {
-            "recorded_at": "2026-11-09 08:16:15",
+            "recorded_at": "2026-11-09 13:06:57",
             "ds_7pb_kh_trieu": 19798.0,
             "ds_7pb_th_trieu": 6433.6,
             "lg_7pb_kh_trieu": 2206.8,
             "lg_7pb_th_trieu": 1368.06,
-            "debt_10_2026_vnd": 6827157794.0,
-            "debt_latest_vnd": 6830000000.0,
+            "debt_10_2026_vnd": 6148383973.0,
+            "debt_latest_vnd": 6150000000.0,
             "debt_by_month": {
               "08/2026": {
                 "current": 3975482293.0,
@@ -5242,30 +5265,30 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
                 "total": 5345484931.0
               },
               "10/2026": {
-                "current": 5404005539.0,
-                "overdue": 1423152255.0,
+                "current": 5079945920.0,
+                "overdue": 1068438053.0,
                 "bad": 0.0,
-                "total": 6827157794.0
+                "total": 6148383973.0
               }
             },
-            "inventory_vnd": 6552205970.0,
+            "inventory_vnd": 7159772470.0,
             "hr_total": 40,
             "hr_official": 39,
             "hr_probation": 1,
             "customers_kh": 1216,
             "customers_may": 822,
             "products_vnd": 3191000000.0,
-            "expense_vnd": 1422260000.0
+            "expense_vnd": 1356020000.0
           }
         },
         "latest_snapshot": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 19798.0,
           "ds_7pb_th_trieu": 6433.6,
           "lg_7pb_kh_trieu": 2206.8,
           "lg_7pb_th_trieu": 1368.06,
-          "debt_10_2026_vnd": 6827157794.0,
-          "debt_latest_vnd": 6830000000.0,
+          "debt_10_2026_vnd": 6148383973.0,
+          "debt_latest_vnd": 6150000000.0,
           "debt_by_month": {
             "08/2026": {
               "current": 3975482293.0,
@@ -5280,20 +5303,20 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
               "total": 5345484931.0
             },
             "10/2026": {
-              "current": 5404005539.0,
-              "overdue": 1423152255.0,
+              "current": 5079945920.0,
+              "overdue": 1068438053.0,
               "bad": 0.0,
-              "total": 6827157794.0
+              "total": 6148383973.0
             }
           },
-          "inventory_vnd": 6552205970.0,
+          "inventory_vnd": 7159772470.0,
           "hr_total": 40,
           "hr_official": 39,
           "hr_probation": 1,
           "customers_kh": 1216,
           "customers_may": 822,
           "products_vnd": 3191000000.0,
-          "expense_vnd": 1422260000.0
+          "expense_vnd": 1356020000.0
         }
       },
       "XemSon": {
@@ -5301,13 +5324,13 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "companyName": "Xem Sơn",
         "periods": {
           "10/2026": {
-            "recorded_at": "2026-11-09 08:16:15",
+            "recorded_at": "2026-11-09 13:06:57",
             "ds_7pb_kh_trieu": 14700.0,
-            "ds_7pb_th_trieu": 12250.0,
+            "ds_7pb_th_trieu": 12130.0,
             "lg_7pb_kh_trieu": 3588.0,
-            "lg_7pb_th_trieu": 3145.0,
-            "debt_10_2026_vnd": 8505854923.0,
-            "debt_latest_vnd": 8510000000.0,
+            "lg_7pb_th_trieu": 3069.0,
+            "debt_10_2026_vnd": 6410563081.0,
+            "debt_latest_vnd": 6410000000.0,
             "debt_by_month": {
               "09/2026": {
                 "current": 11508057117.0,
@@ -5316,30 +5339,30 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
                 "total": 12480299428.0
               },
               "10/2026": {
-                "current": 7170029067.0,
-                "overdue": 1335825856.0,
+                "current": 5722750831.0,
+                "overdue": 687812250.0,
                 "bad": 0.0,
-                "total": 8505854923.0
+                "total": 6410563081.0
               }
             },
-            "inventory_vnd": 23954872011.0,
-            "hr_total": 90,
-            "hr_official": 90,
+            "inventory_vnd": 27926266280.0,
+            "hr_total": 94,
+            "hr_official": 94,
             "hr_probation": 0,
             "customers_kh": 1253,
-            "customers_may": 2723,
+            "customers_may": 2722,
             "products_vnd": 0.0,
             "expense_vnd": 2190033376.0
           }
         },
         "latest_snapshot": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 14700.0,
-          "ds_7pb_th_trieu": 12250.0,
+          "ds_7pb_th_trieu": 12130.0,
           "lg_7pb_kh_trieu": 3588.0,
-          "lg_7pb_th_trieu": 3145.0,
-          "debt_10_2026_vnd": 8505854923.0,
-          "debt_latest_vnd": 8510000000.0,
+          "lg_7pb_th_trieu": 3069.0,
+          "debt_10_2026_vnd": 6410563081.0,
+          "debt_latest_vnd": 6410000000.0,
           "debt_by_month": {
             "09/2026": {
               "current": 11508057117.0,
@@ -5348,18 +5371,18 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
               "total": 12480299428.0
             },
             "10/2026": {
-              "current": 7170029067.0,
-              "overdue": 1335825856.0,
+              "current": 5722750831.0,
+              "overdue": 687812250.0,
               "bad": 0.0,
-              "total": 8505854923.0
+              "total": 6410563081.0
             }
           },
-          "inventory_vnd": 23954872011.0,
-          "hr_total": 90,
-          "hr_official": 90,
+          "inventory_vnd": 27926266280.0,
+          "hr_total": 94,
+          "hr_official": 94,
           "hr_probation": 0,
           "customers_kh": 1253,
-          "customers_may": 2723,
+          "customers_may": 2722,
           "products_vnd": 0.0,
           "expense_vnd": 2190033376.0
         }
@@ -5369,7 +5392,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "companyName": "VPS M",
         "periods": {
           "10/2026": {
-            "recorded_at": "2026-11-09 08:16:15",
+            "recorded_at": "2026-11-09 13:06:57",
             "ds_7pb_kh_trieu": 875.0,
             "ds_7pb_th_trieu": 1895.0,
             "lg_7pb_kh_trieu": 345.0,
@@ -5401,7 +5424,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           }
         },
         "latest_snapshot": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 875.0,
           "ds_7pb_th_trieu": 1895.0,
           "lg_7pb_kh_trieu": 345.0,
@@ -5437,7 +5460,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "companyName": "ITSS",
         "periods": {
           "10/2026": {
-            "recorded_at": "2026-11-09 08:16:15",
+            "recorded_at": "2026-11-09 13:06:57",
             "ds_7pb_kh_trieu": 705.0,
             "ds_7pb_th_trieu": 533.0,
             "lg_7pb_kh_trieu": 198.0,
@@ -5475,7 +5498,7 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           }
         },
         "latest_snapshot": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 705.0,
           "ds_7pb_th_trieu": 533.0,
           "lg_7pb_kh_trieu": 198.0,
@@ -5517,19 +5540,31 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
         "companyName": "Văn phòng VPS",
         "periods": {
           "10/2026": {
-            "recorded_at": "2026-11-09 08:16:15",
+            "recorded_at": "2026-11-09 13:06:57",
             "ds_7pb_kh_trieu": 3000.0,
             "ds_7pb_th_trieu": 7386.0,
             "lg_7pb_kh_trieu": 360.0,
             "lg_7pb_th_trieu": 288.0,
-            "debt_10_2026_vnd": 0.0,
-            "debt_latest_vnd": 1100000000.0,
+            "debt_10_2026_vnd": 589277208.0,
+            "debt_latest_vnd": 590000000.0,
             "debt_by_month": {
+              "08/2026": {
+                "current": 293925579.0,
+                "overdue": 0.0,
+                "bad": 0.0,
+                "total": 293925579.0
+              },
               "09/2026": {
                 "current": 1097065616.0,
                 "overdue": 0.0,
                 "bad": 0.0,
                 "total": 1097065616.0
+              },
+              "10/2026": {
+                "current": 589277208.0,
+                "overdue": 0.0,
+                "bad": 0.0,
+                "total": 589277208.0
               }
             },
             "inventory_vnd": 1955144608.0,
@@ -5543,19 +5578,31 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
           }
         },
         "latest_snapshot": {
-          "recorded_at": "2026-11-09 08:16:15",
+          "recorded_at": "2026-11-09 13:06:57",
           "ds_7pb_kh_trieu": 3000.0,
           "ds_7pb_th_trieu": 7386.0,
           "lg_7pb_kh_trieu": 360.0,
           "lg_7pb_th_trieu": 288.0,
-          "debt_10_2026_vnd": 0.0,
-          "debt_latest_vnd": 1100000000.0,
+          "debt_10_2026_vnd": 589277208.0,
+          "debt_latest_vnd": 590000000.0,
           "debt_by_month": {
+            "08/2026": {
+              "current": 293925579.0,
+              "overdue": 0.0,
+              "bad": 0.0,
+              "total": 293925579.0
+            },
             "09/2026": {
               "current": 1097065616.0,
               "overdue": 0.0,
               "bad": 0.0,
               "total": 1097065616.0
+            },
+            "10/2026": {
+              "current": 589277208.0,
+              "overdue": 0.0,
+              "bad": 0.0,
+              "total": 589277208.0
             }
           },
           "inventory_vnd": 1955144608.0,
@@ -5570,6 +5617,39 @@ window.LIVE_GOOGLE_SHEETS_DATA = {
       }
     },
     "audit_log": [
+      {
+        "timestamp": "2026-11-09 13:05:59",
+        "company": "XemSon",
+        "companyName": "Xem Sơn",
+        "module": "4. Khách hàng & 6. Nhân sự",
+        "period": "10/2026",
+        "metric": "Biến động KH & Nhân sự",
+        "oldValue": "NS: 90 NV | KH: 1253",
+        "newValue": "NS: 94 NV | KH: 1253",
+        "status": "ĐỒNG BỘ KỲ 10/2026"
+      },
+      {
+        "timestamp": "2026-11-09 13:05:59",
+        "company": "XemSon",
+        "companyName": "Xem Sơn",
+        "module": "2. 7 Phòng ban (DS & LG)",
+        "period": "10/2026",
+        "metric": "Doanh số & Lãi gộp T10",
+        "oldValue": "DS: 12,250.00 tr | LG: 3,145.00 tr",
+        "newValue": "DS: 12,130.00 tr | LG: 3,069.00 tr",
+        "status": "CẬP NHẬT -120.00 tr"
+      },
+      {
+        "timestamp": "2026-11-09 13:05:59",
+        "company": "Viet",
+        "companyName": "Việt",
+        "module": "8. Chi phí & Định mức",
+        "period": "10/2026",
+        "metric": "Tổng Chi phí Thực hiện",
+        "oldValue": "1,422.26 tr",
+        "newValue": "1,356.02 tr",
+        "status": "MỚI CẬP NHẬT SỐ LIỆU"
+      },
       {
         "timestamp": "2026-11-09 08:16:15",
         "company": "Viet",
