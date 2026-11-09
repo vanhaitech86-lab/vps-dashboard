@@ -845,11 +845,21 @@
 
                         <!-- DETAILED CUSTOMER STRUCTURE REPORT TABLE -->
                         <div class="card cust-report-card">
-                            <div class="card-header cust-report-header" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #ffffff; border-bottom: 1.5px solid #e2e8f0;">
-                                <div style="display: flex; align-items: center; gap: 8px;">
+                            <div class="card-header cust-report-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 14px 18px; background: #ffffff; border-bottom: 1.5px solid #e2e8f0;">
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                                     <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.3px;">Báo Cáo Chi Tiết Cơ Cấu Khách Hàng</h3>
+                                    <span id="cust-report-unit-badge" style="background: #e0f2fe; color: #0369a1; font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; border: 1px solid #bae6fd;">Toàn Tập đoàn (6 Đơn vị)</span>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                    <select id="customers-company-filter" class="cust-month-select" style="padding: 6px 12px; font-weight: 800; font-size: 0.86rem; border-radius: 6px; border: 1.5px solid #0284c7; background: #f0f9ff; color: #0369a1; cursor: pointer; outline: none;">
+                                        <option value="all">🏢 Tất cả đơn vị (Toàn Tập đoàn)</option>
+                                        <option value="THH">1. Tân Hồng Hà (THH)</option>
+                                        <option value="Viet">2. Công ty Việt (Viet)</option>
+                                        <option value="XemSon">3. Công ty Xem Sơn (XemSon)</option>
+                                        <option value="VPSM">4. VPS Miền Trung (VPSM)</option>
+                                        <option value="ITSS">5. Công ty ITSS</option>
+                                        <option value="VPVPS">6. Văn phòng VPS (VPVPS)</option>
+                                    </select>
                                     <select id="customers-month-filter" class="cust-month-select" style="padding: 6px 12px; font-weight: 800; font-size: 0.88rem; border-radius: 6px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #1e293b; cursor: pointer; outline: none;"></select>
                                 </div>
                             </div>
@@ -4183,18 +4193,18 @@
     <!-- Scripts -->
     <script src="js/connectors.js?v=1788780000"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="js/google_sheets_live_data.js?v=1791270000"></script>
-    <script src="js/data.js?v=1791264000"></script>
-    <script src="js/google_sheets.js?v=1791270000"></script>
+    <script src="js/google_sheets_live_data.js?v=1794230000"></script>
+    <script src="js/data.js?v=1794230000"></script>
+    <script src="js/google_sheets.js?v=1794230000"></script>
     <script src="js/auth.js?v=1788780000"></script>
     <script src="js/filters.js?v=1788780000"></script>
     <script src="js/charts.js?v=1788780000"></script>
-    <script src="js/overview.js?v=1791264000"></script>
-    <script src="js/customers.js?v=1791264000"></script>
+    <script src="js/overview.js?v=1794230000"></script>
+    <script src="js/customers.js?v=1794230000"></script>
     <script src="js/products.js?v=1788780000"></script>
     <script src="js/fujifilm.js?v=1788780000"></script>
     <script src="js/products_other.js?v=1788780000"></script>
-    <script src="js/revenue.js?v=1791264000"></script>
+    <script src="js/revenue.js?v=1794230000"></script>
     <script src="js/project_revenue.js?v=1789730000"></script>
     <script src="js/inventory.js?v=1791270000"></script>
     <script src="js/debt.js?v=1788780000"></script>

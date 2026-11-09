@@ -141,8 +141,10 @@ const customerCatMap = {
     'Dịch vụ - Photo': 'dv_photo', 'Dich vu - Photo': 'dv_photo', 'dịch vụ - photo': 'dv_photo',
     'Dịch vụ - Máy in': 'dv_may_in', 'Dich vu - May in': 'dv_may_in', 'dịch vụ - máy in': 'dv_may_in',
     'Dịch vụ khác': 'dv_khac', 'Dich vu khac': 'dv_khac', 'dịch vụ khác': 'dv_khac',
+    'Cửa hàng': 'cua_hang', 'Cua hang': 'cua_hang', 'cửa hàng': 'cua_hang', 'cua hang': 'cua_hang', 'Bán lẻ': 'cua_hang', 'bán lẻ': 'cua_hang',
     'Phân phối (Đại lý)': 'phan_phoi', 'Phan phoi (Dai ly)': 'phan_phoi', 'phân phối (đại lý)': 'phan_phoi',
     // 3 nhóm phân loại khách hàng theo thời gian phát sinh doanh số
+    'KH đại lý PSDS<3 tháng': 'kh_duoi_3_thang', 'kh đại lý psds<3 tháng': 'kh_duoi_3_thang', 'KH đại lý PSDS <3 tháng': 'kh_duoi_3_thang', 'kh đại lý psds <3 tháng': 'kh_duoi_3_thang',
     'Khách hàng phát sinh doanh số dưới 3 tháng': 'kh_duoi_3_thang', 'khách hàng phát sinh doanh số dưới 3 tháng': 'kh_duoi_3_thang', 'Phát sinh doanh số dưới 3 tháng': 'kh_duoi_3_thang', 'Dưới 3 tháng': 'kh_duoi_3_thang', 'dưới 3 tháng': 'kh_duoi_3_thang', '< 3 tháng': 'kh_duoi_3_thang', '< 3 thang': 'kh_duoi_3_thang', 'duoi 3 thang': 'kh_duoi_3_thang',
     'Khách hàng phát sinh doanh số từ 3 - 6 tháng': 'kh_3_den_6_thang', 'khách hàng phát sinh doanh số từ 3 - 6 tháng': 'kh_3_den_6_thang', 'Phát sinh doanh số từ 3 - 6 tháng': 'kh_3_den_6_thang', 'Từ 3 - 6 tháng': 'kh_3_den_6_thang', 'từ 3 - 6 tháng': 'kh_3_den_6_thang', '3 - 6 tháng': 'kh_3_den_6_thang', '3 - 6 thang': 'kh_3_den_6_thang', '3-6 tháng': 'kh_3_den_6_thang', 'tu 3 - 6 thang': 'kh_3_den_6_thang',
     'Khách hàng phát sinh doanh số trên 6 tháng': 'kh_tren_6_thang', 'khách hàng phát sinh doanh số trên 6 tháng': 'kh_tren_6_thang', 'Phát sinh doanh số trên 6 tháng': 'kh_tren_6_thang', 'Trên 6 tháng': 'kh_tren_6_thang', 'trên 6 tháng': 'kh_tren_6_thang', '> 6 tháng': 'kh_tren_6_thang', '> 6 thang': 'kh_tren_6_thang', 'tren 6 thang': 'kh_tren_6_thang'
@@ -732,18 +734,31 @@ function parseCustomers(csv, cId) {
         const catRaw1 = row[1] ? row[1].toString().trim() : '';
         const catId = customerCatMap[catRaw2] || customerCatMap[catRaw2.toLowerCase()] || customerCatMap[catRaw1] || customerCatMap[catRaw1.toLowerCase()];
         if (!catId) continue;
-        const dau_may  = parseNumber(row[3]), dau_kh  = parseNumber(row[4]);
-        const tang_may = parseNumber(row[5]), tang_kh = parseNumber(row[6]);
-        const giam_may = parseNumber(row[7]), giam_kh = parseNumber(row[8]);
-        const cuoi_may = parseNumber(row[9]), cuoi_kh = parseNumber(row[10]);
-        if (!result[thang]) result[thang] = {};
-        result[thang][catId] = {
+        const dau_may = parseNumber(row[3]), dau_kh = parseNumber(row[4]);
+        let kh_may = 0, kh_kh = 0, tang_may = 0, tang_kh = 0, giam_may = 0, giam_kh = 0, cuoi_may = 0, cuoi_kh = 0;
+        if (row.length >= 12) {
+            kh_may   = parseNumber(row[5]); kh_kh   = parseNumber(row[6]);
+            tang_may = parseNumber(row[7]); tang_kh = parseNumber(row[8]);
+            giam_may = parseNumber(row[9]); giam_kh = parseNumber(row[10]);
+            cuoi_may = parseNumber(row[11]); cuoi_kh = parseNumber(row[12]);
+        } else {
+            tang_may = parseNumber(row[5]); tang_kh = parseNumber(row[6]);
+            giam_may = parseNumber(row[7]); giam_kh = parseNumber(row[8]);
+            cuoi_may = parseNumber(row[9]); cuoi_kh = parseNumber(row[10]);
+        }
+        const entry = {
             dau:      { may: dau_may,  kh: dau_kh  },
-            ke_hoach: { may: 0, kh: 0 },
+            ke_hoach: { may: kh_may,   kh: kh_kh   },
             tang:     { may: tang_may, kh: tang_kh },
             giam:     { may: giam_may, kh: giam_kh },
             cuoi:     { may: cuoi_may || (dau_may + tang_may - giam_may), kh: cuoi_kh || (dau_kh + tang_kh - giam_kh) }
         };
+        if (!result[thang]) result[thang] = {};
+        result[thang][catId] = entry;
+        if (headerMonth && headerMonth !== thang) {
+            if (!result[headerMonth]) result[headerMonth] = {};
+            if (!result[headerMonth][catId]) result[headerMonth][catId] = JSON.parse(JSON.stringify(entry));
+        }
     }
     return result;
 }
@@ -1247,7 +1262,7 @@ window.GoogleSheetsService = {
         };
 
         // 5. KHÁCH HÀNG MATRIX
-        const standardCats = ['thue_may', 'mc', 'dv_photo', 'dv_may_in', 'dv_khac', 'phan_phoi'];
+        const standardCats = ['thue_may', 'mc', 'dv_photo', 'dv_may_in', 'dv_khac', 'cua_hang', 'phan_phoi'];
         const recencyCats = ['kh_duoi_3_thang', 'kh_3_den_6_thang', 'kh_tren_6_thang'];
         const allCustomerCats = [...standardCats, ...recencyCats];
         const fullMatrix = { ...(liveData.customers_matrix || {}) };
@@ -1261,7 +1276,7 @@ window.GoogleSheetsService = {
                 giam: { may: 0, kh: 0 },
                 cuoi: { may: 0, kh: 0 }
             };
-            Object.keys(COMPANY_SHEETS).forEach(cId => {
+            ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS'].forEach(cId => {
                 const r = fullMatrix[cId]?.[catId];
                 const a = fullMatrix['all'][catId];
                 if (r && a) {
@@ -1939,8 +1954,8 @@ window.GoogleSheetsService = {
                 window.mockData.brand_data = brandData;
             }
 
-            // ── Customers Builder (đảm bảo đầy đủ 6 categories dịch vụ và 3 categories phát sinh doanh số) ──
-            const standardCats = ['thue_may', 'mc', 'dv_photo', 'dv_may_in', 'dv_khac', 'phan_phoi'];
+            // ── Customers Builder (đảm bảo đầy đủ 7 categories dịch vụ và 3 categories phát sinh doanh số) ──
+            const standardCats = ['thue_may', 'mc', 'dv_photo', 'dv_may_in', 'dv_khac', 'cua_hang', 'phan_phoi'];
             const recencyCats = ['kh_duoi_3_thang', 'kh_3_den_6_thang', 'kh_tren_6_thang'];
             const allCustomerCats = [...standardCats, ...recencyCats];
 
@@ -1958,19 +1973,28 @@ window.GoogleSheetsService = {
                 Object.keys(COMPANY_SHEETS).forEach(cId => {
                     res.matrix[cId] = {};
                     const compCats = targetData[cId] || {};
+                    const modBase = window.CustomersModule?.monthlyData?.[month]?.[cId]
+                        || window.CustomersModule?.monthlyData?.['10/2026']?.[cId]
+                        || window.CustomersModule?.monthlyData?.['09/2026']?.[cId]
+                        || {};
                     allCustomerCats.forEach(catId => {
-                        const fallback = window.mockData?.customers?.matrix?.[cId]?.[catId] || {
+                        const fallback = modBase[catId] || window.mockData?.customers?.matrix?.[cId]?.[catId] || {
                             dau: { may: 0, kh: 0 },
                             ke_hoach: { may: 0, kh: 0 },
                             tang: { may: 0, kh: 0 },
                             giam: { may: 0, kh: 0 },
                             cuoi: { may: 0, kh: 0 }
                         };
-                        res.matrix[cId][catId] = compCats[catId] || fallback;
+                        const scanned = compCats[catId];
+                        if (scanned && ((scanned.dau?.may || 0) > 0 || (scanned.dau?.kh || 0) > 0 || (scanned.cuoi?.may || 0) > 0 || (scanned.cuoi?.kh || 0) > 0 || (scanned.ke_hoach?.may || 0) > 0 || (scanned.ke_hoach?.kh || 0) > 0)) {
+                            res.matrix[cId][catId] = scanned;
+                        } else {
+                            res.matrix[cId][catId] = fallback;
+                        }
                     });
                 });
 
-                // Tổng hợp 'all'
+                // Tổng hợp 'all' (từ 5 đơn vị kinh doanh trực tiếp, tránh cộng trùng số tổng tại VPVPS)
                 res.matrix['all'] = {};
                 allCustomerCats.forEach(catId => {
                     res.matrix['all'][catId] = {
@@ -1980,7 +2004,7 @@ window.GoogleSheetsService = {
                         giam: { may: 0, kh: 0 },
                         cuoi: { may: 0, kh: 0 }
                     };
-                    Object.keys(COMPANY_SHEETS).forEach(cId => {
+                    ['THH', 'Viet', 'XemSon', 'VPSM', 'ITSS'].forEach(cId => {
                         const r = res.matrix[cId][catId];
                         const a = res.matrix['all'][catId];
                         if (r && a) {
@@ -1997,6 +2021,10 @@ window.GoogleSheetsService = {
                         }
                     });
                 });
+
+                if (window.CustomersModule && window.CustomersModule.monthlyData) {
+                    window.CustomersModule.monthlyData[month] = JSON.parse(JSON.stringify(res.matrix));
+                }
 
                 // byCompany summary
                 Object.keys(COMPANY_SHEETS).forEach(cId => {

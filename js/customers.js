@@ -10,9 +10,417 @@
 window.CustomersModule = {
     currentPeriod: 'month',
     currentCompany: 'all',
-    selectedMonth: '09/2026',
+    selectedMonth: '10/2026',
 
-        monthlyData: {
+    monthlyData: {
+        '10/2026': {
+            "all": {
+                "thue_may": {
+                    "dau": { "may": 2023, "kh": 620 },
+                    "ke_hoach": { "may": 826, "kh": 266 },
+                    "tang": { "may": 21, "kh": 2 },
+                    "giam": { "may": 13, "kh": 3 },
+                    "cuoi": { "may": 2031, "kh": 619 }
+                },
+                "mc": {
+                    "dau": { "may": 388, "kh": 204 },
+                    "ke_hoach": { "may": 110, "kh": 40 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 388, "kh": 204 }
+                },
+                "dv_photo": {
+                    "dau": { "may": 3366, "kh": 1103 },
+                    "ke_hoach": { "may": 1400, "kh": 390 },
+                    "tang": { "may": 4, "kh": 4 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 3370, "kh": 1107 }
+                },
+                "dv_may_in": {
+                    "dau": { "may": 1962, "kh": 291 },
+                    "ke_hoach": { "may": 450, "kh": 100 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 1962, "kh": 291 }
+                },
+                "dv_khac": {
+                    "dau": { "may": 0, "kh": 3 },
+                    "ke_hoach": { "may": 0, "kh": 4 },
+                    "tang": { "may": 0, "kh": 1 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 4 }
+                },
+                "cua_hang": {
+                    "dau": { "may": 0, "kh": 148 },
+                    "ke_hoach": { "may": 0, "kh": 5 },
+                    "tang": { "may": 0, "kh": 4 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 152 }
+                },
+                "phan_phoi": {
+                    "dau": { "may": 0, "kh": 1901 },
+                    "ke_hoach": { "may": 0, "kh": 518 },
+                    "tang": { "may": 0, "kh": 10 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 1911 }
+                },
+                "kh_duoi_3_thang": {
+                    "dau": { "may": 0, "kh": 1171 },
+                    "ke_hoach": { "may": 0, "kh": 365 },
+                    "tang": { "may": 0, "kh": 9 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 1180 }
+                }
+            },
+            "THH": {
+                "thue_may": {
+                    "dau": { "may": 355, "kh": 103 },
+                    "ke_hoach": { "may": 5, "kh": 5 },
+                    "tang": { "may": 8, "kh": 2 },
+                    "giam": { "may": 5, "kh": 2 },
+                    "cuoi": { "may": 358, "kh": 103 }
+                },
+                "mc": {
+                    "dau": { "may": 238, "kh": 164 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 238, "kh": 164 }
+                },
+                "dv_photo": {
+                    "dau": { "may": 1775, "kh": 628 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 4, "kh": 4 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 1779, "kh": 632 }
+                },
+                "dv_may_in": {
+                    "dau": { "may": 1148, "kh": 50 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 1148, "kh": 50 }
+                },
+                "dv_khac": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "cua_hang": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "phan_phoi": {
+                    "dau": { "may": 0, "kh": 373 },
+                    "ke_hoach": { "may": 0, "kh": 6 },
+                    "tang": { "may": 0, "kh": 2 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 375 }
+                },
+                "kh_duoi_3_thang": {
+                    "dau": { "may": 0, "kh": 62 },
+                    "ke_hoach": { "may": 0, "kh": 5 },
+                    "tang": { "may": 0, "kh": 3 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 65 }
+                }
+            },
+            "Viet": {
+                "thue_may": {
+                    "dau": { "may": 817, "kh": 246 },
+                    "ke_hoach": { "may": 20, "kh": 10 },
+                    "tang": { "may": 13, "kh": 0 },
+                    "giam": { "may": 8, "kh": 1 },
+                    "cuoi": { "may": 822, "kh": 245 }
+                },
+                "mc": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "dv_photo": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "dv_may_in": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "dv_khac": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "cua_hang": {
+                    "dau": { "may": 0, "kh": 148 },
+                    "ke_hoach": { "may": 0, "kh": 5 },
+                    "tang": { "may": 0, "kh": 4 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 152 }
+                },
+                "phan_phoi": {
+                    "dau": { "may": 0, "kh": 963 },
+                    "ke_hoach": { "may": 0, "kh": 12 },
+                    "tang": { "may": 0, "kh": 8 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 971 }
+                },
+                "kh_duoi_3_thang": {
+                    "dau": { "may": 0, "kh": 714 },
+                    "ke_hoach": { "may": 0, "kh": 10 },
+                    "tang": { "may": 0, "kh": 6 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 720 }
+                }
+            },
+            "XemSon": {
+                "thue_may": {
+                    "dau": { "may": 794, "kh": 245 },
+                    "ke_hoach": { "may": 800, "kh": 250 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 794, "kh": 245 }
+                },
+                "mc": {
+                    "dau": { "may": 103, "kh": 38 },
+                    "ke_hoach": { "may": 110, "kh": 40 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 103, "kh": 38 }
+                },
+                "dv_photo": {
+                    "dau": { "may": 1374, "kh": 377 },
+                    "ke_hoach": { "may": 1400, "kh": 390 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 1374, "kh": 377 }
+                },
+                "dv_may_in": {
+                    "dau": { "may": 451, "kh": 98 },
+                    "ke_hoach": { "may": 450, "kh": 100 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 451, "kh": 98 }
+                },
+                "dv_khac": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "cua_hang": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "phan_phoi": {
+                    "dau": { "may": 0, "kh": 495 },
+                    "ke_hoach": { "may": 0, "kh": 500 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 495 }
+                },
+                "kh_duoi_3_thang": {
+                    "dau": { "may": 0, "kh": 345 },
+                    "ke_hoach": { "may": 0, "kh": 350 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 345 }
+                }
+            },
+            "VPSM": {
+                "thue_may": {
+                    "dau": { "may": 56, "kh": 25 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 56, "kh": 25 }
+                },
+                "mc": {
+                    "dau": { "may": 47, "kh": 2 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 47, "kh": 2 }
+                },
+                "dv_photo": {
+                    "dau": { "may": 217, "kh": 98 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 217, "kh": 98 }
+                },
+                "dv_may_in": {
+                    "dau": { "may": 363, "kh": 143 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 363, "kh": 143 }
+                },
+                "dv_khac": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "cua_hang": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "phan_phoi": {
+                    "dau": { "may": 0, "kh": 70 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 70 }
+                },
+                "kh_duoi_3_thang": {
+                    "dau": { "may": 0, "kh": 50 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 50 }
+                }
+            },
+            "ITSS": {
+                "thue_may": {
+                    "dau": { "may": 1, "kh": 1 },
+                    "ke_hoach": { "may": 1, "kh": 1 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 1, "kh": 1 }
+                },
+                "mc": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "dv_photo": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "dv_may_in": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "dv_khac": {
+                    "dau": { "may": 0, "kh": 3 },
+                    "ke_hoach": { "may": 0, "kh": 4 },
+                    "tang": { "may": 0, "kh": 1 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 4 }
+                },
+                "cua_hang": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "phan_phoi": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "kh_duoi_3_thang": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                }
+            },
+            "VPVPS": {
+                "thue_may": {
+                    "dau": { "may": 1983, "kh": 615 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 45, "kh": 11 },
+                    "giam": { "may": 13, "kh": 2 },
+                    "cuoi": { "may": 2015, "kh": 624 }
+                },
+                "mc": {
+                    "dau": { "may": 388, "kh": 204 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 1, "kh": 0 },
+                    "cuoi": { "may": 387, "kh": 204 }
+                },
+                "dv_photo": {
+                    "dau": { "may": 3336, "kh": 1102 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 64, "kh": 6 },
+                    "giam": { "may": 6, "kh": 3 },
+                    "cuoi": { "may": 3394, "kh": 1105 }
+                },
+                "dv_may_in": {
+                    "dau": { "may": 1956, "kh": 289 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 5, "kh": 2 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 1961, "kh": 291 }
+                },
+                "dv_khac": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "cua_hang": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "phan_phoi": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                },
+                "kh_duoi_3_thang": {
+                    "dau": { "may": 0, "kh": 0 },
+                    "ke_hoach": { "may": 0, "kh": 0 },
+                    "tang": { "may": 0, "kh": 0 },
+                    "giam": { "may": 0, "kh": 0 },
+                    "cuoi": { "may": 0, "kh": 0 }
+                }
+            }
+        },
         '09/2026': {
             "all": {
                         "thue_may": {
@@ -61,11 +469,11 @@ window.CustomersModule = {
                         },
                         "dv_photo": {
                                     "dau": {
-                                                "may": 1989,
+                                                "may": 3340,
                                                 "kh": 1105
                                     },
                                     "ke_hoach": {
-                                                "may": 1,
+                                                "may": 1400,
                                                 "kh": 390
                                     },
                                     "tang": {
@@ -77,7 +485,7 @@ window.CustomersModule = {
                                                 "kh": 12
                                     },
                                     "cuoi": {
-                                                "may": 1993,
+                                                "may": 3366,
                                                 "kh": 1103
                                     }
                         },
@@ -2073,18 +2481,30 @@ window.CustomersModule = {
         document.addEventListener('vps_filter_changed', (e) => {
             this.currentPeriod = e.detail.period;
             this.currentCompany = e.detail.company;
+            const compFilter = document.getElementById('customers-company-filter');
+            if (compFilter) compFilter.value = this.currentCompany || 'all';
             this.loadData(this.currentPeriod, this.currentCompany);
         });
+
+        // Initialize Company Dropdown in table header
+        const compFilter = document.getElementById('customers-company-filter');
+        if (compFilter) {
+            compFilter.value = this.currentCompany || 'all';
+            compFilter.addEventListener('change', (e) => {
+                this.currentCompany = e.target.value;
+                this.loadData(this.currentPeriod, this.currentCompany);
+            });
+        }
 
         // Initialize Month Dropdown in table header
         const monthFilter = document.getElementById('customers-month-filter');
         if (monthFilter) {
-            const months = ['09/2026', '08/2026', '07/2026', '06/2026'];
+            const months = ['10/2026', '09/2026', '08/2026', '07/2026', '06/2026'];
             monthFilter.innerHTML = '';
             months.forEach(m => {
                 const opt = document.createElement('option');
                 opt.value = m;
-                opt.textContent = 'THÁNG ' + m.split('/')[0] + ' / ' + m.split('/')[1];
+                opt.textContent = 'THÁNG ' + m.split('/')[0] + ' / ' + m.split('/')[1] + (m === '10/2026' ? ' (Mới nhất)' : '');
                 if (m === this.selectedMonth) opt.selected = true;
                 monthFilter.appendChild(opt);
             });
@@ -2112,13 +2532,27 @@ window.CustomersModule = {
 
         // Map UI company dropdown string to matrix keys
         let matrixKey = 'all';
-        if (company === 'Tân Hồng Hà' || (company.includes('T') && company.includes('H'))) matrixKey = 'THH';
-        else if (company === 'Việt' || company.includes('Vi')) matrixKey = 'Viet';
-        else if (company === 'Xem Sơn' || company.includes('Xem') || company.includes('XESCO')) matrixKey = 'XemSon';
-        else if (company === 'VPS M' || company.includes('VPS M') || company.includes('Trung')) matrixKey = 'VPSM';
-        else if (company === 'ITSS' || company.includes('ITSS')) matrixKey = 'ITSS';
-        else if (company === 'Văn phòng VPS' || company.includes('VPVPS') || company.includes('Văn phòng')) matrixKey = 'VPVPS';
+        if (company === 'THH' || company === 'Tân Hồng Hà' || (company && company.includes('T') && company.includes('H'))) matrixKey = 'THH';
+        else if (company === 'Viet' || company === 'Việt' || (company && company.includes('Vi'))) matrixKey = 'Viet';
+        else if (company === 'XemSon' || company === 'Xem Sơn' || (company && (company.includes('Xem') || company.includes('XESCO')))) matrixKey = 'XemSon';
+        else if (company === 'VPSM' || company === 'VPS M' || (company && (company.includes('VPS M') || company.includes('Trung')))) matrixKey = 'VPSM';
+        else if (company === 'ITSS' || (company && company.includes('ITSS'))) matrixKey = 'ITSS';
+        else if (company === 'VPVPS' || company === 'Văn phòng VPS' || (company && (company.includes('VPVPS') || company.includes('Văn phòng')))) matrixKey = 'VPVPS';
         else if (company !== 'all') matrixKey = 'all';
+
+        const unitBadgeLabels = {
+            'all': 'Toàn Tập Đoàn (6 Đơn vị)',
+            'THH': 'Tân Hồng Hà (THH)',
+            'Viet': 'Công ty Việt (Viet)',
+            'XemSon': 'Công ty Xem Sơn (XemSon)',
+            'VPSM': 'VPS Miền Trung (VPSM)',
+            'ITSS': 'Công ty ITSS',
+            'VPVPS': 'Văn phòng VPS (VPVPS)'
+        };
+        const unitBadgeEl = document.getElementById('cust-report-unit-badge');
+        if (unitBadgeEl) {
+            unitBadgeEl.textContent = unitBadgeLabels[matrixKey] || 'Toàn Tập Đoàn (6 Đơn vị)';
+        }
 
         let cData = null;
         if (this.monthlyData && this.monthlyData[this.selectedMonth]) {
@@ -2175,6 +2609,7 @@ window.CustomersModule = {
             { id: 'dv_photo', name: 'Dịch vụ - Photo' },
             { id: 'dv_may_in', name: 'Dịch vụ - Máy in' },
             { id: 'dv_khac', name: 'Dịch vụ khác' },
+            { id: 'cua_hang', name: 'Cửa hàng (Bán lẻ)', isPhanPhoi: true },
             { id: 'phan_phoi', name: 'Phân phối (Đại lý)', isPhanPhoi: true }
         ];
 
@@ -2333,11 +2768,12 @@ window.CustomersModule = {
             </tr>
         `;
 
-        // Other service rows: Dịch vụ - Photo, Dịch vụ - Máy in, Dịch vụ khác, Phân phối (Đại lý)
+        // Other service rows: Dịch vụ - Photo, Dịch vụ - Máy in, Dịch vụ khác, Cửa hàng, Phân phối (Đại lý)
         const otherRows = [
             { id: 'dv_photo', name: 'Dịch vụ - Photo' },
             { id: 'dv_may_in', name: 'Dịch vụ - Máy in' },
             { id: 'dv_khac', name: 'Dịch vụ khác' },
+            { id: 'cua_hang', name: 'Cửa hàng (Bán lẻ)', isPhanPhoi: true },
             { id: 'phan_phoi', name: 'Phân phối (Đại lý)', isPhanPhoi: true }
         ];
 
@@ -2419,6 +2855,62 @@ window.CustomersModule = {
                 <td>${serviceSums.cuoi.kh.toLocaleString()}</td>
             </tr>
         `;
+
+        // Section II: TỔNG HỢP KHÁCH HÀNG & MÁY THEO ĐƠN VỊ THÀNH VIÊN
+        const mAllUnits = (this.monthlyData && this.monthlyData[this.selectedMonth]) ? this.monthlyData[this.selectedMonth] : (data && data.matrix ? data.matrix : {});
+        const unitDefs = [
+            { key: 'THH', name: '1. Công ty Tân Hồng Hà (THH)' },
+            { key: 'Viet', name: '2. Công ty Việt (Viet)' },
+            { key: 'XemSon', name: '3. Công ty Xem Sơn (XemSon)' },
+            { key: 'VPSM', name: '4. VPS Miền Trung (VPSM)' },
+            { key: 'ITSS', name: '5. Công ty ITSS' },
+            { key: 'VPVPS', name: '6. Văn phòng VPS (VPVPS)' }
+        ];
+        tbodyHTML += `
+            <tr class="section-title-row">
+                <td colspan="11" style="text-align: left;">
+                    <i data-lucide="building-2" style="width: 16px; height: 16px; display: inline-block; vertical-align: -2px; margin-right: 6px; color: #0284c7;"></i>
+                    II. BÁO CÁO KHÁCH HÀNG &amp; ĐẦU MÁY THEO TỪNG ĐƠN VỊ THÀNH VIÊN (Bấm vào đơn vị để xem chi tiết)
+                </td>
+            </tr>
+        `;
+        unitDefs.forEach(u => {
+            const uMat = mAllUnits[u.key] || (data && data.matrix && data.matrix[u.key]) || {};
+            const uSum = { dau: { may: 0, kh: 0 }, ke_hoach: { may: 0, kh: 0 }, tang: { may: 0, kh: 0 }, giam: { may: 0, kh: 0 }, cuoi: { may: 0, kh: 0 } };
+            serviceRowDefs.forEach(sr => {
+                const catObj = uMat[sr.id] || {};
+                if (!sr.isPhanPhoi) {
+                    uSum.dau.may += (catObj.dau?.may || 0);
+                    uSum.ke_hoach.may += (catObj.ke_hoach?.may || 0);
+                    uSum.tang.may += (catObj.tang?.may || 0);
+                    uSum.giam.may += (catObj.giam?.may || 0);
+                    uSum.cuoi.may += (catObj.cuoi?.may || 0);
+                }
+                uSum.dau.kh += (catObj.dau?.kh || 0);
+                uSum.ke_hoach.kh += (catObj.ke_hoach?.kh || 0);
+                uSum.tang.kh += (catObj.tang?.kh || 0);
+                uSum.giam.kh += (catObj.giam?.kh || 0);
+                uSum.cuoi.kh += (catObj.cuoi?.kh || 0);
+            });
+            const isSelectedUnit = matrixKey === u.key;
+            const uGiamMayHtml = uSum.giam.may > 0 ? `<span class="cust-lost-highlight">${uSum.giam.may}</span>` : '0';
+            const uGiamKhHtml = uSum.giam.kh > 0 ? `<span class="cust-lost-badge">${uSum.giam.kh}</span>` : '0';
+            tbodyHTML += `
+                <tr onclick="const cf=document.getElementById('customers-company-filter'); if(cf){cf.value='${u.key}'; cf.dispatchEvent(new Event('change'));}" style="cursor: pointer; ${isSelectedUnit ? 'background: #e0f2fe; font-weight: 800;' : ''}" title="Bấm để lọc riêng ${u.name}">
+                    <td style="text-align: left; padding-left: 14px; font-weight: 700; color: #0f172a;">${u.name}</td>
+                    <td>${uSum.dau.may.toLocaleString()}</td>
+                    <td>${uSum.dau.kh.toLocaleString()}</td>
+                    <td style="color: #0284c7; font-weight: 700;">${uSum.ke_hoach.may}</td>
+                    <td style="color: #0284c7; font-weight: 700;">${uSum.ke_hoach.kh}</td>
+                    <td>${uSum.tang.may}</td>
+                    <td>${uSum.tang.kh}</td>
+                    <td>${uGiamMayHtml}</td>
+                    <td>${uGiamKhHtml}</td>
+                    <td style="font-weight: 700;">${uSum.cuoi.may.toLocaleString()}</td>
+                    <td style="font-weight: 700; color: #0369a1;">${uSum.cuoi.kh.toLocaleString()}</td>
+                </tr>
+            `;
+        });
 
         const tbody = document.querySelector('#customersTable tbody');
         if (tbody) tbody.innerHTML = tbodyHTML;
