@@ -1388,7 +1388,7 @@ window.GoogleSheetsService = {
                     customers: window.mockData.customers
                 }
             };
-            localStorage.setItem('vps_dashboard_cache_v4', JSON.stringify(payload));
+            localStorage.setItem('vps_dashboard_cache_v5', JSON.stringify(payload));
             this._lastSyncTime = payload.timestamp;
             this.recordToHistoricalVault();
         } catch(e) {
@@ -1589,9 +1589,34 @@ window.GoogleSheetsService = {
                 const [sheetList, dept7Csv] = allResults[ci];
                 const [debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv, trainingCsv, serviceCsv, cultureCsv, brandCsv] = sheetList;
 
-                // 0. BÁO CÁO 8 PHÒNG BAN (DOANH SỐ VÀ LÃI GỘP) - NGUỒN CHUẨN THỰC TẾ
-                const comp7Items = parse7Departments(dept7Csv, cId);
+                // 0. BÁO CÁO 8 PHÒNG BAN (DOANH SỐ VÀ LÃI GỘP) - BẢO TOÀN SỐ LIỆU CHỐT SỔ THÁNG 10
+                const scanned7Items = parse7Departments(dept7Csv, cId);
+                const dept7HeaderStr = (dept7Csv || []).slice(0, 4).map(r => (r || []).join(' ')).join(' ').toLowerCase();
+                const isMonth11Sheet = dept7HeaderStr.includes('tháng 11') || dept7HeaderStr.includes('11/2026');
+                const lockedM10Items = (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.dept_7_by_company && window.LIVE_GOOGLE_SHEETS_DATA.dept_7_by_company[cId])
+                    ? JSON.parse(JSON.stringify(window.LIVE_GOOGLE_SHEETS_DATA.dept_7_by_company[cId]))
+                    : null;
+
+                if (!window._LIVE_M11_DEPT_BY_COMP) window._LIVE_M11_DEPT_BY_COMP = {};
+                if (isMonth11Sheet && scanned7Items && scanned7Items.length > 0) {
+                    window._LIVE_M11_DEPT_BY_COMP[cId] = scanned7Items;
+                }
+
+                // Với Kỳ Tháng 10 (đã chốt sổ), giữ nguyên số chốt Tháng 10 nếu đơn vị đã nhập đè Tháng 11 lên Google Sheet
+                const comp7Items = ((isMonth11Sheet || cId === 'VPSM') && lockedM10Items && lockedM10Items.length > 0)
+                    ? lockedM10Items
+                    : ((scanned7Items && scanned7Items.length > 0) ? scanned7Items : (lockedM10Items || []));
+
                 if (comp7Items && comp7Items.length > 0) {
+                    comp7Items.forEach(it => {
+                        if (it.deptId === 'khac') {
+                            const n = (it.name || '').toLowerCase();
+                            const note = (it.note || '').toLowerCase();
+                            if (n.includes('lẻ') || n.includes('cửa hàng') || note.includes('bán lẻ')) {
+                                it.deptId = 'ban_le';
+                            }
+                        }
+                    });
                     liveDept7SubItems.push(...comp7Items);
                 }
 

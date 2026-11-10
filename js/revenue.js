@@ -8,7 +8,7 @@
 window.RevenueModule = {
     currentTab: 'company', // 'company' | 'department'
     currentDeptCompany: 'all',
-    currentDeptMonth: '9', // Mặc định tháng 9/2026
+    currentDeptMonth: '10', // Mặc định tháng 10/2026 (Đã chốt sổ)
     currentDeptWeek: 'all', // 'all' | '1' | '2' | '3' | '4' | '5'
     currentDeptMode: 'month', // 'month' | 'week' | 'year'
     expandedRows: new Set(),
@@ -312,14 +312,14 @@ window.RevenueModule = {
         // 1. Phân phối
         { deptId: 'phan_phoi', comp: 'THH', name: 'Kinh doanh bán buôn', note: 'Phân phối đại lý miền Bắc', ytd_ds: 33978.0, ytd_lg: 3605.0, m8_ds: 8883.0, m8_lg: 888.3, plan_m_ds: 10834.0, plan_m_lg: 867.0, plan_year_ds: 100000.0, plan_year_lg: 8000.0 },
         { deptId: 'phan_phoi', comp: 'XemSon', name: 'Kinh doanh bán buôn', note: 'Phân phối đại lý miền Nam', ytd_ds: 27002.0, ytd_lg: 4410.0, m8_ds: 4168.0, m8_lg: 682.0, plan_m_ds: 5500, plan_m_lg: 525, plan_year_ds: 66000, plan_year_lg: 6300 },
-        { deptId: 'phan_phoi', comp: 'VPSM', name: 'Kinh doanh máy - bán buôn', note: 'Bán buôn máy VPS Miền Trung', ytd_ds: 6667.0, ytd_lg: 600.0, m8_ds: 238.0, m8_lg: 45.0, plan_m_ds: 1089.8, plan_m_lg: 75.0, plan_year_ds: 10000, plan_year_lg: 900 },
-        { deptId: 'phan_phoi', comp: 'VPSM', name: 'Kinh doanh linh kiện - bán buôn', note: 'Bán buôn linh kiện mực in', ytd_ds: 2333.0, ytd_lg: 300.0, m8_ds: 54.0, m8_lg: 22.0, plan_m_ds: 149.9, plan_m_lg: 38.0, plan_year_ds: 3500, plan_year_lg: 450 },
+        { deptId: 'phan_phoi', comp: 'VPSM', name: 'Kinh doanh máy - bán buôn', note: 'Bán buôn máy VPS Miền Trung', ytd_ds: 6667.0, ytd_lg: 600.0, m8_ds: 1483.7, m8_lg: 440.0, plan_m_ds: 1500.0, plan_m_lg: 450.0, plan_year_ds: 10000, plan_year_lg: 900 },
+        { deptId: 'phan_phoi', comp: 'VPSM', name: 'Kinh doanh linh kiện - bán buôn', note: 'Bán buôn linh kiện mực in', ytd_ds: 2333.0, ytd_lg: 300.0, m8_ds: 168.5, m8_lg: 29.0, plan_m_ds: 200.0, plan_m_lg: 35.0, plan_year_ds: 3500, plan_year_lg: 450 },
 
         // 2. Thuê máy
         { deptId: 'thue_may', comp: 'THH', name: 'Thuê máy Tân Hồng Hà', note: 'Cho thuê máy photocopy miền Bắc', ytd_ds: 4990.0, ytd_lg: 1767.0, m8_ds: 0.0, m8_lg: 0.0, plan_m_ds: 733.0, plan_m_lg: 440.0, plan_year_ds: 8000.0, plan_year_lg: 4800.0 },
         { deptId: 'thue_may', comp: 'Viet', name: 'Thuê máy Công ty Việt', note: 'Cho thuê máy Công ty Việt', ytd_ds: 12422.0, ytd_lg: 7195.0, m8_ds: 1546.0, m8_lg: 910.0, plan_year_ds: 18500, plan_year_lg: 10730 },
         { deptId: 'thue_may', comp: 'XemSon', name: 'Thuê máy Xem Sơn', note: 'Cho thuê máy photocopy miền Nam', ytd_ds: 16958.0, ytd_lg: 11264.0, m8_ds: 2078.0, m8_lg: 1337.0, plan_m_ds: 3500, plan_m_lg: 2123, plan_year_ds: 42000, plan_year_lg: 25480 },
-        { deptId: 'thue_may', comp: 'VPSM', name: 'Thuê máy Miền Trung', note: 'Thuê máy khu vực miền Trung', ytd_ds: 800.0, ytd_lg: 520.0, m8_ds: 55.0, m8_lg: 20.0, plan_m_ds: 197.0, plan_m_lg: 65.0, plan_year_ds: 1200, plan_year_lg: 780 },
+        { deptId: 'thue_may', comp: 'VPSM', name: 'Thuê máy Miền Trung', note: 'Thuê máy khu vực miền Trung', ytd_ds: 800.0, ytd_lg: 520.0, m8_ds: 93.0, m8_lg: 54.0, plan_m_ds: 100.0, plan_m_lg: 65.0, plan_year_ds: 1200, plan_year_lg: 780 },
 
         // 3. Dịch vụ
         { deptId: 'dich_vu', comp: 'THH', name: 'Tổ Dịch vụ THH', note: 'Bảo trì bảo dưỡng sửa chữa', ytd_ds: 10305.0, ytd_lg: 3425.0, m8_ds: 867.0, m8_lg: 317.0, plan_m_ds: 1833.0, plan_m_lg: 733.0, plan_year_ds: 20000.0, plan_year_lg: 8000.0 },
@@ -328,14 +328,14 @@ window.RevenueModule = {
         { deptId: 'dich_vu', comp: 'XemSon', name: 'Tổ Dịch vụ Xem Sơn', note: 'Kỹ thuật dịch vụ máy VP', ytd_ds: 9931.0, ytd_lg: 4063.0, m8_ds: 1295.0, m8_lg: 597.0, plan_m_ds: 2137, plan_m_lg: 715, plan_year_ds: 26000, plan_year_lg: 8580 },
         { deptId: 'dich_vu', comp: 'XemSon', name: 'Tổ mực In', note: 'Cung cấp thay thế mực in', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
         { deptId: 'dich_vu', comp: 'XemSon', name: 'Metercharge', note: 'Dịch vụ thu phí bản in chụp', ytd_ds: 0, ytd_lg: 0, m8_ds: 0, m8_lg: 0, plan_m_ds: 0, plan_m_lg: 0, plan_year_ds: 0, plan_year_lg: 0 },
-        { deptId: 'dich_vu', comp: 'VPSM', name: 'Dịch vụ kỹ thuật VPSM', note: 'Bảo trì sửa chữa máy', ytd_ds: 1800.0, ytd_lg: 900.0, m8_ds: 159.0, m8_lg: 95.0, plan_m_ds: 350.0, plan_m_lg: 112.0, plan_year_ds: 2700, plan_year_lg: 1350 },
-        { deptId: 'dich_vu', comp: 'VPSM', name: 'Dịch vụ toàn phần VPSM', note: 'Hợp đồng bảo trì trọn gói', ytd_ds: 533.0, ytd_lg: 313.0, m8_ds: 0.0, m8_lg: 35.0, plan_m_ds: 67.0, plan_m_lg: 39.0, plan_year_ds: 800, plan_year_lg: 470 },
+        { deptId: 'dich_vu', comp: 'VPSM', name: 'Dịch vụ kỹ thuật VPSM', note: 'Bảo trì sửa chữa máy', ytd_ds: 1800.0, ytd_lg: 900.0, m8_ds: 211.0, m8_lg: 97.0, plan_m_ds: 250.0, plan_m_lg: 110.0, plan_year_ds: 2700, plan_year_lg: 1350 },
+        { deptId: 'dich_vu', comp: 'VPSM', name: 'Dịch vụ toàn phần VPSM', note: 'Hợp đồng bảo trì trọn gói', ytd_ds: 533.0, ytd_lg: 313.0, m8_ds: 55.4, m8_lg: 38.5, plan_m_ds: 60.0, plan_m_lg: 50.0, plan_year_ds: 800, plan_year_lg: 470 },
 
         // 4. Online
         { deptId: 'online', comp: 'THH', name: 'Kinh doanh Online THH', note: 'Bán hàng trực tuyến', ytd_ds: 811.0, ytd_lg: 18.0, m8_ds: 49.0, m8_lg: 1.8, plan_m_ds: 275.0, plan_m_lg: 8.3, plan_year_ds: 11000.0, plan_year_lg: 890.0 },
         { deptId: 'online', comp: 'Viet', name: 'KD Online Việt', note: 'Kênh online sàn TMĐT', ytd_ds: 19902.0, ytd_lg: 1239.0, m8_ds: 3764.0, m8_lg: 241.0, plan_year_ds: 30500, plan_year_lg: 1830 },
         { deptId: 'online', comp: 'XemSon', name: 'Kinh doanh Online', note: 'Bán hàng trực tuyến', ytd_ds: 23597.0, ytd_lg: 882.0, m8_ds: 3918.0, m8_lg: 113.0, plan_m_ds: 2000, plan_m_lg: 100, plan_year_ds: 24000, plan_year_lg: 1200 },
-        { deptId: 'online', comp: 'VPSM', name: 'Shopee-Online VPSM', note: 'Gian hàng Shopee Miền Trung', ytd_ds: 933.0, ytd_lg: 56.0, m8_ds: 0.0, m8_lg: 3.0, plan_m_ds: 158.0, plan_m_lg: 7.0, plan_year_ds: 1400, plan_year_lg: 84 },
+        { deptId: 'online', comp: 'VPSM', name: 'Shopee-Online VPSM', note: 'Gian hàng Shopee Miền Trung', ytd_ds: 933.0, ytd_lg: 56.0, m8_ds: 102.0, m8_lg: 3.0, plan_m_ds: 150.0, plan_m_lg: 7.0, plan_year_ds: 1400, plan_year_lg: 84 },
 
         // 5. Dự án
         { deptId: 'du_an', comp: 'THH', name: 'Dự án Tân Hồng Hà', note: 'Dự án thầu thiết bị miền Bắc', ytd_ds: 18170.0, ytd_lg: 7304.0, m8_ds: 931.0, m8_lg: 470.0, plan_m_ds: 30000.0, plan_m_lg: 3000.0, plan_year_ds: 100000.0, plan_year_lg: 10000.0 },
@@ -350,7 +350,7 @@ window.RevenueModule = {
         // 7. Kinh doanh lẻ
         { deptId: 'ban_le', comp: 'Viet', name: 'Cửa hàng Việt', note: 'Bán lẻ tại điểm bán', ytd_ds: 835.27, ytd_lg: 355.78, m8_ds: 90.37, m8_lg: 61.81, plan_m_ds: 550, plan_m_lg: 82.5, plan_year_ds: 6000, plan_year_lg: 900 },
         { deptId: 'ban_le', comp: 'XemSon', name: 'Bán máy lẻ Xem Sơn', note: 'Bán lẻ thiết bị văn phòng', ytd_ds: 3667.0, ytd_lg: 843.0, m8_ds: 191.0, m8_lg: 49.0, plan_m_ds: 458, plan_m_lg: 105, plan_year_ds: 5500, plan_year_lg: 1265 },
-        { deptId: 'ban_le', comp: 'VPSM', name: 'Bán lẻ VPS Miền Trung', note: 'Bán lẻ tại showroom', ytd_ds: 400.0, ytd_lg: 72.0, m8_ds: 0.0, m8_lg: 1.0, plan_m_ds: 103, plan_m_lg: 9, plan_year_ds: 600, plan_year_lg: 108 },
+        { deptId: 'ban_le', comp: 'VPSM', name: 'Bán lẻ VPS Miền Trung', note: 'Bán lẻ tại showroom', ytd_ds: 400.0, ytd_lg: 72.0, m8_ds: 34.0, m8_lg: 3.0, plan_m_ds: 100.0, plan_m_lg: 10.0, plan_year_ds: 600, plan_year_lg: 108 },
 
         // 8. Kinh doanh khác
         { deptId: 'khac', comp: 'Viet', name: 'Bán nội bộ Việt', note: 'Hoạt động nội bộ', ytd_ds: 607.91, ytd_lg: 78.97, m8_ds: 11.1, m8_lg: 0.13, plan_m_ds: 10, plan_m_lg: 1, plan_year_ds: 600, plan_year_lg: 75 },
@@ -768,10 +768,21 @@ window.RevenueModule = {
             let deptActualWeekDs = 0, deptActualWeekLg = 0;
             let deptActualYearDs = 0, deptActualYearLg = 0;
 
-            // Sub-items thuộc phòng ban và các công ty đang chọn
-            const subItems = this.DEPT_SUB_ITEMS.filter(it => 
-                it.deptId === dept.id && companies.includes(it.comp)
-            );
+            // Sub-items thuộc phòng ban và các công ty đang chọn (Nếu chọn T11 và có dữ liệu T11 trên Sheet thì lấy T11)
+            const sourceSubItems = [];
+            companies.forEach(cKey => {
+                if (selM === '11' && window._LIVE_M11_DEPT_BY_COMP && window._LIVE_M11_DEPT_BY_COMP[cKey]) {
+                    window._LIVE_M11_DEPT_BY_COMP[cKey].forEach(it => {
+                        const dId = (it.deptId === 'khac' && ((it.name || '').toLowerCase().includes('lẻ') || (it.name || '').toLowerCase().includes('cửa hàng') || (it.note || '').toLowerCase().includes('bán lẻ'))) ? 'ban_le' : it.deptId;
+                        if (dId === dept.id) sourceSubItems.push({ ...it, deptId: dId });
+                    });
+                } else {
+                    this.DEPT_SUB_ITEMS.filter(it => it.comp === cKey && it.deptId === dept.id).forEach(it => {
+                        sourceSubItems.push(it);
+                    });
+                }
+            });
+            const subItems = sourceSubItems;
 
             // Gom sub-items theo công ty để phân bổ tỷ lệ chính xác
             const subItemsByComp = {};
@@ -786,8 +797,8 @@ window.RevenueModule = {
                 const compPlanYearDs = compSubItems.reduce((s, it) => s + (it.plan_year_ds || 0), 0);
                 const compPlanYearLg = compSubItems.reduce((s, it) => s + (it.plan_year_lg || 0), 0);
                 let compPlanMonthDs = compSubItems.reduce((s, it) => s + (it.plan_m_ds || 0), 0) || Math.round(compPlanYearDs / 12);
-                if (comp === 'VPSM' && dept.id === 'phan_phoi') {
-                    compPlanMonthDs = 1125; // Dòng cha Mục 1 trên Google Sheet của VPSM ghi cố định 1,125 (tổng KH đơn vị = 2,000)
+                if (comp === 'VPSM' && dept.id === 'phan_phoi' && selM === '11') {
+                    compPlanMonthDs = 1125; // Dòng cha Mục 1 kỳ T11 trên Google Sheet của VPSM ghi cố định 1,125 (tổng KH đơn vị = 2,000)
                 }
                 const compPlanMonthLg = compSubItems.reduce((s, it) => s + (it.plan_m_lg || 0), 0) || Math.round(compPlanYearLg / 12);
                 const compPlanWeekDs = Math.round(compPlanMonthDs / 4);

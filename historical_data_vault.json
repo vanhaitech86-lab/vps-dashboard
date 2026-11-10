@@ -1,13 +1,13 @@
 {
   "created_at": "2026-11-09 08:16:15",
-  "last_updated": "2026-11-09 13:06:57",
+  "last_updated": "2026-11-10 09:55:34",
   "units": {
     "THH": {
       "company": "THH",
       "companyName": "Tân Hồng Hà",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 13:06:57",
+          "recorded_at": "2026-11-10 09:55:34",
           "ds_7pb_kh_trieu": 48983.0,
           "ds_7pb_th_trieu": 20849.1,
           "lg_7pb_kh_trieu": 6402.3,
@@ -51,7 +51,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 13:06:57",
+        "recorded_at": "2026-11-10 09:55:34",
         "ds_7pb_kh_trieu": 48983.0,
         "ds_7pb_th_trieu": 20849.1,
         "lg_7pb_kh_trieu": 6402.3,
@@ -99,8 +99,8 @@
       "companyName": "Việt",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 13:06:57",
-          "ds_7pb_kh_trieu": 19798.0,
+          "recorded_at": "2026-11-10 09:55:34",
+          "ds_7pb_kh_trieu": 9808.0,
           "ds_7pb_th_trieu": 6433.6,
           "lg_7pb_kh_trieu": 2206.8,
           "lg_7pb_th_trieu": 1368.06,
@@ -137,8 +137,8 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 13:06:57",
-        "ds_7pb_kh_trieu": 19798.0,
+        "recorded_at": "2026-11-10 09:55:34",
+        "ds_7pb_kh_trieu": 9808.0,
         "ds_7pb_th_trieu": 6433.6,
         "lg_7pb_kh_trieu": 2206.8,
         "lg_7pb_th_trieu": 1368.06,
@@ -179,7 +179,7 @@
       "companyName": "Xem Sơn",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 13:06:57",
+          "recorded_at": "2026-11-10 09:55:34",
           "ds_7pb_kh_trieu": 14700.0,
           "ds_7pb_th_trieu": 12130.0,
           "lg_7pb_kh_trieu": 3588.0,
@@ -211,7 +211,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 13:06:57",
+        "recorded_at": "2026-11-10 09:55:34",
         "ds_7pb_kh_trieu": 14700.0,
         "ds_7pb_th_trieu": 12130.0,
         "lg_7pb_kh_trieu": 3588.0,
@@ -247,11 +247,11 @@
       "companyName": "VPS M",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 13:06:57",
-          "ds_7pb_kh_trieu": 875.0,
-          "ds_7pb_th_trieu": 1895.0,
-          "lg_7pb_kh_trieu": 345.0,
-          "lg_7pb_th_trieu": 221.0,
+          "recorded_at": "2026-11-10 09:55:34",
+          "ds_7pb_kh_trieu": 2360.0,
+          "ds_7pb_th_trieu": 2147.6,
+          "lg_7pb_kh_trieu": 727.0,
+          "lg_7pb_th_trieu": 664.5,
           "debt_10_2026_vnd": 2500152647.0,
           "debt_latest_vnd": 2500000000.0,
           "debt_by_month": {
@@ -279,11 +279,11 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 13:06:57",
-        "ds_7pb_kh_trieu": 875.0,
-        "ds_7pb_th_trieu": 1895.0,
-        "lg_7pb_kh_trieu": 345.0,
-        "lg_7pb_th_trieu": 221.0,
+        "recorded_at": "2026-11-10 09:55:34",
+        "ds_7pb_kh_trieu": 2360.0,
+        "ds_7pb_th_trieu": 2147.6,
+        "lg_7pb_kh_trieu": 727.0,
+        "lg_7pb_th_trieu": 664.5,
         "debt_10_2026_vnd": 2500152647.0,
         "debt_latest_vnd": 2500000000.0,
         "debt_by_month": {
@@ -315,7 +315,7 @@
       "companyName": "ITSS",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 13:06:57",
+          "recorded_at": "2026-11-10 09:55:34",
           "ds_7pb_kh_trieu": 705.0,
           "ds_7pb_th_trieu": 533.0,
           "lg_7pb_kh_trieu": 198.0,
@@ -353,7 +353,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 13:06:57",
+        "recorded_at": "2026-11-10 09:55:34",
         "ds_7pb_kh_trieu": 705.0,
         "ds_7pb_th_trieu": 533.0,
         "lg_7pb_kh_trieu": 198.0,
@@ -395,7 +395,7 @@
       "companyName": "Văn phòng VPS",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-09 13:06:57",
+          "recorded_at": "2026-11-10 09:55:34",
           "ds_7pb_kh_trieu": 3000.0,
           "ds_7pb_th_trieu": 7386.0,
           "lg_7pb_kh_trieu": 360.0,
@@ -429,11 +429,11 @@
           "customers_kh": 2224,
           "customers_may": 7757,
           "products_vnd": 1142423079.0,
-          "expense_vnd": 1820823923.0
+          "expense_vnd": 2285668368.0
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-09 13:06:57",
+        "recorded_at": "2026-11-10 09:55:34",
         "ds_7pb_kh_trieu": 3000.0,
         "ds_7pb_th_trieu": 7386.0,
         "lg_7pb_kh_trieu": 360.0,
@@ -467,11 +467,99 @@
         "customers_kh": 2224,
         "customers_may": 7757,
         "products_vnd": 1142423079.0,
-        "expense_vnd": 1820823923.0
+        "expense_vnd": 2285668368.0
       }
     }
   },
   "audit_log": [
+    {
+      "timestamp": "2026-11-10 09:55:34",
+      "company": "VPSM",
+      "companyName": "VPS Miền Trung",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Chốt sổ chính thức Doanh số & Lãi gộp Tháng 10/2026",
+      "oldValue": "DS T10: 1.895,00 tr | LG: 221,00 tr",
+      "newValue": "DS KH: 2.360,00 tr | DS TH: 2.147,60 tr (91,0%) | LG KH: 727,00 tr | LG TH: 664,50 tr (91,4%)",
+      "status": "ĐÃ CHỐT SỔ THÁNG 10"
+    },
+    {
+      "timestamp": "2026-11-10 09:55:34",
+      "company": "VPSM",
+      "companyName": "VPS M",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Doanh số & Lãi gộp T10",
+      "oldValue": "DS: 506.00 tr | LG: 221.00 tr",
+      "newValue": "DS: 2,147.60 tr | LG: 664.50 tr",
+      "status": "CẬP NHẬT +1,641.60 tr"
+    },
+    {
+      "timestamp": "2026-11-10 09:55:34",
+      "company": "XemSon",
+      "companyName": "Xem Sơn",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Doanh số & Lãi gộp T10",
+      "oldValue": "DS: 2,472.00 tr | LG: 0.00 tr",
+      "newValue": "DS: 12,130.00 tr | LG: 3,069.00 tr",
+      "status": "CẬP NHẬT +9,658.00 tr"
+    },
+    {
+      "timestamp": "2026-11-10 09:55:34",
+      "company": "Viet",
+      "companyName": "Việt",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Doanh số & Lãi gộp T10",
+      "oldValue": "DS: 1,044.27 tr | LG: 131.72 tr",
+      "newValue": "DS: 6,433.60 tr | LG: 1,368.06 tr",
+      "status": "CẬP NHẬT +5,389.33 tr"
+    },
+    {
+      "timestamp": "2026-11-09 20:04:38",
+      "company": "XemSon",
+      "companyName": "Xem Sơn",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Doanh số & Lãi gộp T10",
+      "oldValue": "DS: 12,130.00 tr | LG: 3,069.00 tr",
+      "newValue": "DS: 2,472.00 tr | LG: 0.00 tr",
+      "status": "CẬP NHẬT -9,658.00 tr"
+    },
+    {
+      "timestamp": "2026-11-09 20:04:38",
+      "company": "Viet",
+      "companyName": "Việt",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Doanh số & Lãi gộp T10",
+      "oldValue": "DS: 6,433.60 tr | LG: 1,368.06 tr",
+      "newValue": "DS: 1,044.27 tr | LG: 131.72 tr",
+      "status": "CẬP NHẬT -5,389.33 tr"
+    },
+    {
+      "timestamp": "2026-11-09 20:01:14",
+      "company": "VPSM",
+      "companyName": "VPS M",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Doanh số & Lãi gộp T10",
+      "oldValue": "DS: 1,895.00 tr | LG: 221.00 tr",
+      "newValue": "DS: 506.00 tr | LG: 221.00 tr",
+      "status": "CẬP NHẬT -1,389.00 tr"
+    },
+    {
+      "timestamp": "2026-11-09 19:56:05",
+      "company": "VPVPS",
+      "companyName": "Văn phòng VPS",
+      "module": "8. Chi phí & Định mức",
+      "period": "10/2026",
+      "metric": "Tổng Chi phí Thực hiện",
+      "oldValue": "1,820.82 tr",
+      "newValue": "2,285.67 tr",
+      "status": "MỚI CẬP NHẬT SỐ LIỆU"
+    },
     {
       "timestamp": "2026-11-09 13:05:59",
       "company": "XemSon",
