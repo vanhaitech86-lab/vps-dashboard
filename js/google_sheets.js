@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // Google Sheets Service - Multi-File / Multi-Sheet Live Pipeline
 // Tải và tổng hợp toàn bộ 8 sheet từ 5 file Google Sheets riêng của từng đơn vị
 // ============================================================
@@ -1152,7 +1152,7 @@ window.GoogleSheetsService = {
                 return true;
             }
 
-            const raw = localStorage.getItem('vps_dashboard_cache_v4');
+            const raw = localStorage.getItem('vps_dashboard_cache_v5');
             if (raw) {
                 const cached = JSON.parse(raw);
                 if (cached && cached.mockData) {
@@ -1603,7 +1603,7 @@ window.GoogleSheetsService = {
                 }
 
                 // Với Kỳ Tháng 10 (đã chốt sổ), giữ nguyên số chốt Tháng 10 nếu đơn vị đã nhập đè Tháng 11 lên Google Sheet
-                const comp7Items = ((isMonth11Sheet || cId === 'VPSM') && lockedM10Items && lockedM10Items.length > 0)
+                const comp7Items = (isMonth11Sheet && lockedM10Items && lockedM10Items.length > 0)
                     ? lockedM10Items
                     : ((scanned7Items && scanned7Items.length > 0) ? scanned7Items : (lockedM10Items || []));
 
