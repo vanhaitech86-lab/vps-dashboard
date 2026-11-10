@@ -193,6 +193,81 @@ function extractMonthFromHeader(row0) {
     return m ? m[1] : '';
 }
 
+// ============================================================
+// KHO LƯU TRỮ THEO KỲ (PERIOD ARCHIVE) - TỰ ĐỘNG LƯU KỲ TRƯỚC KHI ĐƠN VỊ NHẬP KỲ MỚI
+// Khóa kỳ: 'MM/YYYY' (cả tháng) hoặc 'MM/YYYY-W<tuần>'. Kỳ đã khóa không bị ghi đè.
+// Nguồn: period_archive trong google_sheets_live_data.js (do máy quét lưu) + localStorage (bổ sung từ trình duyệt)
+// ============================================================
+window.VPSArchive = {
+    LS_KEY: 'vps_period_archive_v1',
+    _arch: null,
+    detectPeriod(csv) {
+        const text = (csv || []).slice(0, 4).map(r => (r || []).join(' ')).join(' ');
+        const m = text.match(/tháng\s*(\d{1,2})\s*(?:\/|năm)\s*(\d{4})/i);
+        if (!m) return null;
+        const w = text.match(/tuần\s*(\d)/i);
+        const key = String(m[1]).padStart(2, '0') + '/' + m[2];
+        return w ? key + '-W' + w[1] : key;
+    },
+    get() {
+        if (this._arch) return this._arch;
+        const seed = (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.period_archive) || {};
+        const a = {
+            default_period: seed.default_period || '10/2026',
+            snapshots: JSON.parse(JSON.stringify(seed.snapshots || {})),
+            locked: JSON.parse(JSON.stringify(seed.locked || {})),
+            current: JSON.parse(JSON.stringify(seed.current || {}))
+        };
+        try {
+            const st = JSON.parse(localStorage.getItem(this.LS_KEY) || 'null');
+            if (st && st.snapshots) {
+                Object.entries(st.snapshots).forEach(([pk, per]) => {
+                    Object.entries(per).forEach(([c, items]) => {
+                        if (!(a.snapshots[pk] && a.snapshots[pk][c])) {
+                            (a.snapshots[pk] = a.snapshots[pk] || {})[c] = items;
+                        }
+                    });
+                });
+                Object.entries(st.locked || {}).forEach(([pk, per]) => {
+                    a.locked[pk] = Object.assign({}, a.locked[pk] || {}, per);
+                });
+            }
+        } catch (e) {}
+        this._arch = a;
+        this._publish();
+        return a;
+    },
+    record(cId, pk, items) {
+        const a = this.get();
+        const prev = a.current[cId];
+        if (prev && prev !== pk) {
+            // Đơn vị chuyển sang kỳ mới -> tự động khóa kỳ trước
+            (a.locked[prev] = a.locked[prev] || {})[cId] = true;
+        }
+        a.current[cId] = pk;
+        const isLocked = a.locked[pk] && a.locked[pk][cId];
+        if (!(isLocked && a.snapshots[pk] && a.snapshots[pk][cId])) {
+            (a.snapshots[pk] = a.snapshots[pk] || {})[cId] = JSON.parse(JSON.stringify(items));
+        }
+        this._publish();
+        try { localStorage.setItem(this.LS_KEY, JSON.stringify({ snapshots: a.snapshots, locked: a.locked, current: a.current })); } catch (e) {}
+    },
+    // Lấy số liệu 7 phòng ban của 1 đơn vị theo kỳ (tháng + tuần)
+    getItems(cId, month, week) {
+        const a = this.get();
+        const mm = String(month).padStart(2, '0') + '/2026';
+        const snaps = a.snapshots || {};
+        if (week && week !== 'all' && snaps[mm + '-W' + week] && snaps[mm + '-W' + week][cId]) return snaps[mm + '-W' + week][cId];
+        if (snaps[mm] && snaps[mm][cId]) return snaps[mm][cId];
+        const wk = Object.keys(snaps).filter(k => k.startsWith(mm + '-W') && snaps[k][cId]).sort();
+        return wk.length ? snaps[wk[wk.length - 1]][cId] : null;
+    },
+    _publish() {
+        if (!window.LIVE_GOOGLE_SHEETS_DATA) window.LIVE_GOOGLE_SHEETS_DATA = {};
+        window.LIVE_GOOGLE_SHEETS_DATA.period_archive = this._arch;
+    }
+};
+
 // Fallback CSV Parser thuần JS không phụ thuộc thư viện
 function parseRawCSV(text) {
     const lines = [];
@@ -1589,23 +1664,22 @@ window.GoogleSheetsService = {
                 const [sheetList, dept7Csv] = allResults[ci];
                 const [debtCsv, custCsv, invCsv, hrCsv, spCsv, cpCsv, isoCsv, trainingCsv, serviceCsv, cultureCsv, brandCsv] = sheetList;
 
-                // 0. BÁO CÁO 8 PHÒNG BAN (DOANH SỐ VÀ LÃI GỘP) - BẢO TOÀN SỐ LIỆU CHỐT SỔ THÁNG 10
+                // 0. BÁO CÁO 7 PHÒNG BAN - TỰ ĐỘNG LƯU KỲ TRƯỚC KHI ĐƠN VỊ NHẬP KỲ MỚI (PERIOD ARCHIVE)
                 const scanned7Items = parse7Departments(dept7Csv, cId);
-                const dept7HeaderStr = (dept7Csv || []).slice(0, 4).map(r => (r || []).join(' ')).join(' ').toLowerCase();
-                const isMonth11Sheet = dept7HeaderStr.includes('tháng 11') || dept7HeaderStr.includes('11/2026');
-                const lockedM10Items = (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.dept_7_by_company && window.LIVE_GOOGLE_SHEETS_DATA.dept_7_by_company[cId])
-                    ? JSON.parse(JSON.stringify(window.LIVE_GOOGLE_SHEETS_DATA.dept_7_by_company[cId]))
+                const scannedPeriod = window.VPSArchive.detectPeriod(dept7Csv);
+                const arch = window.VPSArchive.get();
+                const defaultPeriod = arch.default_period || '10/2026';
+                if (scannedPeriod && scanned7Items && scanned7Items.length > 0) {
+                    window.VPSArchive.record(cId, scannedPeriod, scanned7Items);
+                }
+                const lockedItems = (arch.snapshots[defaultPeriod] && arch.snapshots[defaultPeriod][cId])
+                    ? JSON.parse(JSON.stringify(arch.snapshots[defaultPeriod][cId]))
                     : null;
 
-                if (!window._LIVE_M11_DEPT_BY_COMP) window._LIVE_M11_DEPT_BY_COMP = {};
-                if (isMonth11Sheet && scanned7Items && scanned7Items.length > 0) {
-                    window._LIVE_M11_DEPT_BY_COMP[cId] = scanned7Items;
-                }
-
-                // Với Kỳ Tháng 10 (đã chốt sổ), giữ nguyên số chốt Tháng 10 nếu đơn vị đã nhập đè Tháng 11 lên Google Sheet
-                const comp7Items = (isMonth11Sheet && lockedM10Items && lockedM10Items.length > 0)
-                    ? lockedM10Items
-                    : ((scanned7Items && scanned7Items.length > 0) ? scanned7Items : (lockedM10Items || []));
+                // Kỳ mặc định (đã chốt sổ) luôn lấy từ kho lưu trữ nếu có; chỉ lấy trực tiếp từ sheet khi chưa có bản lưu
+                const comp7Items = (lockedItems && lockedItems.length > 0)
+                    ? lockedItems
+                    : ((scanned7Items && scanned7Items.length > 0) ? scanned7Items : []);
 
                 if (comp7Items && comp7Items.length > 0) {
                     comp7Items.forEach(it => {

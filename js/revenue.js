@@ -768,12 +768,14 @@ window.RevenueModule = {
             let deptActualWeekDs = 0, deptActualWeekLg = 0;
             let deptActualYearDs = 0, deptActualYearLg = 0;
 
-            // Sub-items thuộc phòng ban và các công ty đang chọn (Nếu chọn T11 và có dữ liệu T11 trên Sheet thì lấy T11)
+            // Sub-items thuộc phòng ban và các công ty đang chọn - ưu tiên Kho lưu trữ theo kỳ (VPSArchive)
             const sourceSubItems = [];
+            const normDept = it => ((it.deptId === 'khac' && ((it.name || '').toLowerCase().includes('lẻ') || (it.name || '').toLowerCase().includes('cửa hàng') || (it.note || '').toLowerCase().includes('bán lẻ'))) ? 'ban_le' : it.deptId);
             companies.forEach(cKey => {
-                if (selM === '11' && window._LIVE_M11_DEPT_BY_COMP && window._LIVE_M11_DEPT_BY_COMP[cKey]) {
-                    window._LIVE_M11_DEPT_BY_COMP[cKey].forEach(it => {
-                        const dId = (it.deptId === 'khac' && ((it.name || '').toLowerCase().includes('lẻ') || (it.name || '').toLowerCase().includes('cửa hàng') || (it.note || '').toLowerCase().includes('bán lẻ'))) ? 'ban_le' : it.deptId;
+                const archived = (window.VPSArchive && !(selM === '9' && cKey !== 'THH')) ? window.VPSArchive.getItems(cKey, selM, selW) : null;
+                if (archived && archived.length) {
+                    archived.forEach(it => {
+                        const dId = normDept(it);
                         if (dId === dept.id) sourceSubItems.push({ ...it, deptId: dId });
                     });
                 } else {

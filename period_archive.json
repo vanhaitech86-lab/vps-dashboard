@@ -1,0 +1,878 @@
+{
+  "snapshots": {
+    "10/2026": {
+      "Viet": {
+        "captured_at": "2026-11-10 10:13:23",
+        "items": [
+          {
+            "deptId": "thue_may",
+            "comp": "Viet",
+            "name": "Thuê máy Công ty Việt",
+            "note": "Cho thuê máy Công ty Việt",
+            "ytd_ds": 15576.8,
+            "ytd_lg": 9079.57,
+            "m8_ds": 1574.4,
+            "m8_lg": 956.08,
+            "plan_m_ds": 2498.0,
+            "plan_m_lg": 1548.8,
+            "plan_year_ds": 28000.0,
+            "plan_year_lg": 17360.0
+          },
+          {
+            "deptId": "online",
+            "comp": "Viet",
+            "name": "KD Online Việt",
+            "note": "Kênh online sàn TMĐT",
+            "ytd_ds": 25672.93,
+            "ytd_lg": 1629.54,
+            "m8_ds": 2579.76,
+            "m8_lg": 139.1,
+            "plan_m_ds": 3300.0,
+            "plan_m_lg": 264.0,
+            "plan_year_ds": 36000.0,
+            "plan_year_lg": 1800.0
+          },
+          {
+            "deptId": "kdth",
+            "comp": "Viet",
+            "name": "KDTH Công ty Việt",
+            "note": "Kinh doanh tổng hợp",
+            "ytd_ds": 19083.11,
+            "ytd_lg": 1500.14,
+            "m8_ds": 2130.34,
+            "m8_lg": 183.55,
+            "plan_m_ds": 3450.0,
+            "plan_m_lg": 310.5,
+            "plan_year_ds": 36000.0,
+            "plan_year_lg": 2880.0
+          },
+          {
+            "deptId": "khac",
+            "comp": "Viet",
+            "name": "Cửa hàng Việt",
+            "note": "Bán lẻ tại điểm bán",
+            "ytd_ds": 1055.13,
+            "ytd_lg": 502.37,
+            "m8_ds": 110.01,
+            "m8_lg": 73.86,
+            "plan_m_ds": 550.0,
+            "plan_m_lg": 82.5,
+            "plan_year_ds": 6000.0,
+            "plan_year_lg": 900.0
+          },
+          {
+            "deptId": "khac",
+            "comp": "Viet",
+            "name": "Bán nội bộ Việt",
+            "note": "Hoạt động nội bộ",
+            "ytd_ds": 723.99,
+            "ytd_lg": 102.71,
+            "m8_ds": 39.09,
+            "m8_lg": 15.47,
+            "plan_m_ds": 10.0,
+            "plan_m_lg": 1.0,
+            "plan_year_ds": 600.0,
+            "plan_year_lg": 75.0
+          }
+        ]
+      },
+      "XemSon": {
+        "captured_at": "2026-11-10 10:13:23",
+        "items": [
+          {
+            "deptId": "phan_phoi",
+            "comp": "XemSon",
+            "name": "Kinh doanh sỉ (KD sỉ)",
+            "note": "Phân phối thiết bị Xesco",
+            "ytd_ds": 33735.0,
+            "ytd_lg": 5875.0,
+            "m8_ds": 3454.0,
+            "m8_lg": 853.0,
+            "plan_m_ds": 5775.0,
+            "plan_m_lg": 525.0,
+            "plan_year_ds": 66000.0,
+            "plan_year_lg": 6300.0
+          },
+          {
+            "deptId": "thue_may",
+            "comp": "XemSon",
+            "name": "Kỹ thuật thuê máy (KT)",
+            "note": "Máy thuê kỹ thuật Xesco",
+            "ytd_ds": 17396.0,
+            "ytd_lg": 11186.0,
+            "m8_ds": 1761.0,
+            "m8_lg": 976.0,
+            "plan_m_ds": 2975.0,
+            "plan_m_lg": 1756.0,
+            "plan_year_ds": 34000.0,
+            "plan_year_lg": 21080.0
+          },
+          {
+            "deptId": "thue_may",
+            "comp": "XemSon",
+            "name": "KD Thuê máy (Thương mại)",
+            "note": "Hợp đồng thuê máy mới",
+            "ytd_ds": 4006.0,
+            "ytd_lg": 2794.0,
+            "m8_ds": 518.0,
+            "m8_lg": 375.0,
+            "plan_m_ds": 700.0,
+            "plan_m_lg": 367.0,
+            "plan_year_ds": 8000.0,
+            "plan_year_lg": 4400.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "XemSon",
+            "name": "Dịch vụ kỹ thuật Xem Sơn",
+            "note": "Kỹ thuật dịch vụ máy VP",
+            "ytd_ds": 12619.0,
+            "ytd_lg": 5243.0,
+            "m8_ds": 1528.0,
+            "m8_lg": 672.0,
+            "plan_m_ds": 2275.0,
+            "plan_m_lg": 715.0,
+            "plan_year_ds": 26000.0,
+            "plan_year_lg": 8580.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "XemSon",
+            "name": "Metercharge Xem Sơn",
+            "note": "",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 0.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 0.0,
+            "plan_m_lg": 0.0,
+            "plan_year_ds": 0.0,
+            "plan_year_lg": 0.0
+          },
+          {
+            "deptId": "online",
+            "comp": "XemSon",
+            "name": "KD Online Xem Sơn",
+            "note": "Thương mại điện tử Xesco",
+            "ytd_ds": 29560.0,
+            "ytd_lg": 995.0,
+            "m8_ds": 2929.0,
+            "m8_lg": 51.0,
+            "plan_m_ds": 2100.0,
+            "plan_m_lg": 100.0,
+            "plan_year_ds": 24000.0,
+            "plan_year_lg": 1200.0
+          },
+          {
+            "deptId": "du_an",
+            "comp": "XemSon",
+            "name": "Dự án Xesco",
+            "note": "Gói thầu thiết bị miền Nam",
+            "ytd_ds": 10980.0,
+            "ytd_lg": 3102.0,
+            "m8_ds": 1542.0,
+            "m8_lg": 12.0,
+            "plan_m_ds": 0.0,
+            "plan_m_lg": 0.0,
+            "plan_year_ds": 0.0,
+            "plan_year_lg": 0.0
+          },
+          {
+            "deptId": "khac",
+            "comp": "XemSon",
+            "name": "Bán máy lẻ Xem Sơn",
+            "note": "Bán lẻ thiết bị văn phòng",
+            "ytd_ds": 3871.0,
+            "ytd_lg": 999.0,
+            "m8_ds": 398.0,
+            "m8_lg": 130.0,
+            "plan_m_ds": 875.0,
+            "plan_m_lg": 125.0,
+            "plan_year_ds": 10000.0,
+            "plan_year_lg": 1500.0
+          }
+        ]
+      },
+      "VPSM": {
+        "captured_at": "2026-11-10 10:13:23",
+        "items": [
+          {
+            "deptId": "phan_phoi",
+            "comp": "VPSM",
+            "name": "Kinh doanh máy - bán buôn",
+            "note": "Bán buôn máy VPS Miền Trung",
+            "ytd_ds": 6667.0,
+            "ytd_lg": 600.0,
+            "m8_ds": 1483.7,
+            "m8_lg": 440.0,
+            "plan_m_ds": 1500.0,
+            "plan_m_lg": 450.0,
+            "plan_year_ds": 10000.0,
+            "plan_year_lg": 900.0
+          },
+          {
+            "deptId": "phan_phoi",
+            "comp": "VPSM",
+            "name": "Kinh doanh linh kiện - bán buôn",
+            "note": "Bán buôn linh kiện mực in",
+            "ytd_ds": 2333.0,
+            "ytd_lg": 300.0,
+            "m8_ds": 168.5,
+            "m8_lg": 29.0,
+            "plan_m_ds": 200.0,
+            "plan_m_lg": 35.0,
+            "plan_year_ds": 3500.0,
+            "plan_year_lg": 450.0
+          },
+          {
+            "deptId": "thue_may",
+            "comp": "VPSM",
+            "name": "Thuê máy Miền Trung",
+            "note": "Thuê máy khu vực miền Trung",
+            "ytd_ds": 800.0,
+            "ytd_lg": 520.0,
+            "m8_ds": 93.0,
+            "m8_lg": 54.0,
+            "plan_m_ds": 100.0,
+            "plan_m_lg": 65.0,
+            "plan_year_ds": 1200.0,
+            "plan_year_lg": 780.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "VPSM",
+            "name": "Dịch vụ kỹ thuật VPSM",
+            "note": "Bảo trì sửa chữa máy",
+            "ytd_ds": 1800.0,
+            "ytd_lg": 900.0,
+            "m8_ds": 211.0,
+            "m8_lg": 97.0,
+            "plan_m_ds": 250.0,
+            "plan_m_lg": 110.0,
+            "plan_year_ds": 2700.0,
+            "plan_year_lg": 1350.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "VPSM",
+            "name": "Dịch vụ toàn phần VPSM",
+            "note": "Hợp đồng bảo trì trọn gói",
+            "ytd_ds": 533.0,
+            "ytd_lg": 313.0,
+            "m8_ds": 55.4,
+            "m8_lg": 38.5,
+            "plan_m_ds": 60.0,
+            "plan_m_lg": 50.0,
+            "plan_year_ds": 800.0,
+            "plan_year_lg": 470.0
+          },
+          {
+            "deptId": "online",
+            "comp": "VPSM",
+            "name": "Shopee-Online VPSM",
+            "note": "Gian hàng Shopee Miền Trung",
+            "ytd_ds": 933.0,
+            "ytd_lg": 56.0,
+            "m8_ds": 102.0,
+            "m8_lg": 3.0,
+            "plan_m_ds": 150.0,
+            "plan_m_lg": 7.0,
+            "plan_year_ds": 1400.0,
+            "plan_year_lg": 84.0
+          },
+          {
+            "deptId": "khac",
+            "comp": "VPSM",
+            "name": "Bán lẻ VPS Miền Trung",
+            "note": "Bán lẻ tại showroom",
+            "ytd_ds": 400.0,
+            "ytd_lg": 72.0,
+            "m8_ds": 34.0,
+            "m8_lg": 3.0,
+            "plan_m_ds": 100.0,
+            "plan_m_lg": 10.0,
+            "plan_year_ds": 600.0,
+            "plan_year_lg": 108.0
+          }
+        ]
+      },
+      "THH": {
+        "captured_at": "2026-11-10 10:16:04",
+        "items": [
+          {
+            "deptId": "phan_phoi",
+            "comp": "THH",
+            "name": "Kinh doanh bán buôn",
+            "note": "Phân phối đại lý miền Bắc",
+            "ytd_ds": 44087.8,
+            "ytd_lg": 5504.2,
+            "m8_ds": 10109.6,
+            "m8_lg": 1899.1,
+            "plan_m_ds": 10834.0,
+            "plan_m_lg": 867.0,
+            "plan_year_ds": 100000.0,
+            "plan_year_lg": 8000.0
+          },
+          {
+            "deptId": "thue_may",
+            "comp": "THH",
+            "name": "Thuê máy Tân Hồng Hà",
+            "note": "Cho thuê máy photocopy miền Bắc",
+            "ytd_ds": 5709.0,
+            "ytd_lg": 2013.0,
+            "m8_ds": 719.5,
+            "m8_lg": 245.7,
+            "plan_m_ds": 733.0,
+            "plan_m_lg": 440.0,
+            "plan_year_ds": 8000.0,
+            "plan_year_lg": 4800.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "THH",
+            "name": "Tổ Dịch vụ THH",
+            "note": "Bảo trì bảo dưỡng sửa chữa",
+            "ytd_ds": 11605.8,
+            "ytd_lg": 3856.4,
+            "m8_ds": 1301.0,
+            "m8_lg": 431.2,
+            "plan_m_ds": 1833.0,
+            "plan_m_lg": 733.0,
+            "plan_year_ds": 20000.0,
+            "plan_year_lg": 8000.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "THH",
+            "name": "Tổ mực in THH",
+            "note": "Cung cấp thay thế mực in",
+            "ytd_ds": 2836.5,
+            "ytd_lg": 1424.0,
+            "m8_ds": 309.9,
+            "m8_lg": 131.9,
+            "plan_m_ds": 550.0,
+            "plan_m_lg": 220.0,
+            "plan_year_ds": 6000.0,
+            "plan_year_lg": 2400.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "THH",
+            "name": "Metercharge THH",
+            "note": "Dịch vụ thu phí bản in chụp",
+            "ytd_ds": 2136.3,
+            "ytd_lg": 1110.9,
+            "m8_ds": 220.3,
+            "m8_lg": 51.2,
+            "plan_m_ds": 458.0,
+            "plan_m_lg": 274.0,
+            "plan_year_ds": 5000.0,
+            "plan_year_lg": 3000.0
+          },
+          {
+            "deptId": "online",
+            "comp": "THH",
+            "name": "Kinh doanh Online THH",
+            "note": "Bán hàng trực tuyến",
+            "ytd_ds": 865.8,
+            "ytd_lg": 20100.0,
+            "m8_ds": 55.4,
+            "m8_lg": 2.4,
+            "plan_m_ds": 275.0,
+            "plan_m_lg": 8.3,
+            "plan_year_ds": 11000.0,
+            "plan_year_lg": 890.0
+          },
+          {
+            "deptId": "du_an",
+            "comp": "THH",
+            "name": "Dự án Tân Hồng Hà",
+            "note": "Dự án thầu thiết bị miền Bắc",
+            "ytd_ds": 19199.9,
+            "ytd_lg": 7611.1,
+            "m8_ds": 1030.2,
+            "m8_lg": 306.3,
+            "plan_m_ds": 30000.0,
+            "plan_m_lg": 3000.0,
+            "plan_year_ds": 100000.0,
+            "plan_year_lg": 10000.0
+          },
+          {
+            "deptId": "kdth",
+            "comp": "THH",
+            "name": "Kinh doanh tổng hợp THH",
+            "note": "Thương mại tổng hợp",
+            "ytd_ds": 27348.7,
+            "ytd_lg": 1673.5,
+            "m8_ds": 7103.2,
+            "m8_lg": 244.3,
+            "plan_m_ds": 4300.0,
+            "plan_m_lg": 860.0,
+            "plan_year_ds": 30000.0,
+            "plan_year_lg": 6000.0
+          }
+        ]
+      },
+      "ITSS": {
+        "captured_at": "2026-11-10 10:16:04",
+        "items": [
+          {
+            "deptId": "phan_phoi",
+            "comp": "ITSS",
+            "name": "Outsourcing",
+            "note": "",
+            "ytd_ds": 4450.0,
+            "ytd_lg": 1576.0,
+            "m8_ds": 484.0,
+            "m8_lg": 134.0,
+            "plan_m_ds": 600.0,
+            "plan_m_lg": 175.0,
+            "plan_year_ds": 5400.0,
+            "plan_year_lg": 1500.0
+          },
+          {
+            "deptId": "du_an",
+            "comp": "ITSS",
+            "name": "Dự án CNTT ITSS",
+            "note": "Giải pháp phần mềm và mạng",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 0.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 105.0,
+            "plan_m_lg": 23.0,
+            "plan_year_ds": 1200.0,
+            "plan_year_lg": 165.0
+          }
+        ]
+      },
+      "VPVPS": {
+        "captured_at": "2026-11-10 10:16:04",
+        "items": [
+          {
+            "deptId": "khac",
+            "comp": "VPVPS",
+            "name": "VP VPS - Hoạt động KD",
+            "note": "Bán nội bộ, xuất khẩu, thương mại",
+            "ytd_ds": 44267.0,
+            "ytd_lg": 3818.0,
+            "m8_ds": 5671.0,
+            "m8_lg": 504.0,
+            "plan_m_ds": 5000.0,
+            "plan_m_lg": 500.0,
+            "plan_year_ds": 100000.0,
+            "plan_year_lg": 5000.0
+          }
+        ]
+      }
+    },
+    "11/2026-W1": {
+      "Viet": {
+        "captured_at": "2026-11-10 10:16:04",
+        "items": [
+          {
+            "deptId": "thue_may",
+            "comp": "Viet",
+            "name": "Thuê máy Công ty Việt",
+            "note": "Cho thuê máy Công ty Việt",
+            "ytd_ds": 15576.8,
+            "ytd_lg": 9079.57,
+            "m8_ds": 8.5,
+            "m8_lg": 0.0,
+            "plan_m_ds": 2545.0,
+            "plan_m_lg": 1577.9,
+            "plan_year_ds": 28000.0,
+            "plan_year_lg": 17360.0
+          },
+          {
+            "deptId": "online",
+            "comp": "Viet",
+            "name": "KD Online Việt",
+            "note": "Kênh online sàn TMĐT",
+            "ytd_ds": 25672.93,
+            "ytd_lg": 1629.54,
+            "m8_ds": 651.18,
+            "m8_lg": 27.3,
+            "plan_m_ds": 3300.0,
+            "plan_m_lg": 264.0,
+            "plan_year_ds": 36000.0,
+            "plan_year_lg": 1800.0
+          },
+          {
+            "deptId": "kdth",
+            "comp": "Viet",
+            "name": "KDTH Công ty Việt",
+            "note": "Kinh doanh tổng hợp",
+            "ytd_ds": 19083.11,
+            "ytd_lg": 1500.14,
+            "m8_ds": 371.87,
+            "m8_lg": 102.8,
+            "plan_m_ds": 3450.0,
+            "plan_m_lg": 310.5,
+            "plan_year_ds": 36000.0,
+            "plan_year_lg": 2880.0
+          },
+          {
+            "deptId": "khac",
+            "comp": "Viet",
+            "name": "Cửa hàng Việt",
+            "note": "Bán lẻ tại điểm bán",
+            "ytd_ds": 1055.13,
+            "ytd_lg": 502.37,
+            "m8_ds": 12.72,
+            "m8_lg": 1.62,
+            "plan_m_ds": 550.0,
+            "plan_m_lg": 82.5,
+            "plan_year_ds": 6000.0,
+            "plan_year_lg": 900.0
+          },
+          {
+            "deptId": "khac",
+            "comp": "Viet",
+            "name": "Bán nội bộ Việt",
+            "note": "Hoạt động nội bộ",
+            "ytd_ds": 723.99,
+            "ytd_lg": 102.71,
+            "m8_ds": 0.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 10.0,
+            "plan_m_lg": 1.0,
+            "plan_year_ds": 600.0,
+            "plan_year_lg": 75.0
+          }
+        ]
+      },
+      "XemSon": {
+        "captured_at": "2026-11-10 10:16:04",
+        "items": [
+          {
+            "deptId": "phan_phoi",
+            "comp": "XemSon",
+            "name": "Kinh doanh sỉ (KD sỉ)",
+            "note": "Phân phối thiết bị Xesco",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 853.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 5775.0,
+            "plan_m_lg": 525.0,
+            "plan_year_ds": 66000.0,
+            "plan_year_lg": 6300.0
+          },
+          {
+            "deptId": "thue_may",
+            "comp": "XemSon",
+            "name": "Kỹ thuật thuê máy (KT)",
+            "note": "Máy thuê kỹ thuật Xesco",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 71.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 2975.0,
+            "plan_m_lg": 1756.0,
+            "plan_year_ds": 34000.0,
+            "plan_year_lg": 21080.0
+          },
+          {
+            "deptId": "thue_may",
+            "comp": "XemSon",
+            "name": "KD Thuê máy (Thương mại)",
+            "note": "Hợp đồng thuê máy mới",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 0.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 700.0,
+            "plan_m_lg": 367.0,
+            "plan_year_ds": 8000.0,
+            "plan_year_lg": 4400.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "XemSon",
+            "name": "Dịch vụ kỹ thuật Xem Sơn",
+            "note": "Kỹ thuật dịch vụ máy VP",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 327.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 2275.0,
+            "plan_m_lg": 715.0,
+            "plan_year_ds": 26000.0,
+            "plan_year_lg": 8580.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "XemSon",
+            "name": "Metercharge Xem Sơn",
+            "note": "",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 0.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 0.0,
+            "plan_m_lg": 0.0,
+            "plan_year_ds": 0.0,
+            "plan_year_lg": 0.0
+          },
+          {
+            "deptId": "online",
+            "comp": "XemSon",
+            "name": "KD Online Xem Sơn",
+            "note": "Thương mại điện tử Xesco",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 887.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 2100.0,
+            "plan_m_lg": 100.0,
+            "plan_year_ds": 24000.0,
+            "plan_year_lg": 1200.0
+          },
+          {
+            "deptId": "du_an",
+            "comp": "XemSon",
+            "name": "Dự án Xesco",
+            "note": "Gói thầu thiết bị miền Nam",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 234.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 0.0,
+            "plan_m_lg": 0.0,
+            "plan_year_ds": 0.0,
+            "plan_year_lg": 0.0
+          },
+          {
+            "deptId": "khac",
+            "comp": "XemSon",
+            "name": "Bán máy lẻ Xem Sơn",
+            "note": "Bán lẻ thiết bị văn phòng",
+            "ytd_ds": 0.0,
+            "ytd_lg": 0.0,
+            "m8_ds": 100.0,
+            "m8_lg": 0.0,
+            "plan_m_ds": 875.0,
+            "plan_m_lg": 125.0,
+            "plan_year_ds": 10000.0,
+            "plan_year_lg": 1500.0
+          }
+        ]
+      },
+      "VPSM": {
+        "captured_at": "2026-11-10 10:16:04",
+        "items": [
+          {
+            "deptId": "phan_phoi",
+            "comp": "VPSM",
+            "name": "Kinh doanh máy - bán buôn",
+            "note": "Bán buôn máy VPS Miền Trung",
+            "ytd_ds": 6667.0,
+            "ytd_lg": 600.0,
+            "m8_ds": 238.0,
+            "m8_lg": 45.0,
+            "plan_m_ds": 0.0,
+            "plan_m_lg": 75.0,
+            "plan_year_ds": 10000.0,
+            "plan_year_lg": 900.0
+          },
+          {
+            "deptId": "phan_phoi",
+            "comp": "VPSM",
+            "name": "Kinh doanh linh kiện - bán buôn",
+            "note": "Bán buôn linh kiện mực in",
+            "ytd_ds": 2333.0,
+            "ytd_lg": 300.0,
+            "m8_ds": 54.0,
+            "m8_lg": 22.0,
+            "plan_m_ds": 0.0,
+            "plan_m_lg": 38.0,
+            "plan_year_ds": 3500.0,
+            "plan_year_lg": 450.0
+          },
+          {
+            "deptId": "thue_may",
+            "comp": "VPSM",
+            "name": "Thuê máy Miền Trung",
+            "note": "Thuê máy khu vực miền Trung",
+            "ytd_ds": 800.0,
+            "ytd_lg": 520.0,
+            "m8_ds": 55.0,
+            "m8_lg": 20.0,
+            "plan_m_ds": 197.0,
+            "plan_m_lg": 65.0,
+            "plan_year_ds": 1200.0,
+            "plan_year_lg": 780.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "VPSM",
+            "name": "Dịch vụ kỹ thuật VPSM",
+            "note": "Bảo trì sửa chữa máy",
+            "ytd_ds": 1800.0,
+            "ytd_lg": 900.0,
+            "m8_ds": 159.0,
+            "m8_lg": 95.0,
+            "plan_m_ds": 350.0,
+            "plan_m_lg": 112.0,
+            "plan_year_ds": 2700.0,
+            "plan_year_lg": 1350.0
+          },
+          {
+            "deptId": "dich_vu",
+            "comp": "VPSM",
+            "name": "Dịch vụ toàn phần VPSM",
+            "note": "Hợp đồng bảo trì trọn gói",
+            "ytd_ds": 533.0,
+            "ytd_lg": 313.0,
+            "m8_ds": 0.0,
+            "m8_lg": 35.0,
+            "plan_m_ds": 67.0,
+            "plan_m_lg": 39.0,
+            "plan_year_ds": 800.0,
+            "plan_year_lg": 470.0
+          },
+          {
+            "deptId": "online",
+            "comp": "VPSM",
+            "name": "Shopee-Online VPSM",
+            "note": "Gian hàng Shopee Miền Trung",
+            "ytd_ds": 933.0,
+            "ytd_lg": 56.0,
+            "m8_ds": 0.0,
+            "m8_lg": 3.0,
+            "plan_m_ds": 158.0,
+            "plan_m_lg": 7.0,
+            "plan_year_ds": 1400.0,
+            "plan_year_lg": 84.0
+          },
+          {
+            "deptId": "khac",
+            "comp": "VPSM",
+            "name": "Bán lẻ VPS Miền Trung",
+            "note": "Bán lẻ tại showroom",
+            "ytd_ds": 400.0,
+            "ytd_lg": 72.0,
+            "m8_ds": 0.0,
+            "m8_lg": 1.0,
+            "plan_m_ds": 103.0,
+            "plan_m_lg": 9.0,
+            "plan_year_ds": 600.0,
+            "plan_year_lg": 108.0
+          }
+        ]
+      }
+    }
+  },
+  "current": {
+    "THH": "10/2026",
+    "Viet": "11/2026-W1",
+    "XemSon": "11/2026-W1",
+    "VPSM": "11/2026-W1",
+    "ITSS": "10/2026",
+    "VPVPS": "10/2026"
+  },
+  "locked": {
+    "10/2026": {
+      "Viet": true,
+      "XemSon": true,
+      "VPSM": true,
+      "THH": true,
+      "ITSS": true,
+      "VPVPS": true
+    }
+  },
+  "log": [
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "VPVPS",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "ITSS",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "VPSM",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 11/2026-W1"
+    },
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "VPSM",
+      "event": "AUTO_LOCK",
+      "detail": "Đơn vị chuyển từ kỳ 10/2026 sang 11/2026-W1: đã lưu & khóa kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "XemSon",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 11/2026-W1"
+    },
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "XemSon",
+      "event": "AUTO_LOCK",
+      "detail": "Đơn vị chuyển từ kỳ 10/2026 sang 11/2026-W1: đã lưu & khóa kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "Viet",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 11/2026-W1"
+    },
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "Viet",
+      "event": "AUTO_LOCK",
+      "detail": "Đơn vị chuyển từ kỳ 10/2026 sang 11/2026-W1: đã lưu & khóa kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:16:04",
+      "company": "THH",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:13:23",
+      "company": "VPVPS",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:13:23",
+      "company": "ITSS",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:13:23",
+      "company": "VPSM",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:13:23",
+      "company": "XemSon",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:13:23",
+      "company": "Viet",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    },
+    {
+      "time": "2026-11-10 10:13:23",
+      "company": "THH",
+      "event": "NEW_SNAPSHOT",
+      "detail": "Lưu kỳ 10/2026"
+    }
+  ],
+  "last_updated": "2026-11-10 10:16:04"
+}
