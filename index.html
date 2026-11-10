@@ -1440,8 +1440,8 @@
                                             <option value="6">Tháng 06</option>
                                             <option value="7">Tháng 07</option>
                                             <option value="8">Tháng 08 (Chốt sổ)</option>
-                                            <option value="9" selected>Tháng 09 (Chốt sổ)</option>
-                                            <option value="10">Tháng 10 (Hiện tại)</option>
+                                            <option value="9">Tháng 09 (Chốt sổ)</option>
+                                            <option value="10" selected>Tháng 10 (Chốt sổ)</option>
                                             <option value="11">Tháng 11</option>
                                             <option value="12">Tháng 12</option>
                                         </select>
@@ -1538,9 +1538,9 @@
                                     <!-- Dropdown chọn nhanh tháng trước đó -->
                                     <div class="dept-select-wrapper" style="margin: 0;">
                                         <select id="dept-table-quick-month" class="dept-select" onchange="window.RevenueModule.selectMonth(this.value)" style="border-color: #10b981; font-weight: 700; color: #065f46; background: #ecfdf5; padding-right: 28px;" title="Danh sách các tháng để xem lại số liệu trước đó">
-                                            <option value="9" selected>🔒 Tháng 09/2026 (Chốt sổ - Đầy đủ)</option>
+                                            <option value="9">🔒 Tháng 09/2026 (Chốt sổ - Đầy đủ)</option>
                                             <option value="8">🔒 Tháng 08/2026 (Chốt sổ)</option>
-                                            <option value="10">⚡ Tháng 10/2026 (Đang cập nhật tuần)</option>
+                                            <option value="10" selected>🔒 Tháng 10/2026 (Chốt sổ - 6 Đơn vị)</option>
                                             <option value="1">Tháng 01/2026</option>
                                             <option value="2">Tháng 02/2026</option>
                                             <option value="3">Tháng 03/2026</option>
@@ -1548,7 +1548,7 @@
                                             <option value="5">Tháng 05/2026</option>
                                             <option value="6">Tháng 06/2026</option>
                                             <option value="7">Tháng 07/2026</option>
-                                            <option value="11">Tháng 11/2026</option>
+                                            <option value="11">⚡ Tháng 11/2026 (Đang cập nhật Tuần 1)</option>
                                             <option value="12">Tháng 12/2026</option>
                                         </select>
                                         <i data-lucide="chevron-down" class="dept-select-arrow" style="width: 14px; height: 14px;"></i>
@@ -1576,13 +1576,13 @@
                                         <button type="button" class="dept-month-pill highlight-closed" data-month="8" onclick="window.RevenueModule.selectMonth('8')" title="Tháng 08/2026 đã chốt sổ">
                                             <i data-lucide="lock" style="width: 12px; height: 12px;"></i> T8 (Chốt)
                                         </button>
-                                        <button type="button" class="dept-month-pill highlight-closed active" data-month="9" onclick="window.RevenueModule.selectMonth('9')" title="Tháng 09/2026 đã chốt sổ - Bấm xem ngay">
+                                        <button type="button" class="dept-month-pill highlight-closed" data-month="9" onclick="window.RevenueModule.selectMonth('9')" title="Tháng 09/2026 đã chốt sổ - Bấm xem ngay">
                                             <i data-lucide="shield-check" style="width: 13px; height: 13px;"></i> Tháng 9 (⭐ Chốt sổ)
                                         </button>
-                                        <button type="button" class="dept-month-pill highlight-current" data-month="10" onclick="window.RevenueModule.selectMonth('10')" title="Tháng 10/2026 hiện tại đang nhập theo tuần">
-                                            <i data-lucide="zap" style="width: 12px; height: 12px;"></i> Tháng 10 (Hiện tại)
+                                        <button type="button" class="dept-month-pill highlight-closed active" data-month="10" onclick="window.RevenueModule.selectMonth('10')" title="Tháng 10/2026 đã chốt sổ (6 đơn vị)">
+                                            <i data-lucide="shield-check" style="width: 13px; height: 13px;"></i> Tháng 10 (⭐ Chốt sổ)
                                         </button>
-                                        <button type="button" class="dept-month-pill" data-month="11" onclick="window.RevenueModule.selectMonth('11')">T11</button>
+                                        <button type="button" class="dept-month-pill highlight-current" data-month="11" onclick="window.RevenueModule.selectMonth('11')" title="Tháng 11/2026 đang cập nhật theo tuần"><i data-lucide="zap" style="width: 12px; height: 12px;"></i> T11 (Tuần 1)</button>
                                         <button type="button" class="dept-month-pill" data-month="12" onclick="window.RevenueModule.selectMonth('12')">T12</button>
                                         <button type="button" class="dept-month-pill" style="border-color: #8b5cf6; color: #6d28d9; background: #f5f3ff;" onclick="window.RevenueModule.setDeptMode('year')" title="Xem lũy kế cả năm">
                                             <i data-lucide="trending-up" style="width: 13px; height: 13px;"></i> Lũy Kế Năm (YTD)
@@ -4194,18 +4194,18 @@
     <!-- Scripts -->
     <script src="js/connectors.js?v=1788780000"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="js/google_sheets_live_data.js?v=1794290000"></script>
-    <script src="js/data.js?v=1794290000"></script>
-    <script src="js/google_sheets.js?v=1794290000"></script>
+    <script src="js/google_sheets_live_data.js?v=1794300000"></script>
+    <script src="js/data.js?v=1794300000"></script>
+    <script src="js/google_sheets.js?v=1794300000"></script>
     <script src="js/auth.js?v=1788780000"></script>
     <script src="js/filters.js?v=1788780000"></script>
     <script src="js/charts.js?v=1788780000"></script>
-    <script src="js/overview.js?v=1794290000"></script>
-    <script src="js/customers.js?v=1794290000"></script>
+    <script src="js/overview.js?v=1794300000"></script>
+    <script src="js/customers.js?v=1794300000"></script>
     <script src="js/products.js?v=1788780000"></script>
     <script src="js/fujifilm.js?v=1788780000"></script>
     <script src="js/products_other.js?v=1788780000"></script>
-    <script src="js/revenue.js?v=1794290000"></script>
+    <script src="js/revenue.js?v=1794300000"></script>
     <script src="js/project_revenue.js?v=1789730000"></script>
     <script src="js/inventory.js?v=1791270000"></script>
     <script src="js/debt.js?v=1788780000"></script>

@@ -772,7 +772,7 @@ window.RevenueModule = {
             const sourceSubItems = [];
             const normDept = it => ((it.deptId === 'khac' && ((it.name || '').toLowerCase().includes('lẻ') || (it.name || '').toLowerCase().includes('cửa hàng') || (it.note || '').toLowerCase().includes('bán lẻ'))) ? 'ban_le' : it.deptId);
             companies.forEach(cKey => {
-                const archived = (window.VPSArchive && !(selM === '9' && cKey !== 'THH')) ? window.VPSArchive.getItems(cKey, selM, selW) : null;
+                const archived = window.VPSArchive ? window.VPSArchive.getItems(cKey, selM, selW) : null;
                 if (archived && archived.length) {
                     archived.forEach(it => {
                         const dId = normDept(it);
@@ -796,6 +796,7 @@ window.RevenueModule = {
             // Tính toán từng công ty
             companies.forEach(comp => {
                 const compSubItems = subItemsByComp[comp] || [];
+                const isWeeklySnap = compSubItems.some(it => it._isWeeklySnapshot);
                 const compPlanYearDs = compSubItems.reduce((s, it) => s + (it.plan_year_ds || 0), 0);
                 const compPlanYearLg = compSubItems.reduce((s, it) => s + (it.plan_year_lg || 0), 0);
                 let compPlanMonthDs = compSubItems.reduce((s, it) => s + (it.plan_m_ds || 0), 0) || Math.round(compPlanYearDs / 12);
@@ -813,45 +814,20 @@ window.RevenueModule = {
                 deptPlanWeekDs += compPlanWeekDs;
                 deptPlanWeekLg += compPlanWeekLg;
 
-                // Xác định Actual theo kỳ tháng & tuần
-                let compActualMonthDs = 0, compActualMonthLg = 0;
-                let compActualWeekDs = 0, compActualWeekLg = 0;
-
-                if (selM === '9' && comp !== 'THH') {
-                    // KHO LƯU TRỮ THÁNG 9: Đã chốt sổ, bảo toàn độc lập tuyệt đối
-                    const t9Actual = this.PERIOD_STORE['9']?.actualsByCompDept?.[comp]?.[dept.id] || { ds: 0, lg: 0 };
-                    compActualMonthDs = t9Actual.ds;
-                    compActualMonthLg = t9Actual.lg;
-
-                    if (selW === 'all') {
-                        compActualWeekDs = Math.round(compActualMonthDs / 4);
-                        compActualWeekLg = Math.round(compActualMonthLg / 4);
-                    } else {
-                        const wWeight = this.PERIOD_STORE['9']?.weekWeights?.[selW] || 0.25;
-                        compActualWeekDs = Math.round(compActualMonthDs * wWeight);
-                        compActualWeekLg = Math.round(compActualMonthLg * wWeight);
-                    }
-                } else {
-                    // Tất cả 6 đơn vị (THH, Viet, XemSon, VPSM, ITSS, VPVPS) ở kỳ hiện tại lấy chuẩn xác 100% từ bảng tính Google Sheets
-                    compActualMonthDs = compSubItems.reduce((s, it) => s + (it.m8_ds || 0), 0);
-                    compActualMonthLg = compSubItems.reduce((s, it) => s + (it.m8_lg || 0), 0);
-                    compActualWeekDs = selW === '1' ? compActualMonthDs : Math.round(compActualMonthDs / 4);
-                    compActualWeekLg = selW === '1' ? compActualMonthLg : Math.round(compActualMonthLg / 4);
-                }
+                // Xác định Actual theo kỳ tháng & tuần từ Kho lưu trữ đa kỳ (VPSArchive)
+                let compActualMonthDs = compSubItems.reduce((s, it) => s + (it.m8_ds || 0), 0);
+                let compActualMonthLg = compSubItems.reduce((s, it) => s + (it.m8_lg || 0), 0);
+                let compActualWeekDs = isWeeklySnap ? compActualMonthDs : Math.round(compActualMonthDs / 4);
+                let compActualWeekLg = isWeeklySnap ? compActualMonthLg : Math.round(compActualMonthLg / 4);
 
                 deptActualMonthDs += compActualMonthDs;
                 deptActualMonthLg += compActualMonthLg;
                 deptActualWeekDs += compActualWeekDs;
                 deptActualWeekLg += compActualWeekLg;
 
-                // Lũy kế năm (YTD): Lấy chuẩn xác 100% từ cột DS TH NĂM (LK) và LG TH NĂM (LK) trên Google Sheet
-                const compYtdT8Ds = compSubItems.reduce((s, it) => s + (it.ytd_ds || 0), 0);
-                const compYtdT8Lg = compSubItems.reduce((s, it) => s + (it.ytd_lg || 0), 0);
-                const t9CompDs = this.PERIOD_STORE['9']?.actualsByCompDept?.[comp]?.[dept.id]?.ds || 0;
-                const t9CompLg = this.PERIOD_STORE['9']?.actualsByCompDept?.[comp]?.[dept.id]?.lg || 0;
-
-                let compActualYearDs = compYtdT8Ds;
-                let compActualYearLg = compYtdT8Lg;
+                // Lũy kế năm (YTD): Lấy chuẩn xác 100% từ cột DS TH NĂM (LK) và LG TH NĂM (LK) đã chuẩn hóa
+                const compActualYearDs = compSubItems.reduce((s, it) => s + (it.ytd_ds || 0), 0);
+                const compActualYearLg = compSubItems.reduce((s, it) => s + (it.ytd_lg || 0), 0);
 
                 deptActualYearDs += compActualYearDs;
                 deptActualYearLg += compActualYearLg;
@@ -863,6 +839,7 @@ window.RevenueModule = {
                 compSubItems.forEach(item => {
                     const rDs = compSubItems.length === 1 ? 1 : (item.m8_ds || 0) / sumM8Ds;
                     const rLg = compSubItems.length === 1 ? 1 : (item.m8_lg || 0) / sumM8Lg;
+                    const isItemWeekly = !!item._isWeeklySnapshot;
 
                     const itDsKhMonth = item.plan_m_ds !== undefined ? item.plan_m_ds : Math.round((item.plan_year_ds || 0) / 12);
                     const itLgKhMonth = item.plan_m_lg !== undefined ? item.plan_m_lg : Math.round((item.plan_year_lg || 0) / 12);
@@ -873,8 +850,8 @@ window.RevenueModule = {
 
                     let itDsThMonth = item.m8_ds !== undefined ? item.m8_ds : Math.round(compActualMonthDs * rDs);
                     let itLgThMonth = item.m8_lg !== undefined ? item.m8_lg : Math.round(compActualMonthLg * rLg);
-                    let itDsThWeek  = selW === '1' ? itDsThMonth : Math.round(itDsThMonth / 4);
-                    let itLgThWeek  = selW === '1' ? itLgThMonth : Math.round(itLgThMonth / 4);
+                    let itDsThWeek  = isItemWeekly ? itDsThMonth : Math.round(itDsThMonth / 4);
+                    let itLgThWeek  = isItemWeekly ? itLgThMonth : Math.round(itLgThMonth / 4);
                     let itDsThDay   = Math.round(itDsThMonth / 26);
                     let itLgThDay   = Math.round(itLgThMonth / 26);
 
@@ -1064,9 +1041,9 @@ window.RevenueModule = {
             else if (this.currentDeptMode === 'week') modeText = `Đang xem: Theo Tuần (${wTitle})`;
             else if (this.currentDeptMode === 'year') modeText = 'Đang xem: Lũy kế cả năm (YTD)';
             
-            const safeBadge = this.currentDeptMonth === '9' 
-                ? '🔒 Dữ liệu Tháng 9 đã chốt sổ (bảo toàn 100%)' 
-                : (this.currentDeptMonth === '10' ? '⚡ Tháng 10 đang cập nhật theo tuần (T9 giữ nguyên)' : '');
+            const safeBadge = ['8', '9', '10'].includes(String(this.currentDeptMonth))
+                ? `🔒 Dữ liệu Tháng ${this.currentDeptMonth.padStart(2, '0')}/2026 đã chốt sổ (bảo toàn 100%)`
+                : (this.currentDeptMonth === '11' ? '⚡ Tháng 11 đang cập nhật theo tuần (T8, T9, T10 đã khóa bảo toàn)' : '');
 
             subTitle.textContent = `ĐVT: Triệu VNĐ • Kỳ báo cáo: ${mText}${wText} • ${modeText} ${safeBadge ? '• ' + safeBadge : ''}`;
         }

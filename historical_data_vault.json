@@ -1,13 +1,13 @@
 {
   "created_at": "2026-11-09 08:16:15",
-  "last_updated": "2026-11-10 10:16:04",
+  "last_updated": "2026-11-10 10:55:59",
   "units": {
     "THH": {
       "company": "THH",
       "companyName": "Tân Hồng Hà",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-10 10:16:04",
+          "recorded_at": "2026-11-10 10:55:59",
           "ds_7pb_kh_trieu": 48983.0,
           "ds_7pb_th_trieu": 20849.1,
           "lg_7pb_kh_trieu": 6402.3,
@@ -51,7 +51,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-10 10:16:04",
+        "recorded_at": "2026-11-10 10:55:59",
         "ds_7pb_kh_trieu": 48983.0,
         "ds_7pb_th_trieu": 20849.1,
         "lg_7pb_kh_trieu": 6402.3,
@@ -99,7 +99,7 @@
       "companyName": "Việt",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-10 10:16:04",
+          "recorded_at": "2026-11-10 10:55:59",
           "ds_7pb_kh_trieu": 9808.0,
           "ds_7pb_th_trieu": 6433.6,
           "lg_7pb_kh_trieu": 2206.8,
@@ -143,7 +143,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-10 10:16:04",
+        "recorded_at": "2026-11-10 10:55:59",
         "ds_7pb_kh_trieu": 9808.0,
         "ds_7pb_th_trieu": 6433.6,
         "lg_7pb_kh_trieu": 2206.8,
@@ -191,7 +191,7 @@
       "companyName": "Xem Sơn",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-10 10:16:04",
+          "recorded_at": "2026-11-10 10:55:59",
           "ds_7pb_kh_trieu": 14700.0,
           "ds_7pb_th_trieu": 12130.0,
           "lg_7pb_kh_trieu": 3588.0,
@@ -229,7 +229,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-10 10:16:04",
+        "recorded_at": "2026-11-10 10:55:59",
         "ds_7pb_kh_trieu": 14700.0,
         "ds_7pb_th_trieu": 12130.0,
         "lg_7pb_kh_trieu": 3588.0,
@@ -271,7 +271,7 @@
       "companyName": "VPS M",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-10 10:16:04",
+          "recorded_at": "2026-11-10 10:55:59",
           "ds_7pb_kh_trieu": 2360.0,
           "ds_7pb_th_trieu": 2147.6,
           "lg_7pb_kh_trieu": 727.0,
@@ -309,7 +309,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-10 10:16:04",
+        "recorded_at": "2026-11-10 10:55:59",
         "ds_7pb_kh_trieu": 2360.0,
         "ds_7pb_th_trieu": 2147.6,
         "lg_7pb_kh_trieu": 727.0,
@@ -351,7 +351,7 @@
       "companyName": "ITSS",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-10 10:16:04",
+          "recorded_at": "2026-11-10 10:55:59",
           "ds_7pb_kh_trieu": 705.0,
           "ds_7pb_th_trieu": 484.0,
           "lg_7pb_kh_trieu": 198.0,
@@ -389,7 +389,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-10 10:16:04",
+        "recorded_at": "2026-11-10 10:55:59",
         "ds_7pb_kh_trieu": 705.0,
         "ds_7pb_th_trieu": 484.0,
         "lg_7pb_kh_trieu": 198.0,
@@ -431,7 +431,7 @@
       "companyName": "Văn phòng VPS",
       "periods": {
         "10/2026": {
-          "recorded_at": "2026-11-10 10:16:04",
+          "recorded_at": "2026-11-10 10:55:59",
           "ds_7pb_kh_trieu": 5000.0,
           "ds_7pb_th_trieu": 5671.0,
           "lg_7pb_kh_trieu": 500.0,
@@ -469,7 +469,7 @@
         }
       },
       "latest_snapshot": {
-        "recorded_at": "2026-11-10 10:16:04",
+        "recorded_at": "2026-11-10 10:55:59",
         "ds_7pb_kh_trieu": 5000.0,
         "ds_7pb_th_trieu": 5671.0,
         "lg_7pb_kh_trieu": 500.0,
@@ -508,6 +508,17 @@
     }
   },
   "audit_log": [
+    {
+      "timestamp": "2026-11-10 10:55:59",
+      "company": "VPSM",
+      "companyName": "VPS Miền Trung",
+      "module": "2. 7 Phòng ban (DS & LG)",
+      "period": "10/2026",
+      "metric": "Chốt sổ chính thức Doanh số & Lãi gộp Tháng 10/2026",
+      "oldValue": "DS T10: 1.895,00 tr | LG: 221,00 tr",
+      "newValue": "DS KH: 2.360,00 tr | DS TH: 2.147,60 tr (91,0%) | LG KH: 727,00 tr | LG TH: 664,50 tr (91,4%)",
+      "status": "ĐÃ CHỐT SỔ THÁNG 10"
+    },
     {
       "timestamp": "2026-11-10 10:16:04",
       "company": "VPSM",

@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 // Google Sheets Service - Multi-File / Multi-Sheet Live Pipeline
 // Tải và tổng hợp toàn bộ 8 sheet từ 5 file Google Sheets riêng của từng đơn vị
 // ============================================================
@@ -199,7 +199,7 @@ function extractMonthFromHeader(row0) {
 // Nguồn: period_archive trong google_sheets_live_data.js (do máy quét lưu) + localStorage (bổ sung từ trình duyệt)
 // ============================================================
 window.VPSArchive = {
-    LS_KEY: 'vps_period_archive_v1',
+    LS_KEY: 'vps_period_archive_v2',
     _arch: null,
     detectPeriod(csv) {
         const text = (csv || []).slice(0, 4).map(r => (r || []).join(' ')).join(' ');
@@ -245,9 +245,25 @@ window.VPSArchive = {
             (a.locked[prev] = a.locked[prev] || {})[cId] = true;
         }
         a.current[cId] = pk;
+        // Bảo toàn lũy kế năm (YTD) nếu đơn vị xóa trắng cột Lũy kế năm khi nhập kỳ mới (như Xem Sơn kỳ T11-W1)
+        const refItems = (a.snapshots['10/2026'] && a.snapshots['10/2026'][cId])
+            || (prev && a.snapshots[prev] && a.snapshots[prev][cId])
+            || [];
+        const normalizedItems = JSON.parse(JSON.stringify(items)).map((it, idx) => {
+            const ref = refItems.find(x => x.name === it.name && x.deptId === it.deptId) || refItems[idx];
+            if (ref) {
+                if ((it.ytd_ds || 0) === 0 && (ref.ytd_ds || 0) > 0) {
+                    it.ytd_ds = Math.round(((ref.ytd_ds || 0) + (it.m8_ds || 0)) * 10) / 10;
+                }
+                if ((it.ytd_lg || 0) === 0 && (ref.ytd_lg || 0) > 0) {
+                    it.ytd_lg = Math.round(((ref.ytd_lg || 0) + (it.m8_lg || 0)) * 10) / 10;
+                }
+            }
+            return it;
+        });
         const isLocked = a.locked[pk] && a.locked[pk][cId];
         if (!(isLocked && a.snapshots[pk] && a.snapshots[pk][cId])) {
-            (a.snapshots[pk] = a.snapshots[pk] || {})[cId] = JSON.parse(JSON.stringify(items));
+            (a.snapshots[pk] = a.snapshots[pk] || {})[cId] = normalizedItems;
         }
         this._publish();
         try { localStorage.setItem(this.LS_KEY, JSON.stringify({ snapshots: a.snapshots, locked: a.locked, current: a.current })); } catch (e) {}
@@ -257,10 +273,35 @@ window.VPSArchive = {
         const a = this.get();
         const mm = String(month).padStart(2, '0') + '/2026';
         const snaps = a.snapshots || {};
-        if (week && week !== 'all' && snaps[mm + '-W' + week] && snaps[mm + '-W' + week][cId]) return snaps[mm + '-W' + week][cId];
-        if (snaps[mm] && snaps[mm][cId]) return snaps[mm][cId];
+        const tagItems = (arr, isWeekly, key, isPending = false) => arr.map(it => ({
+            ...it,
+            _isWeeklySnapshot: !!isWeekly,
+            _snapshotKey: key,
+            _isPendingPeriod: !!isPending
+        }));
+        if (week && week !== 'all' && snaps[mm + '-W' + week] && snaps[mm + '-W' + week][cId]) {
+            return tagItems(snaps[mm + '-W' + week][cId], true, mm + '-W' + week);
+        }
+        if (snaps[mm] && snaps[mm][cId]) {
+            return tagItems(snaps[mm][cId], false, mm);
+        }
         const wk = Object.keys(snaps).filter(k => k.startsWith(mm + '-W') && snaps[k][cId]).sort();
-        return wk.length ? snaps[wk[wk.length - 1]][cId] : null;
+        if (wk.length) {
+            const latestKey = wk[wk.length - 1];
+            return tagItems(snaps[latestKey][cId], true, latestKey);
+        }
+        // Nếu đang xem kỳ tương lai/mới (T11, T12) mà đơn vị chưa nhập kỳ đó, giữ nguyên KH & Lũy kế năm từ T10 nhưng Thực hiện tháng = 0 (không lấy nhầm TH T10)
+        if (Number(month) >= 11 && snaps['10/2026'] && snaps['10/2026'][cId]) {
+            return snaps['10/2026'][cId].map(it => ({
+                ...it,
+                m8_ds: 0,
+                m8_lg: 0,
+                _isWeeklySnapshot: true,
+                _snapshotKey: mm + '-pending',
+                _isPendingPeriod: true
+            }));
+        }
+        return null;
     },
     _publish() {
         if (!window.LIVE_GOOGLE_SHEETS_DATA) window.LIVE_GOOGLE_SHEETS_DATA = {};
@@ -474,6 +515,7 @@ function parse7Departments(csv, cId) {
         '4': 'online', '5': 'du_an', '6': 'kdth', '7': 'ban_le', '8': 'khac'
     };
     let currDeptId = null;
+    const parentPlanByDept = {};
     const subItems = [];
     for (let i = 0; i < csv.length; i++) {
         const r = csv[i];
@@ -486,6 +528,12 @@ function parse7Departments(csv, cId) {
             if (stt === '7' && (name.toLowerCase().includes('khác') || name.toLowerCase().includes('khac'))) {
                 currDeptId = 'khac';
             }
+            let p_m_ds_kh = parseNumber(r[2]);
+            if (p_m_ds_kh > 0 && p_m_ds_kh < 20) p_m_ds_kh = Math.round(p_m_ds_kh * 1000 * 10) / 10;
+            parentPlanByDept[currDeptId] = {
+                plan_m_ds: p_m_ds_kh,
+                plan_m_lg: parseNumber(r[5])
+            };
             continue;
         }
         if (currDeptId && (name.startsWith('-') || name.startsWith('[') || !stt)) {
@@ -505,8 +553,12 @@ function parse7Departments(csv, cId) {
             if (m_ds_kh > 0 && m_ds_kh < 20) m_ds_kh = Math.round(m_ds_kh * 1000 * 10) / 10;
             if (y_ds_kh > 0 && y_ds_kh < 200) y_ds_kh = Math.round(y_ds_kh * 1000 * 10) / 10;
             if (y_ds_kh >= 1000 && y_lg_kh > 0 && y_lg_kh < 50) y_lg_kh = Math.round(y_lg_kh * 1000 * 10) / 10;
-            if (y_ds_kh >= 1000 && y_ds_th > 0 && y_ds_th < 200) y_ds_th = Math.round(y_ds_th * 1000 * 10) / 10;
-            if (y_lg_kh >= 500 && y_lg_th > 0 && y_lg_th < 50) y_lg_th = Math.round(y_lg_th * 1000 * 10) / 10;
+            if (y_ds_kh >= 1000 && y_ds_th > 0 && y_ds_th < 200 && y_ds_th < m_ds_th) {
+                y_ds_th = Math.round(y_ds_th * 1000 * 10) / 10;
+            }
+            if (y_lg_kh >= 500 && y_lg_th > 0 && y_lg_th < 50 && y_lg_th < m_lg_th && (y_lg_th * 1000) <= y_ds_th) {
+                y_lg_th = Math.round(y_lg_th * 1000 * 10) / 10;
+            }
 
             subItems.push({
                 deptId: currDeptId,
@@ -524,6 +576,16 @@ function parse7Departments(csv, cId) {
             });
         }
     }
+    // Nếu gviz/tq làm rơi ô text ở dòng con (như VPSM mục 1 có '1,089.8' và '149.9'), bù từ dòng cha của phòng ban
+    Object.entries(parentPlanByDept).forEach(([dId, pPlan]) => {
+        const children = subItems.filter(x => x.deptId === dId);
+        if (children.length > 0) {
+            const sumChildPlanDs = children.reduce((s, x) => s + (x.plan_m_ds || 0), 0);
+            if (sumChildPlanDs === 0 && pPlan.plan_m_ds > 0) {
+                children[0].plan_m_ds = pPlan.plan_m_ds;
+            }
+        }
+    });
     return subItems;
 }
 
@@ -1227,7 +1289,7 @@ window.GoogleSheetsService = {
                 return true;
             }
 
-            const raw = localStorage.getItem('vps_dashboard_cache_v5');
+            const raw = localStorage.getItem('vps_dashboard_cache_v6');
             if (raw) {
                 const cached = JSON.parse(raw);
                 if (cached && cached.mockData) {
@@ -1463,7 +1525,7 @@ window.GoogleSheetsService = {
                     customers: window.mockData.customers
                 }
             };
-            localStorage.setItem('vps_dashboard_cache_v5', JSON.stringify(payload));
+            localStorage.setItem('vps_dashboard_cache_v6', JSON.stringify(payload));
             this._lastSyncTime = payload.timestamp;
             this.recordToHistoricalVault();
         } catch(e) {
@@ -1474,7 +1536,7 @@ window.GoogleSheetsService = {
     // Tự động ghi nhận & lưu trữ lịch sử nhập liệu của 6 đơn vị để đối chiếu về sau
     recordToHistoricalVault(forceSnapshot = false) {
         try {
-            const VAULT_KEY = 'vps_historical_vault_v1';
+            const VAULT_KEY = 'vps_historical_vault_v2';
             const seedVault = (window.LIVE_GOOGLE_SHEETS_DATA && window.LIVE_GOOGLE_SHEETS_DATA.historical_vault)
                 ? JSON.parse(JSON.stringify(window.LIVE_GOOGLE_SHEETS_DATA.historical_vault))
                 : { created_at: new Date().toLocaleString('vi-VN'), last_updated: '', units: {}, audit_log: [] };

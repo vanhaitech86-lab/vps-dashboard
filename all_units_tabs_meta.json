@@ -167,10 +167,6 @@
     {
       "name": "Thương hiệu",
       "gid": ""
-    },
-    {
-      "name": "Dự án \\x26 KH Dự án",
-      "gid": ""
     }
   ],
   "VPSM": [
@@ -249,19 +245,19 @@
       "gid": ""
     },
     {
-      "name": "Tồn kho",
-      "gid": ""
-    },
-    {
       "name": "Nhân sự",
       "gid": ""
     },
     {
-      "name": "Sản Phẩm",
+      "name": "Chi Phí",
       "gid": ""
     },
     {
-      "name": "Chi Phí",
+      "name": "Tồn kho",
+      "gid": ""
+    },
+    {
+      "name": "Sản Phẩm",
       "gid": ""
     },
     {
@@ -292,10 +288,6 @@
   "VPVPS": [
     {
       "name": "00_Huong_Dan",
-      "gid": ""
-    },
-    {
-      "name": "Doanh thu",
       "gid": ""
     },
     {
